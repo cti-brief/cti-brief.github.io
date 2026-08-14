@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Daily Threat Brief</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M50%204L88%2018v32c0%2024-18%2042-38%2048C10%2092-8%2074-8%2050V18z%22%20fill%3D%22%23E0544A%22%2F%3E%3Cpath%20d%3D%22M34%2050l13%2013%2019-22%22%20stroke%3D%22%23fff%22%20stroke-width%3D%227%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -323,7 +324,7 @@
 
   <header>
     <div>
-      <div class="eyebrow">Personal Intel Brief · Snapshot &nbsp;·&nbsp; <span class="tlp">TLP:CLEAR</span></div>
+      <div class="eyebrow"><span class="tlp">TLP:CLEAR</span></div>
       <h1>Daily Threat Brief</h1>
       <div class="subhead" id="dateLine"></div>
     </div>
@@ -415,32 +416,25 @@
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
         </div>
 
+        <div class="story" data-detail="sapcommerce">
+          <div class="tagRow"><span class="tag crit">CVSS 10.0</span><span class="tag high">Actively Exploited</span></div>
+          <p class="storyTitle"><span>SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0): unauthenticated RCE now targeted in wild — 3 days after patch</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Defused honeypots detected exploitation attempts Aug 14, just 3 days after SAP's Aug 11 patch. No authentication required — attacker sends crafted requests to the Data Hub Adapter import endpoint for full code execution. Affects COM_CLOUD 2211 and 2211-JDK21. A binary patch alone is insufficient; a full rebuild and redeploy of Commerce Cloud is required.</p>
+          <div class="srcline">Defused / BleepingComputer, SecurityWeek, Onapsis — Aug 11-14, 2026</div>
+        </div>
+
+        <div class="story" data-detail="ptcwindchill">
+          <div class="tagRow"><span class="tag crit">43+ Victims</span><span class="tag high">Industrial IP · Clop</span></div>
+          <p class="storyTitle"><span>Cl0p exploiting PTC Windchill CVE-2026-12569 at scale — Shell, Philips, GE, Fiserv among claimed victims; engineering drawings and facility data stolen</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Cl0p is mass-exploiting CVE-2026-12569 (CVSS 9.3, KEV-listed since June) in PTC Windchill and FlexPLM PLM software. Pure data-theft model — no encryption. Shell confirmed investigating a potential incident involving 89GB claimed stolen (engineering drawings, facility photos, project plans). Philips, GE, and Fiserv also named. 43 victims claimed total. Shell refused to pay in the 2023 MOVEit campaign; Cl0p published their data then.</p>
+          <div class="srcline">BleepingComputer, TechNadu, Ransom-ISAC — Aug 12-14, 2026</div>
+        </div>
+
         <div class="story" data-detail="patchtugsaug">
           <div class="tagRow"><span class="tag crit">Exploited Zero-Day</span><span class="tag high">421 CVEs · 62 Critical</span></div>
           <p class="storyTitle"><span>August Patch Tuesday: CVE-2026-68820 actively exploited for SYSTEM access — plus critical QUIC and DNS RCE cluster</span><span class="detailsCue">Details →</span></p>
           <p class="storyBody">Today's Patch Tuesday (August 11) brings 421 CVEs including one being exploited in the wild right now. CVE-2026-68820 (afd.sys use-after-free) lets a low-privilege local attacker reach SYSTEM via a race condition — no user interaction, all supported Windows versions. Tenable assesses nation-state actors as likely. Two additional bugs were publicly disclosed before patches were available today. Critical RCE cluster not yet exploited: QUIC (CVSS 9.8), DNS Server (CVSS 9.8), and TFTP Server (CVSS 9.8, "Exploitation More Likely").</p>
           <div class="srcline">SecurityWeek, Tenable, SANS ISC — Aug 11, 2026</div>
-        </div>
-
-        <div class="story" data-detail="nullreceiver">
-          <div class="tagRow"><span class="tag crit">DPRK Attributed</span><span class="tag high">npm · Blockchain C2 · 6 Packages</span></div>
-          <p class="storyTitle"><span>Second concurrent DPRK npm campaign: 6 packages use Ethereum wallet transactions as rotating C2 dead drop (NullReceiver technique)</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Sonatype identified 6 packages on Aug 10 using NullReceiver — a DPRK Contagious Interview technique that reads C2 IPs from Ethereum transaction recipient address bytes. Three are hijacked legitimate packages, three are new rogue packages. Every C2 lookup uses a throwaway Ethereum address, making IP blocklisting ineffective. Separate campaign from ChainDrop but attributed to the same DPRK infrastructure. Two simultaneous DPRK npm supply-chain campaigns running this week.</p>
-          <div class="srcline">Sonatype Research Labs, The Hacker News, OpenSourceMalware — Aug 10-11, 2026</div>
-        </div>
-
-        <div class="story" data-detail="stormencryptor">
-          <div class="tagRow"><span class="tag crit">China Attributed</span><span class="tag high">Ransomware · RaaS Pivot</span></div>
-          <p class="storyTitle"><span>Microsoft: China-linked Storm-1175 pivoted from Medusa to new StormEncryptor ransomware — signals independent RaaS operation forming</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Microsoft Threat Intelligence disclosed Storm-1175 — previously a Medusa ransomware affiliate — has deployed its own StormEncryptor strain. The pivot from affiliate to owner signals significant operational maturity. Storm-1175 has been observed targeting MSPs, with N-central overlap. No technical IOCs published in the initial disclosure — monitoring MSTIC for updates over the next 48-72 hours.</p>
-          <div class="srcline">Microsoft Threat Intelligence (MSTIC) via TechManiaCS, Dark Reading — Aug 11, 2026</div>
-        </div>
-
-        <div class="story" data-detail="cevalogistics">
-          <div class="tagRow"><span class="tag high">Supply Chain</span><span class="tag high">European Logistics · 8 Warehouses</span></div>
-          <p class="storyTitle"><span>Ceva Logistics attack disrupts 8 European warehouses — Bol, ING, Ajax, Bijenkorf among organisations hit by downstream fallout</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">A cyberattack on Ceva Logistics' European contract logistics operations disrupted warehouse management systems at eight facilities, causing order delays and cancellations across at least five named downstream customers. Dutch authorities are investigating. Attack type unconfirmed but pattern is consistent with ransomware targeting WMS infrastructure. No technical IOCs published yet.</p>
-          <div class="srcline">Infosecurity Magazine, Sherpa Intelligence — Aug 9-11, 2026</div>
         </div>
 
                 <div class="story" data-detail="mspathaug">
@@ -545,6 +539,20 @@
         
         
         
+        <div class="cveCard crit-card" data-detail="sapcommerce">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-58231</span><span class="cveScore">10.0</span>
+          </div>
+          <div class="cveSub">SAP Commerce Cloud Data Hub Adapter — unauthenticated RCE, exploited Aug 14, rebuild/redeploy required</div>
+        </div>
+
+        <div class="cveCard high-card" data-detail="ptcwindchill">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-12569</span><span class="cveTag kev">KEV</span><span class="cveScore">9.3</span>
+          </div>
+          <div class="cveSub">PTC Windchill/FlexPLM — Clop mass-exploiting, 43+ victims, Shell/Philips confirming incidents</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="teamcity">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-63077</span><span class="cveTag kev">KEV</span><span class="cveScore">9.8</span>
@@ -602,19 +610,7 @@
         <div class="linkGroup">CVE-2026-63077 — JetBrains TeamCity — unauthenticated RCE</div>
         <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory — CVE-2026-63077</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA Known Exploited Vulnerabilities Catalog</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Chinese APT — Mustang Panda spent a year inside QuickFox VP</div>
-        <div class="linkItem"><a href="https://www.fortinet.com/blog/threat-research/quickfox-supply-chain-attack-used-to-deploy-fdmtp-implant" target="_blank">Fortinet FortiGuard Labs — QuickFox FDMTP Supply Chain</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Identity — Pass-ta-key</div>
-        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/pass-ta-key-stealing-google-synced-passkeys/" target="_blank">Unit 42 — Pass-ta-key Google Passkey Research</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">GPU/Cloud — GPUBreach</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-gpubreach-attack-gains-full-system-access-via-nvidia-gpu/" target="_blank">BleepingComputer — GPUBreach NVIDIA Rowhammer Attack</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">AI Safety — UK AI Security Institute</div>
-        <div class="linkItem"><a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-evaluation-and-assurance" target="_blank">UK AISI — Frontier AI Evaluation Report</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">AI Infrastructure — Unit 42</div>
-        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/ai-token-jacking/" target="_blank">Unit 42 — AI Token Jacking</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">CVE-2026-59726 — RufRoot</div>
-        <div class="linkItem"><a href="https://noma.security/blog/rufroot-the-mcp-bridge-vulnerability-that-turns-agents-into-rogue-admins-cve-2026-59726/" target="_blank">Noma Labs — RufRoot CVE-2026-59726</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days</div>
+        <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0</div>
         <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 0-Day Exploitation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after </div>
         <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able Security Advisory SA-2026-10</a><span class="arrow">↗</span></div>
@@ -622,11 +618,21 @@
         <div class="linkGroup">RMM Abuse — SMOKE#SCREEN uses fake Adobe/Zoom updates to </div>
         <div class="linkItem"><a href="https://www.securonix.com/blog/smoke-screen-screenconnect-rmm-abuse-cloudflare-tunnels/" target="_blank">Securonix — SMOKE#SCREEN ScreenConnect RMM Abuse</a><span class="arrow">↗</span></div>
         <div class="linkGroup">DPRK / Lazarus — ChainDrop</div>
-        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/" target="_blank">Unit 42 — ChainDrop npm Worm Analysis</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.elastic.co/security-labs/shai-hulud-chaindrop-npm-supply-chain" target="_blank">Elastic Security Labs — Shai-Hulud ChainDrop</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv Supply Chain Compromise</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain Compromise</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv/Cacheable Namespaces Compromised</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">GPU/Cloud — GPUBreach</div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-gpubreach-attack-gains-full-system-access-via-nvidia-gpu/" target="_blank">BleepingComputer — GPUBreach NVIDIA Rowhammer Attack</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">AI Safety — UK AI Security Institute</div>
+        <div class="linkItem"><a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-evaluation-and-assurance" target="_blank">UK AISI — Frontier AI Evaluation Report</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Chinese APT — Mustang Panda spent a year inside QuickFox VP</div>
+        <div class="linkItem"><a href="https://www.fortinet.com/blog/threat-research/quickfox-supply-chain-attack-used-to-deploy-fdmtp-implant" target="_blank">Fortinet FortiGuard Labs — QuickFox FDMTP Supply Chain</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Identity — Pass-ta-key</div>
+        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/pass-ta-key-stealing-google-synced-passkeys/" target="_blank">Unit 42 — Pass-ta-key Google Passkey Research</a><span class="arrow">↗</span></div>
         <div class="linkGroup">AI Weaponization — Talos</div>
         <div class="linkItem"><a href="https://blog.talosintelligence.com/keep-going-bro-youve-got-this-a-data-driven-look-at-how-adversaries-are-weaponizing-ai/" target="_blank">Cisco Talos Intelligence Group Blog — Adversaries Weaponizing AI</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Microsoft Out-of-Band — Microsoft emergency OOB</div>
+        <div class="linkItem"><a href="https://www.securityweek.com/microsoft-patches-critical-azure-teams-sharepoint-flaws/" target="_blank">SecurityWeek — Microsoft August OOB Patches</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://msrc.microsoft.com/update-guide/" target="_blank">Microsoft Security Response Center</a><span class="arrow">↗</span></div>
         <div class="linkGroup">BI Platform — Metabase zero-day (CVSS 10.0)</div>
         <div class="linkItem"><a href="https://www.metabase.com/blog/security-advisory" target="_blank">Metabase Security Advisory (GHSA-vwf4-m7j8-wcjf)</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/metabase-zero-day-exploited-in-wild.html" target="_blank">The Hacker News — Metabase Zero-Day</a><span class="arrow">↗</span></div>
@@ -634,33 +640,36 @@
         <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian AI Slopsquatting npm Campaign</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/nearly-800-malicious-npm-packages.html" target="_blank">The Hacker News — 800 Malicious npm Packages</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Black Hat 2026 — Black Hat</div>
-        <div class="linkItem"><a href="https://novee.security/blog/critical-flaws-in-anthropic-google-and-openais-coding-agents/" target="_blank">Novee Security — Critical Flaws in AI Coding Agents</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://novee.security/blog/critical-flaws-in-anthropic-google-and-openais-coding-agents/" target="_blank">Novee Security — Critical Flaws in AI Coding Agents (Black Hat)</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/claude-code-and-gemini-cli-flaws-let.html" target="_blank">The Hacker News — Claude Code & Gemini CLI Flaws</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Microsoft Out-of-Band — Microsoft emergency OOB</div>
-        <div class="linkItem"><a href="https://www.securityweek.com/microsoft-patches-critical-azure-teams-sharepoint-flaws/" target="_blank">SecurityWeek — Microsoft August OOB Patches</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://msrc.microsoft.com/update-guide/" target="_blank">Microsoft Security Response Center</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Patch Tuesday — August Patch Tuesday</div>
         <div class="linkItem"><a href="https://www.securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day/" target="_blank">SecurityWeek — August 2026 Patch Tuesday</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.tenable.com/blog/microsofts-august-2026-patch-tuesday-addresses-398-cves-cve-2026-68820" target="_blank">Tenable — August 2026 Patch Tuesday Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">VMware vCenter — vCenter CVE-2026-59310 now actively exploited</div>
-        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 Active Exploitation</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://support.broadcom.com/web/ecx/support-content?segment=SE&article=0&articleName=VMSA-2026-0006" target="_blank">Broadcom Security Advisory VMSA-2026-0006.1</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 Active Exploitation (361 Victims)</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE Exploited for Reverse SSH</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Ransomware — Gunra ransomware</div>
-        <div class="linkItem"><a href="https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF" target="_blank">CISA Advisory AA26-222A — Gunra Ransomware PDF</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.darkreading.com/cyberattacks-data-breaches/gunra-ransomware-gang-fortinet-flaws-bypasses-mfa" target="_blank">Dark Reading — Gunra Exploits Fortinet, Bypasses MFA</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A — Gunra Ransomware</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware Joint Advisory</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress Supply Chain — BdThemes supply chain</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain Attack</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/bdthemes-supply-chain-attack-poisons.html" target="_blank">The Hacker News — BdThemes Poisoned API</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence / Defiant Analysis</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">DPRK / Contagious Interview — DPRK Contagious Interview</div>
-        <div class="linkItem"><a href="https://www.sonatype.com/blog/six-npm-packages-use-ethereum-transactions-to-retrieve-malicious-payloads" target="_blank">Sonatype — Six npm Packages Use Ethereum Transactions</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/trojanized-npm-packages-decode-c2-ip.html" target="_blank">The Hacker News — NullReceiver DPRK npm Campaign</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Ransomware — Microsoft</div>
-        <div class="linkItem"><a href="https://www.microsoft.com/en-us/security/blog/2026/08/11/storm-1175-pivots-to-stormencryptor-ransomware/" target="_blank">Microsoft Threat Intelligence — Storm-1175 StormEncryptor</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Supply Chain — Ceva Logistics supply chain attack disrupts 8</div>
-        <div class="linkItem"><a href="https://www.infosecurity-magazine.com/news/ceva-logistics-supply-chain-attack/" target="_blank">Infosecurity Magazine — Ceva Logistics Cyberattack</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://sherpaintelligence.substack.com/p/basecamp-briefing-august-11-2026" target="_blank">Sherpa Intelligence — Ceva Logistics Breach Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">SAP Commerce Cloud — SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0)</div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231 Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August 2026 Patch Day Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchi</div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm Investigation</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">AI Infrastructure — Unit 42</div>
+        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/ai-token-jacking/" target="_blank">Unit 42 — AI Token Jacking</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">CVE-2026-59726 — RufRoot (CVE-2026-59726, CVSS 10.0)</div>
+        <div class="linkItem"><a href="https://noma.security/blog/rufroot-the-mcp-bridge-vulnerability-that-turns-agents-into-rogue-admins-cve-2026-59726/" target="_blank">Noma Labs — RufRoot CVE-2026-59726</a><span class="arrow">↗</span></div>
       </div>
+
+    </div><!-- end sidebar col -->
+  </div><!-- end grid -->
+</div><!-- end wrap -->
+
 <div class="overlay" id="overlay">
   <div class="drawer" id="drawer">
     <button class="drawerClose" id="drawerClose">✕</button>
@@ -669,7 +678,7 @@
 </div>
 
 <script>
-  document.getElementById('dateLine').textContent = 'Week of Aug 17 – Aug 23, 2026 — Monday briefing, compiled weekly rollup';
+  document.getElementById('dateLine').textContent = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) ;
 
   const D = {
   "teamcity": {
@@ -1233,147 +1242,6 @@
     "source": "SecurityWeek, MSRC",
     "sourceNote": "Aug 7, 2026"
   },
-  "rovoblast": {
-    "eyebrow": "Atlassian · Data Exfiltration · Varonis Research",
-    "title": "RovoBlast: Varonis discloses method to steal Confluence, Jira, and SharePoint data via Atlassian Rovo AI integration",
-    "tags": [
-      [
-        "high",
-        "Atlassian/Microsoft"
-      ],
-      [
-        "info",
-        "Varonis Research"
-      ]
-    ],
-    "overview": "Varonis researchers disclosed RovoBlast on August 8 — an attack method targeting the integration between Atlassian Rovo (Atlassian's AI assistant) and its connected services, including Confluence, Jira, and SharePoint. The technique exploits how Rovo's data connectors handle authorization when answering queries, potentially allowing an attacker to exfiltrate content from Confluence pages, Jira tickets, and SharePoint documents they should not have access to — including content belonging to other users. Varonis reported the issue to Atlassian; no fix has been confirmed at time of writing.",
-    "technical": [
-      "Atlassian Rovo is an AI assistant that indexes and queries connected Atlassian and Microsoft data sources (Confluence, Jira, SharePoint) to answer natural-language questions for users.",
-      "RovoBlast exploits insufficient authorization enforcement at the Rovo AI query layer — the system may answer queries using data the querying user doesn't have explicit permission to read, if that data was indexed from a connected source.",
-      "Varonis confirmed the ability to exfiltrate content from Confluence pages, Jira issue text, and SharePoint documents using the technique.",
-      "The blast radius depends on what Rovo has indexed from connected data sources — organizations with broad Rovo data connector coverage (especially enterprise Confluence/SharePoint integrations) are most exposed.",
-      "No CVE assigned and no patch confirmed as of Aug 8 — Varonis says they're working with Atlassian on remediation."
-    ],
-    "iocs": [],
-    "iocNote": "No IOCs — vulnerability disclosure without campaign indicators. Detection focus: audit Rovo AI query logs for unusual cross-user data access patterns.",
-    "mitigation": [
-      "Audit which Rovo data connectors are enabled and what content they have indexed — restrict connector scope to only the data sources genuinely needed.",
-      "Review Rovo access controls and limit which users can query connected data sources pending a confirmed fix.",
-      "Track Atlassian's security advisory page for a patch: https://www.atlassian.com/trust/security/advisories"
-    ],
-    "response": [
-      "If you use Atlassian Rovo with Confluence, Jira, or SharePoint connectors, assess your exposure and consider temporarily restricting Rovo access to sensitive spaces pending a fix.",
-      "Review Atlassian's advisory page and subscribe for notifications."
-    ],
-    "source": "Varonis via SecurityWeek",
-    "sourceNote": "Aug 8, 2026"
-  },
-  "ciscosdwan": {
-    "eyebrow": "Cisco Critical Patches · Aug 6, 2026 · Three CVSS 9.9",
-    "title": "Cisco patches three CVSS-9.9 flaws in IOS XE and Catalyst SD-WAN found by internal security review",
-    "tags": [
-      [
-        "crit",
-        "Three CVSS 9.9"
-      ],
-      [
-        "high",
-        "IOS XE / SD-WAN"
-      ]
-    ],
-    "overview": "Cisco released a comprehensive security update on Aug 6 addressing 12 vulnerabilities across Catalyst SD-WAN and IOS XE Software, including three rated 9.9. Found through an internal security review rather than external disclosure. The three critical flaws affect Cisco Catalyst SD-WAN regardless of device configuration, and IOS XE in autonomous or controller mode. No public exploitation confirmed at time of release, but CVSS 9.9 on widely-deployed infrastructure warrants immediate prioritization.",
-    "technical": [
-      "Three vulnerabilities rated CVSS 9.9 in Cisco Catalyst SD-WAN and IOS XE — specific CVE numbers not yet confirmed in public reporting at time of writing; check Cisco's PSIRT advisory directly.",
-      "The vulnerabilities affect Catalyst SD-WAN Software regardless of device configuration, which is a broader blast radius than configuration-dependent flaws.",
-      "IOS XE is affected when running in autonomous or controller mode — both deployment patterns are affected.",
-      "Cisco says these were found through internal security review, not through external researcher disclosure or observed exploitation.",
-      "Given the scope of IOS XE deployment across enterprise and service-provider environments, these patches should be treated with the same urgency as a KEV-listed flaw."
-    ],
-    "iocs": [],
-    "iocNote": "No exploitation indicators published — vendor advisory only. Monitor Cisco PSIRT for CVE assignments and any subsequent exploitation reports.",
-    "mitigation": [
-      "Apply Cisco's Aug 6 security update for Catalyst SD-WAN and IOS XE immediately — do not wait for a scheduled maintenance window given the 9.9 CVSS ratings.",
-      "Check Cisco's PSIRT advisory page (tools.cisco.com/security/center) for the specific CVEs, affected versions, and available patches.",
-      "Prioritize internet-facing Cisco SD-WAN and IOS XE devices; ensure internal-only devices are scheduled for patching in the next change window."
-    ],
-    "response": [
-      "Audit your Cisco device inventory for Catalyst SD-WAN and IOS XE versions and confirm patch status.",
-      "Monitor Cisco PSIRT and CISA KEV for any exploitation updates — internal-discovery flaws can attract rapid weaponization once patch details are published."
-    ],
-    "source": "The Hacker News, Cisco PSIRT",
-    "sourceNote": "Aug 6, 2026"
-  },
-  "kemplm": {
-    "eyebrow": "Progress Software · CISA KEV · Active Exploitation",
-    "title": "Progress Kemp LoadMaster CVE-2026-8037 added to CISA KEV — command injection enables unauthenticated RCE",
-    "tags": [
-      [
-        "crit",
-        "CISA KEV"
-      ],
-      [
-        "high",
-        "RCE / Command Injection"
-      ]
-    ],
-    "overview": "CISA added CVE-2026-8037 (CVSS 9.6) in Progress Kemp LoadMaster to its Known Exploited Vulnerabilities catalog on Aug 5, citing evidence of active exploitation. The flaw is a command injection vulnerability that allows unauthenticated attackers to achieve arbitrary code execution on susceptible LoadMaster load balancers. LoadMaster is widely deployed in enterprise environments as an application delivery controller and load balancer.",
-    "technical": [
-      "CVE-2026-8037 (CVSS 9.6): Command injection vulnerability in Progress Kemp LoadMaster — allows unauthenticated remote attacker to execute arbitrary OS commands.",
-      "LoadMaster is an application delivery controller / load balancer used heavily in enterprise and healthcare environments.",
-      "CISA's KEV listing confirms active exploitation in the wild — federal agencies must patch by the CISA deadline; others should treat as high-urgency.",
-      "Exact patch version and affected version range: check Progress Kemp's security advisory at progress.com/kemp."
-    ],
-    "iocs": [],
-    "iocNote": "No public exploitation indicators at time of writing — monitor Progress Kemp's advisory and CISA for updates.",
-    "mitigation": [
-      "Apply the Progress Kemp LoadMaster patch for CVE-2026-8037 immediately — CISA KEV listing confirms this is being actively exploited.",
-      "If LoadMaster management interface is internet-exposed, consider temporarily restricting access while patching.",
-      "Check progress.com/kemp/security for the specific affected versions and patch download."
-    ],
-    "response": [
-      "Search for LoadMaster appliances in your environment and confirm patch status immediately.",
-      "Review LoadMaster access logs for unexpected command execution or unusual administrative activity since early August."
-    ],
-    "source": "CISA KEV / The Hacker News",
-    "sourceNote": "Aug 5, 2026"
-  },
-  "unc6671": {
-    "eyebrow": "Microsoft Threat Intelligence · AitM · Cloud Espionage",
-    "title": "UNC6671: New AitM campaign uses vishing to bypass MFA and exfiltrate M365, Okta environments",
-    "tags": [
-      [
-        "high",
-        "AitM"
-      ],
-      [
-        "high",
-        "Cloud Espionage"
-      ]
-    ],
-    "overview": "Microsoft Threat Intelligence identified a new, active adversary-in-the-middle campaign attributed to a financially motivated threat actor tracked as UNC6671. The campaign combines vishing calls (spoofed login portals delivered via social engineering) with AitM infrastructure that intercepts both credentials and MFA tokens in real time. Following session hijacking, the actor deploys automated Python and PowerShell scripts to exfiltrate data from Microsoft 365 and Okta environments. Distinct from the device-code phishing campaigns already tracked in this brief — this uses full AitM rather than OAuth token theft.",
-    "technical": [
-      "AitM infrastructure intercepts credentials and MFA tokens simultaneously during a spoofed login page session — the victim completes what appears to be a normal login, but the session cookie and authenticated MFA token are captured by the attacker's infrastructure.",
-      "After session establishment, UNC6671 deploys automated Python and PowerShell scripts to systematically exfiltrate from M365 (mail, SharePoint, Teams) and Okta (user accounts, assigned applications, logs).",
-      "Vishing is used to pressure victims into initiating the login — typically impersonating IT support or security teams, similar to STAC4749 already in this brief but with different downstream infrastructure.",
-      "This technique bypasses phishing-resistant FIDO2/passkey protections only when the victim's browser and the AitM proxy are both involved in the WebAuthn exchange — most AitM toolkits fail at this step, so hardware keys remain effective against this specific variant.",
-      "Distinct from device code phishing (already tracked in this brief): that technique steals a token without any credential capture; this technique requires credential + MFA interception but creates a full session."
-    ],
-    "iocs": [],
-    "iocNote": "Microsoft did not publish infrastructure IOCs in the initial disclosure. Monitor Microsoft Threat Intelligence blog for updates.",
-    "mitigation": [
-      "Enforce phishing-resistant MFA (hardware security keys / FIDO2) — AitM attacks typically cannot intercept WebAuthn-backed logins from FIDO2 keys without physical hardware access.",
-      "Enable Microsoft Entra ID's CAE (Continuous Access Evaluation) and Token Protection policies to limit how long a stolen session token remains valid.",
-      "Audit Conditional Access policies for geographic anomalies and impossible travel — AitM operators frequently relay sessions from unexpected locations.",
-      "Brief staff: any login prompt delivered via phone call, chat link, or email should be treated as high-risk regardless of how convincing the caller sounds."
-    ],
-    "response": [
-      "Review Entra ID / Azure AD sign-in logs for unexpected session token issuance or access from unfamiliar IP ranges.",
-      "Check Okta logs for access from IPs inconsistent with the user's normal location, particularly for admin accounts.",
-      "If UNC6671 activity is suspected: revoke all active sessions for affected accounts and force re-authentication with phishing-resistant MFA."
-    ],
-    "source": "Microsoft Threat Intelligence via The Hacker News",
-    "sourceNote": "Aug 8-9, 2026"
-  },
   "metabaseday": {
     "eyebrow": "BI Platform · CVSS 10.0 · Actively Exploited · No CVE Assigned",
     "title": "Metabase zero-day (CVSS 10.0): unauthenticated SQLi grants full admin access — exploited since Aug 2",
@@ -1736,123 +1604,295 @@
     "source": "Wordfence / Defiant via BleepingComputer, The Hacker News, Infosecurity Magazine, CybersecurityNews",
     "sourceNote": "Aug 7-11, 2026"
   },
-  "nullreceiver": {
-    "eyebrow": "DPRK / Contagious Interview · NullReceiver · npm · Aug 10-11, 2026",
-    "title": "DPRK Contagious Interview: 6 npm packages use Ethereum wallet transactions as C2 dead drop — hijacked legitimate packages plus 3 new rogue packages",
+  "sapcommerce": {
+    "eyebrow": "SAP Commerce Cloud · CVE-2026-58231 · CVSS 10.0 · Actively Exploited",
+    "title": "SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0): unauthenticated RCE now targeted in the wild — 3 days after patch",
     "tags": [
       [
         "crit",
-        "DPRK Attributed"
+        "CVSS 10.0"
       ],
       [
         "high",
-        "npm · Blockchain C2 · 6 Packages"
+        "Actively Exploited"
       ]
     ],
-    "overview": "Separate from ChainDrop, Sonatype Research Labs identified six npm packages on August 10 using NullReceiver — a technique that queries an Ethereum wallet for its latest outbound transaction and decodes two C2 IPv4 addresses from the recipient address bytes. Three packages are hijacked legitimate packages; three are newly published rogue packages. All six carry the same payload and share the same Ethereum wallet address matching DPRK Contagious Interview (Lazarus Group) infrastructure. NullReceiver uses throwaway addresses for every lookup — never reusing a destination — making it significantly harder to fingerprint or blocklist than EtherHiding.",
+    "overview": "Defused researchers confirmed Aug 14 that CVE-2026-58231 — a CVSS 10.0 improper authorization flaw in the SAP Commerce Cloud Data Hub Adapter — is now hitting honeypots, just three days after SAP patched it on August 11. An unauthenticated attacker can send specially crafted input to the Data Hub import endpoint to execute arbitrary code with full access to internal components, affecting confidentiality, integrity, and availability. Affects Commerce Cloud versions 2211 and 2211-JDK21. SAP has not yet officially flagged it as exploited but Defused's honeypot data makes the exploitation status clear. A rebuild and redeploy of the updated Commerce Cloud version is required — a simple binary patch is not sufficient.",
     "technical": [
-      "NullReceiver technique: the loader queries an attacker-controlled Ethereum wallet address for its latest outbound transaction, reads bytes from the recipient address field, and decodes those bytes into two C2 IPv4 addresses. Every lookup uses a brand-new throwaway recipient address — unlike EtherHiding, NullReceiver never reuses a destination.",
-      "Package distribution: three hijacked legitimate packages (sonatype-2026-005899) and three newly published rogue packages (sonatype-2026-005901). All six carry the same loader and reference the same Ethereum wallet.",
-      "Implementation: queries multiple Ethereum RPC providers in parallel, uses batched JSON-RPC calls, falls back to Blockscout API. Retrieves additional stages from /0x/cls and /0x/ls, decodes before execution.",
-      "DPRK attribution: Ethereum wallet address matches Contagious Interview infrastructure documented by OpenSourceMalware. Goal: compromise developer machines, steal credentials and cryptocurrency wallet private keys.",
-      "Distinct from ChainDrop: ChainDrop (Aug 4) used EtherHiding and self-propagated via stolen maintainer credentials. NullReceiver (Aug 10) is a separate technique and separate package set — two concurrent DPRK npm campaigns this week."
+      "CVE-2026-58231 (CVSS 10.0, Note #3771065): Improper authorization in SAP Commerce Cloud's Data Hub Adapter extension. No authentication required. An attacker with network access to an affected Commerce Cloud instance crafts requests to the Data Hub import endpoint to execute arbitrary code and compromise internal components.",
+      "Affected versions: COM_CLOUD 2211 and 2211-JDK21. Remediation requires patching to the fixed Commerce Cloud release levels referenced in SAP Security Note #3771065 AND a full rebuild and redeploy of the updated SAP Commerce Cloud version — applying the patch binary without redeploying leaves the instance vulnerable.",
+      "Temporary workaround (if immediate patching is not possible): configure an IP Filter Set in SAP Commerce Cloud to restrict access to the vulnerable Data Hub Adapter endpoint to trusted IPs only. This reduces exposure but is not a complete mitigation.",
+      "Exploitation timeline: SAP patched on Aug 11 (Patch Tuesday); Defused honeypots detected active exploitation attempts on Aug 14 — a 3-day patch-to-exploit window, consistent with Cl0p/SAP patterns from prior years.",
+      "August 2026 SAP Patch Day also includes: CVE-2026-44772 (CVSS 9.9, code injection in SAP Manufacturing Integration and Intelligence), CVE-2026-58243 (CVSS 8.8, privilege escalation in SAP ABAP Developer Tools). Prioritize Commerce Cloud but apply the full patch set."
     ],
     "iocs": [
       {
-        "value": "166.88.134[.]62",
-        "type": "IP",
-        "note": "NullReceiver decoded C2 IP — extracted from Ethereum transaction recipient address bytes. Defanged. Vet before blocking.",
-        "source": "https://thehackernews.com/2026/08/trojanized-npm-packages-decode-c2-ip.html"
+        "value": "/datahub/",
+        "type": "Endpoint",
+        "note": "Data Hub Adapter endpoint prefix — monitor web server access logs for unexpected unauthenticated POST requests to this path from external IPs. This is a detection artifact, not a blockable network IOC.",
+        "source": "https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/"
       }
     ],
-    "iocNote": "Ethereum wallet address and specific package names documented in Sonatype advisories sonatype-2026-005899 and sonatype-2026-005901 at sonatype.com. NullReceiver C2 IPs rotate per-lookup via blockchain — IP blocklisting insufficient; block Ethereum RPC endpoints in CI/build environments.",
+    "iocNote": "No attacker infrastructure IOCs published yet — exploitation is at early honeypot stage. Monitor SAP Commerce Cloud web/application logs for unexpected unauthenticated requests to the Data Hub Adapter import endpoints. Defused is tracking active attempts; check their public threat feed for any published attacker IPs.",
     "mitigation": [
-      "Audit npm dependencies against Sonatype advisory package list (sonatype-2026-005899 and sonatype-2026-005901) — three hijacked packages may already be in use by teams who trust the legitimate package names.",
-      "Consider restricting Ethereum RPC API calls (Infura, Alchemy, Blockscout) in CI/CD environments — npm install pipelines have no legitimate reason to query blockchain infrastructure.",
-      "Treat any npm package installed since Aug 10 that makes outbound calls to Ethereum RPC endpoints as suspicious."
+      "Patch SAP Commerce Cloud to the fixed release level specified in Security Note #3771065 immediately. Apply the fix, then rebuild and redeploy the updated Commerce Cloud version — the rebuild/redeploy step is required; skipping it leaves the flaw active.",
+      "If immediate patching and redeployment is not possible: configure an IP Filter Set in SAP Commerce Cloud to restrict access to the Data Hub Adapter endpoints to trusted internal IPs only. This is a temporary workaround, not a permanent fix.",
+      "Apply the full August 2026 SAP Patch Day set — CVE-2026-44772 (CVSS 9.9, SAP MII) and CVE-2026-58243 (CVSS 8.8, ABAP Developer Tools) are also in scope."
     ],
     "response": [
-      "Check the Sonatype advisory for specific package names and audit recent npm installs against them.",
-      "Search proxy/firewall logs for outbound calls to Ethereum RPC providers (infura.io, alchemy.com, blockscout.com) from build or CI systems.",
-      "If affected packages are found: treat the install environment as credential-compromised, rotate all secrets accessible from that machine or CI runner."
+      "Check whether your Commerce Cloud instance is on a vulnerable version (COM_CLOUD 2211 or 2211-JDK21) and whether it is internet-accessible — either condition warrants immediate action.",
+      "Review SAP Commerce Cloud application and web server logs for unexpected unauthenticated POST requests to the Data Hub Adapter import endpoint, particularly from external source IPs, going back to August 11.",
+      "If exploitation is confirmed: the Data Hub Adapter may have been used to execute arbitrary code on the Commerce Cloud host — assess what internal systems are reachable from that host and initiate incident response."
     ],
-    "source": "Sonatype Research Labs, Hackread, The Hacker News, OpenSourceMalware",
-    "sourceNote": "Aug 10-11, 2026"
+    "source": "Defused / BleepingComputer, SecurityWeek, Onapsis, Pathlock",
+    "sourceNote": "Aug 11-14, 2026"
   },
-  "stormencryptor": {
-    "eyebrow": "Ransomware · Storm-1175 · China-Linked · Microsoft Threat Intelligence · Aug 11, 2026",
-    "title": "Microsoft: China-linked Storm-1175 deployed new StormEncryptor ransomware — pivot from Medusa signals independent RaaS operation forming",
+  "ptcwindchill": {
+    "eyebrow": "Cl0p Ransomware · CVE-2026-12569 · PTC Windchill · 43+ Victims",
+    "title": "Cl0p exploiting CVE-2026-12569 in PTC Windchill/FlexPLM at scale — Shell, Philips, GE, Fiserv among claimed 43 victims",
     "tags": [
       [
         "crit",
-        "China Attributed"
+        "43+ Victims"
       ],
       [
         "high",
-        "Ransomware · RaaS Pivot"
+        "Industrial IP · Clop"
       ]
     ],
-    "overview": "Microsoft Threat Intelligence disclosed today that Storm-1175 — a financially motivated China-linked threat actor — has deployed a previously undocumented ransomware strain called StormEncryptor, pivoting from its prior use of Medusa ransomware. The shift from affiliate to owning the toolchain signals significant operational maturity. Observed targets include MSPs running N-central. No technical IOCs in the initial disclosure — additional detail expected from the security research community within 48-72 hours.",
+    "overview": "The Cl0p ransomware group is exploiting CVE-2026-12569, a CVSS 9.3 unsafe deserialization vulnerability in PTC Windchill and FlexPLM PLM software, to conduct a mass data-theft campaign targeting industrial and technology companies. PTC issued security notices from June 18 and CVE-2026-12569 was KEV-listed, but thousands of internet-exposed instances remained unpatched. Cl0p claims 43+ victims including Shell (89GB of engineering drawings, facility photos, testing reports and project plans), Philips (13.5GB), GE, and Fiserv. Both Shell and Philips confirmed they are investigating incidents. Cl0p's model is pure data-theft extortion — no encryption, no operational disruption, just exfiltration followed by publication threats. Shell previously refused to pay in the MOVEit campaign (2023); Cl0p published their data then.",
     "technical": [
-      "Storm-1175 previously operated as a Medusa RaaS affiliate. Deploying StormEncryptor under its own branding signals it is maturing from affiliate to owning the full ransomware toolchain — a significant step that increases its operational independence.",
-      "China-linked attribution: financially motivated, assessed as distinct from Chinese state-sponsored APT actors. Microsoft's assessment is 'China-linked' rather than 'PRC state-sponsored'.",
-      "Observed targeting overlap with N-central exploitation — Storm-1175 has been observed targeting MSPs, providing a pivot into managed customer environments.",
-      "StormEncryptor technical details are not yet publicly available — Microsoft's initial disclosure is high-level. Detailed analysis expected from the research community within 72 hours."
+      "CVE-2026-12569 (CVSS 9.3): Unsafe deserialization in PTC Windchill and FlexPLM. The attack chain: (1) pre-authentication information disclosure via the FlexPLM WSDL endpoint exposes session or token data; (2) chained with a separate flaw in the Windchill login servlet; (3) achieves unauthenticated remote code execution. Requires no valid credentials.",
+      "PTC issued security notices from June 18, 2026 and the vulnerability was added to the CISA KEV catalog — but Ransom-ISAC's advisory notes the group targets the specific vulnerability rather than specific companies, meaning any internet-exposed unpatched instance is a candidate.",
+      "Cl0p data-theft model: exfiltration-only, no encryption. The stolen data from industrial targets — engineering drawings, facility layouts, testing reports, project plans, blueprints — represents IP and operational intelligence with nation-state-grade strategic value beyond its ransom utility.",
+      "Scale: Cl0p claims 43 victims from this campaign wave. Names confirmed as investigating include Shell and Philips. GE and Fiserv were named but had not confirmed at time of reporting.",
+      "Shell history: Cl0p targeted Shell in the MOVEit campaign in 2023. Shell refused to negotiate; Cl0p published stolen files on their leak site. The same pattern is expected here if Shell doesn't engage.",
+      "The stolen data type (engineering drawings, facility photos, project plans) from an energy major like Shell has implications beyond ransomware — it is potentially useful for physical infrastructure targeting."
     ],
-    "iocs": [],
-    "iocNote": "No IOCs in Microsoft's initial Storm-1175/StormEncryptor disclosure — check the Microsoft Threat Intelligence blog and MSTIC updates over the next 48-72 hours.",
+    "iocs": [
+      {
+        "value": "CVE-2026-12569",
+        "type": "CVE",
+        "note": "PTC Windchill/FlexPLM unsafe deserialization — CVSS 9.3, KEV-listed, being actively exploited by Cl0p. Check all internet-exposed Windchill and FlexPLM instances against this CVE.",
+        "source": "https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/"
+      }
+    ],
+    "iocNote": "Cl0p infrastructure IOCs not published for this campaign. Ransom-ISAC advisory covers the PTC exploitation chain — pull from the KEV catalog for full technical details on CVE-2026-12569. Detection focus: look for unexpected unauthenticated access to Windchill/FlexPLM endpoints and anomalous outbound data transfers from PLM hosts.",
     "mitigation": [
-      "Apply N-central Hotfix 2 (2026.3.1.10) if not already done — Storm-1175 has been observed targeting MSP RMM platforms.",
-      "Review MSP-managed infrastructure access controls — ensure customer tenant isolation is enforced and a single RMM compromise has bounded blast radius."
+      "Patch PTC Windchill and FlexPLM against CVE-2026-12569 immediately — the flaw has been KEV-listed since June and Cl0p is actively exploiting unpatched instances at scale.",
+      "If immediate patching is not possible: take all internet-exposed Windchill and FlexPLM instances offline or behind a VPN/jump host until patching is completed.",
+      "Audit which Windchill and FlexPLM instances in your environment are internet-accessible — Ransom-ISAC's advisory confirms Cl0p is scanning for exposed instances opportunistically."
     ],
     "response": [
-      "Monitor Microsoft Threat Intelligence blog for updated StormEncryptor IOCs — no indicators in initial disclosure.",
-      "If you are an MSP or MSP customer and see unexplained N-central activity alongside ransomware indicators: consider Storm-1175 as an attribution candidate and escalate to incident response."
+      "Check all PTC Windchill and FlexPLM instances for CVE-2026-12569 patch status and internet exposure — any unpatched internet-accessible instance since June 18 should be treated as potentially compromised.",
+      "Review Windchill and FlexPLM access logs for unexpected unauthenticated requests to the WSDL endpoint and login servlet, and look for anomalous outbound data transfers from PLM hosts.",
+      "If you operate Windchill or FlexPLM and store engineering drawings, facility plans, or proprietary technical documents on those systems: assess what Cl0p could have reached if exploitation occurred and consider proactive notification obligations."
     ],
-    "source": "Microsoft Threat Intelligence (MSTIC) via TechManiaCS, Dark Reading",
-    "sourceNote": "Aug 11, 2026"
+    "source": "BleepingComputer, TechNadu, Ransom-ISAC, Reuters via NL Times, The Next Web",
+    "sourceNote": "Aug 12-14, 2026"
   },
-  "cevalogistics": {
-    "eyebrow": "Supply Chain · Contract Logistics · European Operations · Aug 9-11, 2026",
-    "title": "Ceva Logistics attack disrupts 8 European warehouses — Bol, ING, Ajax, Bijenkorf among organisations reporting order delays",
+  "tokenjack": {
+    "eyebrow": "AI Infrastructure · Unit 42 · Active · Financial Impact",
+    "title": "Unit 42: AI token jacking fuelling gray-market LLM resellers — stolen API keys racked up $1M in charges within minutes of theft",
     "tags": [
       [
-        "high",
-        "Supply Chain"
+        "crit",
+        "AI Infrastructure"
       ],
       [
         "high",
-        "European Logistics · 8 Warehouses"
+        "Active · Financial Impact"
       ]
     ],
-    "overview": "A cyberattack on Ceva Logistics' European contract logistics operations disrupted warehouse management systems at eight European facilities, causing shipment delays across multiple downstream customers. Bol, Bijenkorf, Ajax, ING, and Ace & Tate publicly reported order disruptions. Dutch authorities are investigating. Ceva activated security protocols and stated no other global systems were affected. Attack type unconfirmed but pattern is consistent with ransomware targeting operational WMS infrastructure.",
+    "overview": "Unit 42 documented a fast-growing criminal category: stealing developer LLM API keys and feeding them into gray-market 'transfer stations' — fly-by-night proxy services reselling frontier model access at steep discounts. Keys flow from npm supply-chain attacks, infostealers, phishing, and exposed repos. Unit 42 incident response cases saw keys integrated into a transfer station within minutes of theft, running up nearly $1M in API charges before detection. Real infrastructure IOCs published: 16 IPs and 2 domains serving as transfer station infrastructure, plus a distinctive Go HTTP client user-agent string.",
     "technical": [
-      "Affected scope: 8 Ceva Logistics European warehouses — Ceva manages warehouse operations on behalf of multiple clients, so a single infrastructure compromise has wide downstream blast radius.",
-      "Downstream impact: at least five named organisations reported order processing failures directly attributed to the Ceva incident.",
-      "Ceva's public statement confirmed security protocol activation and no impact to other global systems — incident appears localised to European contract logistics infrastructure.",
-      "Attack type not publicly confirmed. Pattern consistent with ransomware targeting warehouse management systems (WMS). Dutch NCSC and law enforcement investigating."
+      "Transfer stations are proxy services that accept stolen API keys and resell inference access at 50-80% discounts. They're typically operated from fly-by-night infrastructure with rapid IP rotation.",
+      "Key theft vectors observed by Unit 42: npm supply-chain attacks (connecting directly to the keyv worm and WEL1DROPPER campaigns), infostealers, accidental code repository commits, and phishing.",
+      "Once a key is stolen, Unit 42 observed it being integrated into a transfer station within minutes — before most organizations would detect anomalous API usage.",
+      "The Go HTTP client user-agent string (Go-http-client/2.0,gzip(gfe)) is distinctive and appears in access logs for API calls routed through the transfer station infrastructure."
     ],
-    "iocs": [],
-    "iocNote": "No technical IOCs published — Dutch authorities and Ceva have not released indicators. Monitor NCSC Netherlands advisories and Ceva's official communications for updates.",
+    "iocs": [
+      {
+        "value": "3.235.109.125",
+        "type": "IP",
+        "note": "Transfer station infrastructure — Unit 42 confirmed",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "116.105.166.148",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "172.96.142.186",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "38.46.219.166",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "38.46.219.163",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "38.46.219.162",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "23.237.196.170",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "15.204.106.173",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "104.243.42.117",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "198.255.70.210",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "47.88.103.81",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "47.251.72.239",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "117.72.74.48",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "207.246.106.162",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "23.236.182.215",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "95.214.112.26",
+        "type": "IP",
+        "note": "Transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "amutes.com",
+        "type": "Domain",
+        "note": "Transfer station domain",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "abb1.life",
+        "type": "Domain",
+        "note": "Transfer station domain",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      },
+      {
+        "value": "Go-http-client/2.0,gzip(gfe)",
+        "type": "User-Agent",
+        "note": "Distinctive user-agent appearing in AI provider access logs for requests routed through transfer station infrastructure",
+        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
+      }
+    ],
     "mitigation": [
-      "If you use Ceva Logistics for European contract logistics: contact your account manager for status updates on your specific operations and implement contingency order routing.",
-      "Review third-party logistics (3PL) risk exposure — WMS-level access at a 3PL translates directly to customer order disruption."
+      "Implement spending limits and usage alerts on all AI API accounts — configure alerts for spikes that exceed normal thresholds, especially off-hours usage.",
+      "Migrate from long-term API keys to short-term bearer tokens wherever the AI provider supports it.",
+      "Never store AI API keys in code repositories, even private ones — use secrets management platforms.",
+      "Use an AI gateway to centralize API key management and remove credentials from individual developer machines and CI environments.",
+      "Block the 16 attacker IPs and 2 domains in the IOC drawer at your firewall and proxy layer."
     ],
     "response": [
-      "If you are a Ceva customer in the European region: verify pending shipment status and activate contingency plans for time-sensitive orders.",
-      "Monitor NCSC Netherlands advisories and Ceva's official communications for IOCs or technical detail as the investigation progresses."
+      "Audit AI provider billing dashboards for anomalous usage spikes — particularly off-hours activity or model invocations for models you haven't explicitly deployed.",
+      "Search code repositories including full git history for hardcoded API keys using secret-scanning tools.",
+      "Review CI/CD pipeline logs for unexpected processes spawning after npm install steps.",
+      "If you find evidence of a key already integrated into a transfer station: contact the AI provider immediately to freeze the key before rotating."
     ],
-    "source": "Infosecurity Magazine, Sherpa Intelligence",
-    "sourceNote": "Aug 9-11, 2026"
+    "source": "Unit 42 / Palo Alto Networks",
+    "sourceNote": "Aug 6, 2026"
+  },
+  "rufroot": {
+    "eyebrow": "CVE-2026-59726 · CVSS 10.0 · Ruflo MCP Bridge · Noma Labs",
+    "title": "RufRoot (CVE-2026-59726, CVSS 10.0): unauthenticated RCE in Ruflo MCP bridge gives attacker access to all LLM API keys and agent memory",
+    "tags": [
+      [
+        "crit",
+        "CVSS 10.0"
+      ],
+      [
+        "high",
+        "MCP Bridge · API Key Theft"
+      ]
+    ],
+    "overview": "Noma Labs disclosed CVE-2026-59726 in Ruflo — a popular Model Context Protocol bridge used to expose MCP servers to Claude, GPT, and other LLM-based agents. An unauthenticated remote attacker can exploit the exposed MCP bridge interface (port 3001) and a MongoDB authentication bypass (port 27017) to achieve RCE, steal all LLM API keys stored in Ruflo, and read or inject into the persistent memory store (AgentDB) used by downstream AI agents. Because Ruflo sits between AI agents and their backend MCP servers, a single compromise gives an attacker persistent access to every agent the Ruflo instance serves — including the ability to inject false memories and manipulate future agent behavior.",
+    "technical": [
+      "CVE-2026-59726 (CVSS 10.0): The Ruflo MCP bridge exposes its management interface on port 3001 with no authentication by default. An attacker with network access sends a crafted request to POST /mcp to achieve unauthenticated remote code execution.",
+      "MongoDB (port 27017) used by Ruflo for AgentDB is also exposed without authentication by default in affected versions — an attacker can read all stored agent patterns, conversation history, stored credentials, and API keys.",
+      "Post-exploitation: attacker reads all LLM API keys stored in Ruflo's configuration (used to authenticate requests to Claude, OpenAI, etc.), injects malicious patterns into AgentDB to persistently manipulate future agent behavior, and can pivot to any MCP server Ruflo is connected to.",
+      "The vulnerability affects Ruflo versions below 3.16.3. Fixed in 3.16.3."
+    ],
+    "iocs": [],
+    "iocNote": "No network IOCs — ports 3001 and 27017 being internet-accessible on a Ruflo host are the exposure indicator. Detection: check firewall logs for unexpected inbound connections to these ports; inspect AgentDB for anomalous pattern entries.",
+    "mitigation": [
+      "Upgrade Ruflo to version 3.16.3 immediately — closes the MCP bridge exposure, MongoDB authentication bypass, and prompt injection paths.",
+      "If you cannot patch immediately: block external access to ports 3001 and 27017 at the firewall.",
+      "Rotate all LLM API keys stored in any Ruflo instance that was ever network-accessible."
+    ],
+    "response": [
+      "Check firewall and network logs for unexpected inbound connections to port 3001 or 27017 on any Ruflo host.",
+      "Inspect AgentDB for anomalous entries — patterns or stored memory you didn't create, or credentials stored that look unfamiliar.",
+      "Review MongoDB data for signs of harvested API keys or injected agent patterns.",
+      "After patching, re-audit the AgentDB pattern store — a patched redeployment does not automatically clean injected content."
+    ],
+    "source": "Noma Labs",
+    "sourceNote": "Aug 6, 2026"
   }
 }
 
 
 
 
+
+
+
+
+
+
   const META = {
   "teamcity": {
-    "status": "carried",
+    "status": "updated",
     "conf": "Confirmed — CVE-2026-63077 now CISA KEV-listed Aug 6, active exploitation confirmed in wild",
     "confNote": "No in-the-wild exploitation confirmed at disclosure",
     "iocDate": "none published",
@@ -1864,7 +1904,7 @@
     ]
   },
   "sonicwall": {
-    "status": "carried",
+    "status": "updated",
     "conf": "Confirmed — INC Ransomware confirmed dominant exploiter (Aug 3)",
     "confNote": "Volexity forensic analysis; UTA0533 unattributed to known group",
     "iocDate": "Jul 17–20, 2026",
@@ -1878,7 +1918,7 @@
     ]
   },
   "ncentral": {
-    "status": "carried",
+    "status": "updated",
     "conf": "Confirmed — Hotfix 2 (2026.3.1.10) released Aug 6, KEV-listed, exploitation ongoing",
     "confNote": "N-able first-party disclosure, independent Huntress investigation, and CISA KEV addition Aug 4 following confirmed customer compromises",
     "iocDate": "Aug 2–4, 2026",
@@ -1893,7 +1933,7 @@
     ]
   },
   "smokescreen": {
-    "status": "carried",
+    "status": "ongoing",
     "conf": "Confirmed — researcher-verified",
     "confNote": "Securonix direct investigation; no formal actor attribution yet",
     "iocDate": "Aug 3–4, 2026",
@@ -1921,7 +1961,7 @@
     ]
   },
   "gpubreach": {
-    "status": "carried",
+    "status": "ongoing",
     "conf": "Confirmed — peer-reviewed research",
     "confNote": "IEEE S&P 2026 disclosure, Black Hat 2026 presentation; NVIDIA acknowledged, no driver patch yet",
     "iocDate": "n/a — hardware attack, no behavioral IOCs",
@@ -1934,7 +1974,7 @@
     ]
   },
   "aisitests": {
-    "status": "carried",
+    "status": "ongoing",
     "conf": "Confirmed — official government disclosure with vendor acknowledgment",
     "confNote": "AISI direct observation with critical caveats: disabled safeguards and permissive conditions not representative of production models",
     "iocDate": "n/a — evaluation disclosure, not a threat actor campaign",
@@ -1948,7 +1988,7 @@
     ]
   },
   "quickfox": {
-    "status": "carried",
+    "status": "ongoing",
     "conf": "Confirmed — researcher-verified",
     "confNote": "Fortinet FortiGuard IR direct analysis; Mustang Panda attribution not formally confirmed — tactical overlap only",
     "iocDate": "Aug 4–5, 2026",
@@ -1962,7 +2002,7 @@
     ]
   },
   "passtkey": {
-    "status": "carried",
+    "status": "ongoing",
     "conf": "Confirmed — researcher-verified",
     "confNote": "Unit 42 direct technical demonstration; Google notified and deploying partial mitigations; no CVE assigned",
     "iocDate": "n/a — technique disclosure, no campaign IOCs",
@@ -1976,7 +2016,7 @@
     ]
   },
   "talosaiweapon": {
-    "status": "carried",
+    "status": "ongoing",
     "conf": "Confirmed — direct artifact analysis by Talos IR",
     "confNote": "Talos collected real prompt logs from compromised threat-actor endpoints; case studies are based on recovered artifacts, not modeled behavior",
     "iocDate": "n/a — research report; see Oasis Security Hephaestus IOC set for related campaign indicators",
@@ -1990,7 +2030,7 @@
     ]
   },
   "mspathaug": {
-    "status": "carried",
+    "status": "new",
     "conf": "Confirmed — vendor advisory, no exploitation at release",
     "confNote": "MSRC directly; no public exploitation confirmed at time of OOB advisory",
     "iocDate": "n/a — no exploitation indicators published",
@@ -2003,60 +2043,8 @@
       "T1078 — Valid Accounts"
     ]
   },
-  "rovoblast": {
-    "status": "carried",
-    "conf": "Confirmed — researcher-disclosed, no vendor patch yet",
-    "confNote": "Varonis direct research; Atlassian notified; no CVE or patch confirmed at time of writing",
-    "iocDate": "n/a — research disclosure, no campaign IOCs",
-    "admiralty": "B2",
-    "severity": 4,
-    "cvss": null,
-    "attack": [
-      "T1530 — Data from Cloud Storage",
-      "T1213 — Data from Information Repositories"
-    ]
-  },
-  "ciscosdwan": {
-    "status": "carried",
-    "conf": "Confirmed — Cisco PSIRT advisory",
-    "confNote": "Found by Cisco internal security review; no public exploitation at time of advisory",
-    "iocDate": "n/a — no exploitation indicators published",
-    "admiralty": "A1",
-    "severity": 5,
-    "cvss": 9.9,
-    "attack": [
-      "T1190 — Exploit Public-Facing Application"
-    ]
-  },
-  "kemplm": {
-    "status": "carried",
-    "conf": "Confirmed — CISA KEV listed, active exploitation",
-    "confNote": "CISA KEV addition confirms active exploitation; vendor patch available",
-    "iocDate": "n/a — no public IOCs",
-    "admiralty": "A1",
-    "severity": 5,
-    "cvss": 9.6,
-    "attack": [
-      "T1190 — Exploit Public-Facing Application",
-      "T1059 — Command and Scripting Interpreter"
-    ]
-  },
-  "unc6671": {
-    "status": "carried",
-    "conf": "Confirmed — Microsoft Threat Intelligence direct attribution",
-    "confNote": "Microsoft identified and attributed directly; no infrastructure IOCs published",
-    "iocDate": "n/a — no IOCs published",
-    "admiralty": "B2",
-    "severity": 4,
-    "cvss": null,
-    "attack": [
-      "T1557 — Adversary-in-the-Middle",
-      "T1539 — Steal Web Session Cookie",
-      "T1078 — Valid Accounts"
-    ]
-  },
   "metabaseday": {
-    "status": "carried",
+    "status": "confirmed",
     "conf": "Confirmed — vendor advisory with active exploitation acknowledged",
     "confNote": "Metabase confirmed active exploitation targeting their own Cloud platform Aug 2; n8n and Kilo Code confirmed as downstream victims",
     "iocDate": "Aug 2–6, 2026 — exploitation confirmed; patch available Aug 6",
@@ -2070,7 +2058,7 @@
     ]
   },
   "weldropper": {
-    "status": "carried",
+    "status": "new",
     "conf": "Confirmed — researcher-verified, campaign actively tracked",
     "confNote": "OpenSourceMalware direct analysis with full package list; Sonatype and Check Point corroborating; Russian origin assessed not confirmed",
     "iocDate": "Aug 6–10, 2026 — campaign active; package list growing",
@@ -2084,7 +2072,7 @@
     ]
   },
   "aicodeflaws": {
-    "status": "carried",
+    "status": "new",
     "conf": "Confirmed — vendor-patched CVEs with Black Hat technical demonstration",
     "confNote": "Novee Security responsible disclosure; Anthropic and Google both patched; CVE-2026-54316 (Claude Code) and CVSS 10.0 Gemini CLI flaw confirmed",
     "iocDate": "n/a — architectural vulnerability, no campaign IOCs",
@@ -2098,7 +2086,7 @@
     ]
   },
   "patchtugsaug": {
-    "status": "carried",
+    "status": "new",
     "conf": "Confirmed — vendor advisory, CVE-2026-68820 confirmed exploited in wild",
     "confNote": "MSRC; Tenable/SANS/Lansweeper analysis; nation-state attribution for CVE-2026-68820 assessed not confirmed",
     "iocDate": "Aug 11, 2026 — exploitation of CVE-2026-68820 confirmed; other CVEs unconfirmed at release",
@@ -2154,48 +2142,67 @@
       "T1505.003 — Web Shell"
     ]
   },
-  "nullreceiver": {
+  "sapcommerce": {
     "status": "new",
-    "conf": "Confirmed — Sonatype Research Labs direct analysis with DPRK attribution",
-    "confNote": "Ethereum wallet matches documented Contagious Interview infrastructure; 6 packages verified",
-    "iocDate": "Aug 10, 2026 — packages identified; DPRK wallet active since Jul 27, 2026",
+    "conf": "Confirmed exploitation — Defused honeypot data, Aug 14; vendor patch available since Aug 11",
+    "confNote": "SAP has not yet officially flagged as exploited but Defused honeypot confirmation is high-quality signal",
+    "iocDate": "Aug 14, 2026 — exploitation confirmed via honeypots; campaign scope unknown",
     "admiralty": "B2",
     "severity": 5,
-    "cvss": null,
+    "cvss": 10,
     "attack": [
-      "T1195.001 — Compromise Software Dependencies",
-      "T1102 — Web Service (Ethereum blockchain dead drop)",
-      "T1555 — Credentials from Password Stores"
+      "T1190 — Exploit Public-Facing Application",
+      "T1059 — Command and Scripting Interpreter"
     ]
   },
-  "stormencryptor": {
+  "ptcwindchill": {
     "status": "new",
-    "conf": "Confirmed — Microsoft Threat Intelligence direct disclosure",
-    "confNote": "MSTIC published Storm-1175/StormEncryptor; technical IOCs not yet available",
-    "iocDate": "n/a — IOCs not published in initial disclosure",
-    "admiralty": "A2",
-    "severity": 4,
-    "cvss": null,
+    "conf": "Confirmed exploitation — Cl0p campaign active, Shell and Philips confirmed investigating, 43 victims claimed",
+    "confNote": "Shell and Philips confirmed investigating; data theft claims unverified by independent parties but consistent with Cl0p tactics and KEV-listed CVE",
+    "iocDate": "Aug 12-14, 2026 — active campaign; victim count growing",
+    "admiralty": "B2",
+    "severity": 5,
+    "cvss": 9.3,
     "attack": [
-      "T1486 — Data Encrypted for Impact",
       "T1190 — Exploit Public-Facing Application",
+      "T1567 — Exfiltration Over Web Service",
       "T1657 — Financial Theft"
     ]
   },
-  "cevalogistics": {
-    "status": "new",
-    "conf": "Confirmed — real-world operational impact confirmed by multiple downstream customers",
-    "confNote": "Bol, Bijenkorf, Ajax, ING, Ace & Tate all publicly confirmed disruption; Dutch authorities investigating",
-    "iocDate": "n/a — no technical IOCs published",
-    "admiralty": "A2",
-    "severity": 3,
+  "tokenjack": {
+    "status": "ongoing",
+    "conf": "Confirmed — Unit 42 incident response data",
+    "confNote": "Unit 42 direct IR cases; attacker infrastructure confirmed",
+    "iocDate": "Aug 6, 2026",
+    "admiralty": "A1",
+    "severity": 4,
     "cvss": null,
     "attack": [
-      "T1486 — Data Encrypted for Impact",
-      "T1190 — Exploit Public-Facing Application"
+      "T1552 — Unsecured Credentials",
+      "T1195.001 — Compromise Software Dependencies"
+    ]
+  },
+  "rufroot": {
+    "status": "ongoing",
+    "conf": "Confirmed — Noma Labs advisory, CVE assigned",
+    "confNote": "Noma Labs direct research publication; CVE-2026-59726 assigned CVSS 10.0",
+    "iocDate": "n/a — exposure is misconfigured port access",
+    "admiralty": "A1",
+    "severity": 5,
+    "cvss": 10,
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1552 — Unsecured Credentials",
+      "T1565 — Data Manipulation"
     ]
   }
 }
+
+
+
+
+
+
 
 
 
@@ -2405,7 +2412,7 @@
 
   const rows = allIocRows();
   document.getElementById('iocCount').textContent =
-    rows.length + ' indicators across ' + new Set(rows.map(r => r.item)).size + ' items · week of Aug 3–Aug 9, 2026';
+    rows.length + ' indicators · ' + new Set(rows.map(r => r.item)).size + ' of ' + Object.keys(D).length + ' items';
 
   // "Copy all IOCs" — pure indicator values, one per line, nothing else. Directly pasteable into a blocklist.
   document.getElementById('copyIocBtn').addEventListener('click', (e) => {
