@@ -44,6 +44,14 @@
   }
   h1{ font-family:var(--disp); font-weight:700; font-size:32px; margin:0; letter-spacing:-.01em; }
   .subhead{color:var(--muted); font-size:13.5px; margin-top:6px; font-family:var(--mono);}
+  .headerStats{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-top:10px; display:flex; flex-direction:column; gap:5px;}
+  .hStatRow{display:flex; flex-wrap:wrap; gap:5px 16px; align-items:baseline;}
+  .hStat{white-space:nowrap;}
+  .hStat b{color:var(--text);}
+  .hStat.st-new b{color:var(--blue);}
+  .hStat.st-confirmed b{color:var(--red);}
+  .hStat.st-updated b{color:var(--amber);}
+  .hStat.st-sector b{color:var(--text); opacity:.9;}
   .postureBox{
     text-align:right; font-family:var(--mono); font-size:12px; color:var(--muted);
     border:1px solid var(--red); background:rgba(224,84,74,.08); border-radius:8px;
@@ -323,10 +331,11 @@
 <div class="wrap">
 
   <header>
-    <div>
+    <div style="flex:1; min-width:0;">
       <div class="eyebrow"><span class="tlp">TLP:CLEAR</span></div>
       <h1>Daily Threat Brief</h1>
       <div class="subhead" id="dateLine"></div>
+      <div class="headerStats" id="headerStats"></div>
     </div>
     <div class="postureBox">
       Threat Posture<br>
@@ -1890,6 +1899,7 @@
 
 
 
+
   const META = {
   "teamcity": {
     "status": "updated",
@@ -1901,6 +1911,9 @@
     "cvss": 9.8,
     "attack": [
       "T1190 — Exploit Public-Facing Application"
+    ],
+    "sectors": [
+      "Technology"
     ]
   },
   "sonicwall": {
@@ -1915,6 +1928,9 @@
       "T1190 — Exploit Public-Facing Application",
       "T1505.003 — Web Shell",
       "T1068 — Exploitation for Privilege Escalation"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "ncentral": {
@@ -1930,6 +1946,10 @@
       "T1078 — Valid Accounts",
       "T1219 — Remote Access Software",
       "T1572 — Protocol Tunneling"
+    ],
+    "sectors": [
+      "Technology",
+      "MSP / IT Services"
     ]
   },
   "smokescreen": {
@@ -1944,6 +1964,9 @@
       "T1566 — Phishing",
       "T1219 — Remote Access Software",
       "T1105 — Ingress Tool Transfer"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "keyvworm": {
@@ -1958,6 +1981,9 @@
       "T1195.001 — Compromise Software Dependencies",
       "T1552 — Unsecured Credentials",
       "T1195.002 — Compromise Software Supply Chain"
+    ],
+    "sectors": [
+      "Technology"
     ]
   },
   "gpubreach": {
@@ -1971,6 +1997,10 @@
     "attack": [
       "T1611 — Escape to Host",
       "T1068 — Exploitation for Privilege Escalation"
+    ],
+    "sectors": [
+      "Technology",
+      "Cloud / AI Infrastructure"
     ]
   },
   "aisitests": {
@@ -1985,6 +2015,9 @@
       "T1656 — Impersonation",
       "T1036 — Masquerading",
       "T1505 — Server Software Component"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "quickfox": {
@@ -1999,6 +2032,9 @@
       "T1195.002 — Compromise Software Supply Chain",
       "T1574.002 — DLL Side-Loading",
       "T1053.005 — Scheduled Task Persistence"
+    ],
+    "sectors": [
+      "Technology"
     ]
   },
   "passtkey": {
@@ -2013,6 +2049,9 @@
       "T1555.003 — Credentials from Web Browsers",
       "T1539 — Steal Web Session Cookie",
       "T1606 — Forge Web Credentials"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "talosaiweapon": {
@@ -2027,6 +2066,9 @@
       "T1588 — Obtain Capabilities",
       "T1586 — Compromise Accounts",
       "T1583 — Acquire Infrastructure"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "mspathaug": {
@@ -2041,6 +2083,9 @@
       "T1190 — Exploit Public-Facing Application",
       "T1068 — Exploitation for Privilege Escalation",
       "T1078 — Valid Accounts"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "metabaseday": {
@@ -2055,6 +2100,9 @@
       "T1190 — Exploit Public-Facing Application",
       "T1552 — Unsecured Credentials",
       "T1078 — Valid Accounts"
+    ],
+    "sectors": [
+      "Technology"
     ]
   },
   "weldropper": {
@@ -2069,6 +2117,9 @@
       "T1195.001 — Compromise Software Dependencies",
       "T1059 — Command and Scripting Interpreter",
       "T1562.001 — Disable or Modify Tools"
+    ],
+    "sectors": [
+      "Technology"
     ]
   },
   "aicodeflaws": {
@@ -2083,6 +2134,9 @@
       "T1059 — Command and Scripting Interpreter",
       "T1552 — Unsecured Credentials",
       "T1195.002 — Compromise Software Supply Chain"
+    ],
+    "sectors": [
+      "Technology"
     ]
   },
   "patchtugsaug": {
@@ -2097,6 +2151,9 @@
       "T1068 — Exploitation for Privilege Escalation",
       "T1190 — Exploit Public-Facing Application",
       "T1203 — Exploitation for Client Execution"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "vcenter": {
@@ -2111,6 +2168,9 @@
       "T1190 — Exploit Public-Facing Application",
       "T1133 — External Remote Services",
       "T1053 — Scheduled Task/Job"
+    ],
+    "sectors": [
+      "All Sectors"
     ]
   },
   "gunra": {
@@ -2126,6 +2186,13 @@
       "T1078 — Valid Accounts",
       "T1556 — Modify Authentication Process",
       "T1486 — Data Encrypted for Impact"
+    ],
+    "sectors": [
+      "Healthcare",
+      "Government",
+      "Financial Services",
+      "Manufacturing",
+      "Energy"
     ]
   },
   "bdthemes": {
@@ -2140,6 +2207,9 @@
       "T1195.001 — Compromise Software Dependencies",
       "T1098 — Account Manipulation",
       "T1505.003 — Web Shell"
+    ],
+    "sectors": [
+      "Technology"
     ]
   },
   "sapcommerce": {
@@ -2153,6 +2223,10 @@
     "attack": [
       "T1190 — Exploit Public-Facing Application",
       "T1059 — Command and Scripting Interpreter"
+    ],
+    "sectors": [
+      "Technology",
+      "Retail / eCommerce"
     ]
   },
   "ptcwindchill": {
@@ -2167,6 +2241,11 @@
       "T1190 — Exploit Public-Facing Application",
       "T1567 — Exfiltration Over Web Service",
       "T1657 — Financial Theft"
+    ],
+    "sectors": [
+      "Manufacturing",
+      "Energy",
+      "Healthcare"
     ]
   },
   "tokenjack": {
@@ -2180,6 +2259,10 @@
     "attack": [
       "T1552 — Unsecured Credentials",
       "T1195.001 — Compromise Software Dependencies"
+    ],
+    "sectors": [
+      "Technology",
+      "Cloud / AI Infrastructure"
     ]
   },
   "rufroot": {
@@ -2194,9 +2277,14 @@
       "T1190 — Exploit Public-Facing Application",
       "T1552 — Unsecured Credentials",
       "T1565 — Data Manipulation"
+    ],
+    "sectors": [
+      "Technology",
+      "Cloud / AI Infrastructure"
     ]
   }
 }
+
 
 
 
@@ -2411,6 +2499,43 @@
   }
 
   const rows = allIocRows();
+  // Header stats — auto-computed from D/META
+  (function(){
+    const keys = Object.keys(D);
+    const iocTotal = keys.reduce((n,k)=>n+(D[k].iocs||[]).length,0);
+
+    // Status counts
+    const sc = {};
+    keys.forEach(k=>{ const s=META[k]?.status||'new'; sc[s]=(sc[s]||0)+1; });
+    const statusOrder = ['new','confirmed','updated','ongoing','carried'];
+    const statusLabel = {new:'New',confirmed:'Confirmed',updated:'Updated',ongoing:'Ongoing',carried:'Carried'};
+
+    // Sector counts from structured META.sectors field
+    const sectorCounts = {};
+    keys.forEach(k=>{
+      (META[k]?.sectors||[]).forEach(s=>{ sectorCounts[s]=(sectorCounts[s]||0)+1; });
+    });
+    const sectorHits = Object.entries(sectorCounts)
+      .filter(([s])=>s!=='All Sectors')
+      .sort((a,b)=>b[1]-a[1]);
+    const allSectorsCount = sectorCounts['All Sectors']||0;
+
+    // Row 1: status counts + IOCs
+    let row1 = `<span class="hStat"><b>${keys.length}</b> items</span>`;
+    statusOrder.forEach(s=>{
+      if(sc[s]) row1+=`<span class="hStat st-${s}"><b>${sc[s]}</b> ${statusLabel[s]}</span>`;
+    });
+    row1+=`<span class="hStat"><b>${iocTotal}</b> IOCs</span>`;
+
+    // Row 2: sector breakdown
+    let row2 = '';
+    if(allSectorsCount) row2+=`<span class="hStat st-sector"><b>${allSectorsCount}</b> All Sectors</span>`;
+    sectorHits.forEach(([sector,n])=>{ row2+=`<span class="hStat st-sector"><b>${n}</b> ${sector}</span>`; });
+
+    document.getElementById('headerStats').innerHTML =
+      `<div class="hStatRow">${row1}</div>${row2?`<div class="hStatRow">${row2}</div>`:''}`;
+  })();
+
   document.getElementById('iocCount').textContent =
     rows.length + ' indicators · ' + new Set(rows.map(r => r.item)).size + ' of ' + Object.keys(D).length + ' items';
 
