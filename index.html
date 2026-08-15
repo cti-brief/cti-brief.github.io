@@ -55,6 +55,10 @@
   .hStat.st-allsectors{font-style:italic; opacity:.7;}
   .hStat.st-allsectors b{color:var(--muted); font-style:normal;}
   .hStat.st-allsectors::after{content:" —"; margin-right:4px; opacity:.4;}
+  .hStat.st-sector{cursor:pointer; border-radius:4px; padding:1px 5px; transition:background .12s, color .12s;}
+  .hStat.st-sector:hover{background:rgba(92,140,224,.1);}
+  .hStat.st-sector.active{background:rgba(92,140,224,.18); color:var(--blue);}
+  .hStat.st-sector.active b{color:var(--blue);}
   .postureBox{
     text-align:right; font-family:var(--mono); font-size:12px; color:var(--muted);
     border:1px solid var(--red); background:rgba(224,84,74,.08); border-radius:8px;
@@ -445,7 +449,7 @@
         <div class="story" data-detail="patchtugsaug">
           <div class="tagRow"><span class="tag crit">Exploited Zero-Day</span><span class="tag high">421 CVEs · 62 Critical</span></div>
           <p class="storyTitle"><span>August Patch Tuesday: CVE-2026-68820 actively exploited for SYSTEM access — plus critical QUIC and DNS RCE cluster</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Today's Patch Tuesday (August 11) brings 421 CVEs including one being exploited in the wild right now. CVE-2026-68820 (afd.sys use-after-free) lets a low-privilege local attacker reach SYSTEM via a race condition — no user interaction, all supported Windows versions. Tenable assesses nation-state actors as likely. Two additional bugs were publicly disclosed before patches were available today. Critical RCE cluster not yet exploited: QUIC (CVSS 9.8), DNS Server (CVSS 9.8), and TFTP Server (CVSS 9.8, "Exploitation More Likely").</p>
+          <p class="storyBody">Today's Patch Tuesday (August 11) brings 421 CVEs including one being exploited right now by North Korea's Lazarus Group. CVE-2026-68820 (afd.sys use-after-free, KEV-listed Aug 11) lets a low-privilege local attacker reach SYSTEM via a race condition — Lazarus is deploying FudModule rootkit and ForestTiger backdoor, targeting defense sector organizations. Critical RCE cluster not yet exploited: QUIC (CVSS 9.8), DNS Server (CVSS 9.8, wormable per ZDI), and TFTP Server (CVSS 9.8).</p>
           <div class="srcline">SecurityWeek, Tenable, SANS ISC — Aug 11, 2026</div>
         </div>
 
@@ -591,9 +595,9 @@
         </div>
         <div class="cveCard high-card" data-detail="patchtugsaug">
           <div class="cveTop">
-            <span class="cveNum">CVE-2026-68820</span><span class="cveTag exploit">Exploited</span><span class="cveScore">7.0</span>
+            <span class="cveNum">CVE-2026-68820</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">7.0</span>
           </div>
-          <div class="cveSub">Windows afd.sys — EoP to SYSTEM, race condition, no user interaction</div>
+          <div class="cveSub">Windows afd.sys — Lazarus Group (DPRK) exploiting for SYSTEM. FudModule rootkit + ForestTiger backdoor. CISA KEV deadline Aug 25.</div>
         </div>
         <div class="cveCard crit-card" data-detail="patchtugsaug">
           <div class="cveTop">
@@ -750,22 +754,20 @@
       {
         "value": "deploy_new.py",
         "type": "Filename",
-        "note": "KNUCKLEBALL malware dropper"
+        "note": "Python deployment script dropped post-exploitation on SonicWall SMA1000 appliances. Part of the attacker toolkit documented by Volexity.",
+        "source": "https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/"
       },
       {
         "value": "agent_wp8.jar",
         "type": "Filename",
-        "note": "Sou5 reverse-proxy malware"
+        "note": "Java agent dropped on SMA1000 appliances — ORANGETAIL payload. SHA256 in Volexity advisory.",
+        "source": "https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/"
       },
       {
         "value": "agent_wp9.jar",
         "type": "Filename",
-        "note": "ORANGETAIL custom Java webshell"
-      },
-      {
-        "value": "/wsproxy",
-        "type": "Endpoint Path",
-        "note": "SMA1000 endpoint exploited for CVE-2026-15409 (SSRF)"
+        "note": "Java agent variant dropped on SMA1000 appliances — ROOTRUN payload. SHA256 in Volexity advisory.",
+        "source": "https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/"
       }
     ],
     "mitigation": [
@@ -864,18 +866,6 @@
         "type": "Filename",
         "note": "Malicious file placed in the users' Documents folder — note this is NOT the legitimate system svchost.exe location",
         "source": "https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10"
-      },
-      {
-        "value": "Cloudflared",
-        "type": "Service Name",
-        "note": "Registered as a persistent service to run the attacker's Cloudflare Tunnel",
-        "source": "https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10"
-      },
-      {
-        "value": "mspsupport@n-able.com",
-        "type": "Identity String",
-        "note": "Apparent N-able support identity Huntress saw associated with suspicious Take Control sessions — investigate, don't assume malicious on sight",
-        "source": "https://www.huntress.com/blog/n-able-vulnerability-exploitation"
       }
     ],
     "mitigation": [
@@ -920,12 +910,6 @@
         "value": "207.174.0.143",
         "type": "IP",
         "note": "WsgiDAV-based staging server, port 8080 — hosts the payload toolkit and phishing page",
-        "source": "https://www.securonix.com/blog/smoke-screen-screenconnect-rmm-abuse-cloudflare-tunnels/"
-      },
-      {
-        "value": "8041",
-        "type": "Port",
-        "note": "ScreenConnect relay C2 port on the staging infrastructure",
         "source": "https://www.securonix.com/blog/smoke-screen-screenconnect-rmm-abuse-cloudflare-tunnels/"
       }
     ],
@@ -1276,14 +1260,7 @@
       "Confirmed real-world downstream impact: n8n disclosed Aug 8 that an attacker accessed 136 customer records (names, emails, 5 bcrypt-hashed passwords) via their Metabase environment using this vulnerability; Kilo Code reported a 4-hour breach window starting Aug 2.",
       "This is the second critical pre-auth RCE/SQLi class flaw in Metabase in three years — CVE-2023-38646 (CVSS 9.8, pre-auth RCE) was disclosed in August 2023 and exploited by threat actors including targeting SANS Institute systems."
     ],
-    "iocs": [
-      {
-        "value": "POST /api/session/reset_password",
-        "type": "Endpoint",
-        "note": "Vulnerable endpoint in Metabase — look for unexpected unauthenticated requests to this path in access logs; any requests with unusual SQL-like parameters should be treated as exploitation attempts.",
-        "source": "https://www.metabase.com/blog/security-advisory"
-      }
-    ],
+    "iocs": [],
     "mitigation": [
       "Upgrade self-hosted Metabase immediately to the fixed point release matching your branch: x.58.24, x.59.21, x.60.17, x.61.11, x.62.9, or x.63.5. Do not wait for CVE assignment — confirmed active exploitation makes delay indefensible.",
       "If you cannot patch immediately, consider temporarily blocking external access to the POST /api/session/reset_password endpoint while you schedule the upgrade.",
@@ -1299,7 +1276,8 @@
       "Review credentials stored in Metabase's database connections — rotate any database passwords it held."
     ],
     "source": "Metabase advisory (GHSA-vwf4-m7j8-wcjf) via The Hacker News, SecurityWeek, BleepingComputer, DarkReading",
-    "sourceNote": "Aug 2–10, 2026"
+    "sourceNote": "Aug 2–10, 2026",
+    "iocNote": "No network or file IOCs published. Detection: search web server and reverse-proxy access logs for POST /api/session/reset_password requests from unexpected source IPs with SQL-like payloads in the request body."
   },
   "weldropper": {
     "eyebrow": "npm Supply Chain · Russian Origin Assessed · Cross-Platform RAT",
@@ -1407,7 +1385,7 @@
   },
   "patchtugsaug": {
     "eyebrow": "Microsoft Patch Tuesday · Aug 11, 2026 · 421 CVEs · 1 Exploited Zero-Day",
-    "title": "August Patch Tuesday: CVE-2026-68820 exploited in wild for SYSTEM access — plus critical QUIC and DNS RCE cluster",
+    "title": "August Patch Tuesday: CVE-2026-68820 exploited by Lazarus Group (DPRK) — deploys FudModule rootkit and ForestTiger backdoor. Plus critical QUIC and DNS RCE cluster",
     "tags": [
       [
         "crit",
@@ -1418,13 +1396,13 @@
         "421 CVEs · 62 Critical"
       ]
     ],
-    "overview": "Microsoft's August 12 Patch Tuesday is the second-largest in history at 421 CVEs (62 critical). The one to act on immediately: CVE-2026-68820, a use-after-free in Windows Ancillary Function Driver for WinSock (afd.sys) actively exploited in the wild — attackers are using it to elevate to SYSTEM with no user interaction. Tenable assesses nation-state actors as likely based on historical afd.sys targeting patterns. Two additional zero-days were publicly disclosed without patches before today: CVE-2026-62832 (Windows User Profile Service EoP) and CVE-2026-72971 (Windows Container Isolation FS Filter Driver tampering). A cluster of high-priority critical RCEs — QUIC, DNS Server, and TFTP — are not yet exploited but carry CVSS 9.8 and 'Exploitation More Likely' ratings.",
+    "overview": "Microsoft's August 12 Patch Tuesday is the second-largest in history at 421 CVEs (62 critical). The one to act on immediately: CVE-2026-68820, a use-after-free in Windows Ancillary Function Driver for WinSock (afd.sys) actively exploited in the wild — attackers are using it to elevate to SYSTEM with no user interaction. Check Point Research attributed exploitation to North Korea's Lazarus Group, operating as part of their long-running Operation Dream Job campaign targeting defense sector workers. Lazarus used the flaw to deploy their FudModule kernel rootkit and ForestTiger backdoor. CVE-2026-68820 was added to the CISA KEV catalog on August 11 with a mandatory patching deadline of August 25 for federal agencies. This is the fourth time Lazarus has exploited an afd.sys zero-day since 2022. Two additional zero-days were publicly disclosed without patches before today: CVE-2026-62832 (Windows User Profile Service EoP) and CVE-2026-72971 (Windows Container Isolation FS Filter Driver tampering). A cluster of high-priority critical RCEs — QUIC, DNS Server, and TFTP — are not yet exploited but carry CVSS 9.8 and 'Exploitation More Likely' ratings.",
     "technical": [
       "CVE-2026-68820 (CVSS 7.0, Important) — EXPLOITED IN WILD: Use-after-free in afd.sys (Ancillary Function Driver for WinSock). Local attacker with low privileges triggers a race condition to reach SYSTEM. No user interaction. Affects all supported Windows client and server versions. Two related afd.sys EoP bugs (CVE-2026-61348, CVE-2026-70307) also patched but not exploited.",
       "CVE-2026-62832 (CVSS 7.8, Important) — PUBLICLY DISCLOSED: Windows User Profile Service EoP to ADMINISTRATOR. Not yet confirmed exploited but publicly known before today's patch — expect weaponization soon.",
       "CVE-2026-72971 (CVSS 5.5, Important) — PUBLICLY DISCLOSED: Windows Container Isolation FS Filter Driver (unionfs.sys) tampering. Link-following flaw, local attacker only, affects Windows 11. Low severity impact but publicly known.",
       "CVE-2026-62815 (CVSS 9.8, Critical): Microsoft QUIC unauthenticated RCE — use-after-free, remote attacker sends crafted packet, no user interaction. Affects Windows 11 and Server 2022/2025 including Server Core. Prioritize on internet-facing systems.",
-      "CVE-2026-62878 (CVSS 9.8, Critical): Windows DNS Server RCE — stack-based buffer overflow, unauthenticated, remote. Every Windows DNS Server instance is affected.",
+      "CVE-2026-62878 (CVSS 9.8, Critical): Windows DNS Server RCE — stack-based buffer overflow, unauthenticated, remote. Every Windows DNS Server instance is affected. The Zero Day Initiative characterized this as wormable — a compromised DNS server could trigger exploitation of adjacent servers.",
       "CVE-2026-62893 (CVSS 9.8, Critical): Windows Deployment Services TFTP Server RCE — unauthenticated, remote. Rated 'Exploitation More Likely' by Microsoft.",
       "CVE-2026-65665 (CVSS 8.8, Critical): SharePoint Server RCE — low privilege required, no user interaction, network-exploitable. 'Exploitation More Likely.'",
       "CVE-2026-6726 and CVE-2026-6727: Non-Microsoft CVEs in the TPM 2.0 reference implementation — spoofing and RSA OAEP timing side-channel. Require OEM firmware updates, not just Windows Update. Patch timeline depends on your hardware vendor.",
@@ -1449,7 +1427,7 @@
   },
   "vcenter": {
     "eyebrow": "VMware vCenter · CVE-2026-59310 · CVSS 9.8 · APT Exploitation Confirmed",
-    "title": "vCenter CVE-2026-59310 now actively exploited: APT actor hit 361 victims across 47 countries in 5 days",
+    "title": "vCenter CVE-2026-59310 now actively exploited: APT actor hit 361 victim IPs across 47 countries in 5 days",
     "tags": [
       [
         "crit",
@@ -1521,13 +1499,145 @@
     ],
     "iocs": [
       {
-        "value": "ia-cdn[.]com",
+        "value": "2dc70a12d158d437e45a55b1d52f3d61c6082a1e1667573302ba3b62813e2751",
+        "type": "SHA256",
+        "note": "main.exe — Gunra custom tool exfiltrating victim data from OneDrive/SharePoint before encryption",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "834efe9b392c6c000877ea5613a079445affc16fe8af5997d68c55cafc95e5d1",
+        "type": "SHA256",
+        "note": "main.exe variant — second observed build of the OneDrive/SharePoint exfiltration executable",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "91f8fc7a3290611e28a35a403fd815554d9d856006cc2ee91ccdb64057ae53b0",
+        "type": "SHA256",
+        "note": "cryptor.exe — Gunra ransomware encryptor binary",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "a82e496b7b5279cb6b93393ec167dd3f50aff1557366784b25f9e51cb23689d9",
+        "type": "SHA256",
+        "note": "msmp.exe — malicious Gunra executable",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "forticloud-sync",
+        "type": "Username",
+        "note": "Malicious Fortinet account created via CVE-2024-55591 / CVE-2025-24472 exploitation — assigned super-admin privileges. Check all Fortinet devices for this account immediately.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": ".ENCRT",
+        "type": "File Extension",
+        "note": "Extension appended to all Gunra-encrypted files on Windows. Presence indicates active or completed encryption.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": ".GNRA",
+        "type": "File Extension",
+        "note": "Extension used by the Gunra Linux ELF variant. Linux variant has a recoverable cryptographic flaw — preserve file timestamps before any remediation.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "R3ADM3.txt",
+        "type": "Filename",
+        "note": "Gunra ransom note filename — dropped in every encrypted directory.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "lgiil72vkmdtbc3qv4tyq6wedyjxqr2qd4ze7xl2cxgerdnymxj7soqd[.]onion",
         "type": "Domain",
-        "note": "Not Gunra — this is the BdThemes/WordPress C2 (separate story). Gunra IOCs are in the CISA AA26-222A advisory.",
-        "source": "https://www.cisa.gov/sites/default/files/2026-08/aa26-222a_gunra_ransomware.pdf"
+        "note": "Gunra dedicated leak site — active Mar–Jul 2026 per CISA advisory. Defanged.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "gunrabxbig445sjqa535uaymzerj6fp4nwc6ngc2xughf2pedjdhk4ad[.]onion",
+        "type": "Domain",
+        "note": "Gunra original DLS — active Apr 2025–Feb 2026. Defanged.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "Datapub[.]news",
+        "type": "Domain",
+        "note": "Gunra clearnet DLS mirror — active Jun–Jul 2025. Defanged.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "a00f105546345756@proton[.]me",
+        "type": "Email",
+        "note": "Gunra ransom negotiation contact. Defanged.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "4569f6322bc3b22e9@proton[.]me",
+        "type": "Email",
+        "note": "Gunra ransom negotiation contact. Defanged.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "ilovemycubscout@gmail[.]com",
+        "type": "Email",
+        "note": "Gunra ransom negotiation contact. Defanged.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "6449a3c1e612168526@proton[.]me",
+        "type": "Email",
+        "note": "Gunra ransom negotiation contact. Defanged.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "23.239.119[.]2",
+        "type": "IP",
+        "note": "Gunra C2 — Jul–Nov 2025. Vet before blocking per CISA guidance.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "23.239.119[.]3",
+        "type": "IP",
+        "note": "Gunra C2 — Jul–Nov 2025.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "23.239.119[.]4",
+        "type": "IP",
+        "note": "Gunra C2 — Jul–Nov 2025.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "23.239.119[.]5",
+        "type": "IP",
+        "note": "Gunra C2 — Jul–Nov 2025.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "23.239.119[.]6",
+        "type": "IP",
+        "note": "Gunra C2 — Jul–Nov 2025.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "103.125.234[.]14",
+        "type": "IP",
+        "note": "Gunra C2 — Nov–Dec 2025.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "70.36.99[.]82",
+        "type": "IP",
+        "note": "Gunra C2 — Nov–Dec 2025.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
+      },
+      {
+        "value": "91.201.66[.]146",
+        "type": "IP",
+        "note": "Gunra C2 — Nov–Dec 2025.",
+        "source": "https://media.defense.gov/2026/Aug/10/2003976697/-1/-1/0/CSA_STOPRANSOMWARE_GUNRA_RANSOMWARE.PDF"
       }
     ],
-    "iocNote": "Full Gunra IOC set (IPs, domains, file hashes) published in CISA Advisory AA26-222A (Aug 10, 2026) at cisa.gov/sites/default/files/2026-08/aa26-222a_gunra_ransomware.pdf — pull directly from the advisory for blocklist/SIEM ingestion.",
+    "iocNote": "IOC set sourced from CISA Advisory AA26-222A (Aug 10, 2026). CISA recommends vetting historical IPs before blocking. Full STIX XML/JSON at cisa.gov/news-events/cybersecurity-advisories/aa26-222a for direct SIEM import. Note: ia-cdn[.]com is the BdThemes WordPress attack C2 — it is NOT a Gunra indicator.",
     "mitigation": [
       "Patch Fortinet FortiOS and FortiProxy against CVE-2024-55591 and CVE-2025-24472 immediately — both are 18+ months old and KEV-listed; continued exposure is indefensible.",
       "Audit VDI authentication portal server for modified authentication processing files — patching the Fortinet CVE does NOT remove the auth backdoor if Gunra already modified your auth files.",
@@ -1584,18 +1694,6 @@
         "type": "String",
         "note": "Fake plugin name used to install emer-run.php webshell. Variant names possible — check for any recently installed plugin you don't recognise.",
         "source": "https://thehackernews.com/2026/08/bdthemes-supply-chain-attack-poisons.html"
-      },
-      {
-        "value": "fz_emer_login_tokens",
-        "type": "String",
-        "note": "Database option key created by the malicious payload. Run: SELECT option_name FROM wp_options WHERE option_name = 'fz_emer_login_tokens' to check if compromised.",
-        "source": "https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/"
-      },
-      {
-        "value": "class-wp-query-",
-        "type": "Filename",
-        "note": "Suspicious file naming pattern used by the webshell payload. Check plugins and uploads directories for files matching this pattern.",
-        "source": "https://cybersecuritynews.com/wordpress-supply-chain-attack/"
       }
     ],
     "mitigation": [
@@ -1637,15 +1735,8 @@
       "Exploitation timeline: SAP patched on Aug 11 (Patch Tuesday); Defused honeypots detected active exploitation attempts on Aug 14 — a 3-day patch-to-exploit window, consistent with Cl0p/SAP patterns from prior years.",
       "August 2026 SAP Patch Day also includes: CVE-2026-44772 (CVSS 9.9, code injection in SAP Manufacturing Integration and Intelligence), CVE-2026-58243 (CVSS 8.8, privilege escalation in SAP ABAP Developer Tools). Prioritize Commerce Cloud but apply the full patch set."
     ],
-    "iocs": [
-      {
-        "value": "/datahub/",
-        "type": "Endpoint",
-        "note": "Data Hub Adapter endpoint prefix — monitor web server access logs for unexpected unauthenticated POST requests to this path from external IPs. This is a detection artifact, not a blockable network IOC.",
-        "source": "https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/"
-      }
-    ],
-    "iocNote": "No attacker infrastructure IOCs published yet — exploitation is at early honeypot stage. Monitor SAP Commerce Cloud web/application logs for unexpected unauthenticated requests to the Data Hub Adapter import endpoints. Defused is tracking active attempts; check their public threat feed for any published attacker IPs.",
+    "iocs": [],
+    "iocNote": "No attacker infrastructure IOCs published. Detection: search SAP Commerce Cloud application and web server logs for unexpected unauthenticated POST requests to /datahub/ import endpoints from external IPs since August 11.",
     "mitigation": [
       "Patch SAP Commerce Cloud to the fixed release level specified in Security Note #3771065 immediately. Apply the fix, then rebuild and redeploy the updated Commerce Cloud version — the rebuild/redeploy step is required; skipping it leaves the flaw active.",
       "If immediate patching and redeployment is not possible: configure an IP Filter Set in SAP Commerce Cloud to restrict access to the Data Hub Adapter endpoints to trusted internal IPs only. This is a temporary workaround, not a permanent fix.",
@@ -1681,15 +1772,8 @@
       "Shell history: Cl0p targeted Shell in the MOVEit campaign in 2023. Shell refused to negotiate; Cl0p published stolen files on their leak site. The same pattern is expected here if Shell doesn't engage.",
       "The stolen data type (engineering drawings, facility photos, project plans) from an energy major like Shell has implications beyond ransomware — it is potentially useful for physical infrastructure targeting."
     ],
-    "iocs": [
-      {
-        "value": "CVE-2026-12569",
-        "type": "CVE",
-        "note": "PTC Windchill/FlexPLM unsafe deserialization — CVSS 9.3, KEV-listed, being actively exploited by Cl0p. Check all internet-exposed Windchill and FlexPLM instances against this CVE.",
-        "source": "https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/"
-      }
-    ],
-    "iocNote": "Cl0p infrastructure IOCs not published for this campaign. Ransom-ISAC advisory covers the PTC exploitation chain — pull from the KEV catalog for full technical details on CVE-2026-12569. Detection focus: look for unexpected unauthenticated access to Windchill/FlexPLM endpoints and anomalous outbound data transfers from PLM hosts.",
+    "iocs": [],
+    "iocNote": "No attacker infrastructure IOCs published for this campaign. CVE-2026-12569 is on the CISA KEV catalog — check all internet-exposed PTC Windchill and FlexPLM instances for patch status. Detection: review Windchill/FlexPLM access logs for unexpected unauthenticated requests to the WSDL endpoint and login servlet, and anomalous outbound data transfers from PLM hosts.",
     "mitigation": [
       "Patch PTC Windchill and FlexPLM against CVE-2026-12569 immediately — the flaw has been KEV-listed since June and Cl0p is actively exploiting unpatched instances at scale.",
       "If immediate patching is not possible: take all internet-exposed Windchill and FlexPLM instances offline or behind a VPN/jump host until patching is completed.",
@@ -1892,6 +1976,8 @@
     "sourceNote": "Aug 6, 2026"
   }
 }
+
+
 
 
 
@@ -2143,8 +2229,8 @@
   },
   "patchtugsaug": {
     "status": "new",
-    "conf": "Confirmed — vendor advisory, CVE-2026-68820 confirmed exploited in wild",
-    "confNote": "MSRC; Tenable/SANS/Lansweeper analysis; nation-state attribution for CVE-2026-68820 assessed not confirmed",
+    "conf": "Confirmed — CVE-2026-68820 Lazarus Group attribution published by Check Point Research; CISA KEV-listed Aug 11",
+    "confNote": "Check Point Research (Moshe Marelus, David Driker) confirmed Lazarus/Operation Dream Job; FudModule rootkit and ForestTiger backdoor documented; Microsoft patched Aug 11; CISA KEV deadline Aug 25 for federal agencies",
     "iocDate": "Aug 11, 2026 — exploitation of CVE-2026-68820 confirmed; other CVEs unconfirmed at release",
     "admiralty": "A1",
     "severity": 5,
@@ -2179,7 +2265,7 @@
     "status": "new",
     "conf": "Confirmed — six-agency joint advisory with documented victim incidents",
     "confNote": "FBI/CISA/NSA/DoD/USSS/KNPA joint advisory AA26-222A; 51 confirmed victims per Ransomware.Live",
-    "iocDate": "Full IOC set in CISA AA26-222A — see iocNote",
+    "iocDate": "Apr 2025 – Aug 2026 — see individual IOC notes for first/last seen dates",
     "admiralty": "A1",
     "severity": 5,
     "cvss": null,
@@ -2283,6 +2369,8 @@
     ]
   }
 }
+
+
 
 
 
@@ -2594,6 +2682,13 @@
   const filterResetBtn = document.getElementById('filterResetBtn');
 
   const filterable = Array.from(document.querySelectorAll('[data-detail]'));
+  // Stamp data-sectors onto each card from META so applyFilters can read it
+  filterable.forEach(el => {
+    const key = el.getAttribute('data-detail');
+    const sectors = META[key]?.sectors || [];
+    el.dataset.sectors = sectors.join(',');
+  });
+  let activeSector = null;
   // Remember each card's original DOM position so "default order" can be restored exactly.
   filterable.forEach((el, i) => { el.dataset.origIndex = i; });
 
@@ -2609,9 +2704,12 @@
     filterable.forEach(el => {
       const key = el.getAttribute('data-detail');
       const m = META[key] || {};
+      const sectors = (el.dataset.sectors || '').split(',');
       const matchesQ = !q || cardSearchText(el, key).includes(q);
       const matchesSt = !st || m.status === st;
-      const show = matchesQ && matchesSt;
+      const matchesSec = !activeSector || sectors.includes(activeSector) ||
+        (activeSector === 'All Sectors' && sectors.includes('All Sectors'));
+      const show = matchesQ && matchesSt && matchesSec;
       el.classList.toggle('hiddenByFilter', !show);
       if (show) visible++;
     });
@@ -2656,7 +2754,25 @@
   sortSelect.addEventListener('change', applySort);
   filterResetBtn.addEventListener('click', () => {
     searchBox.value = ''; statusFilter.value = ''; sortSelect.value = 'default';
+    activeSector = null;
+    document.querySelectorAll('.hStat.st-sector.active').forEach(el => el.classList.remove('active'));
     applyFilters(); applySort();
+  });
+
+  // Sector stat click — toggle filter
+  document.getElementById('headerStats').addEventListener('click', e => {
+    const span = e.target.closest('.hStat.st-sector');
+    if (!span) return;
+    const sector = span.textContent.trim().replace(/^[\d]+\s*/, '');
+    if (activeSector === sector) {
+      activeSector = null;
+      span.classList.remove('active');
+    } else {
+      activeSector = sector;
+      document.querySelectorAll('.hStat.st-sector').forEach(s => s.classList.remove('active'));
+      span.classList.add('active');
+    }
+    applyFilters();
   });
   applyFilters();
 
