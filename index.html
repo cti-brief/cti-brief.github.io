@@ -2668,10 +2668,15 @@
     document.getElementById('csvBtnDrawer')?.addEventListener('click', () => {
       document.getElementById('csvBtn').click();
     });
-    overlay.style.display = 'flex';
     document.getElementById('drawer').style.maxWidth = '900px';
+    overlay.classList.add('open');
+    requestAnimationFrame(() => overlay.classList.add('show'));
   }
   document.getElementById('iocCount').addEventListener('click', showAllIocs);
+  // Reset drawer width when closed so story drawers aren't affected
+  document.getElementById('drawerClose').addEventListener('click', () => {
+    setTimeout(() => { document.getElementById('drawer').style.maxWidth = ''; }, 250);
+  }, true);
 
   document.getElementById('iocCount').textContent =
     rows.length + ' indicators · ' + new Set(rows.map(r => r.item)).size + ' of ' + Object.keys(D).length + ' items';
