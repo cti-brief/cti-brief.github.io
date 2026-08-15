@@ -44,17 +44,16 @@
   }
   h1{ font-family:var(--disp); font-weight:700; font-size:32px; margin:0; letter-spacing:-.01em; }
   .subhead{color:var(--muted); font-size:13.5px; margin-top:6px; font-family:var(--mono);}
-  .headerStats{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-top:10px; display:flex; flex-direction:column; gap:5px;}
-  .hStatRow{display:flex; flex-wrap:wrap; gap:5px 16px; align-items:baseline;}
+  .headerStats{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-top:8px; display:flex; flex-direction:column; gap:4px;}
+  .hStatRow{display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline;}
   .hStat{white-space:nowrap;}
   .hStat b{color:var(--text);}
   .hStat-new b{color:var(--blue);}
   .hStat-confirmed b{color:var(--red);}
   .hStat-updated b{color:var(--amber);}
   .hStat.st-sector b{color:var(--text); opacity:.9;}
-  .hStat.st-allsectors{font-style:italic; opacity:.7;}
+  .hStat.st-allsectors{font-style:italic; opacity:.7; padding-right:8px; border-right:1px solid var(--border); margin-right:0px;}
   .hStat.st-allsectors b{color:var(--muted); font-style:normal;}
-  .hStat.st-allsectors::after{content:" —"; margin-right:4px; opacity:.4;}
   .hStat.st-sector{cursor:pointer; border-radius:4px; padding:1px 5px; transition:background .12s, color .12s;}
   .hStat.st-sector:hover{background:rgba(92,140,224,.1);}
   .hStat.st-sector.active{background:rgba(92,140,224,.18); color:var(--blue);}
@@ -185,6 +184,19 @@
   .cveRow .inlineDetail{grid-column:1/3;}
 
   /* IOC COPY AFFORDANCE */
+  #iocCount{font-family:var(--mono); font-size:12px; color:var(--blue); align-self:center; cursor:pointer; text-decoration:underline; text-underline-offset:2px; opacity:.85;}
+  #iocCount:hover{opacity:1;}
+  .iocTable{width:100%; border-collapse:collapse; font-size:12px;}
+  .iocTable th{font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); border-bottom:1px solid var(--border); padding:6px 10px 6px 0; text-align:left; position:sticky; top:0; background:var(--panel);}
+  .iocTable td{font-family:var(--mono); font-size:12px; padding:7px 10px 7px 0; border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; word-break:break-all;}
+  .iocTable tr:last-child td{border-bottom:none;}
+  .iocTable tr:hover td{background:rgba(92,140,224,.04);}
+  .iocTypePill{display:inline-block; font-size:9px; padding:1px 5px; border-radius:3px; background:rgba(92,140,224,.12); color:var(--blue); text-transform:uppercase; letter-spacing:.06em; white-space:nowrap;}
+  .iocVal{color:var(--text); font-weight:500;}
+  .iocItemName{color:var(--muted); font-size:11px;}
+  .iocSrcLink2{color:var(--blue); text-decoration:none; font-size:11px;}
+  .iocSrcLink2:hover{text-decoration:underline;}
+  .iocAllHeader{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
   .iocHead{display:flex; justify-content:space-between; align-items:center; gap:10px;}
   .iocCopy{
     font-family:var(--mono); font-size:10px; color:var(--muted); background:none;
@@ -2278,7 +2290,7 @@
     "sectors": [
       "Healthcare",
       "Government",
-      "Financial Services",
+      "Financial",
       "Manufacturing",
       "Energy"
     ]
@@ -2623,6 +2635,43 @@
     document.getElementById('headerStats').innerHTML =
       `<div class="hStatRow">${row1}</div>${row2?`<div class="hStatRow">${row2}</div>`:''}`;
   })();
+
+  // ── IOC Preview Table ──────────────────────────────────────────────
+  function showAllIocs(){
+    const rows = allIocRows();
+    const typeColors = {IP:'#84A9E8',Domain:'#84A9E8',SHA256:'#F0BC72',MD5:'#F0BC72',
+        Filename:'#A8D8A8',Email:'#D8A8D8','File Extension':'#A8D8A8',
+        Username:'#F0837B',CVE:'#F0837B',Default:'#888'};
+    const header = `<div class="iocAllHeader">
+      <div style="font-family:var(--disp);font-size:16px;font-weight:700;color:var(--text)">${rows.length} Indicators</div>
+      <button id="csvBtnDrawer" class="iocCopy" style="font-size:12px;padding:5px 14px;">⬇ Export CSV</button>
+    </div>`;
+    const tableRows = rows.map(r => {
+      const col = typeColors[r.type] || typeColors.Default;
+      const srcLabel = r.iocSource ? r.iocSource.replace(/https?:\/\/(www\.)?/,'').split('/')[0] : '';
+      const srcHtml = r.iocSource
+        ? `<a href="${r.iocSource}" target="_blank" rel="noopener" class="iocSrcLink2">${srcLabel}</a>`
+        : '<span style="opacity:.35">—</span>';
+      return `<tr>
+        <td><span class="iocTypePill" style="color:${col};background:${col}22">${r.type}</span></td>
+        <td class="iocVal">${r.indicator}</td>
+        <td class="iocItemName">${r.item.split(':')[0].trim().slice(0,40)}</td>
+        <td class="iocItemName" style="max-width:180px">${r.context.slice(0,80)}</td>
+        <td>${srcHtml}</td>
+      </tr>`;
+    }).join('');
+    const table = `<table class="iocTable"><thead><tr>
+      <th>Type</th><th>Indicator</th><th>Item</th><th>Context</th><th>Source</th>
+    </tr></thead><tbody>${tableRows}</tbody></table>`;
+    drawerContent.innerHTML = header + table;
+    // Wire CSV button inside drawer
+    document.getElementById('csvBtnDrawer')?.addEventListener('click', () => {
+      document.getElementById('csvBtn').click();
+    });
+    overlay.style.display = 'flex';
+    document.getElementById('drawer').style.maxWidth = '900px';
+  }
+  document.getElementById('iocCount').addEventListener('click', showAllIocs);
 
   document.getElementById('iocCount').textContent =
     rows.length + ' indicators · ' + new Set(rows.map(r => r.item)).size + ' of ' + Object.keys(D).length + ' items';
