@@ -444,6 +444,20 @@
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
         </div>
 
+        <div class="story" data-detail="adobecommerce">
+          <div class="tagRow"><span class="tag crit">CVSS 9.1</span><span class="tag high">Exploited Day-0</span></div>
+          <p class="storyTitle"><span>Adobe Commerce CVE-2026-71362: unauthenticated privilege escalation exploited same day as patch — customer accounts hijacked</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Sansec confirmed exploitation attempts began within hours of Adobe's August 11 patch. An unauthenticated attacker exploits improper session identity handling to take over any customer account with no credentials and no user interaction. Affects Commerce, Commerce B2B, and Magento Open Source 2.4.4–2.4.9. Isolated patch APSB26-92 available — apply immediately, do not wait for a full platform upgrade.</p>
+          <div class="srcline">BleepingComputer, SecurityWeek, Sansec, Adobe PSIRT — Aug 11–14, 2026</div>
+        </div>
+
+        <div class="story" data-detail="geoserver">
+          <div class="tagRow"><span class="tag crit">CVSS 9.8</span><span class="tag high">Critical Infra · GIS</span></div>
+          <p class="storyTitle"><span>GeoServer jsonArrayContains zero-day (CVSS 9.8): SQL injection → RCE exploited within hours of Aug 12 disclosure. Patches now available.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">WatchTowr observed hundreds of probes within hours of researcher @q1uf3ng's August 12 disclosure — no patch, no CVE at the time. GeoServer has released 3.0.1, 2.28.5, and 2.27.6. The flaw in jsonArrayContains OGC filter pivots to full RCE when the DB account has elevated privileges. GeoServer's 2024 exploitation breached a US federal agency within two weeks of disclosure — this pattern repeats.</p>
+          <div class="srcline">The Hacker News, SecurityWeek, WatchTowr — Aug 12–15, 2026</div>
+        </div>
+
         <div class="story" data-detail="sapcommerce">
           <div class="tagRow"><span class="tag crit">CVSS 10.0</span><span class="tag high">Actively Exploited</span></div>
           <p class="storyTitle"><span>SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0): unauthenticated RCE now targeted in wild — 3 days after patch</span><span class="detailsCue">Details →</span></p>
@@ -567,6 +581,20 @@
         
         
         
+        <div class="cveCard crit-card" data-detail="adobecommerce">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-71362</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.1</span>
+          </div>
+          <div class="cveSub">Adobe Commerce / Magento — unauthenticated account takeover, exploited same day as patch</div>
+        </div>
+
+        <div class="cveCard crit-card" data-detail="geoserver">
+          <div class="cveTop">
+            <span class="cveNum">GHSA-mqjf-5f49-2fjh</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
+          </div>
+          <div class="cveSub">GeoServer jsonArrayContains SQLi → RCE — patches available 3.0.1/2.28.5/2.27.6</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="sapcommerce">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-58231</span><span class="cveScore">10.0</span>
@@ -638,60 +666,69 @@
         <div class="linkGroup">CVE-2026-63077 — JetBrains TeamCity — unauthenticated RCE</div>
         <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory — CVE-2026-63077</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA Known Exploited Vulnerabilities Catalog</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0</div>
-        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 0-Day Exploitation</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after </div>
+        <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0533</div>
+        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after first</div>
         <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able Security Advisory SA-2026-10</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Vulnerability Exploitation</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">RMM Abuse — SMOKE#SCREEN uses fake Adobe/Zoom updates to </div>
-        <div class="linkItem"><a href="https://www.securonix.com/blog/smoke-screen-screenconnect-rmm-abuse-cloudflare-tunnels/" target="_blank">Securonix — SMOKE#SCREEN ScreenConnect RMM Abuse</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">RMM Abuse — SMOKE#SCREEN uses fake Adobe/Zoom updates to plant</div>
+        <div class="linkItem"><a href="https://www.securonix.com/blog/smoke-screen-screenconnect-rmm-abuse-cloudflare-tunnels/" target="_blank">Securonix — SMOKE#SCREEN</a><span class="arrow">↗</span></div>
         <div class="linkGroup">DPRK / Lazarus — ChainDrop</div>
-        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain Compromise</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv/Cacheable Namespaces Compromised</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv/Cacheable Compromised</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GPU/Cloud — GPUBreach</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-gpubreach-attack-gains-full-system-access-via-nvidia-gpu/" target="_blank">BleepingComputer — GPUBreach NVIDIA Rowhammer Attack</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-gpubreach-attack-gains-full-system-access-via-nvidia-gpu/" target="_blank">BleepingComputer — GPUBreach NVIDIA Attack</a><span class="arrow">↗</span></div>
         <div class="linkGroup">AI Safety — UK AI Security Institute</div>
         <div class="linkItem"><a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-evaluation-and-assurance" target="_blank">UK AISI — Frontier AI Evaluation Report</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Chinese APT — Mustang Panda spent a year inside QuickFox VP</div>
+        <div class="linkGroup">Chinese APT — Mustang Panda spent a year inside QuickFox VPN ins</div>
         <div class="linkItem"><a href="https://www.fortinet.com/blog/threat-research/quickfox-supply-chain-attack-used-to-deploy-fdmtp-implant" target="_blank">Fortinet FortiGuard Labs — QuickFox FDMTP Supply Chain</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Identity — Pass-ta-key</div>
         <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/pass-ta-key-stealing-google-synced-passkeys/" target="_blank">Unit 42 — Pass-ta-key Google Passkey Research</a><span class="arrow">↗</span></div>
         <div class="linkGroup">AI Weaponization — Talos</div>
-        <div class="linkItem"><a href="https://blog.talosintelligence.com/keep-going-bro-youve-got-this-a-data-driven-look-at-how-adversaries-are-weaponizing-ai/" target="_blank">Cisco Talos Intelligence Group Blog — Adversaries Weaponizing AI</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://blog.talosintelligence.com/keep-going-bro-youve-got-this-a-data-driven-look-at-how-adversaries-are-weaponizing-ai/" target="_blank">Cisco Talos — Adversaries Weaponizing AI</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Out-of-Band — Microsoft emergency OOB</div>
         <div class="linkItem"><a href="https://www.securityweek.com/microsoft-patches-critical-azure-teams-sharepoint-flaws/" target="_blank">SecurityWeek — Microsoft August OOB Patches</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://msrc.microsoft.com/update-guide/" target="_blank">Microsoft Security Response Center</a><span class="arrow">↗</span></div>
         <div class="linkGroup">BI Platform — Metabase zero-day (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://www.metabase.com/blog/security-advisory" target="_blank">Metabase Security Advisory (GHSA-vwf4-m7j8-wcjf)</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.metabase.com/blog/security-advisory" target="_blank">Metabase Security Advisory</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/metabase-zero-day-exploited-in-wild.html" target="_blank">The Hacker News — Metabase Zero-Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">npm Supply Chain — WEL1DROPPER</div>
         <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian AI Slopsquatting npm Campaign</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/nearly-800-malicious-npm-packages.html" target="_blank">The Hacker News — 800 Malicious npm Packages</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Black Hat 2026 — Black Hat</div>
-        <div class="linkItem"><a href="https://novee.security/blog/critical-flaws-in-anthropic-google-and-openais-coding-agents/" target="_blank">Novee Security — Critical Flaws in AI Coding Agents (Black Hat)</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://novee.security/blog/critical-flaws-in-anthropic-google-and-openais-coding-agents/" target="_blank">Novee Security — Critical Flaws in AI Coding Agents</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/claude-code-and-gemini-cli-flaws-let.html" target="_blank">The Hacker News — Claude Code & Gemini CLI Flaws</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Patch Tuesday — August Patch Tuesday</div>
         <div class="linkItem"><a href="https://www.securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day/" target="_blank">SecurityWeek — August 2026 Patch Tuesday</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus Group CVE-2026-68820 Attribution</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.tenable.com/blog/microsofts-august-2026-patch-tuesday-addresses-398-cves-cve-2026-68820" target="_blank">Tenable — August 2026 Patch Tuesday Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">VMware vCenter — vCenter CVE-2026-59310 now actively exploited</div>
-        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 Active Exploitation (361 Victims)</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE Exploited for Reverse SSH</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 Active Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Ransomware — Gunra ransomware</div>
         <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A — Gunra Ransomware</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware Joint Advisory</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress Supply Chain — BdThemes supply chain</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain Attack</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence / Defiant Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">SAP Commerce Cloud — SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231 Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August 2026 Patch Day Analysis</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchi</div>
+        <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchill/Fl</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm Investigation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">AI Infrastructure — Unit 42</div>
         <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/ai-token-jacking/" target="_blank">Unit 42 — AI Token Jacking</a><span class="arrow">↗</span></div>
         <div class="linkGroup">CVE-2026-59726 — RufRoot (CVE-2026-59726, CVSS 10.0)</div>
         <div class="linkItem"><a href="https://noma.security/blog/rufroot-the-mcp-bridge-vulnerability-that-turns-agents-into-rogue-admins-cve-2026-59726/" target="_blank">Noma Labs — RufRoot CVE-2026-59726</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Adobe Commerce / Magento — Adobe Commerce CVE-2026-71362 (CVSS 9.1)</div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362 Exploited Same Day</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/adobe-commerce-bug-targeted-immediately-after-disclosure/" target="_blank">SecurityWeek — Adobe Commerce Bug Targeted Immediately After Disclosure</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — Security Bulletin APSB26-92</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">GeoServer — GeoServer jsonArrayContains zero-day (CVSS 9.8)</div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day Targeted in Active Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/" target="_blank">SecurityWeek — Hackers Exploiting Unpatched GeoServer Zero-Day</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://fieldeffect.com/blog/early-exploitation-attempts-observed-geoserver-zero-day" target="_blank">Field Effect — Early Exploitation of GeoServer Zero Day</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -1986,8 +2023,79 @@
     ],
     "source": "Noma Labs",
     "sourceNote": "Aug 6, 2026"
+  },
+  "adobecommerce": {
+    "eyebrow": "Adobe Commerce / Magento · CVE-2026-71362 · CVSS 9.1 · Actively Exploited",
+    "title": "Adobe Commerce CVE-2026-71362 (CVSS 9.1): unauthenticated privilege escalation exploited same day as patch — customer accounts hijacked",
+    "tags": [
+      [
+        "crit",
+        "CVSS 9.1"
+      ],
+      [
+        "high",
+        "Exploited Day-0"
+      ]
+    ],
+    "overview": "Sansec confirmed that exploitation attempts against CVE-2026-71362 began within hours of Adobe releasing its August 11 patch — before most merchants could apply it. The flaw is an incorrect authorization vulnerability (CWE-863) in Adobe Commerce, Adobe Commerce B2B, and Magento Open Source. An unauthenticated remote attacker can exploit improper session identity handling to escalate privileges and take over customer accounts without any user interaction. Adobe stated it had no evidence of exploitation at time of patch release, but Sansec's Shield WAF was already blocking attempts. Scope: all Commerce, Commerce B2B, and Magento Open Source versions through the July 2026 security builds (2.4.4–2.4.9).",
+    "technical": [
+      "CVE-2026-71362 (CVSS 9.1, CWE-863): Incorrect authorization in Adobe Commerce, Commerce B2B, and Magento Open Source. The root cause is improper handling of customer identity validation during account sessions — an unauthenticated attacker sends crafted requests to manipulate session state, escalating to another customer's session context. No authentication, no administrator privileges, no user interaction required. Researcher 0x0.eth (0x0doteth) credited with discovery.",
+      "Affected versions: Adobe Commerce and Magento Open Source 2.4.4 through 2.4.9 running July 2026 or earlier security builds. Fixed in: 2.4.9-2026-aug, 2.4.8-2026-aug, 2.4.7-2026-aug, 2.4.6-2026-aug, 2.4.5-2026-aug, 2.4.4-2026-aug. Adobe released an isolated patch (APSB26-92) to allow merchants to apply the fix without full platform upgrade risk.",
+      "Five additional CVEs patched in APSB26-92: CVE-2026-48413 (CVSS 8.7, stored XSS → RCE, requires low-privilege auth), CVE-2026-48414 (CVSS 7.7, stored XSS → RCE, requires admin), CVE-2026-48415 (CVSS 7.6, security-feature bypass in B2B, requires low-privilege auth), CVE-2026-48416 (CVSS 7.5, security-feature bypass, no auth required), CVE-2026-48411 (CVSS 6.8, authorization bypass), CVE-2026-48412 (CVSS 2.7, privilege escalation). Apply the full patch set.",
+      "Exploitation impact: attacker can impersonate any customer, access saved payment methods, order history, stored addresses, loyalty points, and private account data. In B2B configurations, customer account compromise may expose company-level purchasing accounts and negotiated pricing."
+    ],
+    "iocs": [],
+    "iocNote": "No attacker infrastructure IOCs published. Exploitation is server-side — detection via access log analysis. Search application access logs for unusual session manipulation patterns, unexpected account access from unfamiliar IPs, and anomalous privilege transitions in Magento/Commerce logs.",
+    "mitigation": [
+      "Apply Adobe's isolated patch APSB26-92 immediately for your version branch (2.4.4 through 2.4.9). The isolated patch allows applying the fix without a full platform upgrade — use it if a full upgrade would cause significant delay.",
+      "If immediate patching is not possible: configure your WAF to block anomalous session manipulation requests to the Commerce account endpoints. Sansec's WAF signatures are blocking the known exploit pattern.",
+      "Apply all six additional CVEs in APSB26-92 — don't cherry-pick only the critical CVE-2026-71362."
+    ],
+    "response": [
+      "Search Commerce/Magento access logs for anomalous account session activity since August 11 — particularly unexpected logins, account changes, or order placements from IPs outside your expected customer geography.",
+      "If exploitation is suspected: audit customer accounts for unauthorized changes (shipping address modifications, payment method additions, email changes) and notify affected customers per your breach notification obligations.",
+      "Check for CVE-2026-48416 exploitation simultaneously — it also requires no authentication and was patched in the same release."
+    ],
+    "source": "BleepingComputer, SecurityWeek, Sansec, Adobe PSIRT (APSB26-92)",
+    "sourceNote": "Aug 11–14, 2026"
+  },
+  "geoserver": {
+    "eyebrow": "GeoServer · GHSA-mqjf-5f49-2fjh · CVSS 9.8 · Actively Probed · Patches Available",
+    "title": "GeoServer jsonArrayContains zero-day (CVSS 9.8): SQL injection exploited within hours of Aug 12 disclosure — critical infrastructure GIS platform. Patches now available.",
+    "tags": [
+      [
+        "crit",
+        "CVSS 9.8"
+      ],
+      [
+        "high",
+        "Critical Infra · GIS"
+      ]
+    ],
+    "overview": "A critical SQL injection vulnerability in GeoServer's jsonArrayContains OGC filter function was publicly disclosed on August 12, 2026 by researcher @q1uf3ng, and within hours WatchTowr observed hundreds of exploitation probes from a small pool of IP addresses. At time of disclosure there was no patch and no CVE — a scenario that historically precedes mass exploitation. GeoServer patches are now available (3.0.1, 2.28.5, 2.27.6) and the flaw has been assigned GitHub Security Advisory GHSA-mqjf-5f49-2fjh with CVSS 9.8. The vulnerability affects government GIS infrastructure, utility and energy mapping systems, and any organization running internet-exposed GeoServer with PostGIS. GeoServer has a documented history of rapid exploitation — in 2024, CVE-2024-36401 was used to breach a large US federal agency within two weeks of disclosure.",
+    "technical": [
+      "GHSA-mqjf-5f49-2fjh (CVSS 9.8, no CVE assigned at time of writing): SQL injection in GeoServer's jsonArrayContains function, used in OGC Filters with PostGIS DataStore. User-supplied arguments are improperly sanitized before encoding into database queries. Requires PostGIS 12 or greater with a String or JSON field. Unauthenticated, remote, no user interaction.",
+      "RCE path: If GeoServer's database connection uses an elevated-privilege account (such as the SA/system administrator account on SQL Server, or a superuser in PostgreSQL), the SQL injection pivots into full remote code execution via database-level command execution features (xp_cmdshell on MSSQL, COPY TO/FROM PROGRAM on PostgreSQL).",
+      "Patches: GeoServer 3.0.1, 2.28.5, and 2.27.6. No workaround is available — patching or disabling the jsonArrayContains function via WFS endpoint restriction is the only remediation.",
+      "GeoServer's 2024 exploitation precedent is directly relevant: CVE-2024-36401 (XPath injection) was exploited to breach a large US federal agency, deploy web shells, move laterally, and maintain access for approximately three weeks. The same vulnerability was simultaneously used in botnet and cryptocurrency mining campaigns and by a China-linked espionage group. GeoServer's role in critical infrastructure GIS (utility mapping, government land records, emergency management) makes exploitation particularly high-impact."
+    ],
+    "iocs": [],
+    "iocNote": "No attacker IPs published yet for this campaign — WatchTowr observed hundreds of probes from a small pool but has not released the source IPs. Monitor your own GeoServer logs for unexpected OGC Filter requests containing jsonArrayContains parameters, particularly with unusual SQL metacharacters in the values. WatchTowr and The Hacker News are tracking; check for IOC releases.",
+    "mitigation": [
+      "Upgrade GeoServer to 3.0.1, 2.28.5, or 2.27.6 immediately — the patch is available and attackers are already probing exposed instances.",
+      "If immediate patching is not possible: restrict all internet access to WFS endpoints — particularly any endpoint that processes OGC Filters. Access should require VPN or IP allowlisting.",
+      "Audit your GeoServer database connection configuration — ensure the connecting DB account does NOT have elevated privileges (SA/superuser). Least-privilege DB accounts limit SQL injection to data disclosure and prevent the RCE pivot."
+    ],
+    "response": [
+      "Check GeoServer logs for OGC Filter requests to WFS endpoints containing jsonArrayContains with unusual SQL-like values or metacharacters — this is the exploitation pattern.",
+      "If GeoServer runs with an elevated-privilege DB account and was internet-exposed since August 12: treat as potentially compromised and check for web shells, new database jobs, and outbound network connections from the GeoServer host.",
+      "Given the 2024 federal agency compromise pattern: if exploitation is suspected, look for lateral movement from the GeoServer host to adjacent internal systems, not just the GeoServer instance itself."
+    ],
+    "source": "The Hacker News, SecurityWeek, WatchTowr, Field Effect, Security Affairs",
+    "sourceNote": "Aug 12–15, 2026"
   }
 }
+
 
 
 
@@ -2381,8 +2489,44 @@
     "sectors": [
       "Technology"
     ]
+  },
+  "adobecommerce": {
+    "status": "new",
+    "conf": "Confirmed — Sansec Shield WAF blocking active exploitation attempts same day as patch",
+    "confNote": "Sansec confirmed exploitation within hours of Aug 11 patch; Adobe PSIRT patch advisory APSB26-92 published Aug 11",
+    "iocDate": "Aug 11, 2026 — exploitation same day as patch per Sansec",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": 9.1,
+    "sectors": [
+      "Technology"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1078 — Valid Accounts",
+      "T1565 — Data Manipulation"
+    ]
+  },
+  "geoserver": {
+    "status": "new",
+    "conf": "Confirmed — WatchTowr observed hundreds of probes within hours of Aug 12 disclosure; patches released Aug 14-15",
+    "confNote": "WatchTowr Jake Knott confirmed exploitation attempts; GeoServer project released patches 3.0.1/2.28.5/2.27.6; CVSS 9.8 via GHSA-mqjf-5f49-2fjh",
+    "iocDate": "Aug 12, 2026 — exploitation probes observed same day as disclosure; no IOCs published yet",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": 9.8,
+    "sectors": [
+      "Technology",
+      "Government"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1059 — Command and Scripting Interpreter",
+      "T1505.003 — Server Software Component: Web Shell"
+    ]
   }
 }
+
 
 
 
