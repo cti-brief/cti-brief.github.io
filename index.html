@@ -447,6 +447,13 @@
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
         </div>
 
+        <div class="story" data-detail="zoomsday">
+          <div class="tagRow"><span class="tag high">CVSS 8.3</span><span class="tag high">Zero-Click · All Platforms</span></div>
+          <p class="storyTitle"><span>Zoom "Zoomsday" CVE-2026-53413: zero-click RCE lets any meeting participant silently compromise every attendee — full exploit chain built by AI in under 24 hours</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">A Security disclosed three Zoom annotation memory-corruption CVEs on August 11. The worst (CVE-2026-53413, CVSS 8.3) requires no user interaction — a crafted annotation message is parsed automatically by every client in the meeting, triggering a stack buffer overflow. Attacker must be in the meeting but can then silently take over every participant's device. Patched in ZSB-26015. No in-wild exploitation confirmed. Notable: A Security built the full exploit chain using fewer than 20 public AI prompts in under 24 hours.</p>
+          <div class="srcline">SecurityWeek, Security Affairs, A Security, Zoom PSIRT — Aug 11, 2026</div>
+        </div>
+
         <div class="story" data-detail="ciscoasa">
           <div class="tagRow"><span class="tag high">CVSS 8.6</span><span class="tag high">Exploited · KEV</span></div>
           <p class="storyTitle"><span>Cisco ASA and FTD CVE-2026-20349: one unauthenticated packet crashes the VPN gateway — CISA KEV deadline already passed</span><span class="detailsCue">Details →</span></p>
@@ -591,6 +598,13 @@
         
         
         
+        <div class="cveCard high-card" data-detail="zoomsday">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-53413</span><span class="cveScore">8.3</span>
+          </div>
+          <div class="cveSub">Zoom Zoomsday — zero-click annotation RCE, any participant compromises all attendees. Patched ZSB-26015.</div>
+        </div>
+
         <div class="cveCard high-card" data-detail="ciscoasa">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-20349</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">8.6</span>
@@ -662,6 +676,13 @@
           </div>
           <div class="cveSub">QUIC / DNS / TFTP Server RCE — all unauthenticated, not yet exploited</div>
         </div>
+        <div class="cveCard high-card" data-detail="mspathaug">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-55040</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.1</span>
+          </div>
+          <div class="cveSub">SharePoint JWT auth bypass — PoC-driven exploitation, 8,500+ exposed servers. Both July + August patches required.</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="mspathaug">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-65667</span><span class="cveTag oob">OOB Aug 7</span><span class="cveScore">10.0</span>
@@ -703,9 +724,10 @@
         <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/pass-ta-key-stealing-google-synced-passkeys/" target="_blank">Unit 42 — Pass-ta-key</a><span class="arrow">↗</span></div>
         <div class="linkGroup">AI Weaponization — Talos</div>
         <div class="linkItem"><a href="https://blog.talosintelligence.com/keep-going-bro-youve-got-this-a-data-driven-look-at-how-adversaries-are-weaponizing-ai/" target="_blank">Cisco Talos — Adversaries Weaponizing AI</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Microsoft Out-of-Band — Microsoft emergency OOB</div>
-        <div class="linkItem"><a href="https://www.securityweek.com/microsoft-patches-critical-azure-teams-sharepoint-flaws/" target="_blank">SecurityWeek — Microsoft August OOB Patches</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://msrc.microsoft.com/update-guide/" target="_blank">Microsoft Security Response Center</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Microsoft Out-of-Band — SharePoint CVE-2026-55040 actively exploited after</div>
+        <div class="linkItem"><a href="https://www.securityweek.com/sharepoint-vulnerability-exploited-shortly-after-poc-release/" target="_blank">SecurityWeek — SharePoint CVE-2026-55040 Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.rapid7.com/blog/post/ve-cve-2026-55040-microsoft-sharepoint-jwt-token-authentication-bypass-fixed/" target="_blank">Rapid7 — CVE-2026-55040 Technical Analysis & PoC</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/attackers-exploit-sharepoint.html" target="_blank">The Hacker News — Attackers Exploit SharePoint</a><span class="arrow">↗</span></div>
         <div class="linkGroup">BI Platform — Metabase zero-day (CVSS 10.0)</div>
         <div class="linkItem"><a href="https://www.metabase.com/blog/security-advisory" target="_blank">Metabase Security Advisory</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/metabase-zero-day-exploited-in-wild.html" target="_blank">The Hacker News — Metabase Zero-Day</a><span class="arrow">↗</span></div>
@@ -729,7 +751,7 @@
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">SAP Commerce Cloud — SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce CVE-2026-58231</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August 2026 Patch Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchill/Fl</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft</a><span class="arrow">↗</span></div>
@@ -739,7 +761,7 @@
         <div class="linkGroup">CVE-2026-59726 — RufRoot (CVE-2026-59726, CVSS 10.0)</div>
         <div class="linkItem"><a href="https://noma.security/blog/rufroot-the-mcp-bridge-vulnerability-that-turns-agents-into-rogue-admins-cve-2026-59726/" target="_blank">Noma Labs — RufRoot CVE-2026-59726</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Adobe Commerce / Magento — Adobe Commerce CVE-2026-71362 (CVSS 9.1)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362 Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/adobe-commerce-bug-targeted-immediately-after-disclosure/" target="_blank">SecurityWeek — Adobe Commerce Bug Targeted Immediately</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — APSB26-92</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GeoServer — GeoServer jsonArrayContains zero-day (CVSS 9.8)</div>
@@ -749,6 +771,10 @@
         <div class="linkGroup">Cisco Secure Firewall — Cisco ASA and FTD CVE-2026-20349 (CVSS 8.6)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA/FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Zoom — Zoom 'Zoomsday' CVE-2026-53413</div>
+        <div class="linkItem"><a href="https://www.securityweek.com/zoom-patches-zero-click-code-execution-vulnerability/" target="_blank">SecurityWeek — Zoom Patches Zero-Click Code Execution</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.secureblink.com/threat-feeds/zoom-zero-click-rce-lets-any-participant-hijack-every-device-1" target="_blank">Secureblink — Zoomsday Technical Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.zoom.com/en/trust/security-bulletin/zsb-26015" target="_blank">Zoom PSIRT — ZSB-26015</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -1274,7 +1300,7 @@
   },
   "mspathaug": {
     "eyebrow": "Microsoft Out-of-Band · Aug 7, 2026 · Three CVSS 10.0",
-    "title": "Microsoft emergency OOB: three CVSS-10 flaws in Azure, Teams, and SQL — plus the missing SharePoint RCE half",
+    "title": "SharePoint CVE-2026-55040 actively exploited after Rapid7 PoC — JWT forgery gives unauthenticated admin access. Teams + SharePoint OOB (Aug 7) completes RCE chain.",
     "tags": [
       [
         "crit",
@@ -1287,6 +1313,7 @@
     ],
     "overview": "Microsoft issued an out-of-band update on August 7 addressing critical vulnerabilities across Azure, Teams, and SharePoint — including three rated CVSS 10.0. CVE-2026-63508 (Planetary Computer Pro), CVE-2026-56162 (Azure SQL Database), and CVE-2026-65667 (Microsoft Teams) all allow network-level privilege escalation with no user interaction. Separately, Microsoft shipped the previously embargoed RCE half of the July SharePoint chain — combined with CVE-2026-55040 (auth bypass, patched July), this creates a fully exploitable unauthenticated RCE path against on-prem SharePoint that was only half-closed since Patch Tuesday. No in-the-wild exploitation confirmed at time of release.",
     "technical": [
+      "CVE-2026-55040 (CVSS 9.1) — ACTIVELY EXPLOITED: Rapid7 published a PoC on August 11 and attackers began hitting unpatched SharePoint servers within hours. The PoC chains four JWT validation weaknesses to forge a service-to-service Bearer token with 'alg: none' in the outer header (no signature required), allowing an unauthenticated attacker to impersonate any SharePoint user or administrator. Rapid7 Senior Principal Security Researcher Stephen Fewer originally discovered this at Pwn2Own Berlin. Defused honeypots confirmed exploitation Aug 12. KEVIntel tracked 8 exploitation attempts in the 48 hours following PoC release. This is the fifth SharePoint vulnerability exploited in 2026.",
       "CVE-2026-63508 (CVSS 10.0): Missing authentication in Microsoft Planetary Computer Pro — network-level EoP, no user interaction. Cloud-side mitigated; no customer action required.",
       "CVE-2026-56162 (CVSS 10.0): Improper authentication in Azure SQL Database — network-level EoP. Cloud-side mitigated; no customer action required.",
       "CVE-2026-65667 (CVSS 10.0): Missing authorization in Microsoft Teams — network-level EoP. Verify Teams client is updated.",
@@ -1303,6 +1330,7 @@
       "Azure/SQL/Planetary Computer CVSS 10.0 flaws are cloud-mitigated — verify with MSRC if you run on-prem variants."
     ],
     "response": [
+      "Search on-premises SharePoint Server logs for Bearer service-to-service JWT tokens with 'alg: none' in the outer header — this is the specific forgery pattern from the Rapid7 PoC that attackers are now using. Check SharePoint ULS logs for unauthenticated administrative operations since August 12.",
       "Verify August OOB patches are applied to on-prem SharePoint and AD domain controllers — neither auto-updates in typical enterprise environments.",
       "Run SharePoint version check against MSRC Response Matrix to confirm both halves of the RCE chain are closed."
     ],
@@ -2151,8 +2179,45 @@
     ],
     "source": "BleepingComputer, The Hacker News, SOCRadar, CATAAM, Cisco PSIRT",
     "sourceNote": "Aug 11–14, 2026"
+  },
+  "zoomsday": {
+    "eyebrow": "Zoom · CVE-2026-53413 · CVSS 8.3 · Zero-Click RCE · Patched",
+    "title": "Zoom 'Zoomsday' CVE-2026-53413: zero-click RCE in annotation engine lets any meeting participant silently compromise every attendee's device — AI found it in under 24 hours",
+    "tags": [
+      [
+        "high",
+        "CVSS 8.3"
+      ],
+      [
+        "high",
+        "Zero-Click · All Platforms"
+      ]
+    ],
+    "overview": "A Security disclosed three memory-corruption vulnerabilities in Zoom's annotation feature on August 11, 2026 under the name Zoomsday. The most severe, CVE-2026-53413 (CVSS 8.3), is a zero-click remote code execution flaw — a malicious meeting participant sends a crafted annotation message that the receiving client parses automatically, achieving code execution with no user interaction, no click, no visible warning, and no prompt. The attacker must be in the same meeting (joined or hosted), but can then target every other participant individually through the annotation protocol's direct viewer-sharer channel. Zoom has patched all four vulnerabilities. No exploitation in the wild has been confirmed. A secondary finding of significant importance: A Security discovered and weaponized the full exploit chain using fewer than 20 prompts to publicly available AI models in under 24 hours — a direct demonstration of AI-accelerated vulnerability research compressing the window defenders have to respond.",
+    "technical": [
+      "CVE-2026-53413 (CVSS 8.3 High, ZSB-26015): Missing bounds check in the CAnnoFormatBlock::Deserialize function within Zoom's annotation engine (libannotate.so). The parser accepts 32-bit character counts from the network without validating them against fixed 128-byte buffers, causing a stack buffer overflow. The annotation feature's proprietary protocol opens a direct communication channel between meeting participants, meaning a crafted message from any participant is parsed automatically by every other client.",
+      "CVE-2026-53414 (Medium): Buffer over-read in the annotator that can expose memory contents. CVE-2026-53415 (High, CVSS 8.3): Use-after-free in auto-shape metadata handling providing a write-what-where primitive — a secondary code-execution path. CVE-2026-53416 (High): Path traversal in Zoom Virtual Desktop Infrastructure (VDI) client, unrelated to the annotation cluster.",
+      "Exploitation path: Attacker joins or hosts a meeting → sends a specially crafted annotation message → every other participant's client automatically parses it → stack buffer overflow → control over return address → code execution on the victim's machine. No click, no file opening, no visible warning to the victim.",
+      "AI-accelerated discovery: A Security disclosed that the complete exploit chain was developed using fewer than 20 prompts to publicly available AI models in under 24 hours. This is a significant data point for the broader threat landscape — it demonstrates that nation-state-caliber vulnerability research is being compressed to sub-24-hour timelines by AI tooling, without specialized security AI access.",
+      "Separate from CVE-2026-53412 (July, Windows-only, account takeover) — different vulnerability, different mechanism, different fixed versions. The July check does not cover this."
+    ],
+    "iocs": [],
+    "iocNote": "No exploitation in the wild confirmed at time of writing. No attacker infrastructure IOCs available. Update Zoom clients to the versions specified in ZSB-26015. If you run Zoom for sensitive meetings (executive, legal, security team), treat this as high-urgency patching regardless of no confirmed exploitation — the PoC exists and was developed in under 24 hours.",
+    "mitigation": [
+      "Update Zoom Workplace clients to the fixed versions specified in Zoom Security Bulletin ZSB-26015 on all platforms — Windows, macOS, Linux, iOS, and Android. Zoom is rolling out updates automatically but verify version numbers are current.",
+      "For VDI environments: apply the separate fix for CVE-2026-53416 (path traversal in the VDI client) which requires a different update path.",
+      "This is separate from the July CVE-2026-53412 Windows account-takeover fix — passing the July check does not mean August's annotation cluster is patched."
+    ],
+    "response": [
+      "No exploitation in the wild has been confirmed — however the full exploit chain is documented and was developed in under 24 hours using public AI tools. Treat as urgent patching, not a leisurely rollout.",
+      "If Zoom is used for sensitive discussions (security team, legal, executive, M&A): verify all participants have updated clients before meeting. An unpatched participant could be compromised by a malicious attendee even on a fully patched host.",
+      "Zoom annotation can be disabled for meetings where it is not needed — this removes the attack surface entirely while patching is in progress."
+    ],
+    "source": "SecurityWeek, Security Affairs, Secureblink, A Security, Zoom PSIRT (ZSB-26015)",
+    "sourceNote": "Aug 11, 2026"
   }
 }
+
 
 
 
@@ -2341,9 +2406,9 @@
     ]
   },
   "mspathaug": {
-    "status": "new",
-    "conf": "Confirmed — vendor advisory, no exploitation at release",
-    "confNote": "MSRC directly; no public exploitation confirmed at time of OOB advisory",
+    "status": "confirmed",
+    "conf": "Confirmed — CVE-2026-55040 actively exploited within hours of Rapid7 PoC release (Aug 11-12); Defused honeypots confirmed; 8,500+ on-prem servers still exposed",
+    "confNote": "Rapid7 published technical writeup and PoC on Aug 11; Defused confirmed exploitation via honeypots Aug 12; 8 exploitation attempts in 48 hours from 8 unique IPs across 5 countries per KEVIntel. Microsoft has not confirmed publicly but CISA warned admins to harden SharePoint.",
     "iocDate": "n/a — no exploitation indicators published",
     "admiralty": "A1",
     "severity": 5,
@@ -2599,8 +2664,25 @@
       "T1499 — Endpoint Denial of Service",
       "T1190 — Exploit Public-Facing Application"
     ]
+  },
+  "zoomsday": {
+    "status": "new",
+    "conf": "Confirmed patch — Zoom PSIRT patched Aug 11 (ZSB-26015); no confirmed in-wild exploitation at time of writing",
+    "confNote": "A Security discovered via AI-assisted research in <24 hours, fewer than 20 prompts; coordinated disclosure; Zoom patched all four CVEs; no exploitation in wild confirmed",
+    "iocDate": "n/a — no exploitation confirmed; patch available",
+    "admiralty": "A2",
+    "severity": 4,
+    "cvss": 8.3,
+    "sectors": [
+      "All Sectors"
+    ],
+    "attack": [
+      "T1203 — Exploitation for Client Execution",
+      "T1059 — Command and Scripting Interpreter"
+    ]
   }
 }
+
 
 
 
