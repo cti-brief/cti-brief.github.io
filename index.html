@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Daily Threat Brief</title>
+<title>CTI Brief</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M50%204L88%2018v32c0%2024-18%2042-38%2048C10%2092-8%2074-8%2050V18z%22%20fill%3D%22%23E0544A%22%2F%3E%3Cpath%20d%3D%22M34%2050l13%2013%2019-22%22%20stroke%3D%22%23fff%22%20stroke-width%3D%227%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -352,7 +352,7 @@
   <header>
     <div style="flex:1; min-width:0;">
       <div class="eyebrow"><span class="tlp">TLP:CLEAR</span></div>
-      <h1>Daily Threat Brief</h1>
+      <h1>CTI Brief</h1>
       <div class="subhead" id="dateLine"></div>
       <div class="headerStats" id="headerStats"></div>
     </div>
@@ -442,6 +442,13 @@
           <p class="storyTitle"><span>BdThemes WordPress supply chain: 350,000+ sites backdoored via poisoned API feed — rogue admins and webshells planted without touching plugin code</span><span class="detailsCue">Details →</span></p>
           <p class="storyBody">Attacker gained write access to BdThemes' DigitalOcean Spaces bucket — the backend for Biggopti, a promotional banner component in 7 popular BdThemes plugins. Biggopti runs on every wp-admin page load. The poisoned API response silently creates a rogue admin account, installs a fake plugin (wp-smart-thumbnails) containing emer-run.php webshell, and phones C2 at ia-cdn[.]com. No plugin code was modified so standard integrity checks won't catch it. Active June 23 – Aug 8; API cleaned but compromised sites persist until manually remediated.</p>
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
+        </div>
+
+        <div class="story" data-detail="ciscoasa">
+          <div class="tagRow"><span class="tag high">CVSS 8.6</span><span class="tag high">Exploited · KEV</span></div>
+          <p class="storyTitle"><span>Cisco ASA and FTD CVE-2026-20349: one unauthenticated packet crashes the VPN gateway — CISA KEV deadline already passed</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">One crafted HTTP request to the Remote Access SSL VPN service causes Cisco Secure Firewall ASA and FTD to reload, dropping every connected VPN session. No credentials, no user interaction. Cisco confirmed active exploitation. CISA KEV deadline of August 14 has passed. No configuration workaround exists — only the patch fixes it. Cisco has not published IoCs; Snort rules 46897 and 59654 are the only detection artifacts available.</p>
+          <div class="srcline">BleepingComputer, The Hacker News, Cisco PSIRT — Aug 11–14, 2026</div>
         </div>
 
         <div class="story" data-detail="adobecommerce">
@@ -581,6 +588,13 @@
         
         
         
+        <div class="cveCard high-card" data-detail="ciscoasa">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-20349</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">8.6</span>
+          </div>
+          <div class="cveSub">Cisco ASA / FTD Remote Access SSL VPN — unauthenticated single-packet DoS, no workaround</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="adobecommerce">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-71362</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.1</span>
@@ -590,7 +604,7 @@
 
         <div class="cveCard crit-card" data-detail="geoserver">
           <div class="cveTop">
-            <span class="cveNum">GHSA-mqjf-5f49-2fjh</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
+            <span class="cveNum">GHSA-mqjf-5f49-2fjh</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">9.8</span>
           </div>
           <div class="cveSub">GeoServer jsonArrayContains SQLi → RCE — patches available 3.0.1/2.28.5/2.27.6</div>
         </div>
@@ -664,26 +678,26 @@
         <h2><span class="dot blue"></span>Sources Used This Brief</h2>
 
         <div class="linkGroup">CVE-2026-63077 — JetBrains TeamCity — unauthenticated RCE</div>
-        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory — CVE-2026-63077</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA Known Exploited Vulnerabilities Catalog</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA KEV Catalog</a><span class="arrow">↗</span></div>
         <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0533</div>
-        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000</a><span class="arrow">↗</span></div>
         <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after first</div>
-        <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able Security Advisory SA-2026-10</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able SA-2026-10</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Exploitation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">RMM Abuse — SMOKE#SCREEN uses fake Adobe/Zoom updates to plant</div>
         <div class="linkItem"><a href="https://www.securonix.com/blog/smoke-screen-screenconnect-rmm-abuse-cloudflare-tunnels/" target="_blank">Securonix — SMOKE#SCREEN</a><span class="arrow">↗</span></div>
         <div class="linkGroup">DPRK / Lazarus — ChainDrop</div>
         <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv/Cacheable Compromised</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv Compromised</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GPU/Cloud — GPUBreach</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-gpubreach-attack-gains-full-system-access-via-nvidia-gpu/" target="_blank">BleepingComputer — GPUBreach NVIDIA Attack</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-gpubreach-attack-gains-full-system-access-via-nvidia-gpu/" target="_blank">BleepingComputer — GPUBreach NVIDIA</a><span class="arrow">↗</span></div>
         <div class="linkGroup">AI Safety — UK AI Security Institute</div>
-        <div class="linkItem"><a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-evaluation-and-assurance" target="_blank">UK AISI — Frontier AI Evaluation Report</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-evaluation-and-assurance" target="_blank">UK AISI — Frontier AI Evaluation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Chinese APT — Mustang Panda spent a year inside QuickFox VPN ins</div>
-        <div class="linkItem"><a href="https://www.fortinet.com/blog/threat-research/quickfox-supply-chain-attack-used-to-deploy-fdmtp-implant" target="_blank">Fortinet FortiGuard Labs — QuickFox FDMTP Supply Chain</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.fortinet.com/blog/threat-research/quickfox-supply-chain-attack-used-to-deploy-fdmtp-implant" target="_blank">Fortinet — QuickFox FDMTP Supply Chain</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Identity — Pass-ta-key</div>
-        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/pass-ta-key-stealing-google-synced-passkeys/" target="_blank">Unit 42 — Pass-ta-key Google Passkey Research</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/pass-ta-key-stealing-google-synced-passkeys/" target="_blank">Unit 42 — Pass-ta-key</a><span class="arrow">↗</span></div>
         <div class="linkGroup">AI Weaponization — Talos</div>
         <div class="linkItem"><a href="https://blog.talosintelligence.com/keep-going-bro-youve-got-this-a-data-driven-look-at-how-adversaries-are-weaponizing-ai/" target="_blank">Cisco Talos — Adversaries Weaponizing AI</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Out-of-Band — Microsoft emergency OOB</div>
@@ -693,27 +707,27 @@
         <div class="linkItem"><a href="https://www.metabase.com/blog/security-advisory" target="_blank">Metabase Security Advisory</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/metabase-zero-day-exploited-in-wild.html" target="_blank">The Hacker News — Metabase Zero-Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">npm Supply Chain — WEL1DROPPER</div>
-        <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian AI Slopsquatting npm Campaign</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian npm Campaign</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/nearly-800-malicious-npm-packages.html" target="_blank">The Hacker News — 800 Malicious npm Packages</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Black Hat 2026 — Black Hat</div>
-        <div class="linkItem"><a href="https://novee.security/blog/critical-flaws-in-anthropic-google-and-openais-coding-agents/" target="_blank">Novee Security — Critical Flaws in AI Coding Agents</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/claude-code-and-gemini-cli-flaws-let.html" target="_blank">The Hacker News — Claude Code & Gemini CLI Flaws</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://novee.security/blog/critical-flaws-in-anthropic-google-and-openais-coding-agents/" target="_blank">Novee Security — AI Coding Agent Flaws</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/claude-code-and-gemini-cli-flaws-let.html" target="_blank">The Hacker News — Claude Code & Gemini CLI</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Patch Tuesday — August Patch Tuesday</div>
+        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus CVE-2026-68820</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day/" target="_blank">SecurityWeek — August 2026 Patch Tuesday</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus Group CVE-2026-68820 Attribution</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.tenable.com/blog/microsofts-august-2026-patch-tuesday-addresses-398-cves-cve-2026-68820" target="_blank">Tenable — August 2026 Patch Tuesday Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.tenable.com/blog/microsofts-august-2026-patch-tuesday-addresses-398-cves-cve-2026-68820" target="_blank">Tenable — Patch Tuesday Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">VMware vCenter — vCenter CVE-2026-59310 now actively exploited</div>
-        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 Active Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 361 Victim IPs</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Ransomware — Gunra ransomware</div>
-        <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A — Gunra Ransomware</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware Joint Advisory</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware Advisory</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress Supply Chain — BdThemes supply chain</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain Attack</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">SAP Commerce Cloud — SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231 Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August 2026 Patch Day Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August 2026 Patch Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchill/Fl</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm Investigation</a><span class="arrow">↗</span></div>
@@ -722,13 +736,16 @@
         <div class="linkGroup">CVE-2026-59726 — RufRoot (CVE-2026-59726, CVSS 10.0)</div>
         <div class="linkItem"><a href="https://noma.security/blog/rufroot-the-mcp-bridge-vulnerability-that-turns-agents-into-rogue-admins-cve-2026-59726/" target="_blank">Noma Labs — RufRoot CVE-2026-59726</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Adobe Commerce / Magento — Adobe Commerce CVE-2026-71362 (CVSS 9.1)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362 Exploited Same Day</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/adobe-commerce-bug-targeted-immediately-after-disclosure/" target="_blank">SecurityWeek — Adobe Commerce Bug Targeted Immediately After Disclosure</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — Security Bulletin APSB26-92</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362 Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/adobe-commerce-bug-targeted-immediately-after-disclosure/" target="_blank">SecurityWeek — Adobe Commerce Bug Targeted Immediately</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — APSB26-92</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GeoServer — GeoServer jsonArrayContains zero-day (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day Targeted in Active Exploitation</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/" target="_blank">SecurityWeek — Hackers Exploiting Unpatched GeoServer Zero-Day</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://fieldeffect.com/blog/early-exploitation-attempts-observed-geoserver-zero-day" target="_blank">Field Effect — Early Exploitation of GeoServer Zero Day</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day Targeted</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/" target="_blank">SecurityWeek — GeoServer Zero-Day Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://fieldeffect.com/blog/early-exploitation-attempts-observed-geoserver-zero-day" target="_blank">Field Effect — Early GeoServer Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Cisco Secure Firewall — Cisco ASA and FTD CVE-2026-20349 (CVSS 8.6)</div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA/FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw Exploited</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -743,7 +760,9 @@
 </div>
 
 <script>
-  document.getElementById('dateLine').textContent = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) ;
+  const WEEK_RANGE = 'Week of Aug 10 – Aug 16, 2026';
+  const lastUpdated = new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+  document.getElementById('dateLine').textContent = WEEK_RANGE + ' · Last updated ' + lastUpdated;
 
   const D = {
   "teamcity": {
@@ -2072,7 +2091,7 @@
         "Critical Infra · GIS"
       ]
     ],
-    "overview": "A critical SQL injection vulnerability in GeoServer's jsonArrayContains OGC filter function was publicly disclosed on August 12, 2026 by researcher @q1uf3ng, and within hours WatchTowr observed hundreds of exploitation probes from a small pool of IP addresses. At time of disclosure there was no patch and no CVE — a scenario that historically precedes mass exploitation. GeoServer patches are now available (3.0.1, 2.28.5, 2.27.6) and the flaw has been assigned GitHub Security Advisory GHSA-mqjf-5f49-2fjh with CVSS 9.8. The vulnerability affects government GIS infrastructure, utility and energy mapping systems, and any organization running internet-exposed GeoServer with PostGIS. GeoServer has a documented history of rapid exploitation — in 2024, CVE-2024-36401 was used to breach a large US federal agency within two weeks of disclosure.",
+    "overview": "A critical SQL injection vulnerability in GeoServer's jsonArrayContains OGC filter function was publicly disclosed on August 12, 2026 by researcher @q1uf3ng, and within hours WatchTowr observed hundreds of exploitation probes from a small pool of IP addresses. At time of disclosure there was no patch and no CVE — a scenario that historically precedes mass exploitation. GeoServer patches are now available (3.0.1, 2.28.5, 2.27.6), the flaw has been assigned GHSA-mqjf-5f49-2fjh with CVSS 9.8, and CISA has added it to the Known Exploited Vulnerabilities catalog. The vulnerability affects government GIS infrastructure, utility and energy mapping systems, and any organization running internet-exposed GeoServer with PostGIS. GeoServer has a documented history of rapid exploitation — in 2024, CVE-2024-36401 was used to breach a large US federal agency within two weeks of disclosure.",
     "technical": [
       "GHSA-mqjf-5f49-2fjh (CVSS 9.8, no CVE assigned at time of writing): SQL injection in GeoServer's jsonArrayContains function, used in OGC Filters with PostGIS DataStore. User-supplied arguments are improperly sanitized before encoding into database queries. Requires PostGIS 12 or greater with a String or JSON field. Unauthenticated, remote, no user interaction.",
       "RCE path: If GeoServer's database connection uses an elevated-privilege account (such as the SA/system administrator account on SQL Server, or a superuser in PostgreSQL), the SQL injection pivots into full remote code execution via database-level command execution features (xp_cmdshell on MSSQL, COPY TO/FROM PROGRAM on PostgreSQL).",
@@ -2093,8 +2112,45 @@
     ],
     "source": "The Hacker News, SecurityWeek, WatchTowr, Field Effect, Security Affairs",
     "sourceNote": "Aug 12–15, 2026"
+  },
+  "ciscoasa": {
+    "eyebrow": "Cisco Secure Firewall · CVE-2026-20349 · CVSS 8.6 · Actively Exploited · KEV",
+    "title": "Cisco ASA and FTD CVE-2026-20349 (CVSS 8.6): unauthenticated single-packet VPN crash exploited in wild — CISA KEV deadline was August 14",
+    "tags": [
+      [
+        "high",
+        "CVSS 8.6"
+      ],
+      [
+        "high",
+        "Exploited · KEV"
+      ]
+    ],
+    "overview": "Cisco confirmed active exploitation of CVE-2026-20349, a denial-of-service vulnerability in the Remote Access SSL VPN service of Cisco Secure Firewall ASA and FTD software. A single crafted HTTP request from an unauthenticated remote attacker forces the device to reload, knocking VPN access offline for every remote worker connected through it. CISA added the flaw to its Known Exploited Vulnerabilities catalog on August 11 with a remediation deadline of August 14 for US federal agencies — that deadline has passed. There is no configuration workaround — patching is the only remediation. Cisco has not identified the threat actor or shared indicators of compromise. The vulnerability was independently reported by researcher Valerio Brussani.",
+    "technical": [
+      "CVE-2026-20349 (CVSS 8.6, AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H): Insufficient error checking when processing HTTP requests in the Remote Access SSL VPN service. An unauthenticated remote attacker sends one crafted HTTP request to the affected service and causes an unexpected device reload, resulting in a denial-of-service condition for all connected VPN sessions. No credentials, no user interaction.",
+      "Affected configurations: devices with any of the following enabled — IKEv2 Remote Access VPN with client services, SSL VPN (WebVPN), or Zero Trust Network Access on Cisco FTD. Devices not running remote-access VPN services are not affected.",
+      "Affected versions: Cisco Secure Firewall ASA 9.16 through 9.24 and Cisco Secure Firewall Threat Defense (FTD) 7.0 through 10.0. Check your exact version against Cisco advisory cisco-sa-asaftd-vpn-dos-dzv4mQFF for the specific fixed release per your release train.",
+      "Impact is availability only: this is DoS, not RCE and not data disclosure. Exploitation causes an outage — VPN connectivity drops for all remote workers, and the firewall must reload. In high-availability pairs, exploitation may cascade. In organizations where VPN is the sole remote access method, exploitation creates an immediate business continuity event.",
+      "Detection: Cisco published Snort rules 46897 and 59654 as detection aids. Cisco has not published indicators of compromise — there are no known malicious IPs, hashes, or unique log signatures to hunt for. Detection relies on Snort/IDS correlation and monitoring for unexpected device reloads."
+    ],
+    "iocs": [],
+    "iocNote": "Cisco has not published indicators of compromise for CVE-2026-20349. No attacker IPs, payloads, or log signatures are available. Detection: deploy Snort rules 46897 and 59654 if running Cisco IDS/IPS; monitor ASA/FTD syslog for unexpected reload events and VPN service interruptions; review Remote Access SSL VPN connection logs for crafted HTTP requests immediately before any reload event.",
+    "mitigation": [
+      "Upgrade Cisco Secure Firewall ASA and FTD to a fixed release per Cisco advisory cisco-sa-asaftd-vpn-dos-dzv4mQFF. Check your exact version against the advisory — Cisco released hotfixes covering ASA 9.16–9.24 and FTD 7.0–10.0. There is no configuration workaround.",
+      "If immediate patching is not possible: assess whether your VPN service can be temporarily restricted to trusted source IP ranges at an upstream network device while patching is scheduled — this is not an official workaround but reduces exposure.",
+      "Prioritize HA pairs and primary VPN gateways for patching first — successful exploitation of a DoS on your primary VPN creates an immediate outage event for all remote workers."
+    ],
+    "response": [
+      "Review ASA/FTD syslog for unexpected reload events since August 11 — any unscheduled reload on a device running Remote Access SSL VPN may indicate exploitation.",
+      "Check VPN session logs immediately before any reload event for anomalous HTTP requests to the WebVPN service — particularly from unfamiliar source IPs or with anomalous request structure.",
+      "Deploy Snort rules 46897 and 59654 immediately if running Cisco IDS/IPS — these are the only detection artifacts Cisco has published."
+    ],
+    "source": "BleepingComputer, The Hacker News, SOCRadar, CATAAM, Cisco PSIRT",
+    "sourceNote": "Aug 11–14, 2026"
   }
 }
+
 
 
 
@@ -2509,8 +2565,8 @@
   },
   "geoserver": {
     "status": "new",
-    "conf": "Confirmed — WatchTowr observed hundreds of probes within hours of Aug 12 disclosure; patches released Aug 14-15",
-    "confNote": "WatchTowr Jake Knott confirmed exploitation attempts; GeoServer project released patches 3.0.1/2.28.5/2.27.6; CVSS 9.8 via GHSA-mqjf-5f49-2fjh",
+    "conf": "Confirmed — WatchTowr observed hundreds of probes within hours of Aug 12 disclosure; patches released Aug 14-15; CISA KEV-listed",
+    "confNote": "WatchTowr Jake Knott confirmed exploitation attempts; GeoServer project released patches 3.0.1/2.28.5/2.27.6; CVSS 9.8 via GHSA-mqjf-5f49-2fjh; CISA added to KEV catalog",
     "iocDate": "Aug 12, 2026 — exploitation probes observed same day as disclosure; no IOCs published yet",
     "admiralty": "A2",
     "severity": 5,
@@ -2524,8 +2580,25 @@
       "T1059 — Command and Scripting Interpreter",
       "T1505.003 — Server Software Component: Web Shell"
     ]
+  },
+  "ciscoasa": {
+    "status": "new",
+    "conf": "Confirmed — Cisco PSIRT confirmed active exploitation; CISA KEV-listed Aug 11 with Aug 14 federal deadline",
+    "confNote": "Cisco advisory cisco-sa-asaftd-vpn-dos-dzv4mQFF published Aug 11; CISA KEV deadline Aug 14 (already passed); Snort rules 46897 and 59654 published for detection",
+    "iocDate": "Aug 11, 2026 — active exploitation confirmed by Cisco PSIRT; no IoCs published",
+    "admiralty": "A1",
+    "severity": 5,
+    "cvss": 8.6,
+    "sectors": [
+      "All Sectors"
+    ],
+    "attack": [
+      "T1499 — Endpoint Denial of Service",
+      "T1190 — Exploit Public-Facing Application"
+    ]
   }
 }
+
 
 
 
