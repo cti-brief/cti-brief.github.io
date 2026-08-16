@@ -351,7 +351,10 @@
 
   <header>
     <div style="flex:1; min-width:0;">
-      <div class="eyebrow"><span class="tlp">TLP:CLEAR</span></div>
+      <div class="eyebrow" style="display:flex;justify-content:space-between;align-items:center;">
+        <span class="tlp">TLP:CLEAR</span>
+        <a href="./archive/" style="font-family:var(--mono);font-size:10px;color:var(--muted);text-decoration:none;opacity:.6;letter-spacing:.05em;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.6">Archive ↗</a>
+      </div>
       <h1>CTI Brief</h1>
       <div class="subhead" id="dateLine"></div>
       <div class="headerStats" id="headerStats"></div>
