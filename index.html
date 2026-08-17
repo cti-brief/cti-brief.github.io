@@ -362,7 +362,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      CVE-2026-68820 exploited in wild today (afd.sys → SYSTEM). Patch Tuesday: 421 CVEs, 3 critical RCE at CVSS 9.8. Metabase CVSS 10.0 zero-day, two KEV additions, simultaneous npm supply-chain attacks.
+      macOS pre-auth root exploited at scale via port 5900. SharePoint JWT forgery active post-PoC. AI-built exploits collapsing patch windows — Zoomsday in 24hrs, macOS RCE in 4hrs. Multiple KEV deadlines passed. Cisco ASA, GeoServer, Adobe Commerce exploitation ongoing.
     </div>
   </header>
 
@@ -400,27 +400,27 @@
         <h2>◆ Key Judgments</h2>
         <div class="kj-item">
           <span class="kj-num">01</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that AI guardrails are not functioning as a meaningful barrier for adversarial use — Talos collected real artifact evidence this week showing most actors bypass restrictions with trivial natural-language claims. Actor skill level, not model restrictions, is the primary determinant of damage done.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that AI is actively collapsing the time between vulnerability disclosure and weaponized exploitation — Zoom Zoomsday was built in under 24 hours with fewer than 20 public AI prompts; the macOS Screen Sharing RCE chain was developed in approximately 4 hours. This is a structural shift: patch cadences designed around days-to-weeks are being outpaced by exploit development measured in hours.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">02</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that supply-chain attacks are accelerating in automation — this week alone: a self-propagating npm worm (keyv), a yearlong undetected trojanized VPN installer (QuickFox), a fake-update RMM campaign (SMOKE#SCREEN), and a 788-package typosquatting RAT campaign (WEL1DROPPER). Each exploited trust in legitimate software delivery.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that pre-authentication vulnerabilities in internet-exposed services represent the highest-priority attack surface this week — macOS Screen Sharing (pre-auth root), Cisco ASA/FTD (pre-auth DoS), SharePoint (pre-auth admin impersonation), and GeoServer (pre-auth SQLi/RCE) are all actively exploited or PoC-available. Any service exposed to the internet without authentication-layer patching is a confirmed target in this cycle.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">03</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that identity-layer attacks are outpacing defenses — Pass-ta-key confirms synced passkeys are exploitable in practice (not just theoretically); token jacking confirms stolen API keys enter gray-market resale within minutes of theft. Hardware FIDO2 keys remain the single control that blocks most of these paths.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that KEV compliance deadlines are becoming the primary differentiator between organizations that get breached and those that don't — the Cisco ASA KEV deadline of August 14 has passed with devices still unpatched at scale. CISA's automatable classification of CVE-2026-65400 (macOS) and confirmed exploitation of four other KEV-listed vulnerabilities this cycle confirm attackers are tracking the same catalog defenders are.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">04</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that "first patch didn't hold" is a recurring pattern — N-central's CVE-2026-18556→18577 bypass is this week's primary example. Treat any vendor's "patched" status as provisional until a second review confirms no bypass route remains.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that industrial and engineering IP is now a primary ransomware target — Clop's PTC Windchill campaign against Shell (89GB), Philips, GE, and Fiserv demonstrates that engineering drawings, facility layouts, and testing data are being treated as intelligence-grade assets. Data-theft-only extortion targeting OT and PLM systems represents a distinct threat category from encryption-based ransomware that defenders need a separate playbook for.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">05</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that BI and data platforms are now a preferred entry point for credential pivoting — Metabase's CVSS 10.0 zero-day is the immediate example, but the pattern (BI tools holding privileged credentials to multiple production databases simultaneously) means a single unauthenticated compromise cascades into an organization's entire data estate.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that the npm ecosystem remains a reliable automated delivery mechanism for targeted supply-chain attacks — both the keyvworm credential-revocation campaign and WEL1DROPPER (788+ packages) remain active with no indication of takedown. AI-generated package names and lifecycle script execution-on-install give attackers an automated pipeline into developer endpoints that requires no victim interaction beyond a routine dependency install.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">06</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that AI coding agent automation workflows are a maturing attack surface — CVE-2026-54316 (Claude Code) and the CVSS 10.0 Gemini CLI flaw both demonstrated that a public GitHub issue with no repository permissions can compromise a CI runner and steal workflow credentials. Standard interactive AI coding use is not the risk; automated issue-processing pipelines are.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that Lazarus Group's confirmed exploitation of CVE-2026-68820 (afd.sys, Operation Dream Job) represents an ongoing campaign against defense sector organizations that has not concluded — FudModule rootkit and ForestTiger backdoor are persistent implants designed for long-term access. Organizations in defense, aerospace, and adjacent sectors should assume active targeting regardless of patch status and prioritize detection over prevention-only posture.</span>
         </div></div>
 
       <div class="panel">
@@ -499,7 +499,7 @@
         <div class="story" data-detail="patchtugsaug">
           <div class="tagRow"><span class="tag crit">Exploited Zero-Day</span><span class="tag high">421 CVEs · 62 Critical</span></div>
           <p class="storyTitle"><span>August Patch Tuesday: CVE-2026-68820 actively exploited for SYSTEM access — plus critical QUIC and DNS RCE cluster</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Today's Patch Tuesday (August 11) brings 421 CVEs including one being exploited right now by North Korea's Lazarus Group. CVE-2026-68820 (afd.sys use-after-free, KEV-listed Aug 11) lets a low-privilege local attacker reach SYSTEM via a race condition — Lazarus is deploying FudModule rootkit and ForestTiger backdoor, targeting defense sector organizations. Critical RCE cluster not yet exploited: QUIC (CVSS 9.8), DNS Server (CVSS 9.8, wormable per ZDI), and TFTP Server (CVSS 9.8).</p>
+          <p class="storyBody">August 11 Patch Tuesday brought 421 CVEs including CVE-2026-68820, confirmed exploited by North Korea's Lazarus Group. The afd.sys use-after-free (KEV-listed Aug 11, deadline Aug 25) lets a low-privilege local attacker reach SYSTEM via race condition — Lazarus deployed FudModule rootkit and ForestTiger backdoor against defense sector targets. Critical RCE cluster: QUIC (CVSS 9.8), DNS Server (CVSS 9.8, wormable per ZDI), and TFTP Server (CVSS 9.8).</p>
           <div class="srcline">SecurityWeek, Tenable, SANS ISC — Aug 11, 2026</div>
         </div>
 
