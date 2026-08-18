@@ -447,6 +447,13 @@
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
         </div>
 
+        <div class="story" data-detail="shieldbreak">
+          <div class="tagRow"><span class="tag crit">No Patch · PoC Public</span><span class="tag high">EoP → SYSTEM · Defender Required</span></div>
+          <p class="storyTitle"><span>ShieldBreak CVE-2026-69414: Microsoft Defender zero-day bypasses July patch — any local user reaches SYSTEM on fully updated Windows. No patch available.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Nightmare Eclipse dropped ShieldBreak on August 12 — a full bypass of Microsoft's July RoguePlanet patch. Any local user with code execution escalates to SYSTEM with 100% reliability on Windows 11 25H2 and Server 2025. Defender must be running for the exploit to work — the user-mode callback hook fires during a cloud-hydration scan. Microsoft confirmed CVE-2026-69414 and is working on a patch with no ETA. Kevin Beaumont published Defender for Endpoint detection KQL queries — deploy them now.</p>
+          <div class="srcline">BleepingComputer, SecurityWeek, Arctic Wolf, Malwarebytes — Aug 12–17, 2026</div>
+        </div>
+
         <div class="story" data-detail="macosscreen">
           <div class="tagRow"><span class="tag crit">CVSS 9.8</span><span class="tag high">Exploited · Pre-Auth Root</span></div>
           <p class="storyTitle"><span>macOS Screen Sharing CVE-2026-65400: pre-auth bypass gives root — VPN password rotation has zero effect, Monero miner confirmed on multiple systems</span><span class="detailsCue">Details →</span></p>
@@ -556,6 +563,13 @@
         
         
         
+        <div class="cveCard crit-card" data-detail="shieldbreak">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-69414</span><span class="cveScore">—</span>
+          </div>
+          <div class="cveSub">ShieldBreak — Defender EoP bypass → SYSTEM. No patch, PoC public. Deploy Beaumont's KQL queries.</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="macosscreen">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-65400</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
@@ -816,6 +830,18 @@
         "type": "Filename",
         "note": "Java agent variant dropped on SMA1000 appliances — ROOTRUN payload. SHA256 in Volexity advisory.",
         "source": "https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/"
+      },
+      {
+        "value": "xzfind",
+        "type": "Filename",
+        "note": "On-disk name of ROOTRUN — a malicious setuid ELF binary installed at /usr/bin/xzfind. Allows any unprivileged user to execute arbitrary commands as root on the SMA1000 appliance.",
+        "source": "https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/"
+      },
+      {
+        "value": "Mozilla/6.0 (Windows NT 11.0; Win64; x64) AppleWebKit/1537.136 (KHTML, like Gecko) Chrome/149.0.0.1 Safari/1537.136",
+        "type": "User-Agent",
+        "note": "ORANGETAIL webshell activation header — the backdoor only responds to requests containing this specific invalid browser User-Agent. Search nginx/web server access logs for this string. Its presence confirms ORANGETAIL is deployed and being accessed by the attacker.",
+        "source": "https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/"
       }
     ],
     "mitigation": [
@@ -829,7 +855,8 @@
       "Rotate credentials and certificates on affected appliances; consider a forensic review given the APT-like TTPs Volexity described."
     ],
     "source": "Volexity via BleepingComputer, Cybersecurity Dive (from your feed)",
-    "sourceNote": "Jul 14–20, 2026"
+    "sourceNote": "Jul 14–20, 2026",
+    "iocNote": "SHA256 hashes for deploy_new.py (KNUCKLEBALL), agent_wp8.jar (Suo5), agent_wp9.jar (ORANGETAIL), and xzfind (ROOTRUN) are published in the full Volexity report at the link above — pull them directly for hash-based EDR detection. The ORANGETAIL User-Agent is a high-fidelity detection indicator in web server logs."
   },
   "ncentral": {
     "eyebrow": "RMM Supply Chain · Patch Bypass",
@@ -1905,8 +1932,45 @@
     ],
     "source": "BleepingComputer, SecurityWeek, The Hacker News, Help Net Security, Malwarebytes, NCSC-NL Advisory NCSC-2026-0280",
     "sourceNote": "Aug 6–16, 2026"
+  },
+  "shieldbreak": {
+    "eyebrow": "Microsoft Defender · CVE-2026-69414 · ShieldBreak · No Patch · PoC Public",
+    "title": "ShieldBreak (CVE-2026-69414): Microsoft Defender zero-day bypasses July patch — any local user reaches SYSTEM on fully updated Windows 10, 11, and Server 2025. No patch available.",
+    "tags": [
+      [
+        "crit",
+        "No Patch · PoC Public"
+      ],
+      [
+        "high",
+        "EoP → SYSTEM · Defender Required"
+      ]
+    ],
+    "overview": "Security researcher Nightmare Eclipse (also known as Chaotic Eclipse) released ShieldBreak on August 12, 2026 — a new Microsoft Defender privilege escalation zero-day that fully bypasses Microsoft's July 2026 patch for RoguePlanet (CVE-2026-50656). Microsoft confirmed the new vulnerability, assigned CVE-2026-69414, and acknowledged they are working on a patch — but as of August 17, none is available. The exploit achieves SYSTEM-level access with 100% reliability on fully updated Windows 11 25H2 (including Canary builds) and Windows Server 2025. Windows 10 is also vulnerable though not currently covered by the public PoC. The exploit requires the attacker to have some level of local code execution — this is a local privilege escalation, not a remote code execution vulnerability. Combined with any other initial access vector, ShieldBreak becomes a reliable SYSTEM escalation step. Kevin Beaumont published detection queries for Microsoft Defender for Endpoint. The disclosure follows a dispute between Microsoft and Nightmare Eclipse over the researcher's coordinated disclosure practices — Microsoft issued legal warnings over previous disclosures, prompting the researcher to release ShieldBreak immediately after Patch Tuesday.",
+    "technical": [
+      "CVE-2026-69414 (CVSS not yet assigned): Elevation of Privilege in the Microsoft Malware Protection Engine (mpengine.dll). The mechanism is a user-mode callback hook — the attacker modifies file contents during a Defender cloud-hydration scan, tricking the Malware Protection Engine into executing attacker-controlled code with SYSTEM privileges. Distinct from RoguePlanet (CVE-2026-50656), which was a filesystem race condition involving virtual disks and NT native file manipulation.",
+      "Requirements: (1) local code execution at any privilege level, (2) Microsoft Defender must be enabled and actively scanning. Disabling Defender removes the attack surface but also removes protection — not a viable mitigation for most environments.",
+      "Affected: Windows 10, Windows 11 (through 25H2 including Canary channel), Windows Server 2025 — all with fully updated Defender engine. The researcher reports 100% success rate on Windows 11 25H2 and Windows Server 2025.",
+      "This is the latest in a series of zero-days from Nightmare Eclipse since April 2026: LegacyHive, RoguePlanet (now patched), BlueHammer, RedSun, YellowKey, GreenPlasma, MiniPlasma, UnDefend. Prior disclosures have been linked to real-world attacks. The pattern suggests the researcher has a stockpile of Microsoft Defender/Windows vulnerabilities being disclosed sequentially.",
+      "Kevin Beaumont published detection queries for Microsoft Defender for Endpoint on his blog — these are the only published detection artifacts and should be deployed immediately."
+    ],
+    "iocs": [],
+    "iocNote": "No network IOCs — ShieldBreak is a local exploit with no network component. Detection relies entirely on endpoint behavioral signals: deploy Kevin Beaumont's Defender for Endpoint KQL detection queries (published at doublepulsar.com). Look for unexpected SYSTEM-level process spawning from Defender-related processes (MsMpEng.exe, mpengine.dll), particularly from low-privilege parent processes.",
+    "mitigation": [
+      "No patch is available — Microsoft is working on CVE-2026-69414 but has not published a fix or ETA. Monitor Microsoft's Security Update Guide for CVE-2026-69414.",
+      "Deploy Kevin Beaumont's detection queries for Microsoft Defender for Endpoint immediately — these are the only published detection mechanism. Without them, ShieldBreak exploitation is effectively invisible.",
+      "Apply defense-in-depth to limit local code execution opportunities: restrict local admin rights, enforce application allowlisting, monitor for new local user creation and unexpected process execution."
+    ],
+    "response": [
+      "Deploy Kevin Beaumont's Defender for Endpoint KQL detection queries immediately and retroactively hunt for ShieldBreak exploitation since August 12.",
+      "If ShieldBreak exploitation is suspected: look for unexpected SYSTEM-level process creation from low-privilege parent processes, particularly any relationship to MsMpEng.exe or mpengine.dll in the process tree.",
+      "Given prior Nightmare Eclipse disclosures (LegacyHive, BlueHammer, UnDefend) have been linked to real-world attacks, treat this as an actively weaponized tool rather than a theoretical proof-of-concept."
+    ],
+    "source": "BleepingComputer, SecurityWeek, Arctic Wolf, Malwarebytes, TechCrunch",
+    "sourceNote": "Aug 12–17, 2026"
   }
 }
+
 
 
 
@@ -2271,8 +2335,25 @@
       "T1496 — Resource Hijacking",
       "T1543.004 — Create or Modify System Process: Launch Daemon"
     ]
+  },
+  "shieldbreak": {
+    "status": "new",
+    "conf": "Confirmed — Microsoft acknowledged CVE-2026-69414, confirmed working on patch; PoC tested with 100% success rate on Windows 11 25H2 and Server 2025; no exploitation in wild confirmed yet",
+    "confNote": "Microsoft advisory for CVE-2026-69414 published (no patch); Kevin Beaumont published Defender for Endpoint detection queries; Nightmare Eclipse PoC public on GitHub. No confirmed in-wild exploitation at time of writing.",
+    "iocDate": "n/a — local exploit, no network indicators",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": null,
+    "sectors": [
+      "All Sectors"
+    ],
+    "attack": [
+      "T1068 — Exploitation for Privilege Escalation",
+      "T1543 — Create or Modify System Process"
+    ]
   }
 }
+
 
 
 
