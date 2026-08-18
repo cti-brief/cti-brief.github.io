@@ -447,6 +447,13 @@
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
         </div>
 
+        <div class="story" data-detail="azureentra">
+          <div class="tagRow"><span class="tag high">Fortune 500 · 1.4M Records</span><span class="tag high">Entra ID · Graph API Recon</span></div>
+          <p class="storyTitle"><span>TheHatman Azure/Entra ID campaign: 1.4M+ records from 9 Fortune 500 orgs — data format points to Graph API enumeration, not traditional exfiltration</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">TheHatman listed directories from McDonald's (1.7M records), TCS, Vodafone, HCL, IHG, Kyndryl, Gap, Hexaware, and Wyndham on BreachForums Aug 1–10. No breach confirmed — TCS says data appears 4+ years old. Hudson Rock assesses samples as likely authentic based on structural consistency with Azure/Entra directory exports. Analyst assessment: the uniform three-tier schema across all victims matches programmatic Graph API /users enumeration exactly — not a database dump. Most likely initial access: infostealer-harvested session tokens replaying post-MFA sessions. Detection is in Graph API audit logs, not at the network perimeter.</p>
+          <div class="srcline">InfoStealers / Hudson Rock, SecurityWeek, Help Net Security — Aug 16–18, 2026</div>
+        </div>
+
         <div class="story" data-detail="shieldbreak">
           <div class="tagRow"><span class="tag crit">No Patch · PoC Public</span><span class="tag high">EoP → SYSTEM · Defender Required</span></div>
           <p class="storyTitle"><span>ShieldBreak CVE-2026-69414: Microsoft Defender zero-day bypasses July patch — any local user reaches SYSTEM on fully updated Windows. No patch available.</span><span class="detailsCue">Details →</span></p>
@@ -1968,8 +1975,52 @@
     ],
     "source": "BleepingComputer, SecurityWeek, Arctic Wolf, Malwarebytes, TechCrunch",
     "sourceNote": "Aug 12–17, 2026"
+  },
+  "azureentra": {
+    "eyebrow": "Azure / Entra ID · TheHatman · 9 Fortune 500 Orgs · 1.4M+ Records · Unverified",
+    "title": "TheHatman Azure/Entra ID campaign: 1.4M+ structured employee directory records across 9 Fortune 500 orgs — data format suggests Graph API enumeration over traditional exfiltration",
+    "tags": [
+      [
+        "high",
+        "Fortune 500 · 1.4M Records"
+      ],
+      [
+        "high",
+        "Entra ID · Graph API Recon"
+      ]
+    ],
+    "overview": "Threat actor TheHatman posted six BreachForums listings between August 1–10, 2026, advertising internal employee directories claimed to have been pulled from Azure/Entra ID tenants using compromised credentials. Named organizations include McDonald's (1.7M records claimed), TCS (800K), Vodafone (425K), HCL Technologies (250K), IHG (185K), Kyndryl, Gap Inc., Hexaware Technologies, and Wyndham Hotels. Hudson Rock reviewed samples and assessed the data as likely authentic based on structural consistency with genuine Azure directory exports. No organization has confirmed a breach — TCS stated the referenced data appears to be more than four years old. The vector remains unconfirmed: TheHatman cites compromised credentials broadly, and Hudson Rock lists infostealers, phishing, MFA weakness, and third-party integrations as plausible vectors. Analyst assessment: Phishing-as-a-Service platforms (Tycoon2FA, Rockstar2FA, Evilginx-based kits) are a primary contributor — these adversary-in-the-middle kits capture fully authenticated Entra ID session tokens in real-time as the victim completes MFA, enabling token replay without credentials or MFA codes.",
+    "technical": [
+      "Data structure analysis: Every dump across all nine claimed victims follows the same three-tier template — (1) core identity: display name, UserPrincipalName, @onmicrosoft.com tenant addresses, phone, physical address; (2) organizational: EmployeeId, job title, department, manager, direct reports; (3) access and group mappings: group memberships, service account listings, Global Administrator account identifiers. This schema maps precisely to the output of Microsoft Graph API /users endpoint with a comprehensive $select query — it is the exact format of a programmatic directory enumeration, not a database dump or file system exfiltration.",
+      "ANALYST ASSESSMENT (analyst opinion, not confirmed reporting): The structured uniformity across all victim organizations — matching standard Azure directory export format — is more consistent with Microsoft Graph API enumeration than with traditional exfiltration methods. Graph API read access to /v1.0/users with User.Read.All or Directory.Read.All permission returns exactly this data in this structure. True database-level or file-level exfiltration would typically produce inconsistent formatting across different victims and organizations.",
+      "ANALYST ASSESSMENT: Phishing-as-a-Service platforms are a highly plausible and increasingly documented contributor to the session token theft that enables this class of Graph API enumeration. Adversary-in-the-middle PhaaS kits (Tycoon2FA, Rockstar2FA, Evilginx2-based derivatives) operate as reverse proxies between the victim and the legitimate Microsoft login page — the victim enters credentials and completes MFA on what appears to be the real Entra ID login, but the kit captures the fully authenticated session token cookie in real-time as it is issued. The attacker then replays this post-MFA token against Microsoft Graph API without needing credentials or MFA codes. PhaaS infrastructure makes this accessible to lower-skill actors who previously could not bypass MFA, dramatically expanding the pool of actors capable of conducting Entra ID tenant enumeration at scale. The structured, schema-consistent data dumps from nine Fortune 500 organizations — all following the same Graph API output format — are consistent with a PhaaS supply chain where a platform harvests tokens from multiple organizations and the buyer runs bulk enumeration across the full portfolio.",
+      "ANALYST ASSESSMENT: Session replay is the most plausible initial access vector if MFA was in place at the affected organizations. Infostealers harvesting browser session cookies can yield valid Entra ID session tokens that bypass MFA entirely — the token is already post-authentication. This differs from credential stuffing or password spraying, which MFA blocks. A stolen session token with Graph API read scope is sufficient to enumerate the entire directory without triggering login-based MFA challenges.",
+      "TheHatman also claims 'MFA abuse' as a technique — this could refer to session token theft (bypassing MFA via infostealer-harvested cookies), MFA fatigue attacks (push bombing), or exploiting legacy authentication protocols that MFA doesn't cover. None of these are 'breaking' MFA — they're working around it.",
+      "Scrutex and InfoStealers both note Graph API bulk enumeration detection signals: sign-ins to scripted client apps (Microsoft Graph Command Line Tools, Azure AD PowerShell, Azure CLI) from accounts without administrative roles; paged bulk reads of /users and /groups in Microsoft Graph activity logs; successful authentication from VPS or hosting ASNs; and non-interactive sessions continuing after a password reset."
+    ],
+    "iocs": [],
+    "iocNote": "No technical IOCs published — this is an identity and access campaign, not a malware campaign. No attacker IPs, hashes, or infrastructure are available. Detection is entirely behavioral — audit Microsoft Graph activity logs for bulk directory reads.",
+    "mitigation": [
+      "Audit Graph API application registrations and service principals for User.Read.All, Directory.Read.All, and People.Read.All permissions — these scopes provide access to the full directory. Remove or restrict any third-party integration with excessive directory read permissions.",
+      "Enable Conditional Access policies that require compliant devices and block legacy authentication protocols — the latter don't support MFA and are a common bypass vector.",
+      "Configure Entra ID Identity Protection to flag and require step-up MFA for sign-ins from anonymous IPs, VPS ASNs, and unfamiliar locations — this is the behavioral pattern consistent with the TheHatman campaign.",
+      "Block or alert on non-interactive session token re-use from new IP ranges — a valid session token appearing from a different ASN than the one where it was issued is a strong infostealer/session replay signal.",
+      "Deploy Microsoft Entra ID Token Protection (preview) to bind session tokens to specific devices — replayed tokens from PhaaS kits operating on attacker infrastructure fail device binding checks. This directly counters adversary-in-the-middle PhaaS token capture.",
+      "Enable risky sign-in Conditional Access policies that require re-authentication when Entra ID Identity Protection detects token replay indicators — specifically the 'unfamiliar sign-in properties' and 'anomalous token' risk detections, which fire on session tokens replayed from different ASNs than the originating authentication."
+    ],
+    "response": [
+      "Hunt Microsoft Graph activity logs for paged bulk reads of /users and /groups endpoints — specifically calls that page through the full directory (multiple calls with $skiptoken parameters) from any account, particularly scripted client app sign-ins.",
+      "Search Entra ID sign-in logs for successful authentications from VPS, hosting, and anonymizing ASNs (Hetzner, OVH, DigitalOcean, Tor exit nodes) with subsequent Graph API access — this is the session-replay pattern if an infostealer harvested the initial token.",
+      "Check for non-interactive sign-in sessions (where MFA was satisfied previously and a refresh token is being replayed) that originate from different geographies or ASNs than the account's normal pattern.",
+      "If your organization is in the IT services, hospitality, retail, or logistics sectors — the campaign's apparent target set — proactively audit Entra ID audit logs for bulk /users reads over the past 60 days, not just from August. TCS cited data appearing to be 4+ years old, suggesting some compromised tokens may be from much older infostealer infections that are still valid.",
+      "Hunt for PhaaS infrastructure fingerprints in Entra ID sign-in logs: look for the Evilginx2 and Tycoon2FA pattern of a successful interactive sign-in immediately followed by a non-interactive token redemption from a different IP address or ASN — this is the PhaaS kit collecting the token on its proxy then replaying it from attacker infrastructure."
+    ],
+    "source": "InfoStealers / Hudson Rock, SecurityWeek, Help Net Security, Scrutex, CRN Asia",
+    "sourceNote": "Aug 1–18, 2026"
   }
 }
+
+
 
 
 
@@ -2351,8 +2402,33 @@
       "T1068 — Exploitation for Privilege Escalation",
       "T1543 — Create or Modify System Process"
     ]
+  },
+  "azureentra": {
+    "status": "new",
+    "conf": "Unverified — TheHatman claims authentic; Hudson Rock assesses data likely authentic based on structure; no victim organization has confirmed a breach. TCS explicitly states the referenced data appears to be more than four years old.",
+    "confNote": "Hudson Rock published primary technical analysis Aug 16; InfoStealers corroborated. Scrutex published detailed Graph API enumeration detection guidance. No breach confirmed by any named organization. Attack vector inconclusive — analyst assessment points to Graph API enumeration via session token replay.",
+    "iocDate": "Aug 1–10, 2026 — BreachForums listing dates; data collection date unknown",
+    "admiralty": "B3",
+    "severity": 4,
+    "cvss": null,
+    "sectors": [
+      "Technology",
+      "Retail / eCommerce",
+      "Hospitality",
+      "Financial"
+    ],
+    "attack": [
+      "T1078 — Valid Accounts",
+      "T1530 — Data from Cloud Storage",
+      "T1069 — Permission Groups Discovery",
+      "T1087 — Account Discovery",
+      "T1566.003 — Phishing: Spearphishing via Service (PhaaS)",
+      "T1111 — Multi-Factor Authentication Interception"
+    ]
   }
 }
+
+
 
 
 
