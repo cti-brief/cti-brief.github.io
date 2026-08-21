@@ -288,10 +288,10 @@
   .overlay.open{display:block;}
   .overlay.show{opacity:1;}
   .drawer{
-    position:fixed; top:0; right:0; height:100%; width:520px; max-width:92vw;
+    position:fixed; top:0; right:0; height:100%; width:640px; max-width:96vw;
     background:var(--panel-2); border-left:1px solid var(--border);
     z-index:51; transform:translateX(100%); transition:transform .22s ease;
-    overflow-y:auto; padding:26px 26px 60px;
+    overflow-y:auto; padding:26px 28px 60px;
   }
   .overlay.show .drawer{transform:translateX(0);}
   .drawerClose{
@@ -402,7 +402,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      GitLab CVSS 9.4 exploited within 24hrs of emergency patch. macOS pre-auth root actively exploited. ShieldBreak — Defender EoP, no patch. SharePoint CVE-2026-55040 post-PoC exploitation active. AI-built exploits compressing patch windows. Azure/Entra PhaaS enumeration campaign active.
+      Entra ID CVSS 10.0 RCE exploited, server-side patched Aug 20. Zimbra SNMP unauthenticated RCE confirmed exploited — 12K+ servers exposed. GitLab CVSS 9.4 exploited within 24hrs. macOS pre-auth root actively exploited. ShieldBreak no patch, CISA BOD 26-04 14-day window.
     </div>
   </header>
 
@@ -440,27 +440,27 @@
         <h2>◆ Key Judgments</h2>
         <div class="kj-item">
           <span class="kj-num">01</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that AI is actively compressing the exploit development timeline to a matter of hours — the macOS Screen Sharing RCE chain was built in approximately 4 hours using public AI tools, and Zoom Zoomsday in under 24 hours. The GitLab CVE-2026-19478 emergency patch was followed by confirmed exploitation within 24 hours and WatchTowr's "easily reproducible" warning within 48. The window between patch release and attacker weaponisation is now measured in hours across multiple attack categories, not days or weeks.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that cloud identity infrastructure is now a primary target for nation-state and criminal actors in parallel — in the Aug 17–21 window: Entra ID saw a CVSS 10.0 deserialization RCE confirmed exploited and patched server-side by Microsoft (CVE-2026-69836), while the TheHatman Azure/Entra enumeration campaign (PhaaS session-token replay → Graph API recon) continued against Fortune 500 tenants. These are distinct attack chains against the same target surface — defenders cannot treat cloud identity security as a single-vendor responsibility.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">02</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that GraphQL API layers represent a persistent, underprotected attack surface — GitLab has now patched three critical GraphQL vulnerabilities in 2026 alone, including this week's CVE-2026-19478 (unauthenticated project deletion, CVSS 9.4). The pattern suggests that GraphQL's permissive directive model is being systematically probed for authorization bypasses. Any organization exposing a GraphQL API to untrusted networks should treat it as a primary attack surface, not a secondary one.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that AI is compressing the exploit development timeline to hours — the macOS Screen Sharing RCE was built in ~4 hours with public AI tools; GitLab CVE-2026-19478 was exploited within 24 hours of its emergency patch; and Zimbra CVE-2026-73570 saw active exploitation within days of CERT Polska's disclosure. Patch cadences designed around days-to-weeks are structurally mismatched against adversaries operating on hour timescales.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">03</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that PhaaS platforms have industrialized MFA bypass — the Azure/Entra ID campaign's structured directory exports are consistent with Graph API enumeration following PhaaS-harvested session token replay (Tycoon2FA, Rockstar2FA, Evilginx2-based kits). Token binding (Entra ID Token Protection) and anomalous-token Conditional Access policies are the specific controls that address this vector; standard MFA enforcement does not.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that email infrastructure (Zimbra CVE-2026-73570) remains a high-value initial access target — 12,100+ servers internet-exposed, CERT Polska confirmed exploitation, and prior Zimbra campaigns have been attributed to Russian and Chinese state-sponsored actors targeting diplomatic and military communications. Email servers carry authentication material, stored communications, and LDAP credentials — full server compromise from a single unauthenticated request is unacceptable exposure.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">04</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that unpatched Defender privilege escalation (ShieldBreak, CVE-2026-69414) combined with any initial access vector gives an attacker a reliable SYSTEM escalation path on fully-patched Windows — with no Microsoft patch available and a public PoC. Kevin Beaumont's KQL detection queries remain the only published detection mechanism. Organizations without these detections deployed are effectively blind to this privilege escalation path.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that unpatched Defender privilege escalation (ShieldBreak, CVE-2026-69414) now carries a CISA BOD 26-04 14-day compensating control requirement for FCEB agencies — with no Microsoft patch available and a public PoC. Kevin Beaumont's detection queries remain the only published detection mechanism; deploying them is the compensating control. Organizations outside federal scope should treat the BOD timeline as a benchmark for their own remediation urgency.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">05</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that pre-authentication vulnerabilities in core infrastructure services are being weaponized within hours to days of disclosure — this week's pattern includes macOS Screen Sharing (actively exploited), GitLab GraphQL (exploited within 24hrs of patch), GeoServer (probed within hours of disclosure), and SharePoint JWT bypass (exploited within hours of PoC). KEV compliance speed is the primary determinant of breach vs. non-breach outcomes for these classes of vulnerability.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that GraphQL API layers represent a sustained, underprotected attack surface — GitLab has patched three critical GraphQL vulnerabilities in 2026, including this week's CVE-2026-19478 (exploited within 24hrs, CVSS 9.4). Any organization exposing GraphQL endpoints to untrusted networks should enforce authorization at the directive level and implement strict query depth and complexity limits as defence-in-depth controls while patching.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">06</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that the Clop/PTC Windchill campaign and the Azure/Entra ID enumeration campaign both represent a maturation of data-theft-only ransomware and identity recon into industrialized operations targeting engineering IP and corporate directory data respectively. Neither campaign requires traditional malware deployment — both operate through legitimate API access and exfiltration techniques that leave minimal endpoint footprint and require detection at the API and DLP layer, not the EDR layer.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that the convergence of PhaaS-enabled MFA bypass, Graph API enumeration, and confirmed Entra ID backend exploitation represents a maturation of identity attacks into a multi-stage kill chain — initial token harvest via PhaaS → Graph API recon to map the tenant → potential exploitation of backend vulnerabilities to modify authentication policy. Defenders must instrument all three stages: PhaaS detection in sign-in logs, Graph API bulk read detection in audit logs, and Entra ID configuration change alerting.</span>
         </div></div>
 
       <div class="panel">
@@ -485,6 +485,20 @@
           <p class="storyTitle"><span>BdThemes WordPress supply chain: 350,000+ sites backdoored via poisoned API feed — rogue admins and webshells planted without touching plugin code</span><span class="detailsCue">Details →</span></p>
           <p class="storyBody">Attacker gained write access to BdThemes' DigitalOcean Spaces bucket — the backend for Biggopti, a promotional banner component in 7 popular BdThemes plugins. Biggopti runs on every wp-admin page load. The poisoned API response silently creates a rogue admin account, installs a fake plugin (wp-smart-thumbnails) containing emer-run.php webshell, and phones C2 at ia-cdn[.]com. No plugin code was modified so standard integrity checks won't catch it. Active June 23 – Aug 8; API cleaned but compromised sites persist until manually remediated.</p>
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
+        </div>
+
+        <div class="story" data-detail="entraidrce">
+          <div class="tagRow"><span class="tag crit">CVSS 10.0</span><span class="tag high">Exploited · Cloud IAM · Server-Side Patched</span></div>
+          <p class="storyTitle"><span>Microsoft Entra ID CVE-2026-69836 (CVSS 10.0): RCE confirmed exploited Aug 20 — Microsoft patched server-side, no customer action required. Audit for pre-patch activity.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Deserialization of untrusted data allows unauthenticated RCE on Entra ID infrastructure. Microsoft confirmed exploitation and deployed a server-side fix before disclosure Aug 20. No patch to install — but organizations should audit Entra ID audit logs for anomalous token issuance, Conditional Access policy changes, and service principal modifications in the window prior to Aug 20. Entra ID backs M365, Azure, and thousands of third-party applications — any tenant compromise during the exploitation window is significant.</p>
+          <div class="srcline">The Hacker News, Cyber Security News, CyberPress — Aug 20–21, 2026</div>
+        </div>
+
+        <div class="story" data-detail="zimbra">
+          <div class="tagRow"><span class="tag high">CVSS 8.9</span><span class="tag high">Exploited · 12K Servers · Email Infra</span></div>
+          <p class="storyTitle"><span>Zimbra CVE-2026-73570 (CVSS 8.9): unauthenticated SNMP command injection exploited in wild — 12,100+ servers exposed. CERT Polska confirmed Aug 20.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Unauthenticated OS command injection in Zimbra's SNMP notification component — attacker sends crafted SMTP requests and executes arbitrary commands as the zimbra user. Requires zimbra-snmp installed and SNMP notifications enabled; swatchdog runs by default, widening exposure. Patched July 20 in 10.1.20 but 12,100+ servers remain exposed (Shadowserver). CERT Polska confirmed active exploitation Aug 20 and published detection indicators — check /var/log/zimbra.log for unexpected service state changes and webshells in Jetty webapps directories.</p>
+          <div class="srcline">BleepingComputer, SecurityWeek, The Hacker News, CERT Polska — Aug 20–21, 2026</div>
         </div>
 
         <div class="story" data-detail="gitlab">
@@ -606,6 +620,20 @@
         
         
         
+        <div class="cveCard crit-card" data-detail="entraidrce">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-69836</span><span class="cveTag exploit">Exploited</span><span class="cveScore">10.0</span>
+          </div>
+          <div class="cveSub">Entra ID deserialization RCE — exploited, patched server-side Aug 20. No customer action needed. Audit pre-patch activity.</div>
+        </div>
+
+        <div class="cveCard high-card" data-detail="zimbra">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-73570</span><span class="cveTag exploit">Exploited</span><span class="cveScore">8.9</span>
+          </div>
+          <div class="cveSub">Zimbra SNMP command injection — CERT Polska confirmed exploitation. 12K+ exposed. Fix: 10.1.20.</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="gitlab">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-19478</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.4</span>
@@ -657,21 +685,21 @@
 
         <div class="cveCard crit-card" data-detail="sapcommerce">
           <div class="cveTop">
-            <span class="cveNum">CVE-2026-58231</span><span class="cveScore">10.0</span>
+            <span class="cveNum">CVE-2026-58231</span><span class="cveTag exploit">Exploited</span><span class="cveScore">10.0</span>
           </div>
           <div class="cveSub">SAP Commerce Cloud Data Hub Adapter — unauthenticated RCE, exploited Aug 14, rebuild/redeploy required</div>
         </div>
 
         <div class="cveCard high-card" data-detail="ptcwindchill">
           <div class="cveTop">
-            <span class="cveNum">CVE-2026-12569</span><span class="cveTag kev">KEV</span><span class="cveScore">9.3</span>
+            <span class="cveNum">CVE-2026-12569</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">9.3</span>
           </div>
           <div class="cveSub">PTC Windchill/FlexPLM — Clop mass-exploiting, 43+ victims, Shell/Philips confirming incidents</div>
         </div>
 
         <div class="cveCard crit-card" data-detail="teamcity">
           <div class="cveTop">
-            <span class="cveNum">CVE-2026-63077</span><span class="cveTag kev">KEV</span><span class="cveScore">9.8</span>
+            <span class="cveNum">CVE-2026-63077</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">9.8</span>
           </div>
           <div class="cveSub">TeamCity On-Premises — unauthenticated RCE, KEV listed Aug 6</div>
         </div>
@@ -725,67 +753,75 @@
         <h2><span class="dot blue"></span>Sources Used This Brief</h2>
 
         <div class="linkGroup">CVE-2026-63077 — JetBrains TeamCity — unauthenticated RCE</div>
-        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory — CVE-2026-63077</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA Known Exploited Vulnerabilities Catalog</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory CVE-2026-63077</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA KEV Catalog</a><span class="arrow">↗</span></div>
         <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0533</div>
-        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 0-Day Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 0-Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after first</div>
-        <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able SA-2026-10 Security Advisory</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Vulnerability Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able SA-2026-10</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Exploitation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">DPRK / Lazarus — ChainDrop</div>
-        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain Compromise</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv and Cacheable Namespaces Compromised</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv Compromised</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Out-of-Band — SharePoint CVE-2026-55040 actively exploited after</div>
-        <div class="linkItem"><a href="https://www.securityweek.com/sharepoint-vulnerability-exploited-shortly-after-poc-release/" target="_blank">SecurityWeek — SharePoint CVE-2026-55040 Exploited Post-PoC</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/sharepoint-vulnerability-exploited-shortly-after-poc-release/" target="_blank">SecurityWeek — SharePoint CVE-2026-55040 Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.rapid7.com/blog/post/ve-cve-2026-55040-microsoft-sharepoint-jwt-token-authentication-bypass-fixed/" target="_blank">Rapid7 — CVE-2026-55040 Technical Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">npm Supply Chain — WEL1DROPPER</div>
-        <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian AI Slopsquatting npm Campaign</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/nearly-800-malicious-npm-packages.html" target="_blank">The Hacker News — Nearly 800 Malicious npm Packages</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian npm Campaign</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/nearly-800-malicious-npm-packages.html" target="_blank">The Hacker News — 800 Malicious npm Packages</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Patch Tuesday — August Patch Tuesday</div>
-        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus Group CVE-2026-68820 Attribution</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus CVE-2026-68820</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day/" target="_blank">SecurityWeek — August 2026 Patch Tuesday</a><span class="arrow">↗</span></div>
         <div class="linkGroup">VMware vCenter — vCenter CVE-2026-59310 now actively exploited</div>
-        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 Active Exploitation 361 Victim IPs</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 361 Victim IPs</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Ransomware — Gunra ransomware</div>
-        <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A — Gunra Ransomware</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware Joint Advisory</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress Supply Chain — BdThemes supply chain</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain Creates Rogue WordPress Admins</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence — BdThemes Supply Chain Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence — BdThemes Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">SAP Commerce Cloud — SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231 Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August 2026 Patch Day</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August Patch Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchill/Fl</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft Claims</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm Investigation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Adobe Commerce / Magento — Adobe Commerce CVE-2026-71362 (CVSS 9.1)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362 Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — APSB26-92</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GeoServer — GeoServer jsonArrayContains zero-day (CVSS 9.8)</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day Targeted</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/" target="_blank">SecurityWeek — GeoServer Zero-Day Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cisco Secure Firewall — Cisco ASA and FTD CVE-2026-20349 (CVSS 8.6)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA and FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA/FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw</a><span class="arrow">↗</span></div>
         <div class="linkGroup">macOS — macOS Screen Sharing CVE-2026-65400 (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Flaw Exploited to Deploy Monero Miner</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Flaw Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/recent-macos-screen-sharing-vulnerability-exploited-in-attacks/" target="_blank">SecurityWeek — macOS Screen Sharing Flaw Actively Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/apple-macos-screen-sharing-flaw.html" target="_blank">The Hacker News — Apple macOS Screen Sharing Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/apple-macos-screen-sharing-flaw.html" target="_blank">The Hacker News — Apple macOS Screen Sharing</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Defender — ShieldBreak (CVE-2026-69414)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">BleepingComputer — New Microsoft Defender ShieldBreak Zero-Day Grants System Privileges</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/nightmare-eclipse-drops-windows-zero-day-exploit-shieldbreak/" target="_blank">SecurityWeek — Nightmare Eclipse Drops Windows Zero-Day Exploit ShieldBreak</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://github.com/GossiTheDog/ThreatHunting/blob/master/AdvancedHuntingQueries/ShieldBreak.kql" target="_blank">Kevin Beaumont — ShieldBreak KQL Detection Queries</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">BleepingComputer — ShieldBreak Zero-Day Grants System Privileges</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://blog.qualys.com/product-tech/2026/08/20/shieldbreak-the-windows-defender-zero-day-with-no-patch-detect-it-mitigate-it-with-qualys" target="_blank">Qualys — ShieldBreak No Patch, CISA BOD 26-04</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://github.com/GossiTheDog/ThreatHunting/blob/master/AdvancedHuntingQueries/ShieldBreak.kql" target="_blank">Kevin Beaumont — ShieldBreak KQL Detections</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Azure / Entra ID — TheHatman Azure/Entra ID campaign</div>
-        <div class="linkItem"><a href="https://www.infostealers.com/article/massive-azure-exfiltration-campaign-exposes-millions-of-enterprise-records-via-compromised-credentials-mcdonalds-vodafone-kyndryl-others/" target="_blank">InfoStealers / Hudson Rock — Azure Entra Exfiltration Campaign</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/fortune-500-companies-hit-in-azure-data-theft-campaign/" target="_blank">SecurityWeek — Fortune 500 Companies Hit in Azure Data Theft Campaign</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.infostealers.com/article/massive-azure-exfiltration-campaign-exposes-millions-of-enterprise-records-via-compromised-credentials-mcdonalds-vodafone-kyndryl-others/" target="_blank">InfoStealers / Hudson Rock — Azure Entra Campaign</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/fortune-500-companies-hit-in-azure-data-theft-campaign/" target="_blank">SecurityWeek — Fortune 500 Azure Data Theft</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress — Forminator Forms CVE-2026-15748 (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/forminator-wordpress-flaw-can-enable.html" target="_blank">The Hacker News — Forminator WordPress Flaw Unauthenticated RCE</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/300000-wordpress-sites-potentially-exposed-to-hacking-due-to-form-plugin-flaw/" target="_blank">SecurityWeek — 300,000 WordPress Sites Exposed via Form Plugin Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/forminator-wordpress-flaw-can-enable.html" target="_blank">The Hacker News — Forminator WordPress Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/300000-wordpress-sites-potentially-exposed-to-hacking-due-to-form-plugin-flaw/" target="_blank">SecurityWeek — 300,000 WordPress Sites Exposed</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GitLab CE/EE — GitLab CVE-2026-19478 (CVSS 9.4)</div>
         <div class="linkItem"><a href="https://www.securityweek.com/critical-gitlab-flaw-exploited-shortly-after-disclosure/" target="_blank">SecurityWeek — Critical GitLab Flaw Exploited Shortly After Disclosure</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/critical-gitlab-graphql-flaw-could-let.html" target="_blank">The Hacker News — Critical GitLab GraphQL Flaw</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.helpnetsecurity.com/2026/08/18/gitlab-critical-code-injection-flaw-cve-2026-19478/" target="_blank">Help Net Security — GitLab CVE-2026-19478</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Microsoft Entra ID — Microsoft Entra ID CVE-2026-69836 (CVSS 10.0)</div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html" target="_blank">The Hacker News — Microsoft Entra ID Flaw CVSS 10.0 Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://cybersecuritynews.com/entra-id-rce-vulnerability-exploited/" target="_blank">Cyber Security News — Entra ID RCE Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://cyberpress.org/critical-microsoft-entra-id-rce-flaw/" target="_blank">CyberPress — Microsoft Entra ID RCE Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Zimbra Collaboration Suite — Zimbra CVE-2026-73570 (CVSS 8.9)</div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/" target="_blank">BleepingComputer — Critical Zimbra RCE Flaw Actively Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign/" target="_blank">SecurityWeek — Hackers Target Zimbra Servers</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/attackers-exploit-zimbra-snmp-flaw-for.html" target="_blank">The Hacker News — Zimbra SNMP Flaw Exploited</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -1750,13 +1786,15 @@
     "iocNote": "No network IOCs — ShieldBreak is a local exploit with no network component. Detection relies entirely on endpoint behavioral signals: deploy Kevin Beaumont's Defender for Endpoint KQL detection queries (published at doublepulsar.com). Look for unexpected SYSTEM-level process spawning from Defender-related processes (MsMpEng.exe, mpengine.dll), particularly from low-privilege parent processes.",
     "mitigation": [
       "No patch is available — Microsoft is working on CVE-2026-69414 but has not published a fix or ETA. Monitor Microsoft's Security Update Guide for CVE-2026-69414.",
+      "CISA Binding Operational Directive (BOD) 26-04 applies to CVE-2026-69414 for FCEB agencies — 14-day deadline to deploy compensating controls even without an available patch. Compensating controls: restrict local code execution via application allowlisting, enforce least-privilege, and deploy Kevin Beaumont's Defender for Endpoint detection queries (see Hunt & Investigate) to detect exploitation attempts.",
       "Deploy Kevin Beaumont's detection queries for Microsoft Defender for Endpoint immediately — these are the only published detection mechanism. Without them, ShieldBreak exploitation is effectively invisible.",
       "Apply defense-in-depth to limit local code execution opportunities: restrict local admin rights, enforce application allowlisting, monitor for new local user creation and unexpected process execution."
     ],
     "response": [
-      "Deploy Kevin Beaumont's three ShieldBreak hunting queries immediately — published at github.com/GossiTheDog/ThreatHunting/blob/master/AdvancedHuntingQueries/ShieldBreak.kql. Beaumont states they have no false positives unless running multiple EDR solutions (add exclusions if so). Deploy as Custom Detections in Microsoft Defender for Endpoint. The queries detect: (1) processes foreign to Defender loading Defender libraries (mpengine.dll, MsMpEng.exe components); (2) unvalidated processes loading Cloud Filter API components (cfapi.dll) — the specific API the ShieldBreak callback hook abuses during cloud-hydration scans.",
-      "If ShieldBreak exploitation is suspected: look for unexpected SYSTEM-level process creation from low-privilege parent processes, particularly any relationship to MsMpEng.exe or mpengine.dll in the process tree.",
-      "Given prior Nightmare Eclipse disclosures (LegacyHive, BlueHammer, UnDefend) have been linked to real-world attacks, treat this as an actively weaponized tool rather than a theoretical proof-of-concept."
+      "CISA BOD 26-04 gives federal agencies 14 days to deploy compensating controls for CVE-2026-69414. The only published detection mechanism is Kevin Beaumont's three hunting queries below — deploy them as Custom Detections in Microsoft Defender for Endpoint immediately. Beaumont states they have no false positives unless running multiple EDR solutions (add exclusions if so).",
+      "DEFENDER XDR KQL — Detection 1 (Beaumont @GossiTheDog): non-Defender processes loading MpClient.dll. ShieldBreak requires MpClient to execute its callback hook — any non-Defender process loading this DLL is high-fidelity.\n\n// ShieldBreak Detection 1 — Non-Defender processes loading MpClient.dll\n// Source: Kevin Beaumont (@GossiTheDog) github.com/GossiTheDog/ThreatHunting\n// T1562.001 — Impair Defenses, T1548 — Abuse Elevation Control Mechanism\nDeviceImageLoadEvents\n| where ActionType == \"ImageLoaded\"\n| where FileName == \"MpClient.dll\"\n| where not(\n    InitiatingProcessFolderPath startswith @\"C:\\Program Files\\Windows Defender\\\" or\n    InitiatingProcessFolderPath startswith @\"C:\\ProgramData\\Microsoft\\Windows Defender\\\" or\n    InitiatingProcessFolderPath startswith @\"C:\\Windows\\System32\\\" or\n    InitiatingProcessFileName =~ \"taniumclient.exe\" or\n    InitiatingProcessParentFileName =~ \"taniumclient.exe\"\n)\n| summarize FirstSeen = min(Timestamp), LastSeen = max(Timestamp)\n    by DeviceName, InitiatingProcessFileName, InitiatingProcessFolderPath,\n       InitiatingProcessCommandLine, FolderPath, FileName\n| extend HostCustomEntity = DeviceName, ProcessCustomEntity = InitiatingProcessFileName",
+      "DEFENDER XDR KQL — Detection 2 (Beaumont @GossiTheDog): unvetted processes loading the Windows Cloud Filter API (cldapi.dll). ShieldBreak registers a rogue Cloud Filter API provider via CFAPI — any non-system, non-Program Files process loading this DLL is suspicious.\n\n// ShieldBreak Detection 2 — Unvetted processes loading Cloud Filter API\n// Source: Kevin Beaumont (@GossiTheDog) github.com/GossiTheDog/ThreatHunting\nDeviceImageLoadEvents\n| where ActionType == \"ImageLoaded\"\n| where FileName == \"cldapi.dll\"\n| where not(\n    InitiatingProcessFolderPath startswith @\"C:\\Windows\\System32\\\" or\n    InitiatingProcessFolderPath startswith @\"C:\\Program Files\\\" or\n    InitiatingProcessFolderPath startswith @\"C:\\Program Files (x86)\\\"\n)\n| project Timestamp, DeviceName, InitiatingProcessFileName,\n    InitiatingProcessFolderPath, InitiatingProcessCommandLine, FileName",
+      "DEFENDER XDR KQL — Detection 3 (Beaumont @GossiTheDog): same process loading both MpClient.dll and cldapi.dll within 5 minutes. This combination should never occur legitimately — it directly fingerprints the ShieldBreak exploit chain.\n\n// ShieldBreak Detection 3 — Process loads MpClient + Cloud Filter API within 5 min\n// Source: Kevin Beaumont (@GossiTheDog) github.com/GossiTheDog/ThreatHunting\n// Highest-fidelity of the three — near zero false positives\nlet mp_loads = DeviceImageLoadEvents\n    | where FileName == \"MpClient.dll\"\n    | project MpTime = Timestamp, DeviceName, InitiatingProcessFileName,\n              InitiatingProcessFolderPath, InitiatingProcessId;\nlet cld_loads = DeviceImageLoadEvents\n    | where FileName == \"cldapi.dll\"\n    | project CldTime = Timestamp, DeviceName, InitiatingProcessFileName,\n              InitiatingProcessFolderPath, InitiatingProcessId;\nmp_loads\n| join kind=inner cld_loads on DeviceName, InitiatingProcessId\n| where abs(datetime_diff('minute', MpTime, CldTime)) < 5\n| project DeviceName, InitiatingProcessFileName, InitiatingProcessFolderPath,\n    MpTime, CldTime, InitiatingProcessId"
     ],
     "source": "BleepingComputer, SecurityWeek, Arctic Wolf, Malwarebytes, TechCrunch",
     "sourceNote": "Aug 12–17, 2026"
@@ -1879,8 +1917,96 @@
     ],
     "source": "SecurityWeek, The Hacker News, Help Net Security, CyCognito, TechTimes",
     "sourceNote": "Aug 17–20, 2026"
+  },
+  "entraidrce": {
+    "eyebrow": "Microsoft Entra ID · CVE-2026-69836 · CVSS 10.0 · Exploited · No Customer Action",
+    "title": "Microsoft Entra ID CVE-2026-69836 (CVSS 10.0): deserialization RCE confirmed exploited in wild — Microsoft patched server-side Aug 20, no customer action required",
+    "tags": [
+      [
+        "crit",
+        "CVSS 10.0"
+      ],
+      [
+        "high",
+        "Exploited · Cloud IAM · Server-Side Patched"
+      ]
+    ],
+    "overview": "Microsoft disclosed and confirmed active exploitation of CVE-2026-69836 on August 20, 2026 — a CVSS 10.0 remote code execution vulnerability in Microsoft Entra ID stemming from deserialization of untrusted data (CWE-502). Microsoft manages the Entra ID service infrastructure directly, so the fix was deployed server-side before public disclosure. No customer action — no patch installation, no configuration change, no update — is required. Despite this, the confirmed exploitation window makes this operationally significant: organizations should understand what an attacker who successfully exploited this could have accessed, and whether any anomalous Entra ID activity occurred in the window prior to Microsoft's remediation. Entra ID is the identity backbone for Microsoft 365, Azure, and thousands of third-party SaaS applications — a compromise of its backend could enable token hijacking, access policy manipulation, or lateral movement into any tenant relying on it for authentication.",
+    "technical": [
+      "CVE-2026-69836 (CVSS 10.0, AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H, CWE-502): Deserialization of untrusted data in Microsoft Entra ID (formerly Azure Active Directory). Entra ID's backend processes specially crafted serialized data objects without proper validation. An attacker with network access can send malicious serialized data to a vulnerable endpoint and achieve remote code execution in the Entra ID service context — no authentication, no user interaction.",
+      "Microsoft managed this as a cloud service vulnerability: the fix was deployed server-side before public disclosure on August 20, 2026. This reflects Microsoft's increasingly common approach of silently patching cloud services and disclosing alongside a 'fully mitigated' status. Customers cannot patch this directly; Microsoft has already done it.",
+      "Impact of successful exploitation (prior to Microsoft's remediation): in a cloud identity infrastructure context, RCE in the Entra ID service could enable manipulation of authentication flows, token issuance, access policy evaluation, or conditional access decisions. Downstream impact could include authentication bypass for any application relying on Entra ID, unauthorized token generation, or modification of tenant-level security configurations.",
+      "No technical exploitation details have been published. Microsoft has not disclosed which service component was affected, the specific deserialization endpoint, or the nature of the observed exploitation. This is consistent with their standard approach for cloud service CVEs — limited detail to prevent further exploitation during the remaining window.",
+      "Relationship to TheHatman Azure/Entra campaign: CVE-2026-69836 is a separate vulnerability from the PhaaS session-token replay vector believed to underlie the TheHatman directory enumeration campaign. However, both target Entra ID and together represent a significant escalation of the threat landscape around Microsoft's cloud identity infrastructure."
+    ],
+    "iocs": [],
+    "iocNote": "No technical IoCs published — no customer action required and Microsoft has not released exploitation details. Defenders should audit Entra ID audit logs and sign-in logs for anomalous activity in the period before August 20, 2026 — particularly unusual token issuance, unexpected conditional access policy changes, or service principal modifications not initiated by your administrators.",
+    "mitigation": [
+      "No customer action required — Microsoft patched the Entra ID service server-side before disclosure. Verify your tenant's baseline security posture: review Conditional Access policies, emergency access accounts, and privileged identity management assignments to confirm no unauthorized changes were made prior to August 20.",
+      "Enable Microsoft Entra ID audit log alerting for unexpected changes to Conditional Access policies, service principal credentials, and global administrator assignments — these are the administrative objects a successful Entra ID backend compromise could have touched.",
+      "Review privileged identity management (PIM) for unexpected role activation or permanent assignment changes in the period July–August 2026."
+    ],
+    "response": [
+      "Audit Entra ID audit logs (Portal → Microsoft Entra ID → Monitoring → Audit logs) for: Conditional Access policy modifications, service principal credential additions, role assignment changes, and token issuance anomalies in the window prior to August 20, 2026.",
+      "Review Microsoft Secure Score recommendations — any sudden drops in Secure Score that correlate with the exploitation period may indicate tenant-level configuration tampering.",
+      "If you observe anomalous changes that predate the remediation: treat as potential tenant compromise and engage Microsoft support for incident investigation. Document any unauthorized changes before attempting to revert them."
+    ],
+    "source": "Cyber Security News, The Hacker News, CyberPress, Microsoft MSRC",
+    "sourceNote": "Aug 20–21, 2026"
+  },
+  "zimbra": {
+    "eyebrow": "Zimbra Collaboration Suite · CVE-2026-73570 · CVSS 8.9 · Exploited · 12K+ Exposed",
+    "title": "Zimbra CVE-2026-73570 (CVSS 8.9): unauthenticated OS command injection in SNMP component — actively exploited, 12,100+ servers exposed. CERT Polska confirmed.",
+    "tags": [
+      [
+        "high",
+        "CVSS 8.9"
+      ],
+      [
+        "high",
+        "Exploited · 12K Servers · Email Infra"
+      ]
+    ],
+    "overview": "CERT Polska confirmed active exploitation of CVE-2026-73570 on August 20, 2026 — an unauthenticated OS command injection vulnerability in Zimbra Collaboration Suite's SNMP monitoring component. An attacker can send specially crafted SMTP requests to vulnerable Zimbra servers and execute arbitrary shell commands as the zimbra user with no authentication and no user interaction. Zimbra patched this in version 10.1.20 on July 20, 2026, but Shadowserver tracks over 12,100 Zimbra servers currently internet-exposed. Zimbra has a documented history of rapid exploitation following disclosure — CISA's KEV catalog includes 18 prior Zimbra vulnerabilities, four added in 2026 alone, and prior exploitation has been linked to Russian and Chinese state-sponsored actors targeting military and diplomatic intelligence.",
+    "technical": [
+      "CVE-2026-73570 (CVSS 8.9, CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H, CWE-78: OS Command Injection): In Zimbra Collaboration Suite before version 10.1.20, the SNMP monitoring component improperly sanitizes untrusted input during SNMP notification processing. An unauthenticated remote attacker sends specially crafted SMTP requests that reach the SNMP notification handler, which processes the attacker-controlled content without adequate validation and passes it to an OS-level command — allowing arbitrary shell command execution as the zimbra user.",
+      "Required conditions: (1) the optional zimbra-snmp package is installed, (2) SNMP trap notifications are enabled via the snmp_notify parameter, and (3) the swatchdog service is running. Critically, swatchdog is enabled by default in most Zimbra deployments, meaning condition (3) is satisfied by default in any deployment that has also enabled SNMP notifications.",
+      "The zimbra user context provides access to: mail queues and stored email content, LDAP configuration and credentials, application files and configuration, cryptographic material used by the mail server, and the ability to write webshells to the Jetty webapps directories. This access level makes successful exploitation equivalent to full server compromise for most organizations.",
+      "Exposure: Shadowserver identifies 12,100+ internet-exposed Zimbra servers as of August 2026, concentrated in Europe (4,382) and Asia (4,492). CERT Polska has not disclosed attacker identity or targets, but historically Zimbra exploitation has been used by APT actors (Russian state-linked groups in 2022–2025, Chinese espionage actors) for email interception and lateral movement, as well as by opportunistic ransomware affiliates.",
+      "Patch: Zimbra 10.1.20, released July 20, 2026. No workaround is available that fully mitigates the flaw without disabling SNMP notifications entirely."
+    ],
+    "iocs": [
+      {
+        "value": "/opt/zimbra/jetty/webapps/",
+        "type": "Filename",
+        "note": "Webshell drop location — check for unexpected .jsp, .war, or .class files in this Jetty webapp directory created by the zimbra user after July 20, 2026.",
+        "source": "https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/"
+      },
+      {
+        "value": "/opt/zimbra/jetty_base/webapps/",
+        "type": "Filename",
+        "note": "Secondary webshell drop location — same check as above.",
+        "source": "https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/"
+      }
+    ],
+    "iocNote": "CERT Polska published detection guidance: check /var/log/zimbra.log for unexpected Zimbra service restarts (stopped→running or running→stopped state changes for services not under active administration); check webshell drop directories above for unexpected files created by the zimbra user; check /tmp/ for unexpected files created by the zimbra user within the past 30 days.",
+    "mitigation": [
+      "Upgrade Zimbra Collaboration Suite to version 10.1.20 immediately. The patch has been available since July 20, 2026 — any unpatched internet-exposed server should be treated as potentially compromised.",
+      "If you cannot upgrade immediately: disable SNMP notifications by setting snmp_notify to 0 in zimbraGlobalConfig. This removes the vulnerable code path. Verify with: `zmprov gcf zimbraGlobalConfig | grep -i snmp`.",
+      "Restrict internet access to Zimbra's SNMP-related ports and services — SNMP traffic (UDP 161/162) should never be internet-accessible."
+    ],
+    "response": [
+      "Check /var/log/zimbra.log for unexpected service-status changes (state transitions for Zimbra services not initiated by an administrator) — CERT Polska specifically flagged this as the primary detection signal.",
+      "Audit for webshells in /opt/zimbra/jetty/webapps/, /opt/zimbra/jetty_base/webapps/, and /tmp/ — look for .jsp, .war, .class, or shell script files created by the zimbra user within the past 30 days.",
+      "Review Zimbra audit logs for unexpected admin-level actions, configuration changes, or LDAP queries that were not initiated by known administrators — post-exploitation via the zimbra user can access LDAP and configuration files.",
+      "SENTINEL KQL — Detect Zimbra exploitation indicators via syslog-forwarded Zimbra logs.\n\n// Zimbra CVE-2026-73570 — Exploitation Detection\n// Requires: Zimbra /var/log/zimbra.log forwarded to Sentinel via Syslog connector\nSyslog\n| where TimeGenerated > ago(30d)\n| where Computer has_any (\"zimbra\",\"zcs\",\"mail\")  // adjust to your naming\n| where SyslogMessage has_any (\n    // Unexpected service state changes — primary CERT Polska signal\n    \"stopped to running\", \"running to stopped\",\n    \"status changed\", \"service restart\",\n    // Webshell indicators\n    \"jetty/webapps\", \"jetty_base/webapps\",\n    // SNMP component\n    \"snmp_notify\",\"swatchdog\",\"zimbraSnmp\"\n)\n| where SyslogMessage !has \"scheduled restart\"  // filter maintenance windows\n| project TimeGenerated, Computer, SyslogMessage, Facility\n| sort by TimeGenerated desc"
+    ],
+    "source": "BleepingComputer, SecurityWeek, The Hacker News, CERT Polska, Shadowserver",
+    "sourceNote": "Aug 20–21, 2026"
   }
 }
+
+
 
 
 
@@ -2190,8 +2316,8 @@
   },
   "shieldbreak": {
     "status": "new",
-    "conf": "Confirmed — Microsoft acknowledged CVE-2026-69414, confirmed working on patch; PoC tested with 100% success rate on Windows 11 25H2 and Server 2025; no exploitation in wild confirmed yet",
-    "confNote": "Microsoft advisory for CVE-2026-69414 published (no patch); Kevin Beaumont published Defender for Endpoint detection queries; Nightmare Eclipse PoC public on GitHub. No confirmed in-wild exploitation at time of writing.",
+    "conf": "Confirmed vulnerability — Microsoft confirmed CVE-2026-69414 and is developing a patch; PoC public; CISA BOD 26-04 requires FCEB agencies to deploy compensating controls within 14 days; no confirmed in-wild exploitation in CISA KEV",
+    "confNote": "Microsoft assigned CVE-2026-69414 Aug 14; PoC public Aug 12 (Nightmare Eclipse); Kevin Beaumont KQL detection published; CISA BOD 26-04 applies — 14-day compensating control requirement for federal agencies; no in-wild exploitation confirmed in CISA KEV catalog as of Aug 21",
     "iocDate": "n/a — local exploit, no network indicators",
     "admiralty": "A2",
     "severity": 5,
@@ -2259,8 +2385,45 @@
       "T1485 — Data Destruction",
       "T1565 — Data Manipulation"
     ]
+  },
+  "entraidrce": {
+    "status": "new",
+    "conf": "Confirmed exploitation — Microsoft confirmed active exploitation in MSRC advisory Aug 20, 2026; server-side fix deployed before disclosure; no customer action required",
+    "confNote": "Microsoft MSRC advisory Aug 20 confirmed active exploitation and server-side remediation; CVSS 10.0 max severity; no customer patch required",
+    "iocDate": "Aug 20, 2026 — exploitation confirmed; no IoCs published; server-side patched",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": 10,
+    "sectors": [
+      "All Sectors"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1078 — Valid Accounts",
+      "T1606 — Forge Web Credentials"
+    ]
+  },
+  "zimbra": {
+    "status": "new",
+    "conf": "Confirmed exploitation — CERT Polska confirmed active exploitation Aug 20, 2026; Shadowserver tracks 12,100+ exposed servers",
+    "confNote": "CERT Polska bulletin Aug 20 confirmed exploitation; BleepingComputer and SecurityWeek corroborated; CVSS 8.9; CVE-2026-73570 not yet on CISA KEV as of Aug 21",
+    "iocDate": "Aug 20, 2026 — CERT Polska confirmed exploitation date; Zimbra patched July 20",
+    "admiralty": "A2",
+    "severity": 4,
+    "cvss": 8.9,
+    "sectors": [
+      "Technology",
+      "Government"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1505.003 — Server Software Component: Web Shell",
+      "T1059 — Command and Scripting Interpreter"
+    ]
   }
 }
+
+
 
 
 
@@ -2651,7 +2814,7 @@
     document.getElementById('csvBtnDrawer')?.addEventListener('click', () => {
       document.getElementById('csvBtn').click();
     });
-    document.getElementById('drawer').style.maxWidth = '900px';
+    document.getElementById('drawer').style.maxWidth = '1050px';
     overlay.classList.add('open');
     requestAnimationFrame(() => overlay.classList.add('show'));
   }
