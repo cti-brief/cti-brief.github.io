@@ -402,7 +402,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      Entra ID CVSS 10.0 RCE exploited, server-side patched Aug 20. Zimbra SNMP unauthenticated RCE confirmed exploited — 12K+ servers exposed. GitLab CVSS 9.4 exploited within 24hrs. macOS pre-auth root actively exploited. ShieldBreak no patch, CISA BOD 26-04 14-day window.
+      TrueConf supply chain KEV — Aug 24 deadline, PhantomCore backdoor in client installers. Zimbra SNMP unauthenticated RCE — 12K+ servers exposed. GitLab CVSS 9.4 exploited 24hrs post-patch. macOS pre-auth root exploited. ShieldBreak no patch, CISA BOD 26-04 active. CORRECTION: Entra ID CVE-2026-69836 not exploited.
     </div>
   </header>
 
@@ -440,27 +440,27 @@
         <h2>◆ Key Judgments</h2>
         <div class="kj-item">
           <span class="kj-num">01</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that cloud identity infrastructure is now a primary target for nation-state and criminal actors in parallel — in the Aug 17–21 window: Entra ID saw a CVSS 10.0 deserialization RCE confirmed exploited and patched server-side by Microsoft (CVE-2026-69836), while the TheHatman Azure/Entra enumeration campaign (PhaaS session-token replay → Graph API recon) continued against Fortune 500 tenants. These are distinct attack chains against the same target surface — defenders cannot treat cloud identity security as a single-vendor responsibility.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that software supply chain attacks against collaboration and communications infrastructure are maturing into a standing threat — Head Mare's TrueConf supply chain compromise (CISA KEV, Aug 21, 3-day deadline) replaced signed client installers with PhantomCore and PhantomGraph backdoors, infecting every user who connected for an update. Combined with the keyvworm npm worm and WEL1DROPPER (788+ packages) still active, the pattern is consistent: attackers are targeting the update and install mechanism as the delivery vector rather than the application itself.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">02</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that AI is compressing the exploit development timeline to hours — the macOS Screen Sharing RCE was built in ~4 hours with public AI tools; GitLab CVE-2026-19478 was exploited within 24 hours of its emergency patch; and Zimbra CVE-2026-73570 saw active exploitation within days of CERT Polska's disclosure. Patch cadences designed around days-to-weeks are structurally mismatched against adversaries operating on hour timescales.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that AI is compressing the exploit development timeline to hours — macOS Screen Sharing RCE built in ~4 hours with public AI tools; GitLab CVE-2026-19478 exploited within 24 hours of its emergency patch; Zimbra CVE-2026-73570 saw active exploitation days after CERT Polska's disclosure. This week's Entra ID initial reporting error — where Microsoft marked CVE-2026-69836 as exploited, then retracted it hours later — also illustrates the speed at which defenders are now operating and the need for verification before acting on breaking disclosures.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">03</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that email infrastructure (Zimbra CVE-2026-73570) remains a high-value initial access target — 12,100+ servers internet-exposed, CERT Polska confirmed exploitation, and prior Zimbra campaigns have been attributed to Russian and Chinese state-sponsored actors targeting diplomatic and military communications. Email servers carry authentication material, stored communications, and LDAP credentials — full server compromise from a single unauthenticated request is unacceptable exposure.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that PhaaS platforms have industrialized MFA bypass at scale — the Azure/Entra TheHatman campaign's structured directory exports across nine Fortune 500 organizations are consistent with Graph API enumeration via PhaaS-harvested session token replay (Tycoon2FA, Rockstar2FA, Evilginx2-based kits). Token binding (Entra ID Token Protection) and anomalous-token Conditional Access policies are the specific technical controls that address this vector; standard MFA enforcement does not.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">04</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that unpatched Defender privilege escalation (ShieldBreak, CVE-2026-69414) now carries a CISA BOD 26-04 14-day compensating control requirement for FCEB agencies — with no Microsoft patch available and a public PoC. Kevin Beaumont's detection queries remain the only published detection mechanism; deploying them is the compensating control. Organizations outside federal scope should treat the BOD timeline as a benchmark for their own remediation urgency.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that unpatched Defender privilege escalation (ShieldBreak, CVE-2026-69414) now carries a CISA BOD 26-04 14-day compensating control requirement — with no patch available and a public PoC that achieves SYSTEM on fully updated Windows 10/11/Server 2025. Kevin Beaumont's three detection queries (embedded in this brief's Hunt & Investigate section) remain the only published detection mechanism. Defenders must deploy these before the BOD 26-04 window closes.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">05</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that GraphQL API layers represent a sustained, underprotected attack surface — GitLab has patched three critical GraphQL vulnerabilities in 2026, including this week's CVE-2026-19478 (exploited within 24hrs, CVSS 9.4). Any organization exposing GraphQL endpoints to untrusted networks should enforce authorization at the directive level and implement strict query depth and complexity limits as defence-in-depth controls while patching.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that email and video conferencing infrastructure (Zimbra CVE-2026-73570 and TrueConf CVE-2026-72529/72530) are being systematically targeted for high-value communications interception — 12,100+ Zimbra servers exposed, TrueConf exploited to backdoor every connecting client. Historically, Zimbra exploitation has been attributed to Russian and Chinese state-linked actors targeting diplomatic and military communications. The TrueConf campaign is attributed to Head Mare, active in the Russia-Ukraine conflict zone.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">06</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that the convergence of PhaaS-enabled MFA bypass, Graph API enumeration, and confirmed Entra ID backend exploitation represents a maturation of identity attacks into a multi-stage kill chain — initial token harvest via PhaaS → Graph API recon to map the tenant → potential exploitation of backend vulnerabilities to modify authentication policy. Defenders must instrument all three stages: PhaaS detection in sign-in logs, Graph API bulk read detection in audit logs, and Entra ID configuration change alerting.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that the convergence of SharePoint JWT forgery (CVE-2026-55040, actively exploited post-PoC), macOS pre-auth root (CVE-2026-65400, confirmed cryptomining at scale), and GitLab unauthenticated project deletion (CVE-2026-19478) reflects a sustained campaign pattern targeting unpatched developer and collaboration infrastructure. Organizations prioritizing KEV compliance for IT infrastructure but leaving developer tooling on slower patch cycles are exposed — these three platforms are directly in the development pipeline and are high-value targets.</span>
         </div></div>
 
       <div class="panel">
@@ -487,10 +487,17 @@
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
         </div>
 
+        <div class="story" data-detail="trueconf">
+          <div class="tagRow"><span class="tag high">CISA KEV · 3-day Deadline</span><span class="tag high">Supply Chain · Head Mare · SYSTEM</span></div>
+          <p class="storyTitle"><span>TrueConf CVE-2026-72529/72530 CISA KEV — Head Mare replaces client installers with PhantomCore backdoor. 3-day federal deadline: Aug 24.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">CISA KEV-listed Aug 21. Head Mare hacktivist group chained two TrueConf Server flaws (unauthenticated script exec → SYSTEM via sandbox escape) to replace the legitimate client installer with trojanized versions containing PhantomCore and PhantomGraph backdoors. Every user who connected for an update received the malicious installer. Targets: Russian organizations in critical sectors. Fix: 5.3.9, 5.4.9, or 5.5.5 (June 18). CVE-2026-72529 federal deadline: August 24. Verify TrueConf client signatures — unsigned = malicious.</p>
+          <div class="srcline">SecurityWeek, Kaspersky ICS CERT, The Hacker News — Aug 12–21, 2026</div>
+        </div>
+
         <div class="story" data-detail="entraidrce">
-          <div class="tagRow"><span class="tag crit">CVSS 10.0</span><span class="tag high">Exploited · Cloud IAM · Server-Side Patched</span></div>
-          <p class="storyTitle"><span>Microsoft Entra ID CVE-2026-69836 (CVSS 10.0): RCE confirmed exploited Aug 20 — Microsoft patched server-side, no customer action required. Audit for pre-patch activity.</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Deserialization of untrusted data allows unauthenticated RCE on Entra ID infrastructure. Microsoft confirmed exploitation and deployed a server-side fix before disclosure Aug 20. No patch to install — but organizations should audit Entra ID audit logs for anomalous token issuance, Conditional Access policy changes, and service principal modifications in the window prior to Aug 20. Entra ID backs M365, Azure, and thousands of third-party applications — any tenant compromise during the exploitation window is significant.</p>
+          <div class="tagRow"><span class="tag crit">CVSS 10.0</span><span class="tag high">CORRECTION: Not Exploited · Server-Side Patched</span></div>
+          <p class="storyTitle"><span>Microsoft Entra ID CVE-2026-69836 (CVSS 10.0): CORRECTION — exploitation claim retracted Aug 21. Vulnerability real, server-side patched. Not exploited in wild.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">CORRECTION (Aug 21): Microsoft initially marked CVE-2026-69836 as exploited in its Aug 20 bulletin, then retracted the claim the same day after The Hacker News contacted them. Microsoft stated "this vulnerability was not exploited in the wild." The CVSS 10.0 deserialization RCE vulnerability and the server-side patch are real — only the exploitation claim was in error. No customer action required. The correction does not diminish the severity of the flaw itself.</p>
           <div class="srcline">The Hacker News, Cyber Security News, CyberPress — Aug 20–21, 2026</div>
         </div>
 
@@ -620,11 +627,18 @@
         
         
         
+        <div class="cveCard high-card" data-detail="trueconf">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-72529 / 72530</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">—</span>
+          </div>
+          <div class="cveSub">TrueConf Server — Head Mare supply chain, PhantomCore backdoor. 3-day KEV deadline Aug 24.</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="entraidrce">
           <div class="cveTop">
-            <span class="cveNum">CVE-2026-69836</span><span class="cveTag exploit">Exploited</span><span class="cveScore">10.0</span>
+            <span class="cveNum">CVE-2026-69836</span><span class="cveTag oob">CORRECTION</span><span class="cveScore">10.0</span>
           </div>
-          <div class="cveSub">Entra ID deserialization RCE — exploited, patched server-side Aug 20. No customer action needed. Audit pre-patch activity.</div>
+          <div class="cveSub">Entra ID deserialization RCE — CVSS 10.0, patched server-side. Microsoft retracted "Exploited" claim Aug 21. Not exploited in wild.</div>
         </div>
 
         <div class="cveCard high-card" data-detail="zimbra">
@@ -753,10 +767,10 @@
         <h2><span class="dot blue"></span>Sources Used This Brief</h2>
 
         <div class="linkGroup">CVE-2026-63077 — JetBrains TeamCity — unauthenticated RCE</div>
-        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory CVE-2026-63077</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA KEV Catalog</a><span class="arrow">↗</span></div>
         <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0533</div>
-        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 0-Day</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000</a><span class="arrow">↗</span></div>
         <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after first</div>
         <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able SA-2026-10</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Exploitation</a><span class="arrow">↗</span></div>
@@ -785,25 +799,25 @@
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August Patch Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchill/Fl</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Adobe Commerce / Magento — Adobe Commerce CVE-2026-71362 (CVSS 9.1)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — APSB26-92</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GeoServer — GeoServer jsonArrayContains zero-day (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day Targeted</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/" target="_blank">SecurityWeek — GeoServer Zero-Day Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cisco Secure Firewall — Cisco ASA and FTD CVE-2026-20349 (CVSS 8.6)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA/FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD</a><span class="arrow">↗</span></div>
         <div class="linkGroup">macOS — macOS Screen Sharing CVE-2026-65400 (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Flaw Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/recent-macos-screen-sharing-vulnerability-exploited-in-attacks/" target="_blank">SecurityWeek — macOS Screen Sharing Flaw Actively Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/recent-macos-screen-sharing-vulnerability-exploited-in-attacks/" target="_blank">SecurityWeek — macOS Screen Sharing Actively Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/apple-macos-screen-sharing-flaw.html" target="_blank">The Hacker News — Apple macOS Screen Sharing</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Defender — ShieldBreak (CVE-2026-69414)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">BleepingComputer — ShieldBreak Zero-Day Grants System Privileges</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">BleepingComputer — ShieldBreak Zero-Day</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://blog.qualys.com/product-tech/2026/08/20/shieldbreak-the-windows-defender-zero-day-with-no-patch-detect-it-mitigate-it-with-qualys" target="_blank">Qualys — ShieldBreak No Patch, CISA BOD 26-04</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://github.com/GossiTheDog/ThreatHunting/blob/master/AdvancedHuntingQueries/ShieldBreak.kql" target="_blank">Kevin Beaumont — ShieldBreak KQL Detections</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://github.com/GossiTheDog/ThreatHunting/blob/master/AdvancedHuntingQueries/ShieldBreak.kql" target="_blank">Kevin Beaumont — ShieldBreak KQL Detections (GitHub)</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Azure / Entra ID — TheHatman Azure/Entra ID campaign</div>
         <div class="linkItem"><a href="https://www.infostealers.com/article/massive-azure-exfiltration-campaign-exposes-millions-of-enterprise-records-via-compromised-credentials-mcdonalds-vodafone-kyndryl-others/" target="_blank">InfoStealers / Hudson Rock — Azure Entra Campaign</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/fortune-500-companies-hit-in-azure-data-theft-campaign/" target="_blank">SecurityWeek — Fortune 500 Azure Data Theft</a><span class="arrow">↗</span></div>
@@ -811,17 +825,19 @@
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/forminator-wordpress-flaw-can-enable.html" target="_blank">The Hacker News — Forminator WordPress Flaw</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/300000-wordpress-sites-potentially-exposed-to-hacking-due-to-form-plugin-flaw/" target="_blank">SecurityWeek — 300,000 WordPress Sites Exposed</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GitLab CE/EE — GitLab CVE-2026-19478 (CVSS 9.4)</div>
-        <div class="linkItem"><a href="https://www.securityweek.com/critical-gitlab-flaw-exploited-shortly-after-disclosure/" target="_blank">SecurityWeek — Critical GitLab Flaw Exploited Shortly After Disclosure</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/critical-gitlab-flaw-exploited-shortly-after-disclosure/" target="_blank">SecurityWeek — Critical GitLab Flaw Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/critical-gitlab-graphql-flaw-could-let.html" target="_blank">The Hacker News — Critical GitLab GraphQL Flaw</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.helpnetsecurity.com/2026/08/18/gitlab-critical-code-injection-flaw-cve-2026-19478/" target="_blank">Help Net Security — GitLab CVE-2026-19478</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Entra ID — Microsoft Entra ID CVE-2026-69836 (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html" target="_blank">The Hacker News — Microsoft Entra ID Flaw CVSS 10.0 Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://cybersecuritynews.com/entra-id-rce-vulnerability-exploited/" target="_blank">Cyber Security News — Entra ID RCE Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://cyberpress.org/critical-microsoft-entra-id-rce-flaw/" target="_blank">CyberPress — Microsoft Entra ID RCE Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html" target="_blank">The Hacker News — Microsoft Entra ID Flaw CVSS 10.0 (CORRECTION: not exploited)</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://cybersecuritynews.com/entra-id-rce-vulnerability-exploited/" target="_blank">Cyber Security News — Entra ID RCE</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Zimbra Collaboration Suite — Zimbra CVE-2026-73570 (CVSS 8.9)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/" target="_blank">BleepingComputer — Critical Zimbra RCE Flaw Actively Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign/" target="_blank">SecurityWeek — Hackers Target Zimbra Servers</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/attackers-exploit-zimbra-snmp-flaw-for.html" target="_blank">The Hacker News — Zimbra SNMP Flaw Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">TrueConf Server — TrueConf Server CVE-2026-72529/72530 KEV-listed Au</div>
+        <div class="linkItem"><a href="https://www.securityweek.com/cisa-urges-immediate-patching-of-exploited-trueconf-vulnerabilities/" target="_blank">SecurityWeek — CISA Urges Immediate Patching of TrueConf</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/head-mare-exploits-trueconf-flaws-to.html" target="_blank">The Hacker News — Head Mare Exploits TrueConf Flaws</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/" target="_blank">Kaspersky ICS CERT — Head Mare TrueConf PhantomCore Report</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -1919,8 +1935,8 @@
     "sourceNote": "Aug 17–20, 2026"
   },
   "entraidrce": {
-    "eyebrow": "Microsoft Entra ID · CVE-2026-69836 · CVSS 10.0 · Exploited · No Customer Action",
-    "title": "Microsoft Entra ID CVE-2026-69836 (CVSS 10.0): deserialization RCE confirmed exploited in wild — Microsoft patched server-side Aug 20, no customer action required",
+    "eyebrow": "Microsoft Entra ID · CVE-2026-69836 · CVSS 10.0 · CORRECTION: Not Exploited · No Customer Action",
+    "title": "Microsoft Entra ID CVE-2026-69836 (CVSS 10.0): deserialization RCE patched server-side — CORRECTION: Microsoft retracted exploitation claim Aug 21. Vulnerability is real; exploitation not confirmed.",
     "tags": [
       [
         "crit",
@@ -1928,10 +1944,10 @@
       ],
       [
         "high",
-        "Exploited · Cloud IAM · Server-Side Patched"
+        "Patched Server-Side · No Customer Action"
       ]
     ],
-    "overview": "Microsoft disclosed and confirmed active exploitation of CVE-2026-69836 on August 20, 2026 — a CVSS 10.0 remote code execution vulnerability in Microsoft Entra ID stemming from deserialization of untrusted data (CWE-502). Microsoft manages the Entra ID service infrastructure directly, so the fix was deployed server-side before public disclosure. No customer action — no patch installation, no configuration change, no update — is required. Despite this, the confirmed exploitation window makes this operationally significant: organizations should understand what an attacker who successfully exploited this could have accessed, and whether any anomalous Entra ID activity occurred in the window prior to Microsoft's remediation. Entra ID is the identity backbone for Microsoft 365, Azure, and thousands of third-party SaaS applications — a compromise of its backend could enable token hijacking, access policy manipulation, or lateral movement into any tenant relying on it for authentication.",
+    "overview": "CORRECTION (August 21, 2026): Microsoft initially marked CVE-2026-69836 as \"Exploited: Yes\" in its August 20 security bulletin. After The Hacker News contacted Microsoft for comment, the company corrected the status on August 21 to \"Exploited: No\" and stated \"this vulnerability was not exploited in the wild.\" The original disclosure and the vulnerability itself remain accurate — Microsoft Entra ID contained a CVSS 10.0 deserialization RCE and Microsoft patched it server-side before disclosure on August 20, 2026. — a CVSS 10.0 remote code execution vulnerability in Microsoft Entra ID stemming from deserialization of untrusted data (CWE-502). Microsoft manages the Entra ID service infrastructure directly, so the fix was deployed server-side before public disclosure. No customer action — no patch installation, no configuration change, no update — is required. Despite this, the confirmed exploitation window makes this operationally significant: organizations should understand what an attacker who successfully exploited this could have accessed, and whether any anomalous Entra ID activity occurred in the window prior to Microsoft's remediation. Entra ID is the identity backbone for Microsoft 365, Azure, and thousands of third-party SaaS applications — a compromise of its backend could enable token hijacking, access policy manipulation, or lateral movement into any tenant relying on it for authentication.",
     "technical": [
       "CVE-2026-69836 (CVSS 10.0, AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H, CWE-502): Deserialization of untrusted data in Microsoft Entra ID (formerly Azure Active Directory). Entra ID's backend processes specially crafted serialized data objects without proper validation. An attacker with network access can send malicious serialized data to a vulnerable endpoint and achieve remote code execution in the Entra ID service context — no authentication, no user interaction.",
       "Microsoft managed this as a cloud service vulnerability: the fix was deployed server-side before public disclosure on August 20, 2026. This reflects Microsoft's increasingly common approach of silently patching cloud services and disclosing alongside a 'fully mitigated' status. Customers cannot patch this directly; Microsoft has already done it.",
@@ -1947,6 +1963,7 @@
       "Review privileged identity management (PIM) for unexpected role activation or permanent assignment changes in the period July–August 2026."
     ],
     "response": [
+      "CORRECTION NOTE: Exploitation of CVE-2026-69836 was not confirmed — Microsoft retracted that claim on August 21. The audit log checks below remain recommended regardless: the vulnerability was present in Entra ID's infrastructure for an unknown window prior to the server-side patch, and these are exactly the log signals that would reveal any unauthorized access whether from this CVE or from the concurrent TheHatman Azure/Entra directory enumeration campaign. Consider this general Entra ID baseline hygiene, not exclusively CVE-specific remediation.",
       "Audit Entra ID audit logs (Portal → Microsoft Entra ID → Monitoring → Audit logs) for: Conditional Access policy modifications, service principal credential additions, role assignment changes, and token issuance anomalies in the window prior to August 20, 2026.",
       "Review Microsoft Secure Score recommendations — any sudden drops in Secure Score that correlate with the exploitation period may indicate tenant-level configuration tampering.",
       "If you observe anomalous changes that predate the remediation: treat as potential tenant compromise and engage Microsoft support for incident investigation. Document any unauthorized changes before attempting to revert them."
@@ -2003,8 +2020,75 @@
     ],
     "source": "BleepingComputer, SecurityWeek, The Hacker News, CERT Polska, Shadowserver",
     "sourceNote": "Aug 20–21, 2026"
+  },
+  "trueconf": {
+    "eyebrow": "TrueConf Server · CVE-2026-72529 / 72530 · CISA KEV · Head Mare · Supply Chain",
+    "title": "TrueConf Server CVE-2026-72529/72530 KEV-listed Aug 21: Head Mare replaces client installers with PhantomCore backdoor — any user who connected gets infected",
+    "tags": [
+      [
+        "high",
+        "CISA KEV · 3-day Deadline"
+      ],
+      [
+        "high",
+        "Supply Chain · Head Mare · SYSTEM"
+      ]
+    ],
+    "overview": "CISA added two TrueConf Server vulnerabilities to its Known Exploited Vulnerabilities catalog on August 21, 2026, with unusually tight remediation deadlines: CVE-2026-72529 must be remediated within 3 days (by August 24) and CVE-2026-72530 within 2 weeks (by September 4). Kaspersky's ICS CERT reported in August that the Head Mare hacktivist group chained these vulnerabilities to compromise TrueConf server instances, replace the legitimate TrueConf client installer hosted on the server with a trojanized version containing PhantomCore and PhantomGraph backdoors, and distribute the malicious installer to every user who connected to the server for updates or downloads. The attack primarily targeted Russian organizations in critical sectors — instrumentation, electronics, transportation, energy, IT, and software development — and exploits TrueConf's client auto-update mechanism as its supply chain delivery vector.",
+    "technical": [
+      "CVE-2026-72529 (critical): Unauthenticated remote attackers with access to port 4307/TCP can call an undocumented TrueConf Server function to execute arbitrary scripts. Scripts initially execute in a sandboxed/isolated environment.",
+      "CVE-2026-72530 (critical): Escape from the isolated execution environment, allowing the attacker to execute arbitrary code with NT AUTHORITY\\SYSTEM privileges on the underlying Windows server host. Chained with CVE-2026-72529, an unauthenticated attacker achieves full SYSTEM compromise on the TrueConf server.",
+      "Supply chain delivery mechanism: After gaining SYSTEM on the server, Head Mare deployed a PHP web shell (locale.php) for persistence, then replaced the legitimate TrueConf Client installer file on the server with a trojanized version. The modified installer was not digitally signed. Any user connecting to the server for an update, new install, or scheduled client upgrade silently received the malicious installer, which installed PhantomCore and PhantomGraph backdoors alongside the legitimate client.",
+      "PhantomCore: DLL-based backdoor (detected by pe.exports 'DllGetClassObject' and 'DllCanUnloadNow', .gxfg section). Provides system reconnaissance, credential theft via LSASS memory dumping, and C2 communication. Installed as a Windows service for persistence.",
+      "PhantomGraph: Second backdoor (SysExcSvc.dll and SysReadSvc.dll) communicating with attacker infrastructure via Microsoft OneDrive — blends malicious C2 traffic with legitimate cloud storage. Also installed as a Windows service. Both backdoors used together give Head Mare long-term persistent access to the infected endpoint.",
+      "Fixed in TrueConf Server versions 5.3.9, 5.4.9, and 5.5.5 (released June 18, 2026). CISA KEV deadlines: CVE-2026-72529 — August 24, 2026 (3 days from KEV listing); CVE-2026-72530 — September 4, 2026 (2 weeks from KEV listing)."
+    ],
+    "iocs": [
+      {
+        "value": "locale.php",
+        "type": "Filename",
+        "note": "PHP web shell deployed by Head Mare on compromised TrueConf servers for persistence and lateral movement.",
+        "source": "https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/"
+      },
+      {
+        "value": "SysExcSvc.dll",
+        "type": "Filename",
+        "note": "PhantomGraph backdoor component installed as Windows service, communicates C2 via OneDrive.",
+        "source": "https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/"
+      },
+      {
+        "value": "SysReadSvc.dll",
+        "type": "Filename",
+        "note": "PhantomGraph backdoor second component, also installed as Windows service.",
+        "source": "https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/"
+      },
+      {
+        "value": "c5a460e4e68a088f6e51b2c6474642ec",
+        "type": "MD5",
+        "note": "PhantomCore sample (Kaspersky YARA rule hash). PhantomCore DLL backdoor used by Head Mare in TrueConf supply chain attacks.",
+        "source": "https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/"
+      }
+    ],
+    "iocNote": "YARA rules for PhantomCore (rule apt_HeadMare_PhantomCore) and the malicious unsigned TrueConf installer (rule apt_HeadMare_FakeConf_installer) are published in the Kaspersky ICS CERT advisory. Kaspersky notes: defang IoCs before use; re-fang only within controlled TI platforms (MISP, VirusTotal, SIEM).",
+    "mitigation": [
+      "Update TrueConf Server to versions 5.3.9, 5.4.9, or 5.5.5 immediately — CISA KEV deadline for CVE-2026-72529 is August 24 (3 days). Do not delay patching to the CVE-2026-72530 deadline of September 4.",
+      "After patching the server: push the updated, signed TrueConf client to all endpoints that may have downloaded a trojanized installer from a compromised server. Verify client digital signature before installing — legitimate TrueConf clients are digitally signed. Any unsigned TrueConf installer should be treated as malicious.",
+      "Block port 4307/TCP from internet access at your perimeter — TrueConf's management interface should never be internet-exposed.",
+      "Review for unsigned TrueConf client installations across your endpoint fleet — EDR/AV scan for unsigned executables matching the TrueConf naming convention."
+    ],
+    "response": [
+      "Check all endpoints that installed TrueConf client updates since June 2026 for PhantomCore and PhantomGraph — scan for SysExcSvc.dll and SysReadSvc.dll, check for new Windows services not matching your baseline, and run LSASS memory for credential theft indicators.",
+      "If a TrueConf server was internet-exposed on port 4307 and running a pre-patch version: treat it as fully compromised. Check for locale.php in the Jetty/web root. Preserve the server image for forensics before remediation.",
+      "Hunt for PhantomGraph's OneDrive C2 communication — anomalous OneDrive traffic from services or system processes (not user-context), particularly at regular intervals, on systems that also run TrueConf.",
+      "Check Windows service installation events for SysExcSvc and SysReadSvc — any service with these names is a confirmed PhantomCore/PhantomGraph indicator.",
+      "DEFENDER XDR KQL — Detect PhantomCore and PhantomGraph backdoor installation following TrueConf supply chain compromise.\n\n// TrueConf Supply Chain — PhantomCore/PhantomGraph Detection\n// Targets: SysExcSvc.dll, SysReadSvc.dll service installs + unsigned TrueConf\nDeviceServiceEvents\n| where Timestamp > ago(90d)  // check 90 days — campaign active since July 2026\n| where ServiceName in~ (\"SysExcSvc\",\"SysReadSvc\")\n    or (ServiceDisplayName has_any (\"TrueConf\",\"SysExc\",\"SysRead\") and\n        not(ServiceName startswith \"TrueConf\"))\n| project Timestamp, DeviceName, ServiceName, ServiceDisplayName,\n    InitiatingProcessFileName, InitiatingProcessCommandLine\n| union (\n    DeviceFileEvents\n    | where Timestamp > ago(90d)\n    | where FileName in~ (\"SysExcSvc.dll\",\"SysReadSvc.dll\",\"locale.php\")\n    | where ActionType == \"FileCreated\"\n    | project Timestamp, DeviceName, FolderPath, FileName, SHA256,\n        InitiatingProcessFileName\n)\n| sort by Timestamp desc"
+    ],
+    "source": "SecurityWeek, The Hacker News, Kaspersky ICS CERT, Rescana, GBHackers",
+    "sourceNote": "Aug 7–21, 2026"
   }
 }
+
+
 
 
 
@@ -2387,11 +2471,11 @@
     ]
   },
   "entraidrce": {
-    "status": "new",
-    "conf": "Confirmed exploitation — Microsoft confirmed active exploitation in MSRC advisory Aug 20, 2026; server-side fix deployed before disclosure; no customer action required",
-    "confNote": "Microsoft MSRC advisory Aug 20 confirmed active exploitation and server-side remediation; CVSS 10.0 max severity; no customer patch required",
+    "status": "updated",
+    "conf": "CORRECTED — Microsoft retracted \"Exploited\" status Aug 21, 2026: vulnerability real (CVSS 10.0 deserialization RCE), exploitation NOT confirmed. Server-side patch deployed.",
+    "confNote": "Microsoft advisory originally marked Exploited=Yes; corrected to Exploited=No on Aug 21 after THN inquiry. Vulnerability disclosure and server-side patch remain accurate.",
     "iocDate": "Aug 20, 2026 — exploitation confirmed; no IoCs published; server-side patched",
-    "admiralty": "A2",
+    "admiralty": "A1",
     "severity": 5,
     "cvss": 10,
     "sectors": [
@@ -2420,8 +2504,31 @@
       "T1505.003 — Server Software Component: Web Shell",
       "T1059 — Command and Scripting Interpreter"
     ]
+  },
+  "trueconf": {
+    "status": "new",
+    "conf": "Confirmed exploitation — Kaspersky ICS CERT confirmed active exploitation July 2026; CISA added both CVEs to KEV Aug 21, 2026 with 3-day and 2-week deadlines",
+    "confNote": "Kaspersky ICS CERT advisory Aug 12; CISA KEV added Aug 21; SecurityWeek confirmed Aug 21; CVE-2026-72529 KEV deadline Aug 24; CVE-2026-72530 KEV deadline Sep 4. Head Mare attribution confirmed by Kaspersky.",
+    "iocDate": "July 2026 — active exploitation observed; IoCs published in Kaspersky ICS CERT advisory Aug 12",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": null,
+    "sectors": [
+      "Technology",
+      "Government",
+      "Energy",
+      "Manufacturing"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1195.002 — Supply Chain Compromise: Compromise Software Supply Chain",
+      "T1543.003 — Create or Modify System Process: Windows Service",
+      "T1071 — Application Layer Protocol (OneDrive C2)"
+    ]
   }
 }
+
+
 
 
 
