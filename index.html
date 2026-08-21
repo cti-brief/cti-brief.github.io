@@ -402,7 +402,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      macOS pre-auth root exploited at scale via port 5900. SharePoint JWT forgery active post-PoC. AI-built exploits collapsing patch windows — Zoomsday in 24hrs, macOS RCE in 4hrs. Multiple KEV deadlines passed. Cisco ASA, GeoServer, Adobe Commerce exploitation ongoing.
+      GitLab CVSS 9.4 exploited within 24hrs of emergency patch. macOS pre-auth root actively exploited. ShieldBreak — Defender EoP, no patch. SharePoint CVE-2026-55040 post-PoC exploitation active. AI-built exploits compressing patch windows. Azure/Entra PhaaS enumeration campaign active.
     </div>
   </header>
 
@@ -440,27 +440,27 @@
         <h2>◆ Key Judgments</h2>
         <div class="kj-item">
           <span class="kj-num">01</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that AI is actively collapsing the time between vulnerability disclosure and weaponized exploitation — Zoom Zoomsday was built in under 24 hours with fewer than 20 public AI prompts; the macOS Screen Sharing RCE chain was developed in approximately 4 hours. This is a structural shift: patch cadences designed around days-to-weeks are being outpaced by exploit development measured in hours.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that AI is actively compressing the exploit development timeline to a matter of hours — the macOS Screen Sharing RCE chain was built in approximately 4 hours using public AI tools, and Zoom Zoomsday in under 24 hours. The GitLab CVE-2026-19478 emergency patch was followed by confirmed exploitation within 24 hours and WatchTowr's "easily reproducible" warning within 48. The window between patch release and attacker weaponisation is now measured in hours across multiple attack categories, not days or weeks.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">02</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that pre-authentication vulnerabilities in internet-exposed services represent the highest-priority attack surface this week — macOS Screen Sharing (pre-auth root), Cisco ASA/FTD (pre-auth DoS), SharePoint (pre-auth admin impersonation), and GeoServer (pre-auth SQLi/RCE) are all actively exploited or PoC-available. Any service exposed to the internet without authentication-layer patching is a confirmed target in this cycle.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that GraphQL API layers represent a persistent, underprotected attack surface — GitLab has now patched three critical GraphQL vulnerabilities in 2026 alone, including this week's CVE-2026-19478 (unauthenticated project deletion, CVSS 9.4). The pattern suggests that GraphQL's permissive directive model is being systematically probed for authorization bypasses. Any organization exposing a GraphQL API to untrusted networks should treat it as a primary attack surface, not a secondary one.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">03</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that KEV compliance deadlines are becoming the primary differentiator between organizations that get breached and those that don't — the Cisco ASA KEV deadline of August 14 has passed with devices still unpatched at scale. CISA's automatable classification of CVE-2026-65400 (macOS) and confirmed exploitation of four other KEV-listed vulnerabilities this cycle confirm attackers are tracking the same catalog defenders are.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that PhaaS platforms have industrialized MFA bypass — the Azure/Entra ID campaign's structured directory exports are consistent with Graph API enumeration following PhaaS-harvested session token replay (Tycoon2FA, Rockstar2FA, Evilginx2-based kits). Token binding (Entra ID Token Protection) and anomalous-token Conditional Access policies are the specific controls that address this vector; standard MFA enforcement does not.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">04</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that industrial and engineering IP is now a primary ransomware target — Clop's PTC Windchill campaign against Shell (89GB), Philips, GE, and Fiserv demonstrates that engineering drawings, facility layouts, and testing data are being treated as intelligence-grade assets. Data-theft-only extortion targeting OT and PLM systems represents a distinct threat category from encryption-based ransomware that defenders need a separate playbook for.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that unpatched Defender privilege escalation (ShieldBreak, CVE-2026-69414) combined with any initial access vector gives an attacker a reliable SYSTEM escalation path on fully-patched Windows — with no Microsoft patch available and a public PoC. Kevin Beaumont's KQL detection queries remain the only published detection mechanism. Organizations without these detections deployed are effectively blind to this privilege escalation path.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">05</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that the npm ecosystem remains a reliable automated delivery mechanism for targeted supply-chain attacks — both the keyvworm credential-revocation campaign and WEL1DROPPER (788+ packages) remain active with no indication of takedown. AI-generated package names and lifecycle script execution-on-install give attackers an automated pipeline into developer endpoints that requires no victim interaction beyond a routine dependency install.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that pre-authentication vulnerabilities in core infrastructure services are being weaponized within hours to days of disclosure — this week's pattern includes macOS Screen Sharing (actively exploited), GitLab GraphQL (exploited within 24hrs of patch), GeoServer (probed within hours of disclosure), and SharePoint JWT bypass (exploited within hours of PoC). KEV compliance speed is the primary determinant of breach vs. non-breach outcomes for these classes of vulnerability.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">06</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that Lazarus Group's confirmed exploitation of CVE-2026-68820 (afd.sys, Operation Dream Job) represents an ongoing campaign against defense sector organizations that has not concluded — FudModule rootkit and ForestTiger backdoor are persistent implants designed for long-term access. Organizations in defense, aerospace, and adjacent sectors should assume active targeting regardless of patch status and prioritize detection over prevention-only posture.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that the Clop/PTC Windchill campaign and the Azure/Entra ID enumeration campaign both represent a maturation of data-theft-only ransomware and identity recon into industrialized operations targeting engineering IP and corporate directory data respectively. Neither campaign requires traditional malware deployment — both operate through legitimate API access and exfiltration techniques that leave minimal endpoint footprint and require detection at the API and DLP layer, not the EDR layer.</span>
         </div></div>
 
       <div class="panel">
@@ -487,6 +487,20 @@
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
         </div>
 
+        <div class="story" data-detail="gitlab">
+          <div class="tagRow"><span class="tag crit">CVSS 9.4</span><span class="tag high">Exploited · GraphQL · Source Code</span></div>
+          <p class="storyTitle"><span>GitLab CVE-2026-19478 (CVSS 9.4): unauthenticated GraphQL injection exploited within 24hrs — modify or delete any public project. Emergency patch required for self-managed.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Emergency OOB patch August 17. Any unauthenticated attacker can send a crafted GraphQL directive to a self-managed GitLab instance and modify or delete public projects and user data. No credentials, no user interaction. WatchTowr confirmed easy reproduction August 18; SecurityWeek confirmed exploitation shortly after. Third major GitLab GraphQL flaw in 2026. Fix: 18.11.11, 19.0.8, 19.1.6, or 19.2.4. GitLab.com and Dedicated already patched.</p>
+          <div class="srcline">SecurityWeek, The Hacker News, Help Net Security — Aug 17–20, 2026</div>
+        </div>
+
+        <div class="story" data-detail="forminator">
+          <div class="tagRow"><span class="tag crit">CVSS 9.8</span><span class="tag high">600K Installs · Unauthenticated</span></div>
+          <p class="storyTitle"><span>Forminator Forms CVE-2026-15748: unauthenticated PHP upload → RCE on 300,000+ WordPress sites still running vulnerable releases</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Wordfence disclosed August 17. Attacker forges a Select field value to bypass MIME type validation and upload an executable PHP webshell — no credentials, no user interaction. Requires a form with both a File Upload and Select field. Custom upload storage directories without .htaccess protection give full RCE on file request. 600,000+ installs, ~300,000 still on vulnerable ≤1.56.1. Fix: update to 1.56.2 via WordPress dashboard. No confirmed in-wild exploitation yet — automated scanning likely underway.</p>
+          <div class="srcline">The Hacker News, SecurityWeek, Wordfence / Defiant — Aug 17, 2026</div>
+        </div>
+
         <div class="story" data-detail="azureentra">
           <div class="tagRow"><span class="tag high">Fortune 500 · 1.4M Records</span><span class="tag high">Entra ID · Graph API Recon</span></div>
           <p class="storyTitle"><span>TheHatman Azure/Entra ID campaign: 1.4M+ records from 9 Fortune 500 orgs — data format points to Graph API enumeration, not traditional exfiltration</span><span class="detailsCue">Details →</span></p>
@@ -508,12 +522,6 @@
           <div class="srcline">BleepingComputer, SecurityWeek, NCSC-NL, The Hacker News — Aug 6–16, 2026</div>
         </div>
 
-        <div class="story" data-detail="zoomsday">
-          <div class="tagRow"><span class="tag high">CVSS 8.3</span><span class="tag high">Zero-Click · All Platforms</span></div>
-          <p class="storyTitle"><span>Zoom "Zoomsday" CVE-2026-53413: zero-click RCE lets any meeting participant silently compromise every attendee — full exploit chain built by AI in under 24 hours</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">A Security disclosed three Zoom annotation memory-corruption CVEs on August 11. The worst (CVE-2026-53413, CVSS 8.3) requires no user interaction — a crafted annotation message is parsed automatically by every client in the meeting, triggering a stack buffer overflow. Attacker must be in the meeting but can then silently take over every participant's device. Patched in ZSB-26015. No in-wild exploitation confirmed. Notable: A Security built the full exploit chain using fewer than 20 public AI prompts in under 24 hours.</p>
-          <div class="srcline">SecurityWeek, Security Affairs, A Security, Zoom PSIRT — Aug 11, 2026</div>
-        </div>
 
         <div class="story" data-detail="ciscoasa">
           <div class="tagRow"><span class="tag high">CVSS 8.6</span><span class="tag high">Exploited · KEV</span></div>
@@ -578,12 +586,6 @@
           <div class="srcline">Unit 42, Elastic Security Labs, StepSecurity, Sonatype — Aug 4-11, 2026</div>
         </div>
 
-        <div class="story" data-detail="aicodeflaws">
-          <div class="tagRow"><span class="tag crit">Black Hat 2026</span><span class="tag high">Claude Code · Gemini CLI</span></div>
-          <p class="storyTitle"><span>Black Hat: GitHub issues can compromise Claude Code and Gemini CLI CI workflows — API key theft, repo takeover, supply-chain risk</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Novee Security presented Black Hat USA 2026 research demonstrating that a public GitHub issue filed by an outside contributor with no repository privileges could compromise automated Claude Code and Gemini CLI CI/CD workflows. The researchers tested against Anthropic's and Google…</p>
-          <div class="srcline">Novee Security / Check Point Research via The Hacker News, HackRead, GBHackers, eSecurity Planet — Aug 5–10, 2026</div>
-        </div>
 
         <div class="story" data-detail="weldropper">
           <div class="tagRow"><span class="tag crit">Supply Chain</span><span class="tag high">npm · RAT · 788 Packages</span></div>
@@ -592,12 +594,6 @@
           <div class="srcline">OpenSourceMalware (primary), Check Point Research, Sonatype, The Hacker News, SC Media — Aug 6–10, 2026</div>
         </div>
 
-        <div class="story" data-detail="tokenjack">
-          <div class="tagRow"><span class="tag crit">AI Infrastructure</span><span class="tag high">Active · Financial Impact</span></div>
-          <p class="storyTitle"><span>Unit 42: AI token jacking fuelling gray-market LLM resellers — up to $1M in charges before discovery</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Unit 42 published research today documenting a fast-growing criminal category: stealing developer LLM API keys and feeding them into gray-market 'transfer stations' — fly-by-night proxy services that resell frontier AI model access (Claude, GPT-4, Gemini, etc.) at a fraction of t…</p>
-          <div class="srcline">Unit 42 / Palo Alto Networks — Aug 6, 2026 (published today)</div>
-        </div>
       </div>
 
 
@@ -610,6 +606,20 @@
         
         
         
+        <div class="cveCard crit-card" data-detail="gitlab">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-19478</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.4</span>
+          </div>
+          <div class="cveSub">GitLab GraphQL injection — unauthenticated delete/modify of any public project. Self-managed only. Fix: 18.11.11 / 19.0.8 / 19.1.6 / 19.2.4</div>
+        </div>
+
+        <div class="cveCard crit-card" data-detail="forminator">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-15748</span><span class="cveScore">9.8</span>
+          </div>
+          <div class="cveSub">Forminator Forms — unauthenticated PHP webshell upload, 300K+ exposed WordPress sites. Update to 1.56.2.</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="shieldbreak">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-69414</span><span class="cveScore">—</span>
@@ -622,13 +632,6 @@
             <span class="cveNum">CVE-2026-65400</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
           </div>
           <div class="cveSub">macOS Screen Sharing pre-auth bypass → root. NCSC-NL confirmed cryptojacking. Port 5900 internet-exposed = compromised.</div>
-        </div>
-
-        <div class="cveCard high-card" data-detail="zoomsday">
-          <div class="cveTop">
-            <span class="cveNum">CVE-2026-53413</span><span class="cveScore">8.3</span>
-          </div>
-          <div class="cveSub">Zoom Zoomsday — zero-click annotation RCE, any participant compromises all attendees. Patched ZSB-26015.</div>
         </div>
 
         <div class="cveCard high-card" data-detail="ciscoasa">
@@ -715,12 +718,6 @@
           </div>
           <div class="cveSub">Teams + SharePoint RCE chain — July patch alone insufficient</div>
         </div>
-        <div class="cveCard crit-card" data-detail="rufroot">
-          <div class="cveTop">
-            <span class="cveNum">CVE-2026-59726</span><span class="cveScore">10.0</span>
-          </div>
-          <div class="cveSub">RufRoot MCP bridge — unauthenticated RCE, steals all LLM API keys</div>
-        </div>
       </div>
 
 
@@ -728,65 +725,67 @@
         <h2><span class="dot blue"></span>Sources Used This Brief</h2>
 
         <div class="linkGroup">CVE-2026-63077 — JetBrains TeamCity — unauthenticated RCE</div>
-        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA KEV Catalog</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory — CVE-2026-63077</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA Known Exploited Vulnerabilities Catalog</a><span class="arrow">↗</span></div>
         <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0533</div>
-        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 0-Day Exploitation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after first</div>
-        <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able SA-2026-10</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able SA-2026-10 Security Advisory</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Vulnerability Exploitation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">DPRK / Lazarus — ChainDrop</div>
-        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv Compromised</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain Compromise</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv and Cacheable Namespaces Compromised</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Out-of-Band — SharePoint CVE-2026-55040 actively exploited after</div>
-        <div class="linkItem"><a href="https://www.securityweek.com/sharepoint-vulnerability-exploited-shortly-after-poc-release/" target="_blank">SecurityWeek — SharePoint CVE-2026-55040 Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/sharepoint-vulnerability-exploited-shortly-after-poc-release/" target="_blank">SecurityWeek — SharePoint CVE-2026-55040 Exploited Post-PoC</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.rapid7.com/blog/post/ve-cve-2026-55040-microsoft-sharepoint-jwt-token-authentication-bypass-fixed/" target="_blank">Rapid7 — CVE-2026-55040 Technical Analysis</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/attackers-exploit-sharepoint.html" target="_blank">The Hacker News — Attackers Exploit SharePoint</a><span class="arrow">↗</span></div>
         <div class="linkGroup">npm Supply Chain — WEL1DROPPER</div>
-        <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian npm Campaign</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/nearly-800-malicious-npm-packages.html" target="_blank">The Hacker News — 800 Malicious npm Packages</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Black Hat 2026 — Black Hat</div>
-        <div class="linkItem"><a href="https://novee.security/blog/critical-flaws-in-anthropic-google-and-openais-coding-agents/" target="_blank">Novee Security — AI Coding Agent Flaws</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/claude-code-and-gemini-cli-flaws-let.html" target="_blank">The Hacker News — Claude Code & Gemini CLI</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://opensourcemalware.com/blog/russian-ai-slopsquatting-npm-campaign" target="_blank">OpenSourceMalware — Russian AI Slopsquatting npm Campaign</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/nearly-800-malicious-npm-packages.html" target="_blank">The Hacker News — Nearly 800 Malicious npm Packages</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Patch Tuesday — August Patch Tuesday</div>
-        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus CVE-2026-68820</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus Group CVE-2026-68820 Attribution</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day/" target="_blank">SecurityWeek — August 2026 Patch Tuesday</a><span class="arrow">↗</span></div>
         <div class="linkGroup">VMware vCenter — vCenter CVE-2026-59310 now actively exploited</div>
-        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 361 Victim IPs</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 Active Exploitation 361 Victim IPs</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Ransomware — Gunra ransomware</div>
-        <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a" target="_blank">CISA Advisory AA26-222A — Gunra Ransomware</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank">The Hacker News — Gunra Ransomware Joint Advisory</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress Supply Chain — BdThemes supply chain</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain Creates Rogue WordPress Admins</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence — BdThemes Supply Chain Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">SAP Commerce Cloud — SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce CVE-2026-58231</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231 Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August 2026 Patch Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchill/Fl</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">AI Infrastructure — Unit 42</div>
-        <div class="linkItem"><a href="https://unit42.paloaltonetworks.com/ai-token-jacking/" target="_blank">Unit 42 — AI Token Jacking</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">CVE-2026-59726 — RufRoot (CVE-2026-59726, CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://noma.security/blog/rufroot-the-mcp-bridge-vulnerability-that-turns-agents-into-rogue-admins-cve-2026-59726/" target="_blank">Noma Labs — RufRoot CVE-2026-59726</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop Data Theft Claims</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm Investigation</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Adobe Commerce / Magento — Adobe Commerce CVE-2026-71362 (CVSS 9.1)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362 Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — APSB26-92</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GeoServer — GeoServer jsonArrayContains zero-day (CVSS 9.8)</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day Targeted</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/" target="_blank">SecurityWeek — GeoServer Zero-Day Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cisco Secure Firewall — Cisco ASA and FTD CVE-2026-20349 (CVSS 8.6)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA/FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Zoom — Zoom 'Zoomsday' CVE-2026-53413</div>
-        <div class="linkItem"><a href="https://www.securityweek.com/zoom-patches-zero-click-code-execution-vulnerability/" target="_blank">SecurityWeek — Zoom Zero-Click Code Execution</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.secureblink.com/threat-feeds/zoom-zero-click-rce-lets-any-participant-hijack-every-device-1" target="_blank">Secureblink — Zoomsday Technical Analysis</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.zoom.com/en/trust/security-bulletin/zsb-26015" target="_blank">Zoom PSIRT — ZSB-26015</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA and FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">macOS — macOS Screen Sharing CVE-2026-65400 (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Flaw Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Flaw Exploited to Deploy Monero Miner</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/recent-macos-screen-sharing-vulnerability-exploited-in-attacks/" target="_blank">SecurityWeek — macOS Screen Sharing Flaw Actively Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/apple-macos-screen-sharing-flaw.html" target="_blank">The Hacker News — Apple macOS Screen Sharing Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Microsoft Defender — ShieldBreak (CVE-2026-69414)</div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">BleepingComputer — New Microsoft Defender ShieldBreak Zero-Day Grants System Privileges</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/nightmare-eclipse-drops-windows-zero-day-exploit-shieldbreak/" target="_blank">SecurityWeek — Nightmare Eclipse Drops Windows Zero-Day Exploit ShieldBreak</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://github.com/GossiTheDog/ThreatHunting/blob/master/AdvancedHuntingQueries/ShieldBreak.kql" target="_blank">Kevin Beaumont — ShieldBreak KQL Detection Queries</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Azure / Entra ID — TheHatman Azure/Entra ID campaign</div>
+        <div class="linkItem"><a href="https://www.infostealers.com/article/massive-azure-exfiltration-campaign-exposes-millions-of-enterprise-records-via-compromised-credentials-mcdonalds-vodafone-kyndryl-others/" target="_blank">InfoStealers / Hudson Rock — Azure Entra Exfiltration Campaign</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/fortune-500-companies-hit-in-azure-data-theft-campaign/" target="_blank">SecurityWeek — Fortune 500 Companies Hit in Azure Data Theft Campaign</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">WordPress — Forminator Forms CVE-2026-15748 (CVSS 9.8)</div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/forminator-wordpress-flaw-can-enable.html" target="_blank">The Hacker News — Forminator WordPress Flaw Unauthenticated RCE</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/300000-wordpress-sites-potentially-exposed-to-hacking-due-to-form-plugin-flaw/" target="_blank">SecurityWeek — 300,000 WordPress Sites Exposed via Form Plugin Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">GitLab CE/EE — GitLab CVE-2026-19478 (CVSS 9.4)</div>
+        <div class="linkItem"><a href="https://www.securityweek.com/critical-gitlab-flaw-exploited-shortly-after-disclosure/" target="_blank">SecurityWeek — Critical GitLab Flaw Exploited Shortly After Disclosure</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/critical-gitlab-graphql-flaw-could-let.html" target="_blank">The Hacker News — Critical GitLab GraphQL Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.helpnetsecurity.com/2026/08/18/gitlab-critical-code-injection-flaw-cve-2026-19478/" target="_blank">Help Net Security — GitLab CVE-2026-19478</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -1175,45 +1174,6 @@
     ],
     "source": "OpenSourceMalware, Check Point Research, Sonatype, The Hacker News, SC Media",
     "sourceNote": "Aug 6–10, 2026"
-  },
-  "aicodeflaws": {
-    "eyebrow": "Black Hat 2026 · CVE-2026-54316 · AI Coding Agents",
-    "title": "Black Hat: GitHub issues can compromise Claude Code and Gemini CLI CI workflows — API key theft, repo takeover, supply-chain risk",
-    "tags": [
-      [
-        "crit",
-        "Black Hat 2026"
-      ],
-      [
-        "high",
-        "Claude Code · Gemini CLI"
-      ]
-    ],
-    "overview": "Novee Security presented Black Hat USA 2026 research demonstrating that a public GitHub issue filed by an outside contributor with no repository privileges could compromise automated Claude Code and Gemini CLI CI/CD workflows. The researchers tested against Anthropic's and Google's own repositories running their own agents. The Claude Code chain (three rounds of patch-and-bypass, final issue CVE-2026-54316) reached remote code execution on the CI runner and theft of the workflow's ANTHROPIC_API_KEY and GITHUB_TOKEN. The final, patched variant abused Hugging Face's public download counter as a covert side-channel, incrementing it in a specific pattern to exfiltrate the API key one character at a time. Gemini CLI earned a separate CVSS 10.0 rating. Important scoping: this does not affect standard interactive Claude Code usage — it affects automated GitHub Actions workflows where an agent processes external GitHub issues or pull requests.",
-    "technical": [
-      "Attack surface: GitHub Actions workflows that run Claude Code or Gemini CLI automatically in response to external GitHub issues or pull requests — the agent reads the issue, the issue contains a hidden prompt injection payload, and the agent follows it.",
-      "Claude Code chain (three rounds, each patched and bypassed): Round 1 — malicious git push command abused Git's receive-pack option to execute code on the runner; Round 2 — unrestricted file reads extracted sensitive files; Round 3 (CVE-2026-54316) — abused Claude Code's pre-approved access to Hugging Face by incrementing a download counter in a specific bit-pattern to exfiltrate the API key character by character, covertly.",
-      "CVE-2026-54316 affects Claude Code versions 0.2.54 through 2.1.163 (exclusive). Fixed in version 2.1.163. Anthropic issued multiple patches throughout the disclosure process.",
-      "Gemini CLI: the run-gemini-cli Action restricted its shell tools to echo and gh issue view, but researchers found the configuration registered a full shell tool without runtime command-level restrictions. In yolo mode, an injected instruction could execute arbitrary shell commands. The Gemini CLI sanitized the child process environment, but the parent process retained secrets accessible via /proc — a compromised child process could read those secrets. Google rated GHSA-wpqr-6v78-jr5g at CVSS 10.0 and changed the trust model for headless execution. Fixed in Gemini CLI 0.39.1 and run-gemini-cli 0.1.22.",
-      "Codex: the finding produced neither a patch nor a CVE. OpenAI's position is that the sandbox behaved as documented.",
-      "Broader implication: any automated GitHub Actions workflow where the agent reads external issues or PRs and has broad filesystem or network access should be treated as a potential prompt injection surface."
-    ],
-    "iocs": [],
-    "iocNote": "No network or file-based IOCs applicable to this vulnerability — it is an architectural flaw in how AI coding agents handle untrusted input in automated workflows. Detection focus: audit GitHub Actions logs for unexpected subprocess spawns, file reads outside expected working directories, or outbound network calls to unanticipated domains during agent workflow runs.",
-    "mitigation": [
-      "Update Claude Code to version 2.1.163 or later — this closes CVE-2026-54316.",
-      "Update Gemini CLI to 0.39.1 and run-gemini-cli to 0.1.22.",
-      "If you run automated GitHub Actions workflows where Claude Code or Gemini CLI processes external GitHub issues or PRs: restrict the agent's network access to a known allowlist, limit filesystem access to the working directory only, and treat any issue body as untrusted input the same way you treat user-supplied HTTP request data.",
-      "Scope GitHub token permissions to the minimum required (read-only where possible) for workflows that run AI agents — this limits the blast radius if an injection succeeds.",
-      "Consider requiring a human approval step before an AI agent acts on issues from first-time or external contributors."
-    ],
-    "response": [
-      "Audit your GitHub Actions workflows for any that run Claude Code or Gemini CLI in response to external events — check the trigger conditions and the token permissions granted.",
-      "Review GitHub Actions logs from the past month for any unexpected subprocess executions or file reads in Claude Code or Gemini CLI workflow runs.",
-      "If you maintain an API key in a CI environment that runs Claude Code: rotate that key as a precaution and review Anthropic API usage logs for anomalous requests."
-    ],
-    "source": "Novee Security / Check Point Research via The Hacker News, HackRead, GBHackers, eSecurity Planet",
-    "sourceNote": "Aug 5–10, 2026"
   },
   "patchtugsaug": {
     "eyebrow": "Microsoft Patch Tuesday · Aug 11, 2026 · 421 CVEs · 1 Exploited Zero-Day",
@@ -1623,194 +1583,6 @@
     "source": "BleepingComputer, TechNadu, Ransom-ISAC, Reuters via NL Times, The Next Web",
     "sourceNote": "Aug 12-14, 2026"
   },
-  "tokenjack": {
-    "eyebrow": "AI Infrastructure · Unit 42 · Active · Financial Impact",
-    "title": "Unit 42: AI token jacking fuelling gray-market LLM resellers — stolen API keys racked up $1M in charges within minutes of theft",
-    "tags": [
-      [
-        "crit",
-        "AI Infrastructure"
-      ],
-      [
-        "high",
-        "Active · Financial Impact"
-      ]
-    ],
-    "overview": "Unit 42 documented a fast-growing criminal category: stealing developer LLM API keys and feeding them into gray-market 'transfer stations' — fly-by-night proxy services reselling frontier model access at steep discounts. Keys flow from npm supply-chain attacks, infostealers, phishing, and exposed repos. Unit 42 incident response cases saw keys integrated into a transfer station within minutes of theft, running up nearly $1M in API charges before detection. Real infrastructure IOCs published: 16 IPs and 2 domains serving as transfer station infrastructure, plus a distinctive Go HTTP client user-agent string.",
-    "technical": [
-      "Transfer stations are proxy services that accept stolen API keys and resell inference access at 50-80% discounts. They're typically operated from fly-by-night infrastructure with rapid IP rotation.",
-      "Key theft vectors observed by Unit 42: npm supply-chain attacks (connecting directly to the keyv worm and WEL1DROPPER campaigns), infostealers, accidental code repository commits, and phishing.",
-      "Once a key is stolen, Unit 42 observed it being integrated into a transfer station within minutes — before most organizations would detect anomalous API usage.",
-      "The Go HTTP client user-agent string (Go-http-client/2.0,gzip(gfe)) is distinctive and appears in access logs for API calls routed through the transfer station infrastructure."
-    ],
-    "iocs": [
-      {
-        "value": "3[.]235[.]109[.]125",
-        "type": "IP",
-        "note": "Transfer station infrastructure — Unit 42 confirmed",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "116[.]105[.]166[.]148",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "172[.]96[.]142[.]186",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "38[.]46[.]219[.]166",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "38[.]46[.]219[.]163",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "38[.]46[.]219[.]162",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "23[.]237[.]196[.]170",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "15[.]204[.]106[.]173",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "104[.]243[.]42[.]117",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "198[.]255[.]70[.]210",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "47[.]88[.]103[.]81",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "47[.]251[.]72[.]239",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "117[.]72[.]74[.]48",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "207[.]246[.]106[.]162",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "23[.]236[.]182[.]215",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "95[.]214[.]112[.]26",
-        "type": "IP",
-        "note": "Transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "amutes[.]com",
-        "type": "Domain",
-        "note": "Transfer station domain",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "abb1[.]life",
-        "type": "Domain",
-        "note": "Transfer station domain",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      },
-      {
-        "value": "Go-http-client/2.0,gzip(gfe)",
-        "type": "User-Agent",
-        "note": "Distinctive user-agent appearing in AI provider access logs for requests routed through transfer station infrastructure",
-        "source": "https://unit42.paloaltonetworks.com/ai-token-jacking/"
-      }
-    ],
-    "mitigation": [
-      "Implement spending limits and usage alerts on all AI API accounts — configure alerts for spikes that exceed normal thresholds, especially off-hours usage.",
-      "Migrate from long-term API keys to short-term bearer tokens wherever the AI provider supports it.",
-      "Never store AI API keys in code repositories, even private ones — use secrets management platforms.",
-      "Use an AI gateway to centralize API key management and remove credentials from individual developer machines and CI environments.",
-      "Block the 16 attacker IPs and 2 domains in the IOC drawer at your firewall and proxy layer."
-    ],
-    "response": [
-      "Audit AI provider billing dashboards for anomalous usage spikes — particularly off-hours activity or model invocations for models you haven't explicitly deployed.",
-      "Search code repositories including full git history for hardcoded API keys using secret-scanning tools.",
-      "Review CI/CD pipeline logs for unexpected processes spawning after npm install steps.",
-      "If you find evidence of a key already integrated into a transfer station: contact the AI provider immediately to freeze the key before rotating."
-    ],
-    "source": "Unit 42 / Palo Alto Networks",
-    "sourceNote": "Aug 6, 2026"
-  },
-  "rufroot": {
-    "eyebrow": "CVE-2026-59726 · CVSS 10.0 · Ruflo MCP Bridge · Noma Labs",
-    "title": "RufRoot (CVE-2026-59726, CVSS 10.0): unauthenticated RCE in Ruflo MCP bridge gives attacker access to all LLM API keys and agent memory",
-    "tags": [
-      [
-        "crit",
-        "CVSS 10.0"
-      ],
-      [
-        "high",
-        "MCP Bridge · API Key Theft"
-      ]
-    ],
-    "overview": "Noma Labs disclosed CVE-2026-59726 in Ruflo — a popular Model Context Protocol bridge used to expose MCP servers to Claude, GPT, and other LLM-based agents. An unauthenticated remote attacker can exploit the exposed MCP bridge interface (port 3001) and a MongoDB authentication bypass (port 27017) to achieve RCE, steal all LLM API keys stored in Ruflo, and read or inject into the persistent memory store (AgentDB) used by downstream AI agents. Because Ruflo sits between AI agents and their backend MCP servers, a single compromise gives an attacker persistent access to every agent the Ruflo instance serves — including the ability to inject false memories and manipulate future agent behavior.",
-    "technical": [
-      "CVE-2026-59726 (CVSS 10.0): The Ruflo MCP bridge exposes its management interface on port 3001 with no authentication by default. An attacker with network access sends a crafted request to POST /mcp to achieve unauthenticated remote code execution.",
-      "MongoDB (port 27017) used by Ruflo for AgentDB is also exposed without authentication by default in affected versions — an attacker can read all stored agent patterns, conversation history, stored credentials, and API keys.",
-      "Post-exploitation: attacker reads all LLM API keys stored in Ruflo's configuration (used to authenticate requests to Claude, OpenAI, etc.), injects malicious patterns into AgentDB to persistently manipulate future agent behavior, and can pivot to any MCP server Ruflo is connected to.",
-      "The vulnerability affects Ruflo versions below 3.16.3. Fixed in 3.16.3."
-    ],
-    "iocs": [],
-    "iocNote": "No network IOCs — ports 3001 and 27017 being internet-accessible on a Ruflo host are the exposure indicator. Detection: check firewall logs for unexpected inbound connections to these ports; inspect AgentDB for anomalous pattern entries.",
-    "mitigation": [
-      "Upgrade Ruflo to version 3.16.3 immediately — closes the MCP bridge exposure, MongoDB authentication bypass, and prompt injection paths.",
-      "If you cannot patch immediately: block external access to ports 3001 and 27017 at the firewall.",
-      "Rotate all LLM API keys stored in any Ruflo instance that was ever network-accessible."
-    ],
-    "response": [
-      "Check firewall and network logs for unexpected inbound connections to port 3001 or 27017 on any Ruflo host.",
-      "Inspect AgentDB for anomalous entries — patterns or stored memory you didn't create, or credentials stored that look unfamiliar.",
-      "Review MongoDB data for signs of harvested API keys or injected agent patterns.",
-      "After patching, re-audit the AgentDB pattern store — a patched redeployment does not automatically clean injected content."
-    ],
-    "source": "Noma Labs",
-    "sourceNote": "Aug 6, 2026"
-  },
   "adobecommerce": {
     "eyebrow": "Adobe Commerce / Magento · CVE-2026-71362 · CVSS 9.1 · Actively Exploited",
     "title": "Adobe Commerce CVE-2026-71362 (CVSS 9.1): unauthenticated privilege escalation exploited same day as patch — customer accounts hijacked",
@@ -1917,42 +1689,6 @@
     "source": "BleepingComputer, The Hacker News, SOCRadar, CATAAM, Cisco PSIRT",
     "sourceNote": "Aug 11–14, 2026"
   },
-  "zoomsday": {
-    "eyebrow": "Zoom · CVE-2026-53413 · CVSS 8.3 · Zero-Click RCE · Patched",
-    "title": "Zoom 'Zoomsday' CVE-2026-53413: zero-click RCE in annotation engine lets any meeting participant silently compromise every attendee's device — AI found it in under 24 hours",
-    "tags": [
-      [
-        "high",
-        "CVSS 8.3"
-      ],
-      [
-        "high",
-        "Zero-Click · All Platforms"
-      ]
-    ],
-    "overview": "A Security disclosed three memory-corruption vulnerabilities in Zoom's annotation feature on August 11, 2026 under the name Zoomsday. The most severe, CVE-2026-53413 (CVSS 8.3), is a zero-click remote code execution flaw — a malicious meeting participant sends a crafted annotation message that the receiving client parses automatically, achieving code execution with no user interaction, no click, no visible warning, and no prompt. The attacker must be in the same meeting (joined or hosted), but can then target every other participant individually through the annotation protocol's direct viewer-sharer channel. Zoom has patched all four vulnerabilities. No exploitation in the wild has been confirmed. A secondary finding of significant importance: A Security discovered and weaponized the full exploit chain using fewer than 20 prompts to publicly available AI models in under 24 hours — a direct demonstration of AI-accelerated vulnerability research compressing the window defenders have to respond.",
-    "technical": [
-      "CVE-2026-53413 (CVSS 8.3 High, ZSB-26015): Missing bounds check in the CAnnoFormatBlock::Deserialize function within Zoom's annotation engine (libannotate.so). The parser accepts 32-bit character counts from the network without validating them against fixed 128-byte buffers, causing a stack buffer overflow. The annotation feature's proprietary protocol opens a direct communication channel between meeting participants, meaning a crafted message from any participant is parsed automatically by every other client.",
-      "CVE-2026-53414 (Medium): Buffer over-read in the annotator that can expose memory contents. CVE-2026-53415 (High, CVSS 8.3): Use-after-free in auto-shape metadata handling providing a write-what-where primitive — a secondary code-execution path. CVE-2026-53416 (High): Path traversal in Zoom Virtual Desktop Infrastructure (VDI) client, unrelated to the annotation cluster.",
-      "Exploitation path: Attacker joins or hosts a meeting → sends a specially crafted annotation message → every other participant's client automatically parses it → stack buffer overflow → control over return address → code execution on the victim's machine. No click, no file opening, no visible warning to the victim.",
-      "AI-accelerated discovery: A Security disclosed that the complete exploit chain was developed using fewer than 20 prompts to publicly available AI models in under 24 hours. This is a significant data point for the broader threat landscape — it demonstrates that nation-state-caliber vulnerability research is being compressed to sub-24-hour timelines by AI tooling, without specialized security AI access.",
-      "Separate from CVE-2026-53412 (July, Windows-only, account takeover) — different vulnerability, different mechanism, different fixed versions. The July check does not cover this."
-    ],
-    "iocs": [],
-    "iocNote": "No exploitation in the wild confirmed at time of writing. No attacker infrastructure IOCs available. Update Zoom clients to the versions specified in ZSB-26015. If you run Zoom for sensitive meetings (executive, legal, security team), treat this as high-urgency patching regardless of no confirmed exploitation — the PoC exists and was developed in under 24 hours.",
-    "mitigation": [
-      "Update Zoom Workplace clients to the fixed versions specified in Zoom Security Bulletin ZSB-26015 on all platforms — Windows, macOS, Linux, iOS, and Android. Zoom is rolling out updates automatically but verify version numbers are current.",
-      "For VDI environments: apply the separate fix for CVE-2026-53416 (path traversal in the VDI client) which requires a different update path.",
-      "This is separate from the July CVE-2026-53412 Windows account-takeover fix — passing the July check does not mean August's annotation cluster is patched."
-    ],
-    "response": [
-      "No exploitation in the wild has been confirmed — however the full exploit chain is documented and was developed in under 24 hours using public AI tools. Treat as urgent patching, not a leisurely rollout.",
-      "If Zoom is used for sensitive discussions (security team, legal, executive, M&A): verify all participants have updated clients before meeting. An unpatched participant could be compromised by a malicious attendee even on a fully patched host.",
-      "Zoom annotation can be disabled for meetings where it is not needed — this removes the attack surface entirely while patching is in progress."
-    ],
-    "source": "SecurityWeek, Security Affairs, Secureblink, A Security, Zoom PSIRT (ZSB-26015)",
-    "sourceNote": "Aug 11, 2026"
-  },
   "macosscreen": {
     "eyebrow": "macOS · CVE-2026-65400 · CVSS 9.8 · Actively Exploited · Pre-Auth Root",
     "title": "macOS Screen Sharing CVE-2026-65400 (CVSS 9.8): pre-authentication bypass gives attacker root — conventional hardening useless, Monero miner confirmed on multiple systems",
@@ -2006,7 +1742,7 @@
     "technical": [
       "CVE-2026-69414 (CVSS not yet assigned): Elevation of Privilege in the Microsoft Malware Protection Engine (mpengine.dll). The mechanism is a user-mode callback hook — the attacker modifies file contents during a Defender cloud-hydration scan, tricking the Malware Protection Engine into executing attacker-controlled code with SYSTEM privileges. Distinct from RoguePlanet (CVE-2026-50656), which was a filesystem race condition involving virtual disks and NT native file manipulation.",
       "Requirements: (1) local code execution at any privilege level, (2) Microsoft Defender must be enabled and actively scanning. Disabling Defender removes the attack surface but also removes protection — not a viable mitigation for most environments.",
-      "Affected: Windows 10, Windows 11 (through 25H2 including Canary channel), Windows Server 2025 — all with fully updated Defender engine. The researcher reports 100% success rate on Windows 11 25H2 and Windows Server 2025.",
+      "Affected: Windows 10, Windows 11 (through 25H2 including Canary channel), Windows Server 2025 — all with fully updated Defender engine. Initial disclosure reported 100% success rate on Windows 11 25H2 and Windows Server 2025. Subsequent reporting (August 2026) notes the exploit shows variability between machines on fully patched systems and may not achieve 100% success across all hardware configurations — reliability depends on system state and may require retries. No confirmed in-wild exploitation has been logged by CISA.",
       "This is the latest in a series of zero-days from Nightmare Eclipse since April 2026: LegacyHive, RoguePlanet (now patched), BlueHammer, RedSun, YellowKey, GreenPlasma, MiniPlasma, UnDefend. Prior disclosures have been linked to real-world attacks. The pattern suggests the researcher has a stockpile of Microsoft Defender/Windows vulnerabilities being disclosed sequentially.",
       "Kevin Beaumont published detection queries for Microsoft Defender for Endpoint on his blog — these are the only published detection artifacts and should be deployed immediately."
     ],
@@ -2067,8 +1803,87 @@
     ],
     "source": "InfoStealers / Hudson Rock, SecurityWeek, Help Net Security, Scrutex, CRN Asia",
     "sourceNote": "Aug 1–18, 2026"
+  },
+  "forminator": {
+    "eyebrow": "WordPress · CVE-2026-15748 · CVSS 9.8 · 600K+ Sites · Unauthenticated RCE",
+    "title": "Forminator Forms CVE-2026-15748 (CVSS 9.8): unauthenticated PHP upload → RCE on 300,000+ WordPress sites still running vulnerable releases",
+    "tags": [
+      [
+        "crit",
+        "CVSS 9.8"
+      ],
+      [
+        "high",
+        "600K Installs · Unauthenticated"
+      ]
+    ],
+    "overview": "Wordfence disclosed CVE-2026-15748 on August 17, 2026 — a critical arbitrary file upload vulnerability in Forminator Forms, a WordPress drag-and-drop form builder with over 600,000 active installations used for contact forms, payment forms, polls, and quizzes. SecurityWeek estimated that over 300,000 sites were still running vulnerable releases at time of disclosure. An unauthenticated attacker can upload a malicious PHP webshell and achieve full remote code execution with no credentials and no user interaction, under the right form configuration. Fixed in version 1.56.2.",
+    "technical": [
+      "CVE-2026-15748 (CVSS 9.8, CWE-434: Unrestricted Upload of Dangerous File Type): The `handle_file_upload` function in Forminator's public form submission handler performs MIME type validation using an exact-key blocklist. An attacker bypasses this by providing a pipe-alternative MIME type key (e.g. `application/x-php|application/x-php-source`) that does not match the exact-key blocklist but is executable by the web server.",
+      "Exploitation chain: The vulnerability chains two weaknesses. (1) The public submission handler trusts attacker-controlled upload field configuration injected via a forged Select field value — an attacker can use a crafted POST request to override the form's upload configuration. (2) The MIME type blocklist is bypassed using pipe-alternative MIME keys. Together, an unauthenticated attacker uploads an arbitrary PHP file to the server's upload directory.",
+      "Critical prerequisite: The exploit only works on WordPress sites where a Forminator form contains BOTH a File Upload field AND a Select field. The Select field is the injection point for the forged upload configuration. Sites without this form configuration are not exploitable via the demonstrated chain — but 300,000+ sites appear to meet these conditions.",
+      "Heightened risk with custom upload storage: In Forminator's default configuration, uploaded files are stored in a directory with an `.htaccess` file blocking PHP execution. If an administrator has configured a Custom File Upload Storage root, that directory may be created without the `.htaccess` protection (it can be first initialized during a frontend request where the WordPress helper creating the protection file is unavailable). Under this configuration, requesting the malicious PHP file directly causes the web server to execute attacker code — giving full RCE.",
+      "Affected: Forminator Forms ≤ 1.56.1. Fixed: 1.56.2. Also disclosed in the same Wordfence advisory: CVE-2026-15826 (CVSS 9.8) in User Profile Builder — authentication bypass allowing login as user ID 1, but only exploitable when the non-default 'Automatically Log In' setting is enabled. Patched July 16, 2026 in version 3.16.5."
+    ],
+    "iocs": [],
+    "iocNote": "No attacker infrastructure IOCs published. Exploitation is server-side — a planted PHP webshell is the post-exploitation artifact to hunt for. No confirmed in-wild exploitation reported at time of disclosure, but CVSS 9.8 with no-auth prerequisites and 300,000+ exposed sites makes automated scanning near-certain.",
+    "mitigation": [
+      "Update Forminator Forms to version 1.56.2 immediately. This is available via the WordPress plugin auto-update mechanism — check the Plugins dashboard and verify the version string.",
+      "If you cannot update immediately: disable or remove any Forminator form that contains both a File Upload field and a Select field, or disable the plugin entirely.",
+      "Audit Forminator forms for custom File Upload Storage configurations — if enabled, verify the custom directory contains an `.htaccess` file blocking PHP execution: `Options -ExecCGI\\nAddHandler cgi-script .php .php3 .php4 .phtml\\n<Files *.php>\\nDeny from all\\n</Files>`.",
+      "Update User Profile Builder to version 3.16.5 if in use — CVE-2026-15826 (auth bypass) patched July 16. Check whether 'Automatically Log In' is enabled in plugin settings."
+    ],
+    "response": [
+      "Search the WordPress uploads directory and any Forminator custom upload directories for `.php`, `.phtml`, `.php5`, and `.shtml` files uploaded recently — any PHP file in these directories is a webshell candidate.",
+      "Review web server access logs for POST requests to `wp-admin/admin-ajax.php` with `action=forminator_upload_file` or similar upload action parameters from unexpected IPs since August 17.",
+      "If a webshell is found: treat the WordPress installation as fully compromised — webshells provide persistent, backdoored access independent of the plugin. Take the site offline, restore from a clean backup, and investigate whether the webshell was used for further access before restoring.",
+      "SENTINEL KQL — Detect PHP file creation in WordPress upload directories, consistent with CVE-2026-15748 webshell upload exploitation.\n\n// Forminator Forms CVE-2026-15748 — Webshell Upload Detection\n// Requires: DeviceFileEvents (MDE/Defender XDR)\nDeviceFileEvents\n| where Timestamp > ago(7d)\n| where FileName endswith \".php\"\n    or FileName endswith \".phtml\"\n    or FileName endswith \".php5\"\n| where FolderPath has_any (\n    \"\\\\wp-content\\\\uploads\\\\forminator\",\n    \"\\\\wp-content\\\\uploads\\\\\",\n    \"/wp-content/uploads/\"\n)\n| where ActionType in~ (\"FileCreated\",\"FileModified\")\n| where InitiatingProcessFileName in~ (\n    \"php.exe\",\"php-cgi.exe\",\"php-fpm\",\"w3wp.exe\",\n    \"httpd\",\"nginx\",\"apache2\"\n)\n| project Timestamp, DeviceName, FolderPath, FileName, SHA256,\n    InitiatingProcessFileName, InitiatingProcessCommandLine\n| sort by Timestamp desc"
+    ],
+    "source": "The Hacker News, SecurityWeek, Wordfence / Defiant, Rapid7, Security Online",
+    "sourceNote": "Aug 17, 2026"
+  },
+  "gitlab": {
+    "eyebrow": "GitLab CE/EE · CVE-2026-19478 · CVSS 9.4 · Exploited · Emergency Patch",
+    "title": "GitLab CVE-2026-19478 (CVSS 9.4): unauthenticated GraphQL code injection — exploited within 24 hours of emergency patch. Third major GitLab GraphQL flaw in 2026.",
+    "tags": [
+      [
+        "crit",
+        "CVSS 9.4"
+      ],
+      [
+        "high",
+        "Exploited · GraphQL · Source Code"
+      ]
+    ],
+    "overview": "GitLab released an emergency patch on August 17, 2026 for CVE-2026-19478, a critical code injection vulnerability in the GraphQL API of both Community Edition and Enterprise Edition. An unauthenticated remote attacker can send a specially crafted GraphQL directive to any internet-exposed self-managed GitLab instance and remotely modify or delete public projects and user data — no account, no credentials, no user interaction required. SecurityWeek confirmed exploitation began shortly after public disclosure. WatchTowr warned on August 18 that the flaw is easily reproducible. This is the third major GraphQL-layer security vulnerability GitLab has patched in 2026 — a pattern pointing to a sustained hardening problem in the platform's core API layer. GitLab.com and GitLab Dedicated are already patched; only self-managed installations require action. Full technical details are embargoed until approximately mid-November 2026.",
+    "technical": [
+      "CVE-2026-19478 (CVSS 9.4, CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H): Code injection via an improperly handled GraphQL directive in GitLab's API layer. GitLab has not publicly disclosed the specific directive involved — the 90-day coordinated disclosure embargo lasts until approximately November 17, 2026. Exploitation requires only network access to the GraphQL endpoint.",
+      "Impact: An unauthenticated attacker can remotely modify or delete public GitLab projects and associated user data. In practice, this means source code repositories, CI/CD pipeline configurations, issue trackers, merge requests, and project settings are all within reach — without any authenticated session. The CVSS vector reflects high integrity and availability impact.",
+      "Attack surface: Any self-managed GitLab instance with its GraphQL endpoint internet-accessible. This includes standard web-facing installations where the application's `/api/graphql` endpoint is reachable. GitLab.com and GitLab Dedicated have been patched server-side and require no customer action.",
+      "Affected versions: CE and EE 18.2 through 18.10 (fix: 18.11.11), 19.0.0–19.0.7 (fix: 19.0.8), 19.1.0–19.1.5 (fix: 19.1.6), 19.2.0–19.2.3 (fix: 19.2.4). The 18.0 and 18.1 branches are within the CVSS affected range and have not received fixes — installations on those branches should upgrade to 18.11.11.",
+      "Context: This is the third major GraphQL-layer vulnerability GitLab has patched in 2026. The pattern suggests a systemic weakness in how GitLab handles directive processing and request validation in its GraphQL implementation. GitLab shipped this fix outside its normal twice-monthly cadence (the previous routine release was August 12 with no critical-rated issues) — the out-of-cycle timing is itself a signal of urgency."
+    ],
+    "iocs": [],
+    "iocNote": "No attacker infrastructure IOCs published — exploitation is API-level, no malware or C2. Detection: monitor GitLab application logs for unexpected unauthenticated GraphQL mutation activity (POST /api/graphql with no session cookie or Authorization header but with successful response codes), particularly requests that modify or delete project-level objects. Look for unusual DELETE or mutation events in GitLab's audit log against projects you didn't initiate.",
+    "mitigation": [
+      "Update all self-managed GitLab CE/EE instances to the patched versions immediately: 18.11.11, 19.0.8, 19.1.6, or 19.2.4. No database migrations or downtime are required for multi-node deployments — this is a drop-in update.",
+      "If you are on branches 18.0 or 18.1 (within the affected range but without branch-specific fixes): upgrade to 18.11.11. GitLab does not plan to backport the fix to branches older than 18.11.",
+      "GitLab.com and GitLab Dedicated: already patched, no action required.",
+      "As a temporary measure while scheduling the update: review whether your GitLab instance's GraphQL endpoint (/api/graphql) is internet-accessible, and consider restricting it to known IP ranges at your WAF or reverse proxy."
+    ],
+    "response": [
+      "Audit GitLab application logs for unauthenticated GraphQL requests against public projects — specifically POST /api/graphql requests without session cookies that return 200 responses with mutation results. This is the baseline detection pattern for CVE-2026-19478 exploitation.",
+      "Review GitLab's audit log (Admin Area → Monitoring → Audit Events) for unexpected project modification or deletion events, particularly those not tied to any authenticated user session or tied to an unknown IP address.",
+      "If project tampering is found: treat any modified source code or CI/CD pipeline configuration as potentially compromised — an attacker who can modify a pipeline .gitlab-ci.yml can introduce supply-chain attacks into your build artifacts.",
+      "SENTINEL KQL — Detect unauthenticated GraphQL mutation activity against GitLab, consistent with CVE-2026-19478 exploitation. Requires GitLab access logs forwarded to Sentinel via CommonSecurityLog or custom table.\n\n// GitLab CVE-2026-19478 — Unauthenticated GraphQL Mutation Detection\n// Requires: GitLab access logs forwarded to Sentinel (CommonSecurityLog or W3CIISLog)\nW3CIISLog\n| where TimeGenerated > ago(7d)\n| where csUriStem has \"/api/graphql\"\n| where csMethod == \"POST\"\n| where isempty(cs_Cookie) or cs_Cookie !has \"known_session_prefix\"  // no session cookie\n| where sc_status == 200  // successful mutation\n| where csUserAgent !has_any (\"GitLab\", \"gitlab-runner\")  // exclude legitimate internal agents\n| project TimeGenerated, cIP, csUriStem, csMethod, sc_status, \n    cs_bytes, sc_bytes, csUserAgent\n| sort by TimeGenerated desc"
+    ],
+    "source": "SecurityWeek, The Hacker News, Help Net Security, CyCognito, TechTimes",
+    "sourceNote": "Aug 17–20, 2026"
   }
 }
+
+
+
 
 
 
@@ -2196,23 +2011,6 @@
       "Technology"
     ]
   },
-  "aicodeflaws": {
-    "status": "ongoing",
-    "conf": "Confirmed — vendor-patched CVEs with Black Hat technical demonstration",
-    "confNote": "Novee Security responsible disclosure; Anthropic and Google both patched; CVE-2026-54316 (Claude Code) and CVSS 10.0 Gemini CLI flaw confirmed",
-    "iocDate": "n/a — architectural vulnerability, no campaign IOCs",
-    "admiralty": "A2",
-    "severity": 4,
-    "cvss": null,
-    "attack": [
-      "T1059 — Command and Scripting Interpreter",
-      "T1552 — Unsecured Credentials",
-      "T1195.002 — Compromise Software Supply Chain"
-    ],
-    "sectors": [
-      "Technology"
-    ]
-  },
   "patchtugsaug": {
     "status": "ongoing",
     "conf": "Confirmed — CVE-2026-68820 Lazarus Group attribution published by Check Point Research; CISA KEV-listed Aug 11",
@@ -2321,39 +2119,6 @@
       "Healthcare"
     ]
   },
-  "tokenjack": {
-    "status": "ongoing",
-    "conf": "Confirmed — Unit 42 incident response data",
-    "confNote": "Unit 42 direct IR cases; attacker infrastructure confirmed",
-    "iocDate": "Aug 6, 2026",
-    "admiralty": "A1",
-    "severity": 4,
-    "cvss": null,
-    "attack": [
-      "T1552 — Unsecured Credentials",
-      "T1195.001 — Compromise Software Dependencies"
-    ],
-    "sectors": [
-      "Technology"
-    ]
-  },
-  "rufroot": {
-    "status": "ongoing",
-    "conf": "Confirmed — Noma Labs advisory, CVE assigned",
-    "confNote": "Noma Labs direct research publication; CVE-2026-59726 assigned CVSS 10.0",
-    "iocDate": "n/a — exposure is misconfigured port access",
-    "admiralty": "A1",
-    "severity": 5,
-    "cvss": 10,
-    "attack": [
-      "T1190 — Exploit Public-Facing Application",
-      "T1552 — Unsecured Credentials",
-      "T1565 — Data Manipulation"
-    ],
-    "sectors": [
-      "Technology"
-    ]
-  },
   "adobecommerce": {
     "status": "ongoing",
     "conf": "Confirmed — Sansec Shield WAF blocking active exploitation attempts same day as patch",
@@ -2403,22 +2168,6 @@
     "attack": [
       "T1499 — Endpoint Denial of Service",
       "T1190 — Exploit Public-Facing Application"
-    ]
-  },
-  "zoomsday": {
-    "status": "ongoing",
-    "conf": "Confirmed patch — Zoom PSIRT patched Aug 11 (ZSB-26015); no confirmed in-wild exploitation at time of writing",
-    "confNote": "A Security discovered via AI-assisted research in <24 hours, fewer than 20 prompts; coordinated disclosure; Zoom patched all four CVEs; no exploitation in wild confirmed",
-    "iocDate": "n/a — no exploitation confirmed; patch available",
-    "admiralty": "A2",
-    "severity": 4,
-    "cvss": 8.3,
-    "sectors": [
-      "All Sectors"
-    ],
-    "attack": [
-      "T1203 — Exploitation for Client Execution",
-      "T1059 — Command and Scripting Interpreter"
     ]
   },
   "macosscreen": {
@@ -2477,8 +2226,44 @@
       "T1566.003 — Phishing: Spearphishing via Service (PhaaS)",
       "T1111 — Multi-Factor Authentication Interception"
     ]
+  },
+  "forminator": {
+    "status": "new",
+    "conf": "Confirmed vulnerability — Wordfence published full technical disclosure Aug 17; patch 1.56.2 available; no confirmed in-wild exploitation at time of writing",
+    "confNote": "Wordfence (Defiant) disclosed CVE-2026-15748 Aug 17; discovered by \"daroo\"; Rapid7 confirmed advisory; SecurityWeek estimates 300K+ sites still vulnerable. Automated scanning likely has begun.",
+    "iocDate": "Aug 17, 2026 — disclosure date; no exploitation IoCs published",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": 9.8,
+    "sectors": [
+      "Technology"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1505.003 — Server Software Component: Web Shell"
+    ]
+  },
+  "gitlab": {
+    "status": "new",
+    "conf": "Confirmed exploitation — SecurityWeek confirmed exploitation shortly after Aug 17 disclosure; WatchTowr confirmed easy reproduction on Aug 18",
+    "confNote": "SecurityWeek confirmed exploitation; WatchTowr Aug 18 advisory; GitLab emergency OOB release Aug 17; discovered by hiimguardian via HackerOne. Third GitLab GraphQL vuln in 2026.",
+    "iocDate": "Aug 17, 2026 — exploitation began shortly after disclosure; no IoCs published",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": 9.4,
+    "sectors": [
+      "Technology"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1485 — Data Destruction",
+      "T1565 — Data Manipulation"
+    ]
   }
 }
+
+
+
 
 
 
