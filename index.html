@@ -1736,7 +1736,8 @@
     "response": [
       "Review ASA/FTD syslog for unexpected reload events since August 11 — any unscheduled reload on a device running Remote Access SSL VPN may indicate exploitation.",
       "Check VPN session logs immediately before any reload event for anomalous HTTP requests to the WebVPN service — particularly from unfamiliar source IPs or with anomalous request structure.",
-      "Deploy Snort rules 46897 and 59654 immediately if running Cisco IDS/IPS — these are the only detection artifacts Cisco has published."
+      "Deploy Snort rules 46897 and 59654 immediately if running Cisco IDS/IPS — these are the only detection artifacts Cisco has published.",
+      "SENTINEL KQL — Detect CVE-2026-20349 exploitation attempts against Cisco ASA/FTD via device reload events in syslog. Snort rules 46897 and 59654 are the primary detection; this query supplements with syslog-based reload monitoring.\n\n// Cisco ASA/FTD CVE-2026-20349 — Unexpected Device Reload Detection\n// Requires: Cisco ASA/FTD syslogs forwarded to Sentinel via CommonSecurityLog\nCommonSecurityLog\n| where TimeGenerated > ago(14d)\n| where DeviceVendor == \"Cisco\"\n| where DeviceProduct has_any (\"ASA\",\"FTD\",\"Firepower\")\n| where Message has_any (\n    \"Device reloading\",\n    \"Reload requested\",\n    \"%ASA-1-104001\",  // Failover unit primary — reloading\n    \"SSL VPN connection\",\n    \"WebVPN\"\n)\n| where Message !has \"scheduled\"  // filter planned maintenance reloads\n| project TimeGenerated, Computer, DeviceVendor, DeviceProduct,\n    SourceIP, DestinationIP, Activity, Message\n| sort by TimeGenerated desc"
     ],
     "source": "BleepingComputer, The Hacker News, SOCRadar, CATAAM, Cisco PSIRT",
     "sourceNote": "Aug 11–14, 2026"
@@ -1772,7 +1773,8 @@
     "response": [
       "Audit macOS system logs for unexpected screensharingd session entries from external IPs going back to August 7 — when NCSC-NL first issued its advisory. Any external IP connecting to port 5900 on an unpatched Mac is high-confidence exploitation.",
       "Search running processes and launch daemons/agents for known Monero miner processes (xmrig is the most common) and any unexpected high-CPU processes. Check /Library/LaunchDaemons/ and /Library/LaunchAgents/ for unfamiliar plist entries.",
-      "NCSC-NL noted that the miner may be only the visible artifact — treat any confirmed cryptominer installation as a potential deeper compromise and conduct full endpoint forensics before considering remediation complete."
+      "NCSC-NL noted that the miner may be only the visible artifact — treat any confirmed cryptominer installation as a potential deeper compromise and conduct full endpoint forensics before considering remediation complete.",
+      "DEFENDER XDR KQL — Detect CVE-2026-65400 post-exploitation: reverse shell via screensharingd, cryptominer processes (Monero/XMRig), and launchd persistence. Based on Huntress breakdown and NCSC-NL confirmed exploitation pattern.\n\n// macOS CVE-2026-65400 — Post-Exploitation: Reverse Shell + Cryptominer\n// Source: Analyst query based on Huntress analysis (huntress.com/blog/macos-screen-sharing-rce-patched)\n// Requires: Defender for Endpoint macOS agent\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where DeviceId in\n    // Filter to macOS devices (or remove for all)\n    (DeviceInfo | where OSPlatform == \"macOS\" | project DeviceId)\n| where (\n    // screensharingd spawning a shell (reverse shell pattern)\n    (InitiatingProcessFileName == \"screensharingd\" and\n     FileName in~ (\"bash\",\"sh\",\"zsh\",\"python3\",\"python\",\"ruby\",\"perl\"))\n    or\n    // Known Monero miner processes\n    FileName in~ (\"xmrig\",\"xmr-stak\",\"miner\",\"minerd\",\"cryptonight\")\n    or\n    // High-CPU unnamed processes (cryptominer masquerading)\n    (FileName startswith \".\" and FolderPath startswith \"/usr/bin/\")\n)\n| project Timestamp, DeviceName, FileName, ProcessCommandLine,\n    InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName\n| sort by Timestamp desc"
     ],
     "source": "BleepingComputer, SecurityWeek, The Hacker News, Help Net Security, Malwarebytes, NCSC-NL Advisory NCSC-2026-0280",
     "sourceNote": "Aug 6–16, 2026"
@@ -1929,7 +1931,8 @@
       "Audit GitLab application logs for unauthenticated GraphQL requests against public projects — specifically POST /api/graphql requests without session cookies that return 200 responses with mutation results. This is the baseline detection pattern for CVE-2026-19478 exploitation.",
       "Review GitLab's audit log (Admin Area → Monitoring → Audit Events) for unexpected project modification or deletion events, particularly those not tied to any authenticated user session or tied to an unknown IP address.",
       "If project tampering is found: treat any modified source code or CI/CD pipeline configuration as potentially compromised — an attacker who can modify a pipeline .gitlab-ci.yml can introduce supply-chain attacks into your build artifacts.",
-      "SENTINEL KQL — Detect unauthenticated GraphQL mutation activity against GitLab, consistent with CVE-2026-19478 exploitation. Requires GitLab access logs forwarded to Sentinel via CommonSecurityLog or custom table.\n\n// GitLab CVE-2026-19478 — Unauthenticated GraphQL Mutation Detection\n// Requires: GitLab access logs forwarded to Sentinel (CommonSecurityLog or W3CIISLog)\nW3CIISLog\n| where TimeGenerated > ago(7d)\n| where csUriStem has \"/api/graphql\"\n| where csMethod == \"POST\"\n| where isempty(cs_Cookie) or cs_Cookie !has \"known_session_prefix\"  // no session cookie\n| where sc_status == 200  // successful mutation\n| where csUserAgent !has_any (\"GitLab\", \"gitlab-runner\")  // exclude legitimate internal agents\n| project TimeGenerated, cIP, csUriStem, csMethod, sc_status, \n    cs_bytes, sc_bytes, csUserAgent\n| sort by TimeGenerated desc"
+      "SENTINEL KQL — Detect unauthenticated GraphQL mutation activity against GitLab, consistent with CVE-2026-19478 exploitation. Requires GitLab access logs forwarded to Sentinel via CommonSecurityLog or custom table.\n\n// GitLab CVE-2026-19478 — Unauthenticated GraphQL Mutation Detection\n// Requires: GitLab access logs forwarded to Sentinel (CommonSecurityLog or W3CIISLog)\nW3CIISLog\n| where TimeGenerated > ago(7d)\n| where csUriStem has \"/api/graphql\"\n| where csMethod == \"POST\"\n| where isempty(cs_Cookie) or cs_Cookie !has \"known_session_prefix\"  // no session cookie\n| where sc_status == 200  // successful mutation\n| where csUserAgent !has_any (\"GitLab\", \"gitlab-runner\")  // exclude legitimate internal agents\n| project TimeGenerated, cIP, csUriStem, csMethod, sc_status, \n    cs_bytes, sc_bytes, csUserAgent\n| sort by TimeGenerated desc",
+      "SENTINEL KQL — Detect unauthenticated GraphQL requests against self-managed GitLab, consistent with CVE-2026-19478 exploitation. Requires GitLab access logs forwarded to Sentinel. WatchTowr confirmed easy reproduction within minutes of disclosure.\n\n// GitLab CVE-2026-19478 — Unauthenticated GraphQL Mutation\n// Requires: W3CIISLog or GitLab nginx logs via Syslog connector\n// Detect POST to /api/graphql without session cookie, returning 2xx\nW3CIISLog\n| where TimeGenerated > ago(7d)\n| where csUriStem has \"/api/graphql\"\n| where csMethod == \"POST\"\n| where (isempty(cs_Cookie) or cs_Cookie !has \"_gitlab_session\")\n| where sc_status between (200 .. 299)\n| where csUserAgent !has_any (\"GitLab\", \"gitlab-runner\", \"gitlab-pages\")\n| project TimeGenerated, cIP, csUriStem, csMethod,\n    sc_status, sc_bytes, csUserAgent, cs_Cookie\n| sort by TimeGenerated desc"
     ],
     "source": "SecurityWeek, The Hacker News, Help Net Security, CyCognito, TechTimes",
     "sourceNote": "Aug 17–20, 2026"
@@ -1966,7 +1969,8 @@
       "CORRECTION NOTE: Exploitation of CVE-2026-69836 was not confirmed — Microsoft retracted that claim on August 21. The audit log checks below remain recommended regardless: the vulnerability was present in Entra ID's infrastructure for an unknown window prior to the server-side patch, and these are exactly the log signals that would reveal any unauthorized access whether from this CVE or from the concurrent TheHatman Azure/Entra directory enumeration campaign. Consider this general Entra ID baseline hygiene, not exclusively CVE-specific remediation.",
       "Audit Entra ID audit logs (Portal → Microsoft Entra ID → Monitoring → Audit logs) for: Conditional Access policy modifications, service principal credential additions, role assignment changes, and token issuance anomalies in the window prior to August 20, 2026.",
       "Review Microsoft Secure Score recommendations — any sudden drops in Secure Score that correlate with the exploitation period may indicate tenant-level configuration tampering.",
-      "If you observe anomalous changes that predate the remediation: treat as potential tenant compromise and engage Microsoft support for incident investigation. Document any unauthorized changes before attempting to revert them."
+      "If you observe anomalous changes that predate the remediation: treat as potential tenant compromise and engage Microsoft support for incident investigation. Document any unauthorized changes before attempting to revert them.",
+      "SENTINEL KQL — Community detection (it-learn.io / @it_learn_io): surfaces service principal credential additions and federated trust modifications — two actions an attacker would take to establish persistence after exploiting the Entra ID control plane. Note: exploitation of CVE-2026-69836 was NOT confirmed (Microsoft retracted Aug 21). Run this as general Entra ID identity hygiene; filter against known change windows.\n\n// Entra ID CVE-2026-69836 — Service Principal & Federation Trust Changes\n// Source: it-learn.io Detection Spotlight (blog.it-learn.io), Aug 21 2026\n// Surface persistence actions an attacker would take after control-plane access\nAuditLogs\n| where TimeGenerated > ago(14d)\n| where OperationName in (\n    \"Add service principal credentials\",\n    \"Update application – Certificates and secrets management\",\n    \"Set federation settings on domain\",\n    \"Add federated identity credential\"\n)\n| where InitiatedBy.user.userPrincipalName !in (\n    // Replace with your authorized admin UPNs\n    \"expected-admin1@contoso.com\",\n    \"expected-admin2@contoso.com\"\n)\n| project TimeGenerated, OperationName, InitiatedBy,\n    TargetResources, Result\n| sort by TimeGenerated desc"
     ],
     "source": "Cyber Security News, The Hacker News, CyberPress, Microsoft MSRC",
     "sourceNote": "Aug 20–21, 2026"
@@ -2119,6 +2123,7 @@
 
 
 
+
   const META = {
   "teamcity": {
     "status": "ongoing",
@@ -2154,8 +2159,8 @@
   },
   "ncentral": {
     "status": "ongoing",
-    "conf": "Confirmed — Hotfix 2 (2026.3.1.10) released Aug 6, KEV-listed, exploitation ongoing",
-    "confNote": "N-able first-party disclosure, independent Huntress investigation, and CISA KEV addition Aug 4 following confirmed customer compromises",
+    "conf": "Confirmed exploitation — CISA added CVE-2026-18577 to KEV after customer compromises; auth bypass allows account takeover and pivot to managed endpoints",
+    "confNote": "CISA KEV added Aug 2026; Huntress and N-able confirmed active exploitation; incomplete patch — CVE-2026-18577 bypasses CVE-2026-18556 fix; Hotfix 2 (version 2026.3 HF1) required",
     "iocDate": "Aug 2–4, 2026",
     "admiralty": "A1",
     "severity": 5,
@@ -2527,6 +2532,7 @@
     ]
   }
 }
+
 
 
 
