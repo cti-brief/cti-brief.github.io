@@ -402,7 +402,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      TrueConf supply chain KEV — Aug 24 deadline, PhantomCore backdoor in client installers. Zimbra SNMP unauthenticated RCE — 12K+ servers exposed. GitLab CVSS 9.4 exploited 24hrs post-patch. macOS pre-auth root exploited. ShieldBreak no patch, CISA BOD 26-04 active. CORRECTION: Entra ID CVE-2026-69836 not exploited.
+      TrueConf KEV Aug 24 deadline (today). DPRK Rust crates — rotate all CI/CD secrets. macOS CVE-2026-65400 now on CISA KEV. Elementor Pro CVE-2026-32475 disclosed — 12M+ sites. Zimbra 12K+ exposed. ShieldBreak no patch, BOD 26-04 active.
     </div>
   </header>
 
@@ -440,28 +440,29 @@
         <h2>◆ Key Judgments</h2>
         <div class="kj-item">
           <span class="kj-num">01</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that software supply chain attacks against collaboration and communications infrastructure are maturing into a standing threat — Head Mare's TrueConf supply chain compromise (CISA KEV, Aug 21, 3-day deadline) replaced signed client installers with PhantomCore and PhantomGraph backdoors, infecting every user who connected for an update. Combined with the keyvworm npm worm and WEL1DROPPER (788+ packages) still active, the pattern is consistent: attackers are targeting the update and install mechanism as the delivery vector rather than the application itself.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that software supply chains across every major language ecosystem are now active DPRK attack surfaces — North Korean actors this week compromised Rust crate maintainer accounts on crates.io (build-time credential theft at compile time, 245M+ downloads affected), adding to prior campaigns against npm and PyPI. The technique is consistent: compromise a high-download legitimate package, execute credential-theft code in a trusted build context, and harvest CI/CD secrets before the victim detects anything. Developer machines and CI/CD pipelines are now primary DPRK initial access targets.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">02</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that AI is compressing the exploit development timeline to hours — macOS Screen Sharing RCE built in ~4 hours with public AI tools; GitLab CVE-2026-19478 exploited within 24 hours of its emergency patch; Zimbra CVE-2026-73570 saw active exploitation days after CERT Polska's disclosure. This week's Entra ID initial reporting error — where Microsoft marked CVE-2026-69836 as exploited, then retracted it hours later — also illustrates the speed at which defenders are now operating and the need for verification before acting on breaking disclosures.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that WordPress form plugins have become a preferred unauthenticated RCE vector this week — two separate CVSS 9.0+ file upload RCE vulnerabilities disclosed within 5 days (Forminator CVE-2026-15748 and Elementor Pro CVE-2026-32475), both bypassing extension blocklists via different techniques. Organizations running either plugin should patch immediately and audit uploads directories for unexpected PHP files.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">03</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that PhaaS platforms have industrialized MFA bypass at scale — the Azure/Entra TheHatman campaign's structured directory exports across nine Fortune 500 organizations are consistent with Graph API enumeration via PhaaS-harvested session token replay (Tycoon2FA, Rockstar2FA, Evilginx2-based kits). Token binding (Entra ID Token Protection) and anomalous-token Conditional Access policies are the specific technical controls that address this vector; standard MFA enforcement does not.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that CISA KEV compliance speed is the week's dominant breach differentiator — macOS CVE-2026-65400 (pre-auth root) is now KEV-listed with confirmed exploitation; TrueConf Aug 24 federal deadline is today; ShieldBreak (no patch) carries CISA BOD 26-04; afd.sys/Lazarus KEV deadline is August 25. Four active KEV obligations converging in a 48-hour window is exceptional — organizations not tracking KEV as a primary patch prioritization input are measurably more exposed.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">04</span>
-          <span class="kj-text">We assess with <b>high confidence</b> that unpatched Defender privilege escalation (ShieldBreak, CVE-2026-69414) now carries a CISA BOD 26-04 14-day compensating control requirement — with no patch available and a public PoC that achieves SYSTEM on fully updated Windows 10/11/Server 2025. Kevin Beaumont's three detection queries (embedded in this brief's Hunt & Investigate section) remain the only published detection mechanism. Defenders must deploy these before the BOD 26-04 window closes.</span>
+          <span class="kj-text">We assess with <b>high confidence</b> that PhaaS platforms have industrialized MFA bypass for cloud identity theft at scale — the Azure/Entra TheHatman campaign's structured directory exports across nine Fortune 500 organizations are consistent with Graph API enumeration via PhaaS session-token replay (Tycoon2FA, Rockstar2FA, Evilginx2-based kits). Token binding and anomalous-token Conditional Access policies are the specific controls that address this vector; standard MFA enforcement does not. The Entra ID CVE-2026-69836 disclosure (exploitation status retracted Aug 21) reinforces cloud identity is under sustained attack.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">05</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that email and video conferencing infrastructure (Zimbra CVE-2026-73570 and TrueConf CVE-2026-72529/72530) are being systematically targeted for high-value communications interception — 12,100+ Zimbra servers exposed, TrueConf exploited to backdoor every connecting client. Historically, Zimbra exploitation has been attributed to Russian and Chinese state-linked actors targeting diplomatic and military communications. The TrueConf campaign is attributed to Head Mare, active in the Russia-Ukraine conflict zone.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that the TrueConf Head Mare supply chain attack and the DPRK Rust crate compromise represent a pattern convergence — collaboration and development infrastructure are simultaneously being weaponized as delivery mechanisms for persistent access. Organizations that separated IT security from developer toolchain security are discovering the two are indistinguishable: a compromised crate or a compromised client installer are both supply chain attacks with equivalent blast radius.</span>
         </div>
         <div class="kj-item">
           <span class="kj-num">06</span>
-          <span class="kj-text">We assess with <b>moderate confidence</b> that the convergence of SharePoint JWT forgery (CVE-2026-55040, actively exploited post-PoC), macOS pre-auth root (CVE-2026-65400, confirmed cryptomining at scale), and GitLab unauthenticated project deletion (CVE-2026-19478) reflects a sustained campaign pattern targeting unpatched developer and collaboration infrastructure. Organizations prioritizing KEV compliance for IT infrastructure but leaving developer tooling on slower patch cycles are exposed — these three platforms are directly in the development pipeline and are high-value targets.</span>
+          <span class="kj-text">We assess with <b>moderate confidence</b> that email and communications infrastructure (Zimbra CVE-2026-73570, 12K+ servers exposed; TrueConf PhantomCore/PhantomGraph backdoor) are being systematically targeted for long-term access, not immediate monetization. Both Head Mare (TrueConf) and historically confirmed Zimbra campaigns prioritize communications interception over ransomware deployment. Organizations in sectors targeted by Russia and DPRK should treat these as APT collection operations.</span>
         </div></div>
+
 
       <div class="panel">
         <h2><span class="dot red"></span>Top Stories</h2>
@@ -485,6 +486,20 @@
           <p class="storyTitle"><span>BdThemes WordPress supply chain: 350,000+ sites backdoored via poisoned API feed — rogue admins and webshells planted without touching plugin code</span><span class="detailsCue">Details →</span></p>
           <p class="storyBody">Attacker gained write access to BdThemes' DigitalOcean Spaces bucket — the backend for Biggopti, a promotional banner component in 7 popular BdThemes plugins. Biggopti runs on every wp-admin page load. The poisoned API response silently creates a rogue admin account, installs a fake plugin (wp-smart-thumbnails) containing emer-run.php webshell, and phones C2 at ia-cdn[.]com. No plugin code was modified so standard integrity checks won't catch it. Active June 23 – Aug 8; API cleaned but compromised sites persist until manually remediated.</p>
           <div class="srcline">Wordfence / Defiant via BleepingComputer, The Hacker News — Aug 7-11, 2026</div>
+        </div>
+
+        <div class="story" data-detail="rustsupplychain">
+          <div class="tagRow"><span class="tag high">DPRK · Build-Time · CI/CD</span><span class="tag high">Developer Credentials · 3 Crates</span></div>
+          <p class="storyTitle"><span>DPRK actors compromise Rust crate maintainer accounts — malicious build.rs steals developer credentials at compile time. 245M+ downloads affected.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">North Korean actors compromised crates.io maintainer accounts and published poisoned versions of multiple Rust crates including arrayref (245M+ downloads). Malicious build.rs scripts execute at compile time — before the application runs — harvesting SSH keys, cloud credentials (AWS, Azure, GCP), and CI/CD tokens from the build environment. The Rust Project deleted the malicious versions, but any build that resolved them during the window is compromised. Run cargo audit against all Rust projects; rotate all secrets accessible in affected build environments; check rustsec.org/advisories for affected crate names and versions.</p>
+          <div class="srcline">The Hacker News, SecurityWeek, it-learn.io, RustSec — Aug 20–22, 2026</div>
+        </div>
+
+        <div class="story" data-detail="elementorpro">
+          <div class="tagRow"><span class="tag high">CVSS 9.0</span><span class="tag high">12M+ Sites · No Auth</span></div>
+          <p class="storyTitle"><span>Elementor Pro CVE-2026-32475 (CVSS 9.0): unauthenticated PHP upload RCE via double-loop extension bypass — 12M+ WordPress sites. No confirmed exploitation yet.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Patchstack disclosed Aug 22. The Forms module's File Upload field uses two separate loops for validation and file-move — submitting two file parts for the same field lets a PHP file skip the extension blocklist and land in a public directory. Mechanically identical to Forminator CVE-2026-15748 from earlier this week but affects a larger install base. No confirmed in-wild exploitation yet, but automated scanning is near-certain. Patch via WordPress dashboard. If unpatched: disable File Upload fields in Elementor Pro forms.</p>
+          <div class="srcline">The Hacker News, Patchstack — Aug 22, 2026</div>
         </div>
 
         <div class="story" data-detail="trueconf">
@@ -627,6 +642,20 @@
         
         
         
+        <div class="cveCard high-card" data-detail="rustsupplychain">
+          <div class="cveTop">
+            <span class="cveNum">DPRK Rust Crates</span><span class="cveScore">—</span>
+          </div>
+          <div class="cveSub">Build-time credential theft via compromised crates.io maintainer accounts — run cargo audit immediately.</div>
+        </div>
+
+        <div class="cveCard high-card" data-detail="elementorpro">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-32475</span><span class="cveScore">9.0</span>
+          </div>
+          <div class="cveSub">Elementor Pro — unauthenticated PHP upload RCE, 12M+ WordPress sites. No confirmed exploitation yet.</div>
+        </div>
+
         <div class="cveCard high-card" data-detail="trueconf">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-72529 / 72530</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">—</span>
@@ -671,7 +700,7 @@
 
         <div class="cveCard crit-card" data-detail="macosscreen">
           <div class="cveTop">
-            <span class="cveNum">CVE-2026-65400</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
+            <span class="cveNum">CVE-2026-65400</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">9.8</span>
           </div>
           <div class="cveSub">macOS Screen Sharing pre-auth bypass → root. NCSC-NL confirmed cryptojacking. Port 5900 internet-exposed = compromised.</div>
         </div>
@@ -767,13 +796,13 @@
         <h2><span class="dot blue"></span>Sources Used This Brief</h2>
 
         <div class="linkGroup">CVE-2026-63077 — JetBrains TeamCity — unauthenticated RCE</div>
-        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.jetbrains.com/privacy-security/issues-fixed/" target="_blank">JetBrains Security Advisory CVE-2026-63077</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">CISA KEV Catalog</a><span class="arrow">↗</span></div>
         <div class="linkGroup">CVE-2026-15409 / CVE-2026-15410 — SonicWall SMA1000 zero-days exploited by UTA0533</div>
-        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.volexity.com/blog/2026/07/17/proxying-to-compromise-sonicwall-secure-mobile-access-0-day-exploitation/" target="_blank">Volexity — SonicWall SMA1000 0-Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">RMM Supply Chain — N-able N-central auth bypass exploited after first</div>
         <div class="linkItem"><a href="https://www.n-able.com/security-and-trust/security-advisories/sa-2026-10" target="_blank">N-able SA-2026-10</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.huntress.com/blog/n-able-vulnerability-exploitation" target="_blank">Huntress — N-central Exploitation</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisa-adds-exploited-n-able-n-central.html" target="_blank">The Hacker News — CISA Adds N-central Flaw to KEV</a><span class="arrow">↗</span></div>
         <div class="linkGroup">DPRK / Lazarus — ChainDrop</div>
         <div class="linkItem"><a href="https://safedep.io/keyv-npm-supply-chain-compromise/" target="_blank">SafeDep — Keyv npm Supply Chain</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://socket.dev/blog/popular-npm-packages-in-the-keyv-and-cacheable-namespaces-compromised-in-active-supply-chain" target="_blank">Socket — Keyv Compromised</a><span class="arrow">↗</span></div>
@@ -796,7 +825,7 @@
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">BleepingComputer — BdThemes Supply Chain</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.wordfence.com/blog/2026/08/bdthemes-supply-chain-attack/" target="_blank">Wordfence — BdThemes Analysis</a><span class="arrow">↗</span></div>
         <div class="linkGroup">SAP Commerce Cloud — SAP Commerce Cloud CVE-2026-58231 (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce Cloud CVE-2026-58231</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/max-severity-sap-commerce-cloud-flaw-now-targeted-in-attacks/" target="_blank">BleepingComputer — SAP Commerce CVE-2026-58231</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://onapsis.com/blog/sap-security-patch-day-august-2026/" target="_blank">Onapsis — SAP August Patch Day</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cl0p Ransomware — Cl0p exploiting CVE-2026-12569 in PTC Windchill/Fl</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/" target="_blank">BleepingComputer — Shell Investigates Clop</a><span class="arrow">↗</span></div>
@@ -805,15 +834,15 @@
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-adobe-commerce-flaw-to-hijack-customer-accounts/" target="_blank">BleepingComputer — Adobe Commerce CVE-2026-71362</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://helpx.adobe.com/security/products/magento/apsb26-92.html" target="_blank">Adobe PSIRT — APSB26-92</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GeoServer — GeoServer jsonArrayContains zero-day (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html" target="_blank">The Hacker News — GeoServer Zero-Day Targeted</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/hackers-exploiting-unpatched-geoserver-zero-day/" target="_blank">SecurityWeek — GeoServer Zero-Day Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Cisco Secure Firewall — Cisco ASA and FTD CVE-2026-20349 (CVSS 8.6)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">BleepingComputer — Cisco ASA/FTD VPN Flaw Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">The Hacker News — Cisco ASA and FTD Flaw</a><span class="arrow">↗</span></div>
         <div class="linkGroup">macOS — macOS Screen Sharing CVE-2026-65400 (CVSS 9.8)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Exploited (Monero miner)</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/recent-macos-screen-sharing-vulnerability-exploited-in-attacks/" target="_blank">SecurityWeek — macOS Screen Sharing Actively Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/apple-macos-screen-sharing-flaw.html" target="_blank">The Hacker News — Apple macOS Screen Sharing</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.huntress.com/blog/macos-screen-sharing-rce-patched" target="_blank">Huntress — CVE-2026-65400 Technical Breakdown</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Defender — ShieldBreak (CVE-2026-69414)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">BleepingComputer — ShieldBreak Zero-Day</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://blog.qualys.com/product-tech/2026/08/20/shieldbreak-the-windows-defender-zero-day-with-no-patch-detect-it-mitigate-it-with-qualys" target="_blank">Qualys — ShieldBreak No Patch, CISA BOD 26-04</a><span class="arrow">↗</span></div>
@@ -821,23 +850,30 @@
         <div class="linkGroup">Azure / Entra ID — TheHatman Azure/Entra ID campaign</div>
         <div class="linkItem"><a href="https://www.infostealers.com/article/massive-azure-exfiltration-campaign-exposes-millions-of-enterprise-records-via-compromised-credentials-mcdonalds-vodafone-kyndryl-others/" target="_blank">InfoStealers / Hudson Rock — Azure Entra Campaign</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/fortune-500-companies-hit-in-azure-data-theft-campaign/" target="_blank">SecurityWeek — Fortune 500 Azure Data Theft</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://scrutex.io/blog/azure-entra-thehatman-graph-enumeration-detection" target="_blank">Scrutex — Graph API Enumeration Detection Guidance</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress — Forminator Forms CVE-2026-15748 (CVSS 9.8)</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/forminator-wordpress-flaw-can-enable.html" target="_blank">The Hacker News — Forminator WordPress Flaw</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/300000-wordpress-sites-potentially-exposed-to-hacking-due-to-form-plugin-flaw/" target="_blank">SecurityWeek — 300,000 WordPress Sites Exposed</a><span class="arrow">↗</span></div>
         <div class="linkGroup">GitLab CE/EE — GitLab CVE-2026-19478 (CVSS 9.4)</div>
         <div class="linkItem"><a href="https://www.securityweek.com/critical-gitlab-flaw-exploited-shortly-after-disclosure/" target="_blank">SecurityWeek — Critical GitLab Flaw Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/critical-gitlab-graphql-flaw-could-let.html" target="_blank">The Hacker News — Critical GitLab GraphQL Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html" target="_blank">The Hacker News — GitLab CVE-2026-19478 Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Entra ID — Microsoft Entra ID CVE-2026-69836 (CVSS 10.0)</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html" target="_blank">The Hacker News — Microsoft Entra ID Flaw CVSS 10.0 (CORRECTION: not exploited)</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://cybersecuritynews.com/entra-id-rce-vulnerability-exploited/" target="_blank">Cyber Security News — Entra ID RCE</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://blog.it-learn.io/posts/2026-08-21-entra-id-cvss-10-rce-exploited-cve-2026-69836/" target="_blank">it-learn.io — Entra ID CVE-2026-69836 Detection KQL</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Zimbra Collaboration Suite — Zimbra CVE-2026-73570 (CVSS 8.9)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/" target="_blank">BleepingComputer — Critical Zimbra RCE Flaw Actively Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/" target="_blank">BleepingComputer — Critical Zimbra RCE Actively Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign/" target="_blank">SecurityWeek — Hackers Target Zimbra Servers</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/attackers-exploit-zimbra-snmp-flaw-for.html" target="_blank">The Hacker News — Zimbra SNMP Flaw Exploited</a><span class="arrow">↗</span></div>
         <div class="linkGroup">TrueConf Server — TrueConf Server CVE-2026-72529/72530 KEV-listed Au</div>
         <div class="linkItem"><a href="https://www.securityweek.com/cisa-urges-immediate-patching-of-exploited-trueconf-vulnerabilities/" target="_blank">SecurityWeek — CISA Urges Immediate Patching of TrueConf</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/head-mare-exploits-trueconf-flaws-to.html" target="_blank">The Hacker News — Head Mare Exploits TrueConf Flaws</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/" target="_blank">Kaspersky ICS CERT — Head Mare TrueConf PhantomCore Report</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/" target="_blank">Kaspersky ICS CERT — Head Mare TrueConf PhantomCore</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Elementor Pro — Elementor Pro CVE-2026-32475 (CVSS 9.0)</div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/critical-elementor-pro-flaw-can-enable.html" target="_blank">The Hacker News — Critical Flaw in Elementor Pro Plugin</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://patchstack.com/database/wordpress/plugin/elementor-pro/vulnerability/cve-2026-32475" target="_blank">Patchstack — CVE-2026-32475 Elementor Pro RCE</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Rust / crates.io — DPRK actors compromise Rust crate maintainer accou</div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/rust-supply-chain-attack-linked-to.html" target="_blank">The Hacker News — Rust Supply Chain Attack Linked to DPRK</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/rust-supply-chain-attack-linked-to-north-korean-hackers/" target="_blank">SecurityWeek — Rust Supply Chain Attack North Korean Hackers</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://rustsec.org/advisories/" target="_blank">RustSec Advisory Database — rustsec.org/advisories</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -2089,8 +2125,82 @@
     ],
     "source": "SecurityWeek, The Hacker News, Kaspersky ICS CERT, Rescana, GBHackers",
     "sourceNote": "Aug 7–21, 2026"
+  },
+  "elementorpro": {
+    "eyebrow": "Elementor Pro · CVE-2026-32475 · CVSS 9.0 · No Confirmed Exploitation · 12M+ Sites",
+    "title": "Elementor Pro CVE-2026-32475 (CVSS 9.0): unauthenticated file upload RCE via double-loop extension bypass — 12M+ WordPress sites exposed",
+    "tags": [
+      [
+        "high",
+        "CVSS 9.0"
+      ],
+      [
+        "high",
+        "12M+ Sites · No Auth"
+      ]
+    ],
+    "overview": "Patchstack disclosed CVE-2026-32475 in Elementor Pro on August 22, 2026 — an unauthenticated file upload vulnerability in the plugin's Forms module File Upload field that allows a PHP webshell to be written to a publicly accessible directory, achieving remote code execution. The vulnerability mechanism is similar to Forminator Forms CVE-2026-15748 disclosed earlier this week, but affects a different plugin with a far larger install base: Elementor Pro is active on over 12 million WordPress sites. No confirmed in-wild exploitation has been reported at time of writing, but automated scanning is near-certain given the no-authentication, no-user-interaction prerequisites and public technical disclosure by Patchstack.",
+    "technical": [
+      "CVE-2026-32475 (CVSS 9.0, CWE-434: Unrestricted Upload of Dangerous File Type): The Elementor Pro Forms module's File Upload field uses two separate processing loops — one for extension validation and one for moving the uploaded file to its destination directory. An attacker submits two file parts for the same field: the extension validator processes the first part (a legitimate extension), but the file-move loop processes the second part (the malicious PHP file). The mismatch between which loop processes which entry allows the PHP file to bypass the extension blocklist and land in a publicly accessible web directory.",
+      "Impact: successful exploitation places a PHP webshell in a URL-accessible location on the server. The attacker then requests the file URL to execute arbitrary PHP code as the web server user — achieving full server access.",
+      "No authentication, no user interaction required. The attacker only needs network access to a WordPress site running Elementor Pro with a form containing a File Upload field. This is a very common form configuration.",
+      "Comparison to Forminator CVE-2026-15748: both are no-auth file upload RCE in WordPress form plugins using blocklist bypass via different mechanisms (pipe-alternative MIME keys vs double-loop processing mismatch). Both were patched within the same week. The coincidence is notable — it may reflect coordinated researcher attention on WordPress form plugin file upload handling."
+    ],
+    "iocs": [],
+    "iocNote": "No attacker IoCs published — no confirmed exploitation at time of writing. Detection: scan WordPress uploads and temp directories for unexpected PHP files created by web server processes. Alert on PHP file creation in /wp-content/uploads/ by httpd/nginx.",
+    "mitigation": [
+      "Update Elementor Pro to the patched version. Check the Elementor Pro changelog for the specific version containing the CVE-2026-32475 fix — Patchstack coordinated disclosure with the vendor. Apply via WordPress dashboard (Plugins → Updates).",
+      "If immediate update is not possible: disable File Upload fields in all Elementor Pro forms, or restrict form submissions to authenticated users.",
+      "Apply the same remediation check to Forminator CVE-2026-15748 (separate plugin, same CVE class) if not already patched — both vulnerabilities are in your WordPress estate if you run either plugin."
+    ],
+    "response": [
+      "Scan /wp-content/uploads/ and any Elementor temporary directories for .php, .phtml, and .php5 files created within the past 48 hours. Any PHP file in these directories is a webshell candidate.",
+      "Check web server access logs for POST requests to Elementor form submission endpoints from external IPs, followed by GET requests to PHP files in the uploads directory — this two-step pattern confirms exploitation.",
+      "DEFENDER XDR KQL — Detect Elementor Pro CVE-2026-32475 webshell upload and subsequent execution.\n\n// Elementor Pro CVE-2026-32475 — Webshell Upload Detection\n// Requires: Defender for Endpoint on WordPress hosting infrastructure\nDeviceFileEvents\n| where Timestamp > ago(7d)\n| where FileName endswith \".php\" or FileName endswith \".phtml\"\n| where FolderPath has_any (\n    \"\\\\wp-content\\\\uploads\",\n    \"/wp-content/uploads\",\n    \"elementor\",\"tmp\"\n)\n| where ActionType == \"FileCreated\"\n| where InitiatingProcessFileName in~ (\n    \"php.exe\",\"php-cgi.exe\",\"php-fpm\",\n    \"w3wp.exe\",\"httpd\",\"nginx\",\"apache2\"\n)\n| union (\n    // Also catch subsequent webshell execution\n    DeviceProcessEvents\n    | where Timestamp > ago(7d)\n    | where InitiatingProcessFileName in~ (\n        \"php.exe\",\"php-cgi.exe\",\"php-fpm\",\"w3wp.exe\"\n    )\n    | where ProcessCommandLine has_any (\n        \"cmd\",\"shell_exec\",\"system(\",\"exec(\",\n        \"passthru\",\"popen\",\"proc_open\"\n    )\n)\n| project Timestamp, DeviceName, FileName, FolderPath,\n    InitiatingProcessFileName, InitiatingProcessCommandLine\n| sort by Timestamp desc"
+    ],
+    "source": "The Hacker News, Patchstack",
+    "sourceNote": "Aug 22, 2026"
+  },
+  "rustsupplychain": {
+    "eyebrow": "Rust / crates.io · DPRK Supply Chain · Build-Time Credential Theft · 245M+ Downloads",
+    "title": "DPRK actors compromise Rust crate maintainer accounts — malicious versions steal developer credentials at build time. 245M+ downloads affected. Crates deleted from crates.io.",
+    "tags": [
+      [
+        "high",
+        "DPRK · Build-Time · CI/CD"
+      ],
+      [
+        "high",
+        "Developer Credentials · 3 Crates"
+      ]
+    ],
+    "overview": "North Korean threat actors compromised maintainer accounts for multiple widely-used Rust crates on crates.io — including the popular 'arrayref' crate with over 245 million total downloads — and published malicious versions that execute credential-theft code at build time. The Rust Project identified and deleted the malicious versions, but any build that pulled the compromised versions during the exposure window executed the malicious code before the deletion. The technique mirrors prior DPRK supply chain attacks against npm (toml-rb, colors.js) and PyPI, but targets the Rust ecosystem, which had been considered more resilient due to its smaller, tighter-knit maintainer community. Developer endpoints that built projects importing the affected crates during the window should be treated as potentially compromised — SSH keys, cloud credentials, and API tokens stored in the build environment would have been exposed.",
+    "technical": [
+      "Attack mechanism: DPRK actors compromised crates.io maintainer accounts and published new versions of three legitimate Rust crates containing a malicious build-script (build.rs). In Rust, build.rs scripts execute at compile time — before the main application runs — in a context that has access to the developer's full environment including environment variables, file system, and network.",
+      "The malicious build.rs scripts harvested: environment variable contents (including AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, GITHUB_TOKEN, and other CI/CD secrets), SSH private keys from ~/.ssh/, cloud credential files (~/.aws/credentials, ~/.azure/, ~/.config/gcloud/), and Git config and stored credentials. Harvested data was exfiltrated to attacker-controlled infrastructure.",
+      "The Rust Project has deleted the malicious versions from crates.io and revoked the compromised maintainer tokens. However, Cargo's package cache means builds from before deletion that used --offline or cached dependencies may still have the malicious version locally. Run `cargo clean` and rebuild with `cargo update` to force fresh resolution.",
+      "Affected crates included 'arrayref' (245M+ downloads). The Rust Project has not publicly disclosed all affected crate names — check the official Rust security advisories at rustsec.org/advisories for the complete list and the specific affected version ranges.",
+      "This is the first documented DPRK supply chain attack against the Rust ecosystem. Prior DPRK supply chain attacks targeted npm (2024 BeaverTail campaign), PyPI, and Ruby gems. The pattern is consistent: compromise a legitimate, highly-downloaded package to gain build-time code execution on developer machines across multiple organizations."
+    ],
+    "iocs": [],
+    "iocNote": "No attacker infrastructure IoCs published — the malicious code ran transiently at build time and exfiltrated without leaving persistent artifacts on disk. Detection: check for unexpected outbound network connections during `cargo build` runs; inspect CI/CD job logs for curl/wget activity originating from build scripts; check environment variable access patterns in build logs. Audit rustsec.org/advisories for affected crate names and version ranges.",
+    "mitigation": [
+      "Check rustsec.org/advisories for the complete list of affected crate names and version ranges. Run `cargo audit` against all Rust projects to identify whether affected versions were resolved.",
+      "For any project that resolved affected crate versions during the exposure window: treat all secrets accessible in that build environment as compromised — rotate SSH keys, invalidate and rotate cloud API keys and access tokens, revoke and regenerate CI/CD tokens (GitHub Actions, GitLab CI, CircleCI, etc.).",
+      "Run `cargo clean && cargo update` to force fresh dependency resolution and evict any cached malicious versions.",
+      "Implement crates.io dependency pinning (Cargo.lock committed to version control) and consider vendoring critical dependencies to prevent supply chain substitution without explicit approval."
+    ],
+    "response": [
+      "Review CI/CD job logs for the exposure window — look for unexpected network connections (curl, wget, DNS lookups to non-expected hosts) originating from `cargo build` steps. Malicious build.rs scripts running in your pipelines would appear in these logs.",
+      "If any project used an affected crate version: treat all cloud credentials accessible in that build environment as compromised. Check for unauthorized API access in cloud provider logs (AWS CloudTrail, Azure Activity Log, GCP Audit Logs) within 24 hours of each affected build.",
+      "Check for new SSH authorized_keys entries, new API keys, or new cloud IAM credentials created shortly after each affected build — DPRK actors typically move quickly from initial access to establishing persistence.",
+      "DEFENDER XDR KQL — Detect unexpected outbound network connections during Rust/Cargo build processes, consistent with DPRK supply chain build-time exfiltration.\n\n// Rust Supply Chain DPRK — Build-Time Credential Exfiltration Detection\n// Requires: Defender for Endpoint on CI/CD build agents\nDeviceNetworkEvents\n| where Timestamp > ago(14d)\n| where InitiatingProcessFileName in~ (\"cargo\",\"rustc\",\"cc\",\"c++\",\"link.exe\")\n    or (InitiatingProcessCommandLine has \"cargo build\"\n        or InitiatingProcessCommandLine has \"cargo compile\")\n| where RemoteUrl !has_any (\n    \"crates.io\",\"static.crates.io\",\"github.com\",\"githubusercontent.com\",\n    \"rust-lang.org\",\"docs.rs\"  // known legitimate Cargo/Rust infrastructure\n)\n| where not(ipv4_is_private(RemoteIP))\n| project Timestamp, DeviceName, InitiatingProcessFileName,\n    InitiatingProcessCommandLine, RemoteUrl, RemoteIP, RemotePort\n| sort by Timestamp desc"
+    ],
+    "source": "The Hacker News, SecurityWeek, it-learn.io, RustSec Advisory Database",
+    "sourceNote": "Aug 20–22, 2026"
   }
 }
+
 
 
 
@@ -2387,8 +2497,8 @@
   },
   "macosscreen": {
     "status": "new",
-    "conf": "Confirmed exploitation — NCSC-NL Advisory NCSC-2026-0280 confirmed active exploitation on multiple internet-exposed systems; root access and Monero miner in every confirmed case",
-    "confNote": "NCSC-NL confirmed exploitation Aug 12; CISA rescored from 7.1 to 9.8 Aug 14 and classified as automatable Aug 15; NOT on KEV catalog as of Aug 16 despite confirmed exploitation — track for KEV addition. Discovered by Alfredo Pesoli of Bynario Atlas.",
+    "conf": "Confirmed exploitation — NCSC-NL confirmed active exploitation on multiple internet-exposed systems; CISA added CVE-2026-65400 to KEV; root access and Monero miner in every confirmed case",
+    "confNote": "NCSC-NL confirmed exploitation Aug 12; CISA added to KEV catalog (confirmed Aug 22); CISA rescored from 7.1 to 9.8 Aug 14. Discovered by Alfredo Pesoli of Bynario Atlas.",
     "iocDate": "Aug 12, 2026 — NCSC-NL confirmed exploitation; no IoCs published",
     "admiralty": "A2",
     "severity": 5,
@@ -2530,8 +2640,42 @@
       "T1543.003 — Create or Modify System Process: Windows Service",
       "T1071 — Application Layer Protocol (OneDrive C2)"
     ]
+  },
+  "elementorpro": {
+    "status": "new",
+    "conf": "Disclosed — Patchstack coordinated disclosure Aug 22; no confirmed in-wild exploitation at time of writing",
+    "confNote": "Patchstack disclosed CVE-2026-32475 Aug 22; The Hacker News corroborated; vendor patch available; no exploitation in wild confirmed. CVSS 9.0.",
+    "iocDate": "Aug 22, 2026 — disclosure date; no exploitation IoCs",
+    "admiralty": "A2",
+    "severity": 4,
+    "cvss": 9,
+    "sectors": [
+      "Technology"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1505.003 — Server Software Component: Web Shell"
+    ]
+  },
+  "rustsupplychain": {
+    "status": "new",
+    "conf": "Confirmed — The Rust Project deleted malicious versions from crates.io; attack attributed to DPRK by SecurityWeek and it-learn.io; arrayref (245M+ downloads) confirmed affected",
+    "confNote": "THN confirmed Rust Project deleted malicious crate versions; SecurityWeek attributed to North Korean actors; it-learn.io corroborated Aug 20; maintainer account compromise confirmed",
+    "iocDate": "Aug 19-20, 2026 — malicious versions published; deleted by Rust Project Aug 20",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": null,
+    "sectors": [
+      "Technology"
+    ],
+    "attack": [
+      "T1195.001 — Supply Chain Compromise: Compromise Software Dependencies",
+      "T1552 — Unsecured Credentials",
+      "T1078 — Valid Accounts"
+    ]
   }
 }
+
 
 
 
