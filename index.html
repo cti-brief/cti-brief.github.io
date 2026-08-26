@@ -402,7 +402,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      Oracle WebLogic CVSS 10.0 KEV — Aug 27 deadline, China-nexus APT. Mirage2FA AiTM PhaaS — 4,532 M365 orgs compromised. ShieldBreak no patch, CISA BOD 26-04 active. Zimbra 12K+ still exposed. DPRK Rust supply chain — rotate CI/CD secrets.
+      miniOrange SAML CVSS 9.8 exploited — unauthenticated WordPress admin bypass, PoC public. Oracle WebLogic CVSS 10.0 KEV Aug 27 deadline. Zimbra 270+ instances confirmed compromised. Mirage2FA 4,532 M365 orgs. ShieldBreak no patch BOD 26-04.
     </div>
   </header>
 
@@ -476,6 +476,13 @@
 
 
 
+        <div class="story" data-detail="miniorange">
+          <div class="tagRow"><span class="tag high">CVSS 9.8</span><span class="tag high">Exploited · SAML Bypass · WordPress Admin</span><span class="statusBadge st-new">new</span></div>
+          <p class="storyTitle"><span>miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8): chained SAML signature bypass grants unauthenticated WordPress admin access — actively exploited, PoC public. Paid editions silently patched with no update warning.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Two chained auth bypasses let any attacker forge a SAML assertion and log in as WordPress admin with no credentials. CVE-2026-61979: plugin accepts attacker-specified HMAC-SHA1 algorithm using the public IdP key as the secret — trivially forgeable. CVE-2026-15981: OpenSSL error (-1) treated as success. DigitalOcean blocked an active admin session attempt Aug 16; public PoC available Aug 25. Critical distribution problem: seven independently versioned editions under one plugin slug — paid editions were silently patched with no advisory and no WordPress dashboard update prompt for some tiers. If on 16.x Standard, you must manually upload the fix.</p>
+          <div class="srcline">The Hacker News, BleepingComputer, Patchstack, SCWorld — Aug 16–25, 2026</div>
+        </div>
+
         <div class="story" data-detail="oracleweblogic">
           <div class="tagRow"><span class="tag crit">CVSS 10.0</span><span class="tag high">Exploited · CISA KEV · Aug 27 Deadline</span></div>
           <p class="storyTitle"><span>Oracle WebLogic CVE-2026-21962 (CVSS 10.0): unauthenticated access control bypass in production since January, CISA KEV Aug 24 — federal deadline Aug 27. China-nexus APT confirmed.</span><span class="detailsCue">Details →</span></p>
@@ -515,7 +522,7 @@
         <div class="story" data-detail="zimbra">
           <div class="tagRow"><span class="tag high">CVSS 8.9</span><span class="tag high">Exploited · 12K Servers · Email Infra</span></div>
           <p class="storyTitle"><span>Zimbra CVE-2026-73570 (CVSS 8.9): unauthenticated SNMP command injection exploited in wild — 12,100+ servers exposed. CERT Polska confirmed Aug 20.</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Unauthenticated OS command injection in Zimbra's SNMP notification component — attacker sends crafted SMTP requests and executes arbitrary commands as the zimbra user. Requires zimbra-snmp installed and SNMP notifications enabled; swatchdog runs by default, widening exposure. Patched July 20 in 10.1.20 but 12,100+ servers remain exposed (Shadowserver). CERT Polska confirmed active exploitation Aug 20 and published detection indicators — check /var/log/zimbra.log for unexpected service state changes and webshells in Jetty webapps directories.</p>
+          <p class="storyBody">Unauthenticated OS command injection in Zimbra's SNMP notification component — attacker sends crafted SMTP requests and executes arbitrary commands as the zimbra user. Requires zimbra-snmp installed and SNMP notifications enabled; swatchdog runs by default, widening exposure. Patched July 20 in 10.1.20 but 12,100+ servers remain exposed (Shadowserver). CERT Polska confirmed active exploitation Aug 20. As of August 25, 270+ Zimbra instances confirmed compromised. Check /var/log/zimbra.log for unexpected service state changes and webshells in Jetty webapps directories.</p>
           <div class="srcline">BleepingComputer, SecurityWeek, The Hacker News, CERT Polska — Aug 20–21, 2026</div>
         </div>
 
@@ -587,6 +594,13 @@
         
         
         
+        <div class="cveCard high-card" data-detail="miniorange">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-61979 / 15981</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
+          </div>
+          <div class="cveSub">miniOrange SAML SSO — chained unauthenticated WordPress admin bypass. PoC public. Paid editions need manual patch.</div>
+        </div>
+
         <div class="cveCard crit-card" data-detail="oracleweblogic">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-21962</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">10.0</span>
@@ -702,9 +716,10 @@
         <div class="linkGroup">Microsoft Out-of-Band — SharePoint CVE-2026-55040 actively exploited after</div>
         <div class="linkItem"><a href="https://www.securityweek.com/sharepoint-vulnerability-exploited-shortly-after-poc-release/" target="_blank">SecurityWeek — SharePoint CVE-2026-55040 Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.rapid7.com/blog/post/ve-cve-2026-55040-microsoft-sharepoint-jwt-token-authentication-bypass-fixed/" target="_blank">Rapid7 — CVE-2026-55040 Technical Analysis</a><span class="arrow">↗</span></div>
-        <div class="linkGroup">Microsoft Patch Tuesday — August Patch Tuesday</div>
-        <div class="linkItem"><a href="https://research.checkpoint.com/" target="_blank">Check Point Research — Lazarus CVE-2026-68820</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/august-2026-patch-tuesday-microsoft-fixes-421-cves-one-exploited-zero-day/" target="_blank">SecurityWeek — August 2026 Patch Tuesday</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Lazarus / Operation Dream Job — Operation Dream Job (Lazarus)</div>
+        <div class="linkItem"><a href="https://research.checkpoint.com/2026/shattering-the-dream-when-a-job-offer-becomes-a-zero-day-attack/" target="_blank">Check Point Research — Lazarus Operation Dream Job</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/lazarus-hackers-exploited-windows-zero-day-to-target-defense-firms/" target="_blank">BleepingComputer — Lazarus Exploits Windows Zero-Day</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://rewterz.com/threat-advisory/windows-afd-sys-zero-day-exploited-by-lazarus-active-iocs" target="_blank">Rewterz — Active IOCs CVE-2026-68820</a><span class="arrow">↗</span></div>
         <div class="linkGroup">VMware vCenter — vCenter CVE-2026-59310 now actively exploited</div>
         <div class="linkItem"><a href="https://medium.com/@quirso_de/active-exploitation-of-cve-2026-59310-361-victim-ips-across-47-countries-9783187cc6ff" target="_blank">QUIRSO — CVE-2026-59310 361 Victim IPs</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-vmware-vcenter-rce-flaw-exploited-for-reverse-ssh-access/" target="_blank">BleepingComputer — VMware vCenter RCE</a><span class="arrow">↗</span></div>
@@ -713,7 +728,6 @@
         <div class="linkItem"><a href="https://www.technadu.com/shell-and-philips-confirm-investigation-following-cl0p-data-theft-claims-targeting-nearly-50-companies-including-fiserv-and-ge/633182/" target="_blank">TechNadu — Shell and Philips Confirm</a><span class="arrow">↗</span></div>
         <div class="linkGroup">macOS — macOS Screen Sharing CVE-2026-65400 (CVSS 9.8)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/" target="_blank">BleepingComputer — macOS Screen Sharing Exploited</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/recent-macos-screen-sharing-vulnerability-exploited-in-attacks/" target="_blank">SecurityWeek — macOS Screen Sharing Actively Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.huntress.com/blog/macos-screen-sharing-rce-patched" target="_blank">Huntress — CVE-2026-65400</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft Defender — ShieldBreak (CVE-2026-69414)</div>
         <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">BleepingComputer — ShieldBreak Zero-Day</a><span class="arrow">↗</span></div>
@@ -726,19 +740,17 @@
         <div class="linkItem"><a href="https://www.securityweek.com/critical-gitlab-flaw-exploited-shortly-after-disclosure/" target="_blank">SecurityWeek — Critical GitLab Flaw Exploited</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html" target="_blank">The Hacker News — GitLab CVE-2026-19478</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Zimbra Collaboration Suite — Zimbra CVE-2026-73570 (CVSS 8.9)</div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/" target="_blank">BleepingComputer — Critical Zimbra RCE Actively Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/" target="_blank">BleepingComputer — Critical Zimbra RCE Actively Exploited (270+ compromised)</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign/" target="_blank">SecurityWeek — Hackers Target Zimbra Servers</a><span class="arrow">↗</span></div>
         <div class="linkGroup">TrueConf Server — TrueConf Server CVE-2026-72529/72530 KEV-listed Au</div>
         <div class="linkItem"><a href="https://www.securityweek.com/cisa-urges-immediate-patching-of-exploited-trueconf-vulnerabilities/" target="_blank">SecurityWeek — CISA Urges Immediate Patching of TrueConf</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/head-mare-exploits-trueconf-flaws-to.html" target="_blank">The Hacker News — Head Mare Exploits TrueConf</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/" target="_blank">Kaspersky ICS CERT — Head Mare TrueConf PhantomCore</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Elementor Pro — Elementor Pro CVE-2026-32475 (CVSS 9.0)</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/critical-elementor-pro-flaw-can-enable.html" target="_blank">The Hacker News — Critical Flaw in Elementor Pro Plugin</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://patchstack.com/database/wordpress/plugin/elementor-pro/vulnerability/cve-2026-32475" target="_blank">Patchstack — CVE-2026-32475</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Rust / crates.io — DPRK actors compromise Rust crate maintainer accou</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/rust-supply-chain-attack-linked-to.html" target="_blank">The Hacker News — Rust Supply Chain Attack Linked to DPRK</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.securityweek.com/rust-supply-chain-attack-linked-to-north-korean-hackers/" target="_blank">SecurityWeek — Rust Supply Chain Attack North Korean Hackers</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://rustsec.org/advisories/" target="_blank">RustSec Advisory Database</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.securityweek.com/rust-supply-chain-attack-linked-to-north-korean-hackers/" target="_blank">SecurityWeek — Rust Supply Chain North Korean Hackers</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Oracle HTTP Server / WebLogic — Oracle WebLogic CVE-2026-21962 (CVSS 10.0)</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/actively-exploited-oracle-weblogic-flaw.html" target="_blank">The Hacker News — Actively Exploited Oracle WebLogic Flaw</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/cisa-warns-of-exploited-oracle-weblogic-vulnerability/" target="_blank">SecurityWeek — CISA Warns of Exploited Oracle WebLogic</a><span class="arrow">↗</span></div>
@@ -746,7 +758,10 @@
         <div class="linkGroup">Microsoft 365 PhaaS — Mirage2FA PhaaS</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/mirage2fa-surge-hits-4500-us-and-eu.html" target="_blank">The Hacker News — Mirage2FA Surge Hits 4,500 US and EU Companies</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://any.run/cybersecurity-blog/mirage2fa-phishing-targets-us-companies/" target="_blank">ANY.RUN — Mirage2FA Phishing Targets US Companies</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://cybersecuritynews.com/microsoft-365-session-theft/" target="_blank">Cyber Security News — Microsoft 365 Session Theft</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">WordPress — miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8</div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/attackers-target-miniorange-saml-flaws.html" target="_blank">The Hacker News — Attackers Target miniOrange SAML Flaws</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-target-wordpress-sites-in-miniorange-auth-bypass-attacks/" target="_blank">BleepingComputer — Hackers Target WordPress Sites in miniOrange Auth Bypass Attacks</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://patchstack.com/articles/one-slug-seven-editions-the-miniorange-saml-sso-bug-that-let-anyone-log-in-as-your-wordpress-admin/" target="_blank">Patchstack — One Slug, Seven Editions: miniOrange SAML SSO Bug</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -1290,7 +1305,7 @@
         "Exploited · 12K Servers · Email Infra"
       ]
     ],
-    "overview": "CERT Polska confirmed active exploitation of CVE-2026-73570 on August 20, 2026 — an unauthenticated OS command injection vulnerability in Zimbra Collaboration Suite's SNMP monitoring component. An attacker can send specially crafted SMTP requests to vulnerable Zimbra servers and execute arbitrary shell commands as the zimbra user with no authentication and no user interaction. Zimbra patched this in version 10.1.20 on July 20, 2026, but Shadowserver tracks over 12,100 Zimbra servers currently internet-exposed. Zimbra has a documented history of rapid exploitation following disclosure — CISA's KEV catalog includes 18 prior Zimbra vulnerabilities, four added in 2026 alone, and prior exploitation has been linked to Russian and Chinese state-sponsored actors targeting military and diplomatic intelligence.",
+    "overview": "CERT Polska confirmed active exploitation of CVE-2026-73570 on August 20, 2026 — an unauthenticated OS command injection vulnerability in Zimbra Collaboration Suite's SNMP monitoring component. An attacker can send specially crafted SMTP requests to vulnerable Zimbra servers and execute arbitrary shell commands as the zimbra user with no authentication and no user interaction. Zimbra patched this in version 10.1.20 on July 20, 2026, but Shadowserver tracks over 12,100 Zimbra servers currently internet-exposed. As of August 25, 2026, over 270 Zimbra instances have been confirmed compromised in active remote code execution attacks. Zimbra has a documented history of rapid exploitation following disclosure — CISA's KEV catalog includes 18 prior Zimbra vulnerabilities, four added in 2026 alone, and prior exploitation has been linked to Russian and Chinese state-sponsored actors targeting military and diplomatic intelligence.",
     "technical": [
       "CVE-2026-73570 (CVSS 8.9, CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H, CWE-78: OS Command Injection): In Zimbra Collaboration Suite before version 10.1.20, the SNMP monitoring component improperly sanitizes untrusted input during SNMP notification processing. An unauthenticated remote attacker sends specially crafted SMTP requests that reach the SNMP notification handler, which processes the attacker-controlled content without adequate validation and passes it to an OS-level command — allowing arbitrary shell command execution as the zimbra user.",
       "Required conditions: (1) the optional zimbra-snmp package is installed, (2) SNMP trap notifications are enabled via the snmp_notify parameter, and (3) the swatchdog service is running. Critically, swatchdog is enabled by default in most Zimbra deployments, meaning condition (3) is satisfied by default in any deployment that has also enabled SNMP notifications.",
@@ -1554,8 +1569,46 @@
     ],
     "source": "The Hacker News, ANY.RUN, Cyber Security News, HackerNoon",
     "sourceNote": "Aug 19–25, 2026"
+  },
+  "miniorange": {
+    "eyebrow": "WordPress · miniOrange SAML SSO · CVE-2026-61979 + CVE-2026-15981 · CVSS 9.8 · Actively Exploited",
+    "title": "miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8): chained unauthenticated auth bypass grants full WordPress admin access — actively exploited, PoC public",
+    "tags": [
+      [
+        "high",
+        "CVSS 9.8"
+      ],
+      [
+        "high",
+        "Exploited · SAML Bypass · WordPress Admin"
+      ]
+    ],
+    "overview": "Attackers are actively exploiting two chained authentication bypass vulnerabilities in the miniOrange SAML 2.0 Single Sign On WordPress plugin that allow an unauthenticated attacker to forge SAML responses and log in as any WordPress user, including administrators. DigitalOcean's security team detected and blocked an active exploitation attempt on August 16, 2026, and then reproduced both bypasses in the Standard edition. A public proof-of-concept exploit is available. The attack chains CVE-2026-61979 (signature algorithm confusion) and CVE-2026-15981 (OpenSSL return value mishandling) to forge a fully valid SAML assertion without any credentials. A particularly dangerous distribution issue: the plugin ships under one WordPress slug but has seven independently versioned editions (free plus six paid tiers). The original security advisories covered only the free edition — all six paid editions were patched silently with no changelog and no public advisory, meaning paid-edition sites received no update warning through the WordPress dashboard and were never reflected in vulnerability databases as affected.",
+    "technical": [
+      "CVE-2026-61979 (CVSS 8.1, CWE-290: Authentication Bypass by Spoofing): The plugin accepted the signature algorithm specified in the incoming SAML response rather than enforcing the algorithm configured by the site administrator. An attacker crafts a SAML response specifying HMAC-SHA1 as the signature method. The plugin then treats the Identity Provider's RSA public key PEM as the HMAC shared secret. Since RSA public keys are widely accessible (published in SAML metadata), the attacker can compute a valid HMAC-SHA1 signature using the public key as the secret, forging a SAML assertion the plugin treats as legitimate.",
+      "CVE-2026-15981 (CVSS 9.8, CWE-287: Improper Authentication): PHP's openssl_verify() returns 1 (valid), 0 (invalid), or -1 (error). The plugin performed a loose boolean check on the return value, causing -1 (error) to evaluate as truthy — i.e., as a successful signature verification. An attacker can craft a malformed SAML signature that triggers an OpenSSL verification error, which the plugin then interprets as a passing signature check. Combined with CVE-2026-61979, this provides a complete authentication bypass: the attacker specifies a manipulable algorithm (Chain 1) or triggers an OpenSSL error (Chain 2) to forge a SAML assertion as any user.",
+      "Distribution issue — seven editions, one slug: The plugin is distributed as miniorange-saml-20-single-sign-on on WordPress.org, but contains seven independently versioned product editions: free (5.x), Standard (16.x → 17.x), Premium (20.x), Enterprise (26.x), All Inclusive (32.x), and other paid tiers (35.x). Patchstack discovered that all six paid editions were silently patched — Standard edition fixed in 17.0.5 (CVE-2026-61979) and 17.0.6 (CVE-2026-15981) — but no public advisories were published for paid editions, no CVE records named them, and the WordPress admin dashboard shows no update prompt for some paid tiers (notably 16.x sites must manually upload the fix).",
+      "Exploitation status: DigitalOcean detected an active admin session attempt on August 16, blocked it, and reproduced both CVEs on Standard edition 16.1.9 on August 17. A public PoC targeting the free edition is available as of August 25. Patchstack warns that the pace of attacks could increase significantly given the public PoC.",
+      "Affected versions and fixes: Free edition — fixed in 5.4.5. Standard edition — CVE-2026-61979 fixed in 17.0.5; CVE-2026-15981 fixed in 17.0.6. Other paid editions — contact miniOrange for version-specific patch status; the standard WordPress update prompt may not surface the fix for all paid tiers."
+    ],
+    "iocs": [],
+    "iocNote": "No attacker-infrastructure IOCs published. Detection: monitor WordPress authentication logs for SAML assertion submissions followed by immediate admin-level session creation from IP addresses with no prior login history. Look for POST requests to /wp-login.php?saml_user_auto_register or similar SAML callback paths from external IPs, particularly those not associated with your configured Identity Provider.",
+    "mitigation": [
+      "Update immediately. Free edition: update to 5.4.5 via the WordPress plugin dashboard. Standard edition: update to 17.0.6 (which covers both CVEs). Other paid editions: log in to the miniOrange portal to obtain the patched version — the WordPress admin update prompt may NOT show the available fix for all paid tiers. Version 16.x sites must manually upload the updated plugin archive.",
+      "If you cannot update immediately: disable the miniOrange SAML SSO plugin until the patch is applied. SAML SSO functionality will be unavailable but the authentication bypass attack surface is eliminated.",
+      "After patching: audit your WordPress admin user list for any accounts created between August 16 and the date you applied the patch. Any unfamiliar administrator accounts should be treated as attacker-created and removed."
+    ],
+    "response": [
+      "Check WordPress database for unexpected administrator-role user accounts created after August 16, 2026 — run: `SELECT user_login, user_registered FROM wp_users u JOIN wp_usermeta m ON u.ID=m.user_id WHERE m.meta_key='wp_capabilities' AND m.meta_value LIKE '%administrator%' AND u.user_registered > '2026-08-16'`",
+      "Review WordPress authentication logs for SAML callback requests (POST to wp-login.php with SAML parameters) from IPs not matching your configured Identity Provider. These are exploitation attempts.",
+      "If a compromised admin account is found: assume full WordPress compromise — reset all administrator credentials, rotate database passwords, audit installed plugins for malicious additions, and check for webshells in the wp-content directory.",
+      "DEFENDER XDR KQL — Detect miniOrange SAML exploitation: WordPress admin session creation following SAML callback from unexpected IP.\n\n// miniOrange SAML CVE-2026-61979/15981 — SAML Bypass Exploitation Detection\n// Requires: IIS/nginx access logs forwarded to Sentinel, WordPress on Windows hosting\nW3CIISLog\n| where TimeGenerated > ago(14d)\n| where csUriStem has_any (\"wp-login.php\",\"saml_user_auto_register\",\"saml_sso\")\n| where csMethod == \"POST\"\n| where sc_status in (200, 302)\n| where not(ipv4_is_private(cIP))\n| join kind=leftouter (\n    W3CIISLog\n    | where csUriStem has \"wp-admin\"\n    | where sc_status == 200\n    | project AdminTime = TimeGenerated, cIP, AdminPath = csUriStem\n) on cIP\n| where abs(datetime_diff('minute', TimeGenerated, AdminTime)) < 5\n| project TimeGenerated, cIP, csUriStem, sc_status, AdminTime, AdminPath\n| sort by TimeGenerated desc"
+    ],
+    "source": "The Hacker News, BleepingComputer, Patchstack, SCWorld, CyberPress",
+    "sourceNote": "Aug 16–25, 2026"
   }
 }
+
 
 
 
@@ -1748,9 +1801,9 @@
     ]
   },
   "zimbra": {
-    "status": "ongoing",
-    "conf": "Confirmed exploitation — CERT Polska confirmed active exploitation Aug 20, 2026; Shadowserver tracks 12,100+ exposed servers",
-    "confNote": "CERT Polska bulletin Aug 20 confirmed exploitation; BleepingComputer and SecurityWeek corroborated; CVSS 8.9; CVE-2026-73570 not yet on CISA KEV as of Aug 21",
+    "status": "updated",
+    "conf": "Confirmed exploitation — CERT Polska confirmed active exploitation Aug 20; Synacor patched in ZCS 10.1.20; 270+ instances confirmed compromised as of Aug 25 (IT Security Newsletter / Bleeping); Shadowserver tracks 12,100+ exposed servers",
+    "confNote": "CERT Polska bulletin Aug 20; 270+ confirmed compromised as of Aug 25, 2026; BleepingComputer Aug 25 update; Shadowserver 12K+ exposed",
     "iocDate": "Aug 20, 2026 — CERT Polska confirmed exploitation date; Zimbra patched July 20",
     "admiralty": "A2",
     "severity": 4,
@@ -1858,8 +1911,26 @@
       "T1566.002 — Phishing: Spearphishing Link",
       "T1078 — Valid Accounts"
     ]
+  },
+  "miniorange": {
+    "status": "new",
+    "conf": "Confirmed exploitation attempts — DigitalOcean detected and blocked active admin session attempt Aug 16; Patchstack reproduced both CVEs Aug 17; public PoC available as of Aug 25; BleepingComputer confirmed active exploitation attempts",
+    "confNote": "DigitalOcean confirmed detection Aug 16; Patchstack coordination Aug 17-21; THN and BleepingComputer confirmed exploitation attempts Aug 25; CVE-2026-15981 CVSS 9.8; public PoC available",
+    "iocDate": "Aug 16, 2026 — first exploitation attempt detected; PoC public Aug 25",
+    "admiralty": "A2",
+    "severity": 4,
+    "cvss": 9.8,
+    "sectors": [
+      "Technology"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1078 — Valid Accounts",
+      "T1548 — Abuse Elevation Control Mechanism"
+    ]
   }
 }
+
 
 
 
