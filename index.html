@@ -267,7 +267,7 @@
 
   /* FILTER BAR */
   .filterBar{
-    display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px;
+    display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:8px;
   }
   .filterBar input[type=text]{
     font-family:var(--mono); font-size:12px; background:var(--panel); border:1px solid var(--border);
@@ -280,6 +280,57 @@
   }
   .filterCount{font-family:var(--mono); font-size:10.5px; color:var(--muted); white-space:nowrap;}
   .hiddenByFilter{display:none !important;}
+  /* Sector chips */
+  .sectorChips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+  .sChip{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:12px;
+    border:1px solid var(--border);background:var(--panel);color:var(--muted);
+    cursor:pointer;transition:all .15s;}
+  .sChip:hover{border-color:var(--blue);color:var(--blue);}
+  .sChip.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .sChip.all-chip{border-color:var(--blue);color:var(--blue);}
+  .sChip.all-chip.active{background:var(--blue);color:#fff;}
+  /* Settings button */
+  .settingsBtn{background:none;border:1px solid var(--border);color:var(--muted);
+    border-radius:6px;padding:6px 9px;cursor:pointer;font-size:14px;transition:all .15s;}
+  .settingsBtn:hover{border-color:var(--blue);color:var(--blue);}
+  /* Settings modal */
+  .settingsModal{display:none;position:fixed;inset:0;background:rgba(4,7,13,.7);
+    backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;}
+  .settingsModal.open{display:flex;}
+  .settingsBox{background:var(--panel-2);border:1px solid var(--border);border-radius:12px;
+    padding:24px 28px;width:420px;max-width:95vw;}
+  .settingsBox h3{font-size:14pt;color:var(--text);margin-bottom:4px;}
+  .settingsBox p{font-size:10pt;color:var(--muted);margin-bottom:16px;}
+  .settingsBox label{display:block;font-family:var(--mono);font-size:10.5px;
+    color:var(--muted);margin-bottom:3px;margin-top:12px;}
+  .settingsBox input{width:100%;background:var(--panel);border:1px solid var(--border);
+    color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--mono);font-size:11px;}
+  .settingsBox input:focus{outline:none;border-color:var(--blue);}
+  .settingsSave{margin-top:16px;background:var(--blue);color:#fff;border:none;
+    border-radius:6px;padding:8px 18px;cursor:pointer;font-size:11pt;font-weight:600;}
+  .settingsClose{float:right;background:none;border:none;color:var(--muted);
+    font-size:18px;cursor:pointer;margin-top:-4px;}
+  /* IOC Enrichment */
+  .enrichBtn{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:4px;
+    border:1px solid var(--border);background:var(--panel);color:var(--muted);
+    cursor:pointer;margin-left:8px;transition:all .15s;white-space:nowrap;}
+  .enrichBtn:hover{border-color:var(--blue);color:var(--blue);}
+  .enrichBtn.loading{color:var(--muted);cursor:wait;}
+  .enrichCard{background:var(--panel);border:1px solid var(--border);border-radius:6px;
+    padding:10px 12px;margin:6px 0 6px 28px;font-family:var(--mono);font-size:10px;}
+  .enrichCard .enrichTitle{font-weight:600;color:var(--text);margin-bottom:6px;font-size:10.5px;}
+  .enrichCard .enrichRow{display:flex;gap:8px;margin-bottom:3px;align-items:baseline;}
+  .enrichCard .enrichLabel{color:var(--muted);min-width:90px;}
+  .enrichCard .enrichVal{color:var(--text);}
+  .enrichCard .enrichVal.danger{color:#EF4444;}
+  .enrichCard .enrichVal.safe{color:#22C55E;}
+  .enrichCard .enrichVal.warn{color:#F59E0B;}
+  .enrichLinks{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;}
+  .enrichLink{font-size:9px;padding:2px 7px;border-radius:4px;border:1px solid var(--border);
+    color:var(--blue);text-decoration:none;background:var(--panel);}
+  .enrichLink:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+  /* Fuse match highlight */
+  .fuseMatch{background:rgba(45,106,159,.2);border-radius:2px;}
 
   .overlay{
     position:fixed; inset:0; background:rgba(4,7,13,.6); backdrop-filter:blur(2px);
@@ -385,6 +436,7 @@
   .drawerFoot{ margin-top:24px; padding-top:16px; border-top:1px solid var(--border); font-family:var(--mono); font-size:11px; color:#5C6684; }
   .drawerFoot a{color:var(--blue);}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -416,7 +468,7 @@
   </div>
 
   <div class="filterBar">
-    <input type="text" id="searchBox" placeholder="Search titles, tags, overview text…">
+    <input type="text" id="searchBox" placeholder="Smart search — try 'authentication bypass', 'KEV', 'DPRK', 'WordPress admin'…">
     <select id="statusFilter">
       <option value="">All statuses</option>
       <option value="new">New</option>
@@ -430,7 +482,24 @@
       <option value="admiralty">Sort: source reliability</option>
     </select>
     <button class="tbtn" id="filterResetBtn">✕ Reset</button>
+    <button class="settingsBtn" id="settingsBtn" title="Configure enrichment API keys">⚙</button>
     <span class="filterCount" id="filterCount"></span>
+  </div>
+  <div class="sectorChips" id="sectorChips"></div>
+
+  <!-- Settings modal -->
+  <div class="settingsModal" id="settingsModal">
+    <div class="settingsBox">
+      <button class="settingsClose" id="settingsClose">✕</button>
+      <h3>⚙ Enrichment Settings</h3>
+      <p>API keys are stored in your browser only (localStorage). They are never sent anywhere except the respective API.</p>
+      <label>VirusTotal API Key (free at virustotal.com)</label>
+      <input type="password" id="vtKey" placeholder="Enter your VirusTotal API key…">
+      <label>AbuseIPDB API Key (free at abuseipdb.com)</label>
+      <input type="password" id="abuseKey" placeholder="Enter your AbuseIPDB API key…">
+      <br>
+      <button class="settingsSave" id="settingsSave">Save Keys</button>
+    </div>
   </div>
 
   <div class="grid">
@@ -2064,17 +2133,20 @@
     const stamp = m.iocDate ? '<div class="conf" style="margin-bottom:8px;">IOC set as of: <b>' + m.iocDate + '</b></div>' : '';
     if (item.iocs && item.iocs.length){
       const copyBtn = '<button class="iocCopy" data-copykey="' + key + '">⧉ copy values</button>';
-      const rows = item.iocs.map(i =>
-        '<li><span class="iocType">' + i.type + '</span><span class="iocValue">' + i.value + '</span>' +
-        (i.note ? '<span class="iocNote">' + i.note + '</span>' : '') +
-        (i.source ? '<span class="iocSrc">⬡ ' + (()=>{
-          const urls = i.source.match(/https?:\/\/[^\s]+/g) || [];
-          if(!urls.length) return i.source;
+      const rows = item.iocs.map((ioc, idx) =>
+        '<li><span class="iocType">' + ioc.type + '</span><span class="iocValue">' + ioc.value + '</span>' +
+        '<button class="enrichBtn" onclick="enrichIOC(this,\'' + ioc.value.replace(/'/g,"\\'") + '\',\'' + ioc.type + '\')">🔍 Enrich</button>' +
+        (ioc.note ? '<span class="iocNote">' + ioc.note + '</span>' : '') +
+        (ioc.source ? '<span class="iocSrc">⬡ ' + (()=>{
+          const urls = ioc.source.match(/https?:\/\/[^\s]+/g) || [];
+          if(!urls.length) return ioc.source;
           return urls.map(u=>{
             const label = u.replace(/https?:\/\/(www\.)?/,'').split('/').slice(0,2).join('/').replace(/[,\/]+$/,'');
             return '<a href="'+u+'" target="_blank" rel="noopener" class="iocSrcLink">'+label+'</a>';
           }).join(' / ');
-        })() + '</span>' : '') + '</li>'
+        })() + '</span>' : '') +
+        '<div class="enrichResult" id="enrich-' + key + '-' + idx + '"></div>' +
+        '</li>'
       ).join('');
       return '<div class="iocHead"><span></span>' + copyBtn + '</div>' + stamp +
              '<ul class="iocStructured">' + rows + '</ul>';
@@ -2432,38 +2504,104 @@
   // ---------- SEARCH / FILTER / SORT ----------
   const searchBox = document.getElementById('searchBox');
   const statusFilter = document.getElementById('statusFilter');
+  // ═══════════════════════════════════════════════════════════
+  // SMART SEARCH (Fuse.js) + SECTOR CHIPS + IOC ENRICHMENT
+  // ═══════════════════════════════════════════════════════════
+
+  // ── Build Fuse.js search index from all D data ────────────
+  const fuseIndex = Object.keys(D).map(key => {
+    const item = D[key] || {};
+    const m = META[key] || {};
+    return {
+      key,
+      title:    item.title || '',
+      eyebrow:  item.eyebrow || '',
+      overview: item.overview || '',
+      technical: (item.technical || []).join(' '),
+      tags:     (item.tags || []).map(t => t[1] || '').join(' '),
+      iocs:     (item.iocs || []).map(i => i.value + ' ' + (i.note || '')).join(' '),
+      sectors:  (m.sectors || []).join(' '),
+      status:   m.status || '',
+      attack:   (m.attack || []).join(' '),
+      source:   item.source || '',
+      mitigation: (item.mitigation || []).join(' '),
+    };
+  });
+
+  const fuse = new Fuse(fuseIndex, {
+    keys: [
+      { name: 'title',     weight: 0.40 },
+      { name: 'eyebrow',   weight: 0.15 },
+      { name: 'tags',      weight: 0.15 },
+      { name: 'overview',  weight: 0.12 },
+      { name: 'iocs',      weight: 0.08 },
+      { name: 'sectors',   weight: 0.05 },
+      { name: 'attack',    weight: 0.03 },
+      { name: 'mitigation',weight: 0.02 },
+    ],
+    threshold: 0.40,
+    includeScore: true,
+    ignoreLocation: true,
+    minMatchCharLength: 2,
+  });
+
+  // ── Sector chips ──────────────────────────────────────────
+  (function buildSectorChips(){
+    const chips = document.getElementById('sectorChips');
+    const sectorSet = new Set();
+    Object.keys(META).forEach(k => (META[k].sectors || []).forEach(s => sectorSet.add(s)));
+    const sectors = ['All', ...Array.from(sectorSet).sort()];
+    sectors.forEach(s => {
+      const chip = document.createElement('button');
+      chip.className = 'sChip' + (s === 'All' ? ' all-chip active' : '');
+      chip.textContent = s;
+      chip.onclick = () => {
+        activeSector = s === 'All' ? null : s;
+        chips.querySelectorAll('.sChip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        applyFilters();
+      };
+      chips.appendChild(chip);
+    });
+  })();
+
+  // ── Filter logic (Fuse-powered) ───────────────────────────
   const sortSelect = document.getElementById('sortSelect');
   const filterCount = document.getElementById('filterCount');
   const filterResetBtn = document.getElementById('filterResetBtn');
 
   const filterable = Array.from(document.querySelectorAll('[data-detail]'));
-  // Stamp data-sectors onto each card from META so applyFilters can read it
   filterable.forEach(el => {
     const key = el.getAttribute('data-detail');
     const sectors = META[key]?.sectors || [];
     el.dataset.sectors = sectors.join(',');
   });
   let activeSector = null;
-  // Remember each card's original DOM position so "default order" can be restored exactly.
   filterable.forEach((el, i) => { el.dataset.origIndex = i; });
 
-  function cardSearchText(el, key){
-    const item = D[key] || {};
-    return (el.textContent + ' ' + (item.overview || '')).toLowerCase();
-  }
-
   function applyFilters(){
-    const q = searchBox.value.trim().toLowerCase();
+    const q = searchBox.value.trim();
     const st = statusFilter.value;
+
+    // Fuse smart search — get ordered key set if query present
+    let fuseKeys = null;
+    if (q.length >= 2) {
+      const results = fuse.search(q);
+      fuseKeys = new Map(results.map(r => [r.item.key, r.score]));
+    }
+
     let visible = 0;
     filterable.forEach(el => {
       const key = el.getAttribute('data-detail');
       const m = META[key] || {};
       const sectors = (el.dataset.sectors || '').split(',');
-      const matchesQ = !q || cardSearchText(el, key).includes(q);
+
+      const matchesQ = !q || q.length < 2 || fuseKeys?.has(key) || false;
       const matchesSt = !st || m.status === st;
-      const matchesSec = !activeSector || sectors.includes(activeSector) ||
+      const matchesSec = !activeSector ||
+        sectors.includes(activeSector) ||
         (activeSector === 'All Sectors' && sectors.includes('All Sectors'));
+
       const show = matchesQ && matchesSt && matchesSec;
       el.classList.toggle('hiddenByFilter', !show);
       if (show) visible++;
@@ -2473,8 +2611,6 @@
 
   function applySort(){
     const mode = sortSelect.value;
-    // Group filterable elements by their parent panel.
-    // cveCards sort by their displayed CVSS score; story cards sort by META severity.
     const byParent = new Map();
     filterable.forEach(el => {
       const p = el.parentElement;
@@ -2486,19 +2622,15 @@
       const isCvePanel = els.some(el => el.classList.contains('cveCard'));
       if (mode === 'severity') {
         if (isCvePanel) {
-          sorted.sort((a, b) => {
-            const scoreA = parseFloat(a.querySelector('.cveScore')?.textContent || 0);
-            const scoreB = parseFloat(b.querySelector('.cveScore')?.textContent || 0);
-            return scoreB - scoreA;
-          });
+          sorted.sort((a,b) => parseFloat(b.querySelector('.cveScore')?.textContent||0) - parseFloat(a.querySelector('.cveScore')?.textContent||0));
         } else {
-          sorted.sort((a, b) => (META[b.dataset.detail]?.severity || 0) - (META[a.dataset.detail]?.severity || 0));
+          sorted.sort((a,b) => (META[b.dataset.detail]?.severity||0) - (META[a.dataset.detail]?.severity||0));
         }
       } else if (mode === 'admiralty') {
-        const rank = c => c ? ('ABCDF'.indexOf(c[0]) * 10 + parseInt(c[1] || 9)) : 999;
-        sorted.sort((a, b) => rank(META[a.dataset.detail]?.admiralty) - rank(META[b.dataset.detail]?.admiralty));
+        const rank = c => c ? ('ABCDF'.indexOf(c[0])*10 + parseInt(c[1]||9)) : 999;
+        sorted.sort((a,b) => rank(META[a.dataset.detail]?.admiralty) - rank(META[b.dataset.detail]?.admiralty));
       } else {
-        sorted.sort((a, b) => a.dataset.origIndex - b.dataset.origIndex);
+        sorted.sort((a,b) => a.dataset.origIndex - b.dataset.origIndex);
       }
       sorted.forEach(el => parent.appendChild(el));
     });
@@ -2510,18 +2642,18 @@
   filterResetBtn.addEventListener('click', () => {
     searchBox.value = ''; statusFilter.value = ''; sortSelect.value = 'default';
     activeSector = null;
-    document.querySelectorAll('.hStat.st-sector.active').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sChip').forEach(c => c.classList.remove('active'));
+    document.querySelector('.sChip.all-chip')?.classList.add('active');
+    document.querySelectorAll('.hStat.st-sector').forEach(el => el.classList.remove('active'));
     applyFilters(); applySort();
   });
 
-  // Sector stat click — toggle filter
   document.getElementById('headerStats').addEventListener('click', e => {
     const span = e.target.closest('.hStat.st-sector');
     if (!span) return;
-    const sector = span.textContent.trim().replace(/^[\d]+\s*/, '');
+    const sector = span.textContent.trim().replace(/^[\d]+\s*/,'');
     if (activeSector === sector) {
-      activeSector = null;
-      span.classList.remove('active');
+      activeSector = null; span.classList.remove('active');
     } else {
       activeSector = sector;
       document.querySelectorAll('.hStat.st-sector').forEach(s => s.classList.remove('active'));
@@ -2530,6 +2662,181 @@
     applyFilters();
   });
   applyFilters();
+
+  // ═══════════════════════════════════════════════════════════
+  // IOC ENRICHMENT
+  // ═══════════════════════════════════════════════════════════
+
+  // External lookup links per IOC type
+  function enrichLinks(value, type){
+    const enc = encodeURIComponent(value);
+    const links = [];
+    const t = type.toLowerCase();
+    if (t.includes('ip')) {
+      links.push(['VirusTotal', 'https://www.virustotal.com/gui/ip-address/'+enc]);
+      links.push(['AbuseIPDB', 'https://www.abuseipdb.com/check/'+enc]);
+      links.push(['Shodan', 'https://www.shodan.io/host/'+enc]);
+      links.push(['GreyNoise', 'https://viz.greynoise.io/ip/'+enc]);
+    } else if (t.includes('domain')) {
+      links.push(['VirusTotal', 'https://www.virustotal.com/gui/domain/'+enc]);
+      links.push(['URLhaus', 'https://urlhaus.abuse.ch/browse.php?search='+enc]);
+      links.push(['Shodan', 'https://www.shodan.io/search?query='+enc]);
+    } else if (t.includes('sha256') || t.includes('sha1') || t.includes('md5') || t.includes('hash')) {
+      links.push(['VirusTotal', 'https://www.virustotal.com/gui/file/'+enc]);
+      links.push(['MalwareBazaar', 'https://bazaar.abuse.ch/browse.php?search=sha256%3A'+enc]);
+      links.push(['ANY.RUN', 'https://any.run/malware-trends/?search='+enc]);
+    } else if (t.includes('url')) {
+      links.push(['VirusTotal', 'https://www.virustotal.com/gui/url/'+btoa(value).replace(/=+$/,'')]);
+      links.push(['URLhaus', 'https://urlhaus.abuse.ch/browse.php?search='+enc]);
+    } else if (t.includes('filename') || t.includes('file path')) {
+      links.push(['VirusTotal', 'https://www.virustotal.com/gui/search/'+enc]);
+      links.push(['MalwareBazaar', 'https://bazaar.abuse.ch/browse.php?search='+enc]);
+    } else {
+      links.push(['VirusTotal Search', 'https://www.virustotal.com/gui/search/'+enc]);
+    }
+    return links;
+  }
+
+  // MalwareBazaar lookup (hash types, no key, CORS OK)
+  async function queryMalwareBazaar(hash, type){
+    const t = type.toLowerCase();
+    const queryType = t.includes('sha256') ? 'sha256_hash' :
+                      t.includes('sha1')   ? 'sha1_hash'   :
+                      t.includes('md5')    ? 'md5_hash'    : null;
+    if (!queryType) return null;
+    try {
+      const res = await fetch('https://mb-api.abuse.ch/api/v1/', {
+        method:'POST', body: new URLSearchParams({query:'get_info', [queryType]:hash})
+      });
+      const data = await res.json();
+      if (data.query_status === 'ok' && data.data?.length) {
+        const d = data.data[0];
+        return {
+          source: 'MalwareBazaar',
+          fields: [
+            ['File name', d.file_name || '—'],
+            ['File type', d.file_type || '—'],
+            ['Signature', d.signature || 'Unknown'],
+            ['First seen', d.first_seen ? d.first_seen.slice(0,10) : '—'],
+            ['Tags', (d.tags || []).join(', ') || '—'],
+          ],
+          verdict: 'malicious'
+        };
+      }
+      return {source:'MalwareBazaar', fields:[['Status','Not found in MalwareBazaar']], verdict:'unknown'};
+    } catch(e){ return null; }
+  }
+
+  // URLhaus lookup (domains/URLs, no key, CORS OK)
+  async function queryURLhaus(value, type){
+    const t = type.toLowerCase();
+    try {
+      let body;
+      if (t.includes('url')) {
+        body = new URLSearchParams({url: value});
+        const res = await fetch('https://urlhaus-api.abuse.ch/v1/url/', {method:'POST', body});
+        const data = await res.json();
+        if (data.query_status === 'is_malware') {
+          return {source:'URLhaus', fields:[['Status','Malicious URL'],['Threat',data.threat||'—'],['Date added',data.date_added?.slice(0,10)||'—']], verdict:'malicious'};
+        } else if (data.query_status === 'no_results') {
+          return {source:'URLhaus', fields:[['Status','Not in URLhaus database']], verdict:'unknown'};
+        }
+      } else if (t.includes('domain')) {
+        body = new URLSearchParams({host: value});
+        const res = await fetch('https://urlhaus-api.abuse.ch/v1/host/', {method:'POST', body});
+        const data = await res.json();
+        if (data.query_status === 'is_host' && data.urls_count > 0) {
+          return {source:'URLhaus', fields:[['Malicious URLs',data.urls_count],['Status','Known malicious host']], verdict:'malicious'};
+        } else {
+          return {source:'URLhaus', fields:[['Status','Not found as malicious host']], verdict:'unknown'};
+        }
+      }
+    } catch(e){ return null; }
+    return null;
+  }
+
+  // Render enrichment result card
+  function renderEnrichCard(container, result, linksArr){
+    const verdictColor = result?.verdict === 'malicious' ? 'danger' :
+                         result?.verdict === 'safe'      ? 'safe'   : '';
+    let html = '<div class="enrichCard">';
+    if (result) {
+      html += '<div class="enrichTitle">🔍 ' + result.source + '</div>';
+      (result.fields || []).forEach(([label, val]) => {
+        html += '<div class="enrichRow"><span class="enrichLabel">' + label + '</span>' +
+                '<span class="enrichVal ' + verdictColor + '">' + val + '</span></div>';
+      });
+    }
+    if (linksArr.length) {
+      html += '<div class="enrichLinks">';
+      linksArr.forEach(([label, url]) => {
+        html += '<a class="enrichLink" href="' + url + '" target="_blank" rel="noopener">↗ ' + label + '</a>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  // Main enrichment entry point — called by the Enrich button
+  window.enrichIOC = async function(btn, value, type){
+    btn.disabled = true;
+    btn.textContent = '⏳';
+    btn.classList.add('loading');
+
+    // Find the result div (sibling after the button)
+    const li = btn.closest('li');
+    const resultDiv = li?.querySelector('.enrichResult');
+    if (!resultDiv) { btn.disabled = false; btn.textContent = '🔍 Enrich'; return; }
+
+    const links = enrichLinks(value, type);
+    const t = type.toLowerCase();
+
+    let result = null;
+    try {
+      if (t.includes('sha256') || t.includes('sha1') || t.includes('md5')) {
+        result = await queryMalwareBazaar(value, type);
+      } else if (t.includes('url')) {
+        result = await queryURLhaus(value, 'url');
+      } else if (t.includes('domain')) {
+        result = await queryURLhaus(value, 'domain');
+      }
+      // IPs and other types: external links only
+    } catch(e){ result = null; }
+
+    if (!result) {
+      // No inline API available — show external links only
+      result = {source:'External lookups', fields:[['Type', type + ' — no key-free inline API available']], verdict:'unknown'};
+    }
+
+    renderEnrichCard(resultDiv, result, links);
+    btn.textContent = '✓';
+    btn.style.color = 'var(--green, #22C55E)';
+  };
+
+  // ═══════════════════════════════════════════════════════════
+  // SETTINGS MODAL
+  // ═══════════════════════════════════════════════════════════
+  (function initSettings(){
+    const modal = document.getElementById('settingsModal');
+    const vtInput = document.getElementById('vtKey');
+    const abuseInput = document.getElementById('abuseKey');
+
+    // Load saved keys
+    try { vtInput.value = localStorage.getItem('cti_vt_key') || ''; } catch(e){}
+    try { abuseInput.value = localStorage.getItem('cti_abuse_key') || ''; } catch(e){}
+
+    document.getElementById('settingsBtn').onclick = () => modal.classList.add('open');
+    document.getElementById('settingsClose').onclick = () => modal.classList.remove('open');
+    modal.addEventListener('click', e => { if(e.target === modal) modal.classList.remove('open'); });
+    document.getElementById('settingsSave').onclick = () => {
+      try {
+        localStorage.setItem('cti_vt_key', vtInput.value.trim());
+        localStorage.setItem('cti_abuse_key', abuseInput.value.trim());
+      } catch(e){}
+      modal.classList.remove('open');
+    };
+  })();
 
   // ---------- PERSONAL "SEEN / CHANGED SINCE YOUR LAST VISIT" (via storage, per-browser) ----------
   // This is separate from the editorial status badges above (new/updated/confirmed/ongoing),
