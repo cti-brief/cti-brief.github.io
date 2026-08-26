@@ -289,27 +289,7 @@
   .sChip.active{background:var(--blue);color:#fff;border-color:var(--blue);}
   .sChip.all-chip{border-color:var(--blue);color:var(--blue);}
   .sChip.all-chip.active{background:var(--blue);color:#fff;}
-  /* Settings button */
-  .settingsBtn{background:none;border:1px solid var(--border);color:var(--muted);
-    border-radius:6px;padding:6px 9px;cursor:pointer;font-size:14px;transition:all .15s;}
-  .settingsBtn:hover{border-color:var(--blue);color:var(--blue);}
-  /* Settings modal */
-  .settingsModal{display:none;position:fixed;inset:0;background:rgba(4,7,13,.7);
-    backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;}
-  .settingsModal.open{display:flex;}
-  .settingsBox{background:var(--panel-2);border:1px solid var(--border);border-radius:12px;
-    padding:24px 28px;width:420px;max-width:95vw;}
-  .settingsBox h3{font-size:14pt;color:var(--text);margin-bottom:4px;}
-  .settingsBox p{font-size:10pt;color:var(--muted);margin-bottom:16px;}
-  .settingsBox label{display:block;font-family:var(--mono);font-size:10.5px;
-    color:var(--muted);margin-bottom:3px;margin-top:12px;}
-  .settingsBox input{width:100%;background:var(--panel);border:1px solid var(--border);
-    color:var(--text);border-radius:6px;padding:7px 10px;font-family:var(--mono);font-size:11px;}
-  .settingsBox input:focus{outline:none;border-color:var(--blue);}
-  .settingsSave{margin-top:16px;background:var(--blue);color:#fff;border:none;
-    border-radius:6px;padding:8px 18px;cursor:pointer;font-size:11pt;font-weight:600;}
-  .settingsClose{float:right;background:none;border:none;color:var(--muted);
-    font-size:18px;cursor:pointer;margin-top:-4px;}
+  /* enrichment styles */
   /* IOC Enrichment */
   .enrichBtn{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:4px;
     border:1px solid var(--border);background:var(--panel);color:var(--muted);
@@ -454,7 +434,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      Gitea CVE-2026-60004 CVSS 9.8 KEV — 48hr federal deadline Aug 28, PoC public. MLflow SSRF stealing cloud IAM creds. miniOrange SAML exploited — WordPress admin bypass. Oracle WebLogic KEV deadline TODAY (Aug 27). ShieldBreak no patch BOD 26-04.
+      China QTFY APT seized TODAY — check DNS/proxy logs for qtproxy.xyz · qt-proxy.org · qt-team.com back to 2018 (NASA, Fed, Senate compromised). Gitea CVE-2026-60004 KEV Aug 28 deadline. Oracle WebLogic KEV Aug 27 deadline TODAY. miniOrange SAML CVSS 9.8 exploited. ShieldBreak no patch BOD 26-04.
     </div>
   </header>
 
@@ -482,23 +462,9 @@
       <option value="admiralty">Sort: source reliability</option>
     </select>
     <button class="tbtn" id="filterResetBtn">✕ Reset</button>
-    <button class="settingsBtn" id="settingsBtn" title="Configure enrichment API keys">⚙</button>
     <span class="filterCount" id="filterCount"></span>
   </div>
-  <!-- Settings modal -->
-  <div class="settingsModal" id="settingsModal">
-    <div class="settingsBox">
-      <button class="settingsClose" id="settingsClose">✕</button>
-      <h3>⚙ Enrichment Settings</h3>
-      <p>API keys are stored in your browser only (localStorage). They are never sent anywhere except the respective API.</p>
-      <label>VirusTotal API Key (free at virustotal.com)</label>
-      <input type="password" id="vtKey" placeholder="Enter your VirusTotal API key…">
-      <label>AbuseIPDB API Key (free at abuseipdb.com)</label>
-      <input type="password" id="abuseKey" placeholder="Enter your AbuseIPDB API key…">
-      <br>
-      <button class="settingsSave" id="settingsSave">Save Keys</button>
-    </div>
-  </div>
+  <!-- (settings modal removed — no API keys required) -->
 
   <div class="grid">
     <div>
@@ -569,6 +535,13 @@
           <p class="storyTitle"><span>miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8): chained SAML signature bypass grants unauthenticated WordPress admin access — actively exploited, PoC public. Paid editions silently patched with no update warning.</span><span class="detailsCue">Details →</span></p>
           <p class="storyBody">Two chained auth bypasses let any attacker forge a SAML assertion and log in as WordPress admin with no credentials. CVE-2026-61979: plugin accepts attacker-specified HMAC-SHA1 algorithm using the public IdP key as the secret — trivially forgeable. CVE-2026-15981: OpenSSL error (-1) treated as success. DigitalOcean blocked an active admin session attempt Aug 16; public PoC available Aug 25. Critical distribution problem: seven independently versioned editions under one plugin slug — paid editions were silently patched with no advisory and no WordPress dashboard update prompt for some tiers. If on 16.x Standard, you must manually upload the fix.</p>
           <div class="srcline">The Hacker News, BleepingComputer, Patchstack, SCWorld — Aug 16–25, 2026</div>
+        </div>
+
+        <div class="story" data-detail="qtfy">
+          <div class="tagRow"><span class="tag crit">China State-Sponsored · DOJ/FBI Action</span><span class="tag high">NASA · Fed · Senate · DOJ Compromised</span><span class="statusBadge st-new">new</span></div>
+          <p class="storyTitle"><span>DOJ/FBI seize QScan and QTRouter today — China-linked QTFY APT breached NASA, Federal Reserve, DOJ, NIH, and US Senate since 2018. Sold hacking services to China MSS and PLA. All domains seized, both platforms now inoperable.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Breaking Aug 26: FBI/DOJ seized three hard-coded C2 domains (qtproxy[.]xyz, qt-proxy[.]org, qt-team[.]com) making both QTFY platforms immediately inoperable. QScan scanned and infected IoT devices globally as botnet nodes; QTRouter routed intrusion traffic through those nodes and commercial VPS (fastlink[.]ws "Fast Labyrinth") to conceal PRC origin. Campaign active since May 2018. QTFY sold services to China MSS and PLA. Lumen Black Lotus Labs tracked the infrastructure for 18 months. Defenders: pull DNS/proxy logs for all three domains back to 2018 — any historical connection is a priority investigation target.</p>
+          <div class="srcline">DOJ Press Release, The Hacker News, BleepingComputer, Lumen Black Lotus Labs — Aug 26, 2026</div>
         </div>
 
         <div class="story" data-detail="oracleweblogic">
@@ -657,8 +630,8 @@
 
         <div class="story" data-detail="patchtugsaug">
           <div class="tagRow"><span class="tag crit">DPRK · Active Espionage</span><span class="tag high">CISA KEV · FudModule v3.1 · Defense/Aerospace</span><span class="statusBadge st-ongoing">ongoing</span></div>
-          <p class="storyTitle"><span>Operation Dream Job (Lazarus): fake job offers → afd.sys zero-day (CVE-2026-68820) → FudModule v3.1 kills 94 ETW providers → ForestTiger/Troy backdoors. Defense, aerospace, aviation. 30 IOCs + 4 KQL in drawer.</span><span class="detailsCue">Details →</span></p>
-          <p class="storyBody">Check Point Research confirmed Lazarus exploited CVE-2026-68820 for 5 weeks before Aug 11 patch. Two chains: DLL sideloading (Lockheed Martin lure) and SecurityPDF trojanized viewer (Enveil impersonation at envell.xyz / enveil.online). Both deliver MISTPEN — fileless downloader C2ing exclusively through Microsoft Graph/OneDrive. Target validated with screenshots; FudModule v3.1 deployed to kernel (kills 94 ETW providers, tampers Smart App Control, blinds all EDR). Troy and ForestTiger backdoors persist. C2 through compromised Roundcube/WordPress/PrestaShop via RelayShell PHP webshell. Confirmed victims: France, Germany, India, Brazil. 30 IOCs (domains, IPs, 7×SHA256, 7×SHA1, 7×MD5, 3 filenames) and 4 detection KQL queries in drawer.</p>
+          <p class="storyTitle"><span>Operation Dream Job (Lazarus): fake job offers → afd.sys zero-day (CVE-2026-68820) → FudModule v3.1 kills 94 ETW providers → ForestTiger/Troy backdoors. Defense, aerospace, aviation. 16 IOCs + 4 KQL in drawer.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Check Point Research confirmed Lazarus exploited CVE-2026-68820 for 5 weeks before Aug 11 patch. Two chains: DLL sideloading (Lockheed Martin lure) and SecurityPDF trojanized viewer (Enveil impersonation at envell.xyz / enveil.online). Both deliver MISTPEN — fileless downloader C2ing exclusively through Microsoft Graph/OneDrive. Target validated with screenshots; FudModule v3.1 deployed to kernel (kills 94 ETW providers, tampers Smart App Control, blinds all EDR). Troy and ForestTiger backdoors persist. C2 through compromised Roundcube/WordPress/PrestaShop via RelayShell PHP webshell. Confirmed victims: France, Germany, India, Brazil. 16 IOCs (7×SHA256, 3 domains, 2 IPs, 3 filenames) and 4 KQL queries in drawer. MD5/SHA1 removed — SHA256 covers same files.</p>
           <div class="srcline">Check Point Research, BleepingComputer, Rewterz — Jul 7–Aug 25, 2026</div>
         </div>
 
@@ -708,6 +681,13 @@
             <span class="cveNum">CVE-2026-61979 / 15981</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
           </div>
           <div class="cveSub">miniOrange SAML SSO — chained unauthenticated WordPress admin bypass. PoC public. Paid editions need manual patch.</div>
+        </div>
+
+        <div class="cveCard crit-card" data-detail="qtfy">
+          <div class="cveTop">
+            <span class="cveNum">QTFY / QScan / QTRouter</span><span class="cveScore">—</span>
+          </div>
+          <div class="cveSub">China APT seized today — NASA, Fed, Senate, DOJ compromised since 2018. Check DNS logs for qtproxy.xyz, qt-proxy.org, qt-team.com.</div>
         </div>
 
         <div class="cveCard crit-card" data-detail="oracleweblogic">
@@ -1803,6 +1783,72 @@ const D = {
     ],
     "source": "SecurityWeek, Cyber Security News, CISA",
     "sourceNote": "Aug 19–26, 2026"
+  },
+  "qtfy": {
+    "eyebrow": "China APT · QTFY / QScan / QTRouter · DOJ/FBI Seizure · Active Since 2018",
+    "title": "DOJ/FBI seize QScan and QTRouter — China-linked QTFY APT (Nanjing Xinjiuwei) breached NASA, Federal Reserve, DOJ, NIH, and US Senate. Sold hacking services to MSS and PLA. All C2 domains seized, both platforms inoperable.",
+    "tags": [
+      [
+        "crit",
+        "China State-Sponsored · DOJ/FBI Action"
+      ],
+      [
+        "high",
+        "NASA · Fed · Senate · DOJ Compromised"
+      ]
+    ],
+    "overview": "The U.S. Department of Justice and FBI announced August 26, 2026 the court-authorized seizure of three domains central to two Chinese state-sponsored hacking platforms — QScan and QTRouter — operated by threat group QTFY, employed by Nanjing Xinjiuwei Network Technology Company (南京鑫玖维网络科技有限公司). QTFY has been actively compromising U.S. critical infrastructure since at least May 2018. Confirmed victims include NASA, the Federal Reserve, the Departments of Justice, Energy, and Health and Human Services, the National Institutes of Health, and the United States Senate. Additional victims include hospitals, telecommunications providers, power companies, financial institutions, and defense contractors domestically and in South Korea. QTFY sold hacking services commercially to customers including China's Ministry of State Security (MSS) and People's Liberation Army (PLA). Lumen Technologies' Black Lotus Labs tracked the infrastructure for 18 months. The three seized domains were hard-coded into both QScan and QTRouter for C2 and authentication — seizure immediately rendered both platforms inoperable. This follows prior FBI disruptions of China-linked malware: PlugX (2025), Flax Typhoon (2024), and Volt Typhoon (2023).",
+    "technical": [
+      "QScan — reconnaissance and exploitation platform: Continuously scanned internet-connected devices globally, profiling targets for open ports, application banners, OS fingerprints, and configuration data. Automatically infected vulnerable IoT devices, conscripting them as botnet nodes for the QTRouter obfuscation network.",
+      "QTRouter — Operational Relay Box (ORB) network: Comprised the compromised IoT devices plus commercial proxy service nodes (VPS purchased from fastlink.ws under codename \"Fast Labyrinth\"). When QTFY or its paying customers conducted intrusions, traffic routed through QTRouter nodes appeared to originate from locations geographically close to the target or outside China. This ORB tactic has been increasingly used by Chinese APT groups since 2024.",
+      "Commercial hacking services model: QTFY operated as a full-service hacking contractor, selling access to QScan scanning capability and QTRouter obfuscation nodes to external actors. Customers confirmed by DOJ included China's MSS and PLA. This means the QTFY disruption affects intrusion campaigns beyond QTFY's own operations.",
+      "Domain seizure impact: The three seized domains (qtproxy[.]xyz, qt-proxy[.]org, qt-team[.]com) were hard-coded into QScan and QTRouter binary malware for C2 communication and authentication. Seizure immediately disrupted all infected devices globally running QScan or QTRouter components. Law enforcement banners now displayed on all three domains."
+    ],
+    "iocs": [
+      {
+        "value": "qtproxy.xyz",
+        "type": "Domain",
+        "note": "QScan/QTRouter C2 domain — hard-coded in malware. Seized by FBI/DOJ Aug 26, 2026. Now displays law enforcement banner. Check historical DNS logs.",
+        "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
+      },
+      {
+        "value": "qt-proxy.org",
+        "type": "Domain",
+        "note": "QScan/QTRouter C2 domain — hard-coded in malware. Seized by FBI/DOJ Aug 26, 2026. Now displays law enforcement banner.",
+        "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
+      },
+      {
+        "value": "qt-team.com",
+        "type": "Domain",
+        "note": "QTFY operational domain — hard-coded in malware. Seized by FBI/DOJ Aug 26, 2026.",
+        "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
+      },
+      {
+        "value": "fastlink.ws",
+        "type": "Domain",
+        "note": "Commercial proxy service whose nodes were purchased by QTFY as \"Fast Labyrinth\" ORB relay nodes to blend espionage traffic with legitimate proxy traffic.",
+        "source": "https://www.bleepingcomputer.com/news/security/fbi-disrupts-proxy-network-enabling-chinese-espionage-operations/"
+      },
+      {
+        "value": "QTFY",
+        "type": "Actor Alias",
+        "note": "China state-sponsored APT group employed by Nanjing Xinjiuwei Network Technology Company. Operated QScan and QTRouter since 2018. Sold services to China MSS and PLA.",
+        "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
+      }
+    ],
+    "iocNote": "The three seized C2 domains are now law enforcement-controlled. Defenders should review DNS, proxy, and network logs for historical connections to qtproxy[.]xyz, qt-proxy[.]org, qt-team[.]com, and fastlink[.]ws from the May 2018 — August 26, 2026 window. Any connection is a potential indicator of QScan infection or QTRouter relay node activity. Lumen Black Lotus Labs is expected to publish additional IOCs; monitor their blog.",
+    "mitigation": [
+      "Review DNS and proxy logs for historical connections to all four IOC domains back to 2018. Any internal host that connected to these domains during the campaign window is a priority investigation target.",
+      "Audit internet-facing IoT devices, routers, and network appliances for unauthorized configuration changes or unexpected outbound connections — QScan specifically targeted IoT infrastructure as botnet nodes.",
+      "For organizations in confirmed victim sectors (federal, defense, telecom, financial, healthcare): conduct a targeted hunt for lateral movement originating from perimeter devices that may have been compromised as QTRouter relay nodes."
+    ],
+    "response": [
+      "Pull DNS logs for qtproxy.xyz, qt-proxy.org, qt-team.com, fastlink.ws going back as far as your retention allows. Any internal resolution of these domains should be escalated immediately.",
+      "Check for unexpected outbound connections from IoT, router, and camera-class devices to commercial VPS providers — this is the QTRouter node recruitment signature.",
+      "DEFENDER XDR KQL — Hunt for historical QTFY infrastructure connections.\n\n// QTFY QScan/QTRouter — Historical Connection Hunt\nlet qtfy_iocs = dynamic([\"qtproxy.xyz\",\"qt-proxy.org\",\"qt-team.com\",\"fastlink.ws\"]);\n(\n  DeviceNetworkEvents\n  | where RemoteUrl has_any (qtfy_iocs)\n     or RemoteIPType == \"Public\" and (\n        RemoteUrl has \"qtproxy\" or RemoteUrl has \"qt-proxy\" or RemoteUrl has \"qt-team\"\n     )\n  | project Timestamp, DeviceName, RemoteUrl, RemoteIP,\n      InitiatingProcessFileName, InitiatingProcessCommandLine\n)\n| union (\n  DnsEvents\n  | where Name has_any (qtfy_iocs)\n  | project Timestamp, ClientIP, Name, QueryType\n)\n| sort by Timestamp desc"
+    ],
+    "source": "DOJ Press Release, The Hacker News, BleepingComputer, Lumen Black Lotus Labs, UPI",
+    "sourceNote": "Aug 26, 2026 — breaking"
   }
 }
 const META = {
@@ -2122,6 +2168,27 @@ const META = {
       "T1190 — Exploit Public-Facing Application",
       "T1552.005 — Credentials from Cloud Instance Metadata API",
       "T1078.004 — Valid Accounts: Cloud Accounts"
+    ]
+  },
+  "qtfy": {
+    "status": "new",
+    "conf": "Confirmed — DOJ/FBI court-authorized domain seizure Aug 26, 2026; Lumen Black Lotus Labs 18-month infrastructure tracking corroborated; court documents unsealed SDCA confirming QTFY employed by Nanjing Xinjiuwei Network Technology Company",
+    "confNote": "DOJ press release Aug 26; unsealed court docs SDCA; confirmed victims NASA, Fed, DOJ, DOE, HHS, NIH, Senate; QTFY sold services to China MSS and PLA per DOJ; Lumen Black Lotus Labs corroborated attribution",
+    "iocDate": "May 2018 — campaign start; Aug 26, 2026 — DOJ/FBI seizure",
+    "admiralty": "A1",
+    "severity": 5,
+    "cvss": null,
+    "sectors": [
+      "Government",
+      "Financial",
+      "Technology"
+    ],
+    "attack": [
+      "T1595 — Active Scanning (QScan)",
+      "T1584.005 — Compromise Infrastructure: Botnet",
+      "T1090.003 — Proxy: Multi-hop Proxy",
+      "T1078 — Valid Accounts",
+      "T1041 — Exfiltration Over C2 Channel"
     ]
   }
 }
@@ -2502,44 +2569,47 @@ const WEEK_RANGE = 'Week of Aug 24 – Aug 30, 2026';
         SHA1:'#888', Filename:'#A8D8A8',Email:'#D8A8D8','File Extension':'#A8D8A8',
         Username:'#F0837B',CVE:'#F0837B',Default:'#888'};
     const mdeExportable = r => MDE_TYPE_MAP[r.type];
-    const sha256Count = rows.filter(r => r.type === 'SHA256').length;
-    const altHashCount = rows.filter(r => ['MD5','SHA1'].includes(r.type)).length;
+    const unresolvable = rows.filter(r => ['MD5','SHA1'].includes(r.type));
+
     const header = `<div class="iocAllHeader">
       <div>
         <div style="font-family:var(--disp);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">${rows.length} Indicators</div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">
-          Export CSV → open in Defender portal: <span style="color:var(--text)">Settings → Endpoints → Indicators → Import</span><br>
-          <span style="color:var(--blue)">CSV contains SHA256 hashes only</span> — MDE rejects MD5/SHA1 on import.
-          ${altHashCount ? `<span style="color:var(--muted)">${altHashCount} MD5/SHA1 rows shown here for reference — use 🔍 Enrich to resolve SHA256.</span>` : ''}
-          <br>Rows with <span style="color:var(--blue)">GenerateAlert = True</span> import as blocks &nbsp;·&nbsp; <span style="color:var(--muted)">GenerateAlert = False</span> = reference indicators
+          Export CSV → <span style="color:var(--text)">Settings → Endpoints → Indicators → Import</span><br>
+          <span style="color:var(--blue)">CSV exports SHA256 only</span> — MDE rejects MD5/SHA1 on import.
+          ${unresolvable.length ? `<span style="color:var(--muted)">${unresolvable.length} MD5 row${unresolvable.length>1?'s':''} shown for reference — SHA256 not available from public sources for ${unresolvable.map(r=>r.item.split(':')[0].trim().slice(0,30)).join(', ')}.</span>` : ''}
         </div>
       </div>
       <button id="csvBtnDrawer" class="iocCopy" style="font-size:12px;padding:5px 14px;flex-shrink:0;">⬇ Export CSV (SHA256)</button>
     </div>`;
-    const tableRows = rows.map(r => {
+
+    const tableRows = rows.map((r, idx) => {
       const col = typeColors[r.type] || typeColors.Default;
       const srcLabel = r.iocSource ? r.iocSource.replace(/https?:\/\/(www\.)?/,'').split('/')[0] : '';
       const srcHtml = r.iocSource
         ? `<a href="${r.iocSource}" target="_blank" rel="noopener" class="iocSrcLink2">${srcLabel}</a>`
         : '<span style="opacity:.35">—</span>';
-      const csvBadge = mdeExportable(r)
+      const isAlt = ['MD5','SHA1'].includes(r.type);
+      const badge = mdeExportable(r)
         ? `<span style="font-family:var(--mono);font-size:8px;background:var(--blue)22;color:var(--blue);padding:1px 4px;border-radius:3px;margin-left:4px;">CSV</span>`
-        : (['MD5','SHA1'].includes(r.type)
-            ? `<span style="font-family:var(--mono);font-size:8px;background:#88888822;color:var(--muted);padding:1px 4px;border-radius:3px;margin-left:4px;" title="MD5/SHA1 excluded from MDE CSV — use Enrich to get SHA256">ref only</span>`
-            : '');
+        : isAlt
+          ? `<span style="font-family:var(--mono);font-size:8px;background:#88888822;color:var(--muted);padding:1px 4px;border-radius:3px;margin-left:4px;" title="SHA256 unavailable — excluded from MDE CSV">ref only</span>`
+          : '';
+
       return `<tr>
-        <td><span class="iocTypePill" style="color:${col};background:${col}22">${r.type}</span>${csvBadge}</td>
+        <td><span class="iocTypePill" style="color:${col};background:${col}22">${r.type}</span>${badge}</td>
         <td class="iocVal">${r.indicator}</td>
         <td class="iocItemName">${r.item.split(':')[0].trim().slice(0,40)}</td>
         <td class="iocItemName" style="max-width:180px">${r.context.slice(0,80)}</td>
         <td>${srcHtml}</td>
       </tr>`;
     }).join('');
+
     const table = `<table class="iocTable"><thead><tr>
       <th>Type</th><th>Indicator</th><th>Item</th><th>Context</th><th>Source</th>
     </tr></thead><tbody>${tableRows}</tbody></table>`;
     drawerContent.innerHTML = header + table;
-    // Wire CSV button inside drawer
+
     document.getElementById('csvBtnDrawer')?.addEventListener('click', () => {
       document.getElementById('csvBtn').click();
     });
@@ -2794,181 +2864,65 @@ const WEEK_RANGE = 'Week of Aug 24 – Aug 30, 2026';
   // ═══════════════════════════════════════════════════════════
 
   // External lookup links per IOC type
+  // ── IOC Enrichment — external lookup links only ──────────────────
+  // Inline API calls (MalwareBazaar POST, URLhaus POST) are CORS-blocked
+  // from GitHub Pages. Hash resolution happens at brief-generation time.
+  // Enrich button shows curated external lookup links — instant, always works.
+
   function enrichLinks(value, type){
     const enc = encodeURIComponent(value);
     const links = [];
     const t = type.toLowerCase();
     if (t.includes('ip')) {
-      links.push(['VirusTotal', 'https://www.virustotal.com/gui/ip-address/'+enc]);
-      links.push(['AbuseIPDB', 'https://www.abuseipdb.com/check/'+enc]);
-      links.push(['Shodan', 'https://www.shodan.io/host/'+enc]);
-      links.push(['GreyNoise', 'https://viz.greynoise.io/ip/'+enc]);
+      links.push(['VirusTotal',  'https://www.virustotal.com/gui/ip-address/'+enc]);
+      links.push(['AbuseIPDB',   'https://www.abuseipdb.com/check/'+enc]);
+      links.push(['Shodan',      'https://www.shodan.io/host/'+enc]);
+      links.push(['GreyNoise',   'https://viz.greynoise.io/ip/'+enc]);
+      links.push(['URLScan',     'https://urlscan.io/search/#ip%3A'+enc]);
     } else if (t.includes('domain')) {
-      links.push(['VirusTotal', 'https://www.virustotal.com/gui/domain/'+enc]);
-      links.push(['URLhaus', 'https://urlhaus.abuse.ch/browse.php?search='+enc]);
-      links.push(['Shodan', 'https://www.shodan.io/search?query='+enc]);
-    } else if (t.includes('sha256') || t.includes('sha1') || t.includes('md5') || t.includes('hash')) {
-      links.push(['VirusTotal', 'https://www.virustotal.com/gui/file/'+enc]);
-      links.push(['MalwareBazaar', 'https://bazaar.abuse.ch/browse.php?search=sha256%3A'+enc]);
-      links.push(['ANY.RUN', 'https://any.run/malware-trends/?search='+enc]);
+      links.push(['VirusTotal',  'https://www.virustotal.com/gui/domain/'+enc]);
+      links.push(['URLScan',     'https://urlscan.io/search/#domain%3A'+enc]);
+      links.push(['Shodan',      'https://www.shodan.io/search?query=hostname%3A'+enc]);
+      links.push(['URLhaus',     'https://urlhaus.abuse.ch/browse.php?search='+enc]);
+    } else if (t.includes('sha256') || t.includes('sha1') || t.includes('md5')) {
+      links.push(['VirusTotal',  'https://www.virustotal.com/gui/file/'+enc]);
+      // SHA256: direct sample page; MD5/SHA1: prefixed search
+      const mbUrl = t.includes('sha256')
+        ? 'https://bazaar.abuse.ch/sample/'+enc+'/'
+        : 'https://bazaar.abuse.ch/browse.php?search='+(t.includes('md5')?'md5:':'sha1:')+enc;
+      links.push(['MalwareBazaar', mbUrl]);
+      links.push(['ANY.RUN',     'https://any.run/malware-trends/?search='+enc]);
+      links.push(['Hybrid Analysis','https://www.hybrid-analysis.com/search?query='+enc]);
     } else if (t.includes('url')) {
-      links.push(['VirusTotal', 'https://www.virustotal.com/gui/url/'+btoa(value).replace(/=+$/,'')]);
-      links.push(['URLhaus', 'https://urlhaus.abuse.ch/browse.php?search='+enc]);
+      links.push(['VirusTotal',  'https://www.virustotal.com/gui/url/'+btoa(value).replace(/=+$/,'')]);
+      links.push(['URLScan',     'https://urlscan.io/search/#page.url%3A'+enc]);
+      links.push(['URLhaus',     'https://urlhaus.abuse.ch/browse.php?search='+enc]);
     } else if (t.includes('filename') || t.includes('file path')) {
-      links.push(['VirusTotal', 'https://www.virustotal.com/gui/search/'+enc]);
-      links.push(['MalwareBazaar', 'https://bazaar.abuse.ch/browse.php?search='+enc]);
+      links.push(['VirusTotal Search','https://www.virustotal.com/gui/search/'+enc]);
+      links.push(['MalwareBazaar',    'https://bazaar.abuse.ch/browse.php?search=filename:'+enc]);
     } else {
-      links.push(['VirusTotal Search', 'https://www.virustotal.com/gui/search/'+enc]);
+      links.push(['VirusTotal Search','https://www.virustotal.com/gui/search/'+enc]);
     }
     return links;
   }
 
-  // MalwareBazaar lookup (hash types, no key, CORS OK)
-  async function queryMalwareBazaar(hash, type){
-    const t = type.toLowerCase();
-    const queryType = t.includes('sha256') ? 'sha256_hash' :
-                      t.includes('sha1')   ? 'sha1_hash'   :
-                      t.includes('md5')    ? 'md5_hash'    : null;
-    if (!queryType) return null;
-    const isAltHash = t.includes('md5') || t.includes('sha1');
-    try {
-      const res = await fetch('https://mb-api.abuse.ch/api/v1/', {
-        method:'POST', body: new URLSearchParams({query:'get_info', [queryType]:hash})
-      });
-      const data = await res.json();
-      if (data.query_status === 'ok' && data.data?.length) {
-        const d = data.data[0];
-        const fields = [];
-        // For MD5/SHA1 queries, surface SHA256 at top — this is the MDE-importable value
-        if (isAltHash && d.sha256_hash) {
-          fields.push(['📋 SHA256 (MDE)', d.sha256_hash]);
-        }
-        fields.push(
-          ['File name',  d.file_name  || '—'],
-          ['File type',  d.file_type  || '—'],
-          ['Signature',  d.signature  || 'Unknown'],
-          ['First seen', d.first_seen ? d.first_seen.slice(0,10) : '—'],
-          ['Tags',       (d.tags || []).join(', ') || '—'],
-        );
-        if (isAltHash && d.sha256_hash) {
-          fields.push(['ℹ MD5/SHA1 excluded from MDE CSV — use SHA256 above', '']);
-        }
-        return { source:'MalwareBazaar', fields, verdict:'malicious' };
-      }
-      return {source:'MalwareBazaar', fields:[['Status','Not found in MalwareBazaar']], verdict:'unknown'};
-    } catch(e){ return null; }
-  }
-
-  // URLhaus lookup (domains/URLs, no key, CORS OK)
-  async function queryURLhaus(value, type){
-    const t = type.toLowerCase();
-    try {
-      let body;
-      if (t.includes('url')) {
-        body = new URLSearchParams({url: value});
-        const res = await fetch('https://urlhaus-api.abuse.ch/v1/url/', {method:'POST', body});
-        const data = await res.json();
-        if (data.query_status === 'is_malware') {
-          return {source:'URLhaus', fields:[['Status','Malicious URL'],['Threat',data.threat||'—'],['Date added',data.date_added?.slice(0,10)||'—']], verdict:'malicious'};
-        } else if (data.query_status === 'no_results') {
-          return {source:'URLhaus', fields:[['Status','Not in URLhaus database']], verdict:'unknown'};
-        }
-      } else if (t.includes('domain')) {
-        body = new URLSearchParams({host: value});
-        const res = await fetch('https://urlhaus-api.abuse.ch/v1/host/', {method:'POST', body});
-        const data = await res.json();
-        if (data.query_status === 'is_host' && data.urls_count > 0) {
-          return {source:'URLhaus', fields:[['Malicious URLs',data.urls_count],['Status','Known malicious host']], verdict:'malicious'};
-        } else {
-          return {source:'URLhaus', fields:[['Status','Not found as malicious host']], verdict:'unknown'};
-        }
-      }
-    } catch(e){ return null; }
-    return null;
-  }
-
-  // Render enrichment result card
-  function renderEnrichCard(container, result, linksArr){
-    const verdictColor = result?.verdict === 'malicious' ? 'danger' :
-                         result?.verdict === 'safe'      ? 'safe'   : '';
-    let html = '<div class="enrichCard">';
-    if (result) {
-      html += '<div class="enrichTitle">🔍 ' + result.source + '</div>';
-      (result.fields || []).forEach(([label, val]) => {
-        html += '<div class="enrichRow"><span class="enrichLabel">' + label + '</span>' +
-                '<span class="enrichVal ' + verdictColor + '">' + val + '</span></div>';
-      });
-    }
-    if (linksArr.length) {
-      html += '<div class="enrichLinks">';
-      linksArr.forEach(([label, url]) => {
-        html += '<a class="enrichLink" href="' + url + '" target="_blank" rel="noopener">↗ ' + label + '</a>';
-      });
-      html += '</div>';
-    }
-    html += '</div>';
-    container.innerHTML = html;
-  }
-
-  // Main enrichment entry point — called by the Enrich button
-  window.enrichIOC = async function(btn, value, type){
-    btn.disabled = true;
-    btn.textContent = '⏳';
-    btn.classList.add('loading');
-
-    // Find the result div (sibling after the button)
-    const li = btn.closest('li');
-    const resultDiv = li?.querySelector('.enrichResult');
-    if (!resultDiv) { btn.disabled = false; btn.textContent = '🔍 Enrich'; return; }
-
+  window.enrichIOC = function(btn, value, type){
+    const li  = btn.closest('li');
+    const div = li?.querySelector('.enrichResult');
+    if (!div) return;
+    // Toggle
+    if (div.innerHTML) { div.innerHTML = ''; btn.textContent = '🔍 Enrich'; return; }
     const links = enrichLinks(value, type);
-    const t = type.toLowerCase();
-
-    let result = null;
-    try {
-      if (t.includes('sha256') || t.includes('sha1') || t.includes('md5')) {
-        result = await queryMalwareBazaar(value, type);
-      } else if (t.includes('url')) {
-        result = await queryURLhaus(value, 'url');
-      } else if (t.includes('domain')) {
-        result = await queryURLhaus(value, 'domain');
-      }
-      // IPs and other types: external links only
-    } catch(e){ result = null; }
-
-    if (!result) {
-      // No inline API available — show external links only
-      result = {source:'External lookups', fields:[['Type', type + ' — no key-free inline API available']], verdict:'unknown'};
-    }
-
-    renderEnrichCard(resultDiv, result, links);
-    btn.textContent = '✓';
-    btn.style.color = 'var(--green, #22C55E)';
+    let html = '<div class="enrichCard"><div class="enrichTitle">External lookups — opens in new tab</div><div class="enrichLinks">';
+    links.forEach(([label, url]) => {
+      html += `<a class="enrichLink" href="${url}" target="_blank" rel="noopener">↗ ${label}</a>`;
+    });
+    html += '</div></div>';
+    div.innerHTML = html;
+    btn.textContent = '✕';
   };
 
-  // ═══════════════════════════════════════════════════════════
-  // SETTINGS MODAL
-  // ═══════════════════════════════════════════════════════════
-  (function initSettings(){
-    const modal = document.getElementById('settingsModal');
-    const vtInput = document.getElementById('vtKey');
-    const abuseInput = document.getElementById('abuseKey');
-
-    // Load saved keys
-    try { vtInput.value = localStorage.getItem('cti_vt_key') || ''; } catch(e){}
-    try { abuseInput.value = localStorage.getItem('cti_abuse_key') || ''; } catch(e){}
-
-    document.getElementById('settingsBtn').onclick = () => modal.classList.add('open');
-    document.getElementById('settingsClose').onclick = () => modal.classList.remove('open');
-    modal.addEventListener('click', e => { if(e.target === modal) modal.classList.remove('open'); });
-    document.getElementById('settingsSave').onclick = () => {
-      try {
-        localStorage.setItem('cti_vt_key', vtInput.value.trim());
-        localStorage.setItem('cti_abuse_key', abuseInput.value.trim());
-      } catch(e){}
-      modal.classList.remove('open');
-    };
-  })();
+  // (settings modal removed)
 
   // ---------- PERSONAL "SEEN / CHANGED SINCE YOUR LAST VISIT" (via storage, per-browser) ----------
   // This is separate from the editorial status badges above (new/updated/confirmed/ongoing),
@@ -3019,7 +2973,6 @@ const WEEK_RANGE = 'Week of Aug 24 – Aug 30, 2026';
     } catch(e){ /* storage unavailable — skip silently, rest of dashboard still works */ }
   }
   runVisitDiff();
-
 </script>
 </body>
 </html>
