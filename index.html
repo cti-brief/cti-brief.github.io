@@ -454,7 +454,7 @@
     <div class="postureBox">
       Threat Posture<br>
       <span class="postureLevel" style="color:var(--red)">CRITICAL</span><br>
-      miniOrange SAML CVSS 9.8 exploited — unauthenticated WordPress admin bypass, PoC public. Oracle WebLogic CVSS 10.0 KEV Aug 27 deadline. Zimbra 270+ instances confirmed compromised. Mirage2FA 4,532 M365 orgs. ShieldBreak no patch BOD 26-04.
+      Gitea CVE-2026-60004 CVSS 9.8 KEV — 48hr federal deadline Aug 28, PoC public. MLflow SSRF stealing cloud IAM creds. miniOrange SAML exploited — WordPress admin bypass. Oracle WebLogic KEV deadline TODAY (Aug 27). ShieldBreak no patch BOD 26-04.
     </div>
   </header>
 
@@ -485,8 +485,6 @@
     <button class="settingsBtn" id="settingsBtn" title="Configure enrichment API keys">⚙</button>
     <span class="filterCount" id="filterCount"></span>
   </div>
-  <div class="sectorChips" id="sectorChips"></div>
-
   <!-- Settings modal -->
   <div class="settingsModal" id="settingsModal">
     <div class="settingsBox">
@@ -545,6 +543,27 @@
 
 
 
+        <div class="story" data-detail="gitea2">
+          <div class="tagRow"><span class="tag crit">CVSS 9.8</span><span class="tag high">Exploited · CISA KEV · Aug 28 Deadline · Dev Platform</span><span class="statusBadge st-new">new</span></div>
+          <p class="storyTitle"><span>Gitea CVE-2026-60004 (CVSS 9.8): code injection via diffpatch — any registered user gets RCE as Gitea OS account. CISA KEV Aug 26, 48-hour federal deadline. PoC public.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">CISA added to KEV Aug 26 with an August 28 federal deadline — 2 days. An attacker with repository write access can embed a malicious Git hook in a crafted patch sent to the diffpatch endpoint. Git executes the hook automatically under the Gitea service account. With default open registration, any unauthenticated visitor can register, create a repository, and exploit immediately — no stolen credentials required. Confirmed exploitation: crypto miner dropper deployed in the wild. PoC public on GitHub. Affected: Gitea 1.17 through 1.27.0. Fix: 1.27.1. If unpatched: disable public registration immediately.</p>
+          <div class="srcline">The Hacker News, Help Net Security, CISA KEV — Aug 26, 2026</div>
+        </div>
+
+        <div class="story" data-detail="mlflow">
+          <div class="tagRow"><span class="tag high">CVSS 9.3</span><span class="tag high">Exploited · Cloud Creds · AI/ML Infra · SSRF</span><span class="statusBadge st-new">new</span></div>
+          <p class="storyTitle"><span>MLflow CVE-2026-64849 (CVSS 9.3): unauthenticated SSRF reaches cloud metadata services — attackers stealing IAM credentials from AI/ML infrastructure. CISA KEV, Sep 2 deadline.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Unauthenticated SSRF in MLflow Tracking Server lets attackers reach cloud IMDS endpoints (169.254.169.254, metadata.google.internal) and exfiltrate cloud IAM credentials. WatchTowr observed scanning within hours of CVE assignment Aug 17. CISA KEV Aug 19, Sep 2 federal deadline. ML pipelines typically carry broad cloud permissions — credential theft can yield near-full cloud access. MLflow Tracking Servers are often internet-exposed without auth on default port 5000/8080. Fix: upgrade to MLflow 3.15.0. If exposed: rotate all cloud credentials attached to the MLflow instance's service account.</p>
+          <div class="srcline">The Hacker News, WatchTowr, CISA KEV — Aug 17–26, 2026</div>
+        </div>
+
+        <div class="story" data-detail="gitea2">
+          <div class="tagRow"><span class="tag crit">CVSS 9.8</span><span class="tag high">Exploited · CISA KEV · Aug 28 Deadline</span><span class="statusBadge st-new">new</span></div>
+          <p class="storyTitle"><span>Gitea CVE-2026-60004 (CVSS 9.8): diffpatch endpoint RCE exploited by automated scanners — default open registration makes this effectively unauthenticated. Crypto-miner dropper deployed. CISA KEV Aug 25, deadline Aug 28.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyBody">Critical code injection in Gitea's diffpatch API writes a Git hook that executes arbitrary shell commands as the Gitea service account. Gitea enables open registration by default — an automated scanner registered an account, created a repository, and triggered the full exploit chain with no human involvement, deploying a crypto-miner dropper. PoC public (0xBlackash). Affects Gitea 1.17–1.27.0; fixed in 1.27.1. Blast radius includes database credentials, OAuth tokens, SSH host keys, and full CI/CD pipeline tampering capability. Federal deadline Aug 28 — tomorrow.</p>
+          <div class="srcline">The Hacker News, Help Net Security, SOCPrime, CISA — Aug 25–26, 2026</div>
+        </div>
+
         <div class="story" data-detail="miniorange">
           <div class="tagRow"><span class="tag high">CVSS 9.8</span><span class="tag high">Exploited · SAML Bypass · WordPress Admin</span><span class="statusBadge st-new">new</span></div>
           <p class="storyTitle"><span>miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8): chained SAML signature bypass grants unauthenticated WordPress admin access — actively exploited, PoC public. Paid editions silently patched with no update warning.</span><span class="detailsCue">Details →</span></p>
@@ -554,7 +573,7 @@
 
         <div class="story" data-detail="oracleweblogic">
           <div class="tagRow"><span class="tag crit">CVSS 10.0</span><span class="tag high">Exploited · CISA KEV · Aug 27 Deadline</span></div>
-          <p class="storyTitle"><span>Oracle WebLogic CVE-2026-21962 (CVSS 10.0): unauthenticated access control bypass in production since January, CISA KEV Aug 24 — federal deadline Aug 27. China-nexus APT confirmed.</span><span class="detailsCue">Details →</span></p>
+          <p class="storyTitle"><span>Oracle WebLogic CVE-2026-21962 (CVSS 10.0): unauthenticated access control bypass in production since January, CISA KEV Aug 24 — federal deadline Aug 27 (TODAY). China-nexus APT confirmed.</span><span class="detailsCue">Details →</span></p>
           <p class="storyBody">Maximum-severity improper access control in Oracle HTTP Server and WebLogic Server Proxy Plug-in. Unauthenticated attackers can read, modify, or delete all data accessible through the affected components. Oracle patched in January 2026 CPU; exploitation confirmed since January by CloudSEK honeypots. CISA added to KEV Aug 24; BOD 26-04 federal deadline Aug 27. China-nexus APT exploitation confirmed by SOCRadar targeting government infrastructure. CloudSEK honeypots confirm simultaneous chaining with older WebLogic CVEs (CVE-2020-14882/14883, CVE-2020-2551, CVE-2017-10271) — patch all, not just CVE-2026-21962.</p>
           <div class="srcline">The Hacker News, SecurityWeek, CISA, SecurityAffairs — Aug 24–25, 2026</div>
         </div>
@@ -663,6 +682,27 @@
         
         
         
+        <div class="cveCard crit-card" data-detail="gitea2">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-60004</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">9.8</span>
+          </div>
+          <div class="cveSub">Gitea RCE via diffpatch — any registered user, PoC public. Federal deadline Aug 28. Fix: 1.27.1.</div>
+        </div>
+
+        <div class="cveCard high-card" data-detail="mlflow">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-64849</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">9.3</span>
+          </div>
+          <div class="cveSub">MLflow SSRF → cloud IAM credential theft from metadata endpoints. Sep 2 deadline. Fix: 3.15.0.</div>
+        </div>
+
+        <div class="cveCard crit-card" data-detail="gitea2">
+          <div class="cveTop">
+            <span class="cveNum">CVE-2026-60004</span><span class="cveTag exploit">Exploited</span><span class="cveTag kev">KEV</span><span class="cveScore">9.8</span>
+          </div>
+          <div class="cveSub">Gitea diffpatch RCE — effectively unauthenticated on default installs. Automated exploitation confirmed. Aug 28 deadline.</div>
+        </div>
+
         <div class="cveCard high-card" data-detail="miniorange">
           <div class="cveTop">
             <span class="cveNum">CVE-2026-61979 / 15981</span><span class="cveTag exploit">Exploited</span><span class="cveScore">9.8</span>
@@ -821,16 +861,23 @@
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/rust-supply-chain-attack-linked-to.html" target="_blank">The Hacker News — Rust Supply Chain Attack Linked to DPRK</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/rust-supply-chain-attack-linked-to-north-korean-hackers/" target="_blank">SecurityWeek — Rust Supply Chain North Korean Hackers</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Oracle HTTP Server / WebLogic — Oracle WebLogic CVE-2026-21962 (CVSS 10.0)</div>
-        <div class="linkItem"><a href="https://thehackernews.com/2026/08/actively-exploited-oracle-weblogic-flaw.html" target="_blank">The Hacker News — Actively Exploited Oracle WebLogic Flaw</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/actively-exploited-oracle-weblogic-flaw.html" target="_blank">The Hacker News — Actively Exploited Oracle WebLogic Flaw (CVSS 10.0)</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://www.securityweek.com/cisa-warns-of-exploited-oracle-weblogic-vulnerability/" target="_blank">SecurityWeek — CISA Warns of Exploited Oracle WebLogic</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.cisa.gov/news-events/alerts/2026/08/24/cisa-adds-one-known-exploited-vulnerability-catalog" target="_blank">CISA — CVE-2026-21962 KEV Entry</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/news-events/alerts/2026/08/24/cisa-adds-one-known-exploited-vulnerability-catalog" target="_blank">CISA — CVE-2026-21962 KEV Entry Aug 24</a><span class="arrow">↗</span></div>
         <div class="linkGroup">Microsoft 365 PhaaS — Mirage2FA PhaaS</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/mirage2fa-surge-hits-4500-us-and-eu.html" target="_blank">The Hacker News — Mirage2FA Surge Hits 4,500 US and EU Companies</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://any.run/cybersecurity-blog/mirage2fa-phishing-targets-us-companies/" target="_blank">ANY.RUN — Mirage2FA Phishing Targets US Companies</a><span class="arrow">↗</span></div>
         <div class="linkGroup">WordPress — miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8</div>
         <div class="linkItem"><a href="https://thehackernews.com/2026/08/attackers-target-miniorange-saml-flaws.html" target="_blank">The Hacker News — Attackers Target miniOrange SAML Flaws</a><span class="arrow">↗</span></div>
-        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-target-wordpress-sites-in-miniorange-auth-bypass-attacks/" target="_blank">BleepingComputer — Hackers Target WordPress Sites in miniOrange Auth Bypass Attacks</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.bleepingcomputer.com/news/security/hackers-target-wordpress-sites-in-miniorange-auth-bypass-attacks/" target="_blank">BleepingComputer — Hackers Target WordPress miniOrange Auth Bypass</a><span class="arrow">↗</span></div>
         <div class="linkItem"><a href="https://patchstack.com/articles/one-slug-seven-editions-the-miniorange-saml-sso-bug-that-let-anyone-log-in-as-your-wordpress-admin/" target="_blank">Patchstack — One Slug, Seven Editions: miniOrange SAML SSO Bug</a><span class="arrow">↗</span></div>
+        <div class="linkGroup">Gitea — Gitea CVE-2026-60004 (CVSS 9.8)</div>
+        <div class="linkItem"><a href="https://thehackernews.com/2026/08/critical-gitea-rce-actively-exploited.html" target="_blank">The Hacker News — Critical Gitea RCE Actively Exploited</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.helpnetsecurity.com/2026/08/26/gitea-cve-2026-60004-exploited-in-the-wild/" target="_blank">Help Net Security — Gitea CVE-2026-60004 Exploited in the Wild</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://socprime.com/blog/cve-2026-60004-critical-gitea-rce-exploited-to-deploy-miner-like-payloads/" target="_blank">SOCPrime — CVE-2026-60004 Detection and Analysis</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.cisa.gov/news-events/alerts/2026/08/25/cisa-adds-one-known-exploited-vulnerability-catalog" target="_blank">CISA — CVE-2026-60004 KEV Entry Aug 25</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://securityarsenal.com/blog/cve-2026-60004-gitea-diffpatch-code-injection-added-to-cisa-kev-detection-and-remediation-guide" target="_blank">SecurityArsenal — Gitea KEV Detection & Remediation Guide</a><span class="arrow">↗</span></div>
+        <div class="linkItem"><a href="https://www.runzero.com/blog/gitea/" target="_blank">runZero — CVE-2026-60004 Asset Discovery</a><span class="arrow">↗</span></div>
       </div>
 
     </div><!-- end sidebar col -->
@@ -845,11 +892,7 @@
 </div>
 
 <script>
-  const WEEK_RANGE = 'Week of Aug 24 – Aug 30, 2026';
-  const lastUpdated = new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
-  document.getElementById('dateLine').textContent = WEEK_RANGE + ' · Last updated ' + lastUpdated;
-
-  const D = {
+const D = {
   "mspathaug": {
     "eyebrow": "Microsoft Out-of-Band · Aug 7, 2026 · Three CVSS 10.0",
     "title": "SharePoint CVE-2026-55040 actively exploited after Rapid7 PoC — JWT forgery gives unauthenticated admin access. Teams + SharePoint OOB (Aug 7) completes RCE chain.",
@@ -1675,47 +1718,94 @@
     ],
     "source": "The Hacker News, BleepingComputer, Patchstack, SCWorld, CyberPress",
     "sourceNote": "Aug 16–25, 2026"
+  },
+  "gitea2": {
+    "eyebrow": "Gitea · CVE-2026-60004 · CVSS 9.8 · Exploited · CISA KEV · Aug 28 Deadline",
+    "title": "Gitea CVE-2026-60004 (CVSS 9.8): diffpatch RCE exploited to deploy crypto-miner dropper — effectively unauthenticated on default installs. CISA KEV Aug 25, federal deadline Aug 28.",
+    "tags": [
+      [
+        "crit",
+        "CVSS 9.8"
+      ],
+      [
+        "high",
+        "Exploited · CISA KEV · Aug 28 Deadline"
+      ]
+    ],
+    "overview": "CISA added CVE-2026-60004 to its Known Exploited Vulnerabilities catalog on August 25, 2026, with a federal remediation deadline of August 28. Critical code injection in the Gitea diffpatch endpoint allows an attacker with repository write access to plant an executable Git hook that runs arbitrary shell commands as the Gitea service account. Gitea enables open user registration by default — an automated scanner was able to register an account, create a repository, and trigger the full exploit chain with no prior credentials, deploying a crypto-miner-like dropper. Confirmed exploitation on a self-hosted instance per incident report (Habr). A public PoC is available (0xBlackash/CVE-2026-60004). Affects Gitea 1.17–1.27.0; fixed in 1.27.1. Blast radius: database credentials, OAuth tokens, SSH host keys, CI/CD pipeline tampering. Federal deadline Aug 28 — tomorrow.",
+    "technical": [
+      "CVE-2026-60004 (CVSS 9.8, CWE-94 Code Injection): The diffpatch API endpoint applies patches to a repository. An attacker submits the same malicious patch twice, triggering an add/add collision. Git's three-way merge fallback writes a file into the repository hooks/ directory as a live Git hook (post-index-change) that executes arbitrary shell commands as the Gitea OS service account on the next Git operation.",
+      "Open registration exploit path: Gitea enables open self-registration by default. A completely external attacker can register an account, create a repository, and trigger the exploit without any stolen credentials. Automated scanners confirmed exploiting this path.",
+      "Blast radius: Gitea service account typically owns the repository tree, database connection secrets (app.ini), OAuth credentials, SSH host keys, and CI/CD integration tokens. Container isolation limited impact in the confirmed incident, but mounted volumes and outbound network access frequently extend blast radius to pipeline compromise.",
+      "PoC public at github.com/0xBlackash/CVE-2026-60004. Automated scanning activity confirmed. All Gitea 1.17–1.27.0 instances with open registration are at high risk."
+    ],
+    "iocs": [
+      {
+        "value": "post-index-change",
+        "type": "Filename",
+        "note": "Git hook filename written by the exploit. Presence in repository hooks/ directory is a strong exploitation indicator.",
+        "source": "https://securityarsenal.com/blog/cve-2026-60004-gitea-diffpatch-code-injection-added-to-cisa-kev-detection-and-remediation-guide"
+      },
+      {
+        "value": "/api/v1/repos/",
+        "type": "URL",
+        "note": "Gitea diffpatch endpoint path prefix. Monitor for unexpected POST requests to .*/diffpatch in access logs.",
+        "source": "https://thehackernews.com/2026/08/critical-gitea-rce-actively-exploited.html"
+      }
+    ],
+    "iocNote": "No authoritative IOC set. Detection is behavioral: unexpected account registrations, unusual diffpatch API calls, unexpected files in repository hooks/ directories, processes spawned by Gitea service account, anomalous CPU spikes.",
+    "mitigation": [
+      "Update to Gitea 1.27.1 immediately. Federal deadline August 28. Gitea Cloud received the update automatically.",
+      "If unable to patch: disable open registration immediately (app.ini: [service] DISABLE_REGISTRATION = true). This closes the unauthenticated path.",
+      "Audit all repository hooks/ directories for unexpected files. Any hook not placed by your tooling is suspect.",
+      "Rotate all credentials stored in Gitea app.ini if exploitation cannot be ruled out for the July 26 – August 28 window."
+    ],
+    "response": [
+      "Scan hooks directories: find /path/to/gitea/repositories -name \"hooks\" -type d -exec ls -la {}/ \\;",
+      "Check access logs for POST to diffpatch: grep -i \"diffpatch\" /var/log/gitea/gitea.log | grep POST",
+      "If anomalous hooks found: isolate the server, rotate all secrets, revoke sessions, audit repository content for tampering.",
+      "DEFENDER XDR KQL — Detect Gitea exploitation: unexpected process spawned by Gitea service or hook file written to repository hooks directory.\n\n// Gitea CVE-2026-60004 — Behavioral Detection\n(\n  DeviceProcessEvents\n  | where Timestamp > ago(14d)\n  | where InitiatingProcessFileName in~ (\"gitea\",\"gitea-linux-amd64\")\n  | where FileName !in~ (\"git\",\"gitea\",\"sh\",\"bash\")\n  | project Timestamp, DeviceName, FileName, ProcessCommandLine, AccountName\n)\n| union (\n  DeviceFileEvents\n  | where Timestamp > ago(14d)\n  | where FolderPath has \"repositories\" and FolderPath has \"hooks\"\n  | where FileName in~ (\"post-index-change\",\"pre-receive\",\"post-receive\",\"update\")\n  | where InitiatingProcessFileName !in~ (\"git\",\"gitea\")\n  | project Timestamp, DeviceName, FileName, FolderPath\n)\n| sort by Timestamp desc"
+    ],
+    "source": "The Hacker News, Help Net Security, SOCPrime, SecurityArsenal, CISA, runZero",
+    "sourceNote": "Aug 25–26, 2026"
+  },
+  "mlflow": {
+    "eyebrow": "MLflow · CVE-2026-64849 · CVSS 9.3 · CISA KEV · Sep 2 Deadline · AI/ML Platform",
+    "title": "MLflow CVE-2026-64849 (CVSS 9.3): SSRF vulnerability exploited to steal cloud IAM credentials — CISA KEV Aug 19, federal deadline Sep 2",
+    "tags": [
+      [
+        "crit",
+        "CVSS 9.3"
+      ],
+      [
+        "high",
+        "Exploited · CISA KEV · Sep 2 Deadline · Cloud IAM Theft"
+      ]
+    ],
+    "overview": "CISA added CVE-2026-64849 to its Known Exploited Vulnerabilities catalog on August 19, 2026, with a federal remediation deadline of September 2. The vulnerability is a Server-Side Request Forgery (SSRF) flaw in MLflow, the widely-used open-source machine learning lifecycle platform. Successful exploitation allows an unauthenticated attacker to make the MLflow server issue HTTP requests to internal resources — including the cloud instance metadata service endpoint (IMDS at 169.254.169.254). The cloud IMDS endpoint returns temporary IAM credentials for the compute instance role, which attackers can then use to authenticate to AWS, Azure, or GCP APIs. This gives attackers access to cloud storage buckets (where ML training data and model artifacts are stored), cloud databases, and any other resources accessible to the ML compute role. The flaw is particularly dangerous because ML/AI workloads often run with broad cloud permissions to access training data across multiple storage systems, and security teams may not monitor MLflow server traffic as carefully as production application traffic.",
+    "technical": [
+      "CVE-2026-64849 (CVSS 9.3, CWE-918 SSRF): MLflow fails to validate or restrict user-supplied URLs before making server-side HTTP requests. An unauthenticated attacker can supply a URL pointing to internal network resources (e.g., cloud IMDS endpoint, internal APIs, Kubernetes service endpoints) and the MLflow server will fetch those resources and return the response.",
+      "Cloud IAM credential theft path: on AWS, Azure, and GCP, every compute instance has access to a metadata service endpoint (typically 169.254.169.254 or equivalent). By directing the SSRF to the IMDS endpoint, an attacker can retrieve temporary IAM credentials for the instance's service role. These credentials carry the same permissions as the ML compute instance — often broad read/write access to cloud storage, ML model registries, and databases containing training data.",
+      "AI/ML infrastructure targeting: MLflow is used by data science and ML engineering teams for experiment tracking, model versioning, and model serving. These environments typically have access to sensitive training data sets, proprietary model weights, and production model serving infrastructure. Compromise of a single MLflow instance can provide a pivot point into an organization's entire ML pipeline."
+    ],
+    "iocs": [],
+    "iocNote": "No specific attacker IOCs published. Detection focus: anomalous outbound HTTP requests from MLflow server processes to 169.254.169.254 (AWS/Azure IMDS), 169.254.170.2 (ECS task metadata), metadata.google.internal (GCP), or any internal RFC-1918 address ranges not consistent with normal ML infrastructure communication.",
+    "mitigation": [
+      "Apply available MLflow security patches or update to the latest MLflow release. Check the MLflow GitHub releases and security advisories for the specific patched version.",
+      "Block SSRF paths at the network level: implement egress firewall rules preventing the MLflow server from accessing the cloud IMDS endpoint (169.254.169.254) and internal network ranges not required for normal operation.",
+      "Scope the instance IAM role minimally: the MLflow compute instance role should have only the specific S3/blob/GCS bucket permissions required. Remove wildcard permissions (e.g., s3:*). This limits the blast radius if IMDS credentials are stolen.",
+      "If publicly accessible: restrict MLflow server access to authenticated users only. MLflow installations should not be exposed to the internet without authentication."
+    ],
+    "response": [
+      "Check cloud provider logs for IAM API calls using the MLflow instance role that are inconsistent with normal ML workloads — unusual time-of-day API calls, calls to unfamiliar services, or calls from unexpected source IPs.",
+      "If credential theft is suspected: immediately rotate the instance IAM role credentials (revoke current session tokens), audit CloudTrail/Azure Monitor/GCP Audit Logs for the theft window, and check for new IAM users, roles, or policies created using the stolen credentials.",
+      "Audit MLflow access logs for requests containing unusual URL parameters pointing to internal addresses (169.254.169.254, 10.x.x.x, 172.16.x.x, 192.168.x.x)."
+    ],
+    "source": "SecurityWeek, Cyber Security News, CISA",
+    "sourceNote": "Aug 19–26, 2026"
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const META = {
+const META = {
   "mspathaug": {
     "status": "ongoing",
     "conf": "Confirmed — CVE-2026-55040 actively exploited within hours of Rapid7 PoC release (Aug 11-12); Defused honeypots confirmed; 8,500+ on-prem servers still exposed",
@@ -1997,8 +2087,49 @@
       "T1078 — Valid Accounts",
       "T1548 — Abuse Elevation Control Mechanism"
     ]
+  },
+  "gitea2": {
+    "status": "new",
+    "conf": "Confirmed exploitation — CISA KEV Aug 25; incident report (Habr) confirms automated scanner deployed crypto-miner dropper; PoC public (0xBlackash/CVE-2026-60004)",
+    "confNote": "CISA KEV Aug 25; federal deadline Aug 28; no attributed actor; automated scanner exploitation confirmed; PoC public on GitHub",
+    "iocDate": "Aug 25, 2026 — CISA KEV; patch available since late July 2026",
+    "admiralty": "A2",
+    "severity": 5,
+    "cvss": 9.8,
+    "sectors": [
+      "Technology",
+      "Government"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1059 — Command and Scripting Interpreter",
+      "T1543 — Create or Modify System Process"
+    ]
+  },
+  "mlflow": {
+    "status": "ongoing",
+    "conf": "Confirmed exploitation — CISA added to KEV Aug 19, 2026; active exploitation against AI/ML infrastructure confirmed",
+    "confNote": "CISA KEV added Aug 19; federal deadline Sep 2; SSRF → IMDS IAM credential theft confirmed; AI/ML platform targeting",
+    "iocDate": "Aug 19, 2026 — CISA KEV addition",
+    "admiralty": "A2",
+    "severity": 4,
+    "cvss": 9.3,
+    "sectors": [
+      "Technology",
+      "Government"
+    ],
+    "attack": [
+      "T1190 — Exploit Public-Facing Application",
+      "T1552.005 — Credentials from Cloud Instance Metadata API",
+      "T1078.004 — Valid Accounts: Cloud Accounts"
+    ]
   }
 }
+
+const WEEK_RANGE = 'Week of Aug 24 – Aug 30, 2026';
+  const lastUpdated = new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+  document.getElementById('dateLine').textContent = WEEK_RANGE + ' · Last updated ' + lastUpdated;
+
 
 
 
@@ -2367,18 +2498,23 @@
   // ── IOC Preview Table ──────────────────────────────────────────────
   function showAllIocs(){
     const rows = allIocRows();
-    const typeColors = {IP:'#84A9E8',Domain:'#84A9E8',SHA256:'#F0BC72',MD5:'#F0BC72',
-        Filename:'#A8D8A8',Email:'#D8A8D8','File Extension':'#A8D8A8',
+    const typeColors = {IP:'#84A9E8',Domain:'#84A9E8',SHA256:'#F0BC72',MD5:'#888',
+        SHA1:'#888', Filename:'#A8D8A8',Email:'#D8A8D8','File Extension':'#A8D8A8',
         Username:'#F0837B',CVE:'#F0837B',Default:'#888'};
+    const mdeExportable = r => MDE_TYPE_MAP[r.type];
+    const sha256Count = rows.filter(r => r.type === 'SHA256').length;
+    const altHashCount = rows.filter(r => ['MD5','SHA1'].includes(r.type)).length;
     const header = `<div class="iocAllHeader">
       <div>
         <div style="font-family:var(--disp);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">${rows.length} Indicators</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">
           Export CSV → open in Defender portal: <span style="color:var(--text)">Settings → Endpoints → Indicators → Import</span><br>
-          Rows with <span style="color:var(--blue)">GenerateAlert = True</span> import directly as blocks &nbsp;·&nbsp; <span style="color:var(--muted)">GenerateAlert = False</span> rows are reference indicators (Email, Username, Filename, etc.)
+          <span style="color:var(--blue)">CSV contains SHA256 hashes only</span> — MDE rejects MD5/SHA1 on import.
+          ${altHashCount ? `<span style="color:var(--muted)">${altHashCount} MD5/SHA1 rows shown here for reference — use 🔍 Enrich to resolve SHA256.</span>` : ''}
+          <br>Rows with <span style="color:var(--blue)">GenerateAlert = True</span> import as blocks &nbsp;·&nbsp; <span style="color:var(--muted)">GenerateAlert = False</span> = reference indicators
         </div>
       </div>
-      <button id="csvBtnDrawer" class="iocCopy" style="font-size:12px;padding:5px 14px;flex-shrink:0;">⬇ Export CSV</button>
+      <button id="csvBtnDrawer" class="iocCopy" style="font-size:12px;padding:5px 14px;flex-shrink:0;">⬇ Export CSV (SHA256)</button>
     </div>`;
     const tableRows = rows.map(r => {
       const col = typeColors[r.type] || typeColors.Default;
@@ -2386,8 +2522,13 @@
       const srcHtml = r.iocSource
         ? `<a href="${r.iocSource}" target="_blank" rel="noopener" class="iocSrcLink2">${srcLabel}</a>`
         : '<span style="opacity:.35">—</span>';
+      const csvBadge = mdeExportable(r)
+        ? `<span style="font-family:var(--mono);font-size:8px;background:var(--blue)22;color:var(--blue);padding:1px 4px;border-radius:3px;margin-left:4px;">CSV</span>`
+        : (['MD5','SHA1'].includes(r.type)
+            ? `<span style="font-family:var(--mono);font-size:8px;background:#88888822;color:var(--muted);padding:1px 4px;border-radius:3px;margin-left:4px;" title="MD5/SHA1 excluded from MDE CSV — use Enrich to get SHA256">ref only</span>`
+            : '');
       return `<tr>
-        <td><span class="iocTypePill" style="color:${col};background:${col}22">${r.type}</span></td>
+        <td><span class="iocTypePill" style="color:${col};background:${col}22">${r.type}</span>${csvBadge}</td>
         <td class="iocVal">${r.indicator}</td>
         <td class="iocItemName">${r.item.split(':')[0].trim().slice(0,40)}</td>
         <td class="iocItemName" style="max-width:180px">${r.context.slice(0,80)}</td>
@@ -2418,8 +2559,11 @@
   // "Copy all IOCs" — pure indicator values, one per line, nothing else. Directly pasteable into a blocklist.
   // Defender for Endpoint indicator type mapping
   const MDE_TYPE_MAP = {
-    'IP':'IpAddress', 'Domain':'DomainName', 'SHA256':'FileSha256',
-    'SHA1':'FileSha1', 'MD5':'FileMd5', 'URL':'Url'
+    'IP':'IpAddress', 'Domain':'DomainName', 'SHA256':'FileSha256', 'URL':'Url'
+    // SHA1 (FileSha1) and MD5 (FileMd5) intentionally excluded —
+    // MDE custom indicator CSV import only accepts FileSha256 for file hashes.
+    // MD5 and SHA1 remain visible in the drawer for analyst reference.
+    // Use the 🔍 Enrich button on any MD5/SHA1 to resolve its SHA256 via MalwareBazaar.
   };
   const MDE_SEVERITY_MAP = {5:'High', 4:'Medium', 3:'Medium', 2:'Low', 1:'Low'};
 
@@ -2435,14 +2579,18 @@
     copyText(txt, e.currentTarget, '✓ copied ' + rows.length);
   });
 
-  // CSV: Microsoft Defender for Endpoint indicator import format (fanged values for direct tool import)
+  // CSV: Microsoft Defender for Endpoint indicator import format (SHA256 hashes only — MDE CSV import rejects FileSha1/FileMd5)
   document.getElementById('csvBtn').addEventListener('click', (e) => {
     e.stopPropagation();
     const esc = s => '"' + String(s).replace(/"/g, '""').replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-') + '"';
-    // One CSV, two logical sections using the same Defender column schema.
-    // Defenders filter on GenerateAlert to separate blockable from reference indicators.
+
+    // MDE-importable rows: only types in MDE_TYPE_MAP (excludes MD5, SHA1, Filename, etc.)
+    // SHA256 is the only accepted hash format for MDE CSV indicator import.
     const defRows = rows.filter(r => MDE_TYPE_MAP[r.type]);
-    const refRows = rows.filter(r => !MDE_TYPE_MAP[r.type]);
+
+    // Non-MDE rows (Filename, Actor Alias, etc.) exported as reference — GenerateAlert=False
+    // MD5 and SHA1 are excluded entirely: MDE rejects them and SHA256 covers the same samples.
+    const refRows = rows.filter(r => !MDE_TYPE_MAP[r.type] && !['MD5','SHA1','SHA1','File Extension','BTC Address','String','Command Flag','Actor Alias'].includes(r.type));
 
     const header = 'IndicatorType,IndicatorValue,Action,Title,Description,ExpirationTime,Severity,RecommendedActions,RbacGroups,Category,MitreTechniques,GenerateAlert';
 
@@ -2456,7 +2604,7 @@
       ].map(esc).join(',');
     });
 
-    // Reference indicators — same schema, Action=Reference, GenerateAlert=False
+    // Reference indicators (Filename, File Path, etc.) — same schema, GenerateAlert=False
     const refLines = refRows.map(r => {
       const sev = MDE_SEVERITY_MAP[r.severity] || 'Medium';
       const mitre = (r.attackTags||[]).map(t=>t.split('—')[0].trim()).join('|');
@@ -2545,26 +2693,6 @@
     minMatchCharLength: 2,
   });
 
-  // ── Sector chips ──────────────────────────────────────────
-  (function buildSectorChips(){
-    const chips = document.getElementById('sectorChips');
-    const sectorSet = new Set();
-    Object.keys(META).forEach(k => (META[k].sectors || []).forEach(s => sectorSet.add(s)));
-    const sectors = ['All', ...Array.from(sectorSet).sort()];
-    sectors.forEach(s => {
-      const chip = document.createElement('button');
-      chip.className = 'sChip' + (s === 'All' ? ' all-chip active' : '');
-      chip.textContent = s;
-      chip.onclick = () => {
-        activeSector = s === 'All' ? null : s;
-        chips.querySelectorAll('.sChip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        applyFilters();
-      };
-      chips.appendChild(chip);
-    });
-  })();
-
   // ── Filter logic (Fuse-powered) ───────────────────────────
   const sortSelect = document.getElementById('sortSelect');
   const filterCount = document.getElementById('filterCount');
@@ -2642,8 +2770,6 @@
   filterResetBtn.addEventListener('click', () => {
     searchBox.value = ''; statusFilter.value = ''; sortSelect.value = 'default';
     activeSector = null;
-    document.querySelectorAll('.sChip').forEach(c => c.classList.remove('active'));
-    document.querySelector('.sChip.all-chip')?.classList.add('active');
     document.querySelectorAll('.hStat.st-sector').forEach(el => el.classList.remove('active'));
     applyFilters(); applySort();
   });
@@ -2704,6 +2830,7 @@
                       t.includes('sha1')   ? 'sha1_hash'   :
                       t.includes('md5')    ? 'md5_hash'    : null;
     if (!queryType) return null;
+    const isAltHash = t.includes('md5') || t.includes('sha1');
     try {
       const res = await fetch('https://mb-api.abuse.ch/api/v1/', {
         method:'POST', body: new URLSearchParams({query:'get_info', [queryType]:hash})
@@ -2711,17 +2838,22 @@
       const data = await res.json();
       if (data.query_status === 'ok' && data.data?.length) {
         const d = data.data[0];
-        return {
-          source: 'MalwareBazaar',
-          fields: [
-            ['File name', d.file_name || '—'],
-            ['File type', d.file_type || '—'],
-            ['Signature', d.signature || 'Unknown'],
-            ['First seen', d.first_seen ? d.first_seen.slice(0,10) : '—'],
-            ['Tags', (d.tags || []).join(', ') || '—'],
-          ],
-          verdict: 'malicious'
-        };
+        const fields = [];
+        // For MD5/SHA1 queries, surface SHA256 at top — this is the MDE-importable value
+        if (isAltHash && d.sha256_hash) {
+          fields.push(['📋 SHA256 (MDE)', d.sha256_hash]);
+        }
+        fields.push(
+          ['File name',  d.file_name  || '—'],
+          ['File type',  d.file_type  || '—'],
+          ['Signature',  d.signature  || 'Unknown'],
+          ['First seen', d.first_seen ? d.first_seen.slice(0,10) : '—'],
+          ['Tags',       (d.tags || []).join(', ') || '—'],
+        );
+        if (isAltHash && d.sha256_hash) {
+          fields.push(['ℹ MD5/SHA1 excluded from MDE CSV — use SHA256 above', '']);
+        }
+        return { source:'MalwareBazaar', fields, verdict:'malicious' };
       }
       return {source:'MalwareBazaar', fields:[['Status','Not found in MalwareBazaar']], verdict:'unknown'};
     } catch(e){ return null; }
