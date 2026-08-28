@@ -396,13 +396,16 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
               <button onClick="{{ p.pick }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.bd }}" style-hover="border-color:var(--color-accent)">{{ p.name }} <span style="opacity:.55">{{ p.n }}</span></button>
             </sc-for>
           </div>
+          <button onClick="{{ toggleAllKql }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:{{ kqlSelBg }};color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">{{ kqlToggleAllLabel }}</button>
+          <span style="font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-mute)">{{ kqlSelLabel }}</span>
           <button onClick="{{ copyAllKql }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:var(--color-accent);color:#fff;border:0;text-align:left" style-hover="background:var(--accent-press)">Copy {{ kqlShown }} queries</button>
           <button onClick="{{ downloadKql }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Download .kql</button>
         </div>
         <div style="overflow:auto;padding:0 0 40px">
           <sc-for list="{{ kqlRows }}" as="k" hint-placeholder-count="6">
-            <div style="border-bottom:1px solid var(--color-hair);padding:16px 24px">
-              <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px">
+            <div style="border-bottom:1px solid var(--color-hair);padding:16px 24px;background:{{ k.rowBg }}">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+                <button onClick="{{ k.toggleSel }}" aria-pressed="{{ k.selected }}" style="appearance:none;width:16px;height:16px;flex:none;cursor:pointer;padding:0;display:grid;place-items:center;font-family:var(--mono);font-size:10px;line-height:1;color:#fff;background:{{ k.selBg }};border:1px solid {{ k.selBd }}" style-hover="border-color:var(--color-accent)">{{ k.mark }}</button>
                 <span style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border:1px solid {{ k.bd }};color:{{ k.fg }}">{{ k.platform }}</span>
                 <span style="font-family:var(--mono);font-size:10.5px;color:var(--color-mute)">{{ k.story }}</span>
                 <div style="flex:1"></div>
@@ -472,7 +475,7 @@ const MUTE = 'var(--color-mute)', ACC = 'var(--color-accent)', HAIR = 'var(--col
 class Component extends DCLogic {
   state = {
     ready: false, tab: null, q: '', sort: 'default', status: [], sector: '',
-    pins: [], expanded: {}, openKql: {}, pinOnly: false, iocQ: '', iocType: '', kqlQ: '', kqlPlat: '', toast: '', theme: null
+    pins: [], expanded: {}, openKql: {}, pinOnly: false, iocQ: '', iocType: '', kqlQ: '', kqlPlat: '', kqlSel: {}, toast: '', theme: null
   };
 
   applyTheme(t) { try { document.documentElement.dataset.theme = t; } catch (e) {} }
@@ -679,9 +682,9 @@ class Component extends DCLogic {
       if (seen[s.key]) return; seen[s.key] = 1;
       const det = D[s.key] || {};
       const list = this.splitKql(det.technical).kql.concat(this.splitKql(det.response).kql);
-      list.forEach(k => out.push({
+      list.forEach((k, i) => out.push({
         platform: k.platform, desc: k.desc, code: k.code,
-        story: (det.title || s.title).slice(0, 70), key: s.key
+        story: (det.title || s.title).slice(0, 70), key: s.key, qid: s.key + '::' + i
       }));
     });
     return out;
@@ -882,14 +885,22 @@ class Component extends DCLogic {
     const kqlFiltered = kqlAll
       .filter(k => !this.state.kqlPlat || k.platform === this.state.kqlPlat)
       .filter(k => !kq || (k.platform + ' ' + k.desc + ' ' + k.code + ' ' + k.story).toLowerCase().includes(kq));
+    const sel = this.state.kqlSel;
+    const selectedFiltered = kqlFiltered.filter(k => sel[k.qid]);
+    const kqlExport = selectedFiltered.length ? selectedFiltered : kqlFiltered;
+    const allSelected = kqlFiltered.length > 0 && selectedFiltered.length === kqlFiltered.length;
     const kqlRows = kqlFiltered.map(k => ({
       platform: k.platform, desc: k.desc, code: k.code, story: k.story,
+      selected: !!sel[k.qid], mark: sel[k.qid] ? '✓' : '',
+      selBg: sel[k.qid] ? ACC : 'transparent', selBd: sel[k.qid] ? ACC : 'var(--color-mute)',
+      rowBg: sel[k.qid] ? 'var(--color-surface)' : 'transparent',
+      toggleSel: () => { const o = Object.assign({}, this.state.kqlSel); if (o[k.qid]) delete o[k.qid]; else o[k.qid] = 1; this.setState({ kqlSel: o }); },
       bd: k.platform === 'Sentinel' ? HAIR : 'var(--accent-bd)',
       fg: k.platform === 'Sentinel' ? MUTE : 'var(--hover)',
       copy: () => this.copy(k.code, 'Query copied'),
       open: () => openStory(k.key)
     }));
-    const kqlBundle = () => kqlFiltered.map(k =>
+    const kqlBundle = () => kqlExport.map(k =>
       '// ' + k.platform + ' — ' + k.story + '\n// ' + k.desc + '\n' + k.code).join('\n\n');
 
     const dedupe = list => { const seen = {}; return list.filter(c => { const k = (c.num || '').trim(); if (seen[k]) return false; seen[k] = 1; return true; }); };
@@ -928,10 +939,18 @@ class Component extends DCLogic {
       isOverview: tabId === 'overview', isStories: tabId === 'stories', isVulns: tabId === 'vulns',
       isIocs: tabId === 'iocs', isKql: tabId === 'kql', isJudgments: tabId === 'judgments', isSources: tabId === 'sources',
       stories, chips, sectors, actions, exploited, cves, iocRows, iocTypes, kqlRows, kqlPlatforms,
-      kqlQ: this.state.kqlQ, kqlShown: kqlRows.length, noKql: this.state.ready && kqlRows.length === 0,
+      kqlQ: this.state.kqlQ, kqlShown: kqlExport.length, noKql: this.state.ready && kqlRows.length === 0,
       setKqlQ: e => this.setState({ kqlQ: e.target.value }),
-      copyAllKql: () => this.copy(kqlBundle(), kqlRows.length + ' queries copied'),
-      downloadKql: () => { this.download('cti-hunting-queries.kql', kqlBundle()); this.flash('Queries downloaded'); },
+      kqlSelLabel: selectedFiltered.length ? selectedFiltered.length + ' selected' : 'Select queries',
+      kqlSelActive: selectedFiltered.length > 0,
+      kqlSelBg: selectedFiltered.length ? 'var(--color-raise)' : 'transparent',
+      toggleAllKql: () => {
+        if (allSelected || selectedFiltered.length) return this.setState({ kqlSel: {} });
+        const o = {}; kqlFiltered.forEach(k => { o[k.qid] = 1; }); this.setState({ kqlSel: o });
+      },
+      kqlToggleAllLabel: selectedFiltered.length ? 'Clear' : 'Select all',
+      copyAllKql: () => this.copy(kqlBundle(), kqlExport.length + ' queries copied'),
+      downloadKql: () => { this.download('cti-hunting-queries.kql', kqlBundle()); this.flash(kqlExport.length + ' queries downloaded'); },
       noResults: this.state.ready && stories.length === 0,
       resultLine: stories.length + ' of ' + d.STORIES.length + ' items',
       cveLine: cves.length + ' of ' + (d.CVES || []).length + ' tracked',
