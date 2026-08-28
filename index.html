@@ -645,8 +645,8 @@ class Component extends DCLogic {
     ].filter(sec => sec.paras.length || sec.bullets.length || sec.chips.length);
     row.hasIocs = iocs.length > 0;
     row.iocCount = iocs.length ? iocs.length + ' indicators' : '';
-    row.iocs = iocs.map(i => ({ type: i.type, value: i.value, note: i.note || '' }));
-    row.copyIocs = () => this.copy(iocs.map(i => i.value).join('\n'), iocs.length + ' values copied');
+    row.iocs = iocs.map(i => ({ type: i.type, value: this.defang(i.type, i.value), note: i.note || '' }));
+    row.copyIocs = () => this.copy(iocs.map(i => this.defang(i.type, i.value)).join('\n'), iocs.length + ' values copied');
     row.kql = tech.kql.concat(resp.kql).map((k, i) => {
       const kid = id + ':kql:' + i, open = !!this.state.openKql[kid];
       return {
@@ -665,7 +665,8 @@ class Component extends DCLogic {
       if (seen[s.key]) return; seen[s.key] = 1;
       const det = D[s.key] || {};
       (det.iocs || []).forEach(i => rows.push({
-        type: i.type, value: i.value, note: i.note || '', item: (det.title || s.title).slice(0, 60), key: s.key
+        type: i.type, value: this.defang(i.type, i.value), note: i.note || '',
+        item: (det.title || s.title).slice(0, 60), key: s.key
       }));
     });
     return rows;
@@ -683,6 +684,36 @@ class Component extends DCLogic {
         story: (det.title || s.title).slice(0, 70), key: s.key
       }));
     });
+    return out;
+  }
+
+  ascii(v) {
+    return String(v == null ? '' : v)
+      .replace(/[\u2018\u2019\u201A\u201B\u2032]/g, "'")
+      .replace(/[\u201C\u201D\u201E\u201F\u2033]/g, '"')
+      .replace(/[\u2013\u2014\u2015]/g, '-')
+      .replace(/[\u2212]/g, '-')
+      .replace(/\u2026/g, '...')
+      .replace(/[\u00A0\u2007\u202F\u2009\u200A]/g, ' ')
+      .replace(/[\u200B-\u200D\uFEFF]/g, '')
+      .replace(/[\u2022\u00B7]/g, '-')
+      .replace(/\u00AE/g, '(R)').replace(/\u00A9/g, '(C)').replace(/\u2122/g, '(TM)')
+      .replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '');
+  }
+
+  csvFile(name, rows) {
+    const q = v => '"' + this.ascii(v).replace(/"/g, '""') + '"';
+    const text = rows.map(r => r.map(q).join(',')).join('\r\n');
+    this.download(name, '\uFEFF' + text, 'text/csv;charset=utf-8');
+  }
+
+  defang(type, v) {
+    const s = String(v == null ? '' : v).trim();
+    const t = String(type || '').toLowerCase();
+    if (!/^(ip|ipv4|ipv6|domain|url)$/.test(t)) return s;
+    let out = s.replace(/\[\.\]|\(\.\)|\{\.\}/g, '.').replace(/\[:\]/g, ':').replace(/^hxxps/i, 'https').replace(/^hxxp/i, 'http');
+    out = out.replace(/\./g, '[.]');
+    if (/^https?:\/\//i.test(out)) out = out.replace(/^http/i, 'hxxp').replace(/:\/\//, '[:]//');
     return out;
   }
 
@@ -919,16 +950,12 @@ class Component extends DCLogic {
       },
       copyAllIocs: () => this.copy(iocRows.map(r => r.value).join('\n'), iocRows.length + ' values copied'),
       csv: () => {
-        const rows = [['type', 'value', 'note', 'campaign']].concat(iocRows.map(r => [r.type, r.value, r.note, r.item]));
-        const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
-        a.download = 'cti-iocs.csv'; a.click();
+        this.csvFile('cti-iocs.csv', [['type', 'value', 'note', 'campaign']]
+          .concat(iocRows.map(r => [r.type, r.value, r.note, r.item])));
         this.flash('CSV downloaded');
       },
       defenderCount: this.defenderRows(iocRows).length,
       defenderCsv: () => {
-        const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
         const head = ['IndicatorType', 'IndicatorValue', 'ExpirationTime', 'Action', 'Severity', 'Title', 'Description', 'RecommendedActions', 'RbacGroups', 'Category', 'MitreTechniques', 'GenerateAlert'];
         const mapped = this.defenderRows(iocRows);
         if (!mapped.length) { this.flash('No Defender-compatible indicators'); return; }
@@ -954,8 +981,8 @@ class Component extends DCLogic {
           const t = x.t, r = x.r;
           const isFile = !!fileTypes[t];
           const week = (d.WEEK_RANGE || '').trim();
-          const title = ('CTI' + (week ? ' ' + week : '') + ' \u2014 ' + r.item).slice(0, 100);
-          const desc = (r.note ? r.note + ' ' : '') + '(Source: CTI brief' + (week ? ', ' + week : '') + ' \u2014 ' + r.item + ')';
+          const title = this.ascii('CTI' + (week ? ' ' + week : '') + ' - ' + r.item).slice(0, 100);
+          const desc = this.ascii((r.note ? r.note + ' ' : '') + '(Source: CTI brief' + (week ? ', ' + week : '') + ' - ' + r.item + ')');
           const rec = isFile
             ? 'Isolate the device, collect the file for analysis, and hunt for the hash across the estate before releasing the block.'
             : 'Confirm the destination is not business-required, then review proxy, DNS and firewall logs for prior connections from any host.';
@@ -965,9 +992,9 @@ class Component extends DCLogic {
             isFile ? 'BlockAndRemediate' : 'Block',
             'Medium', title, desc, rec, '',
             catFor(t, r.note), tech, 'TRUE'
-          ].map(q).join(',');
+          ];
         });
-        this.download('defender-indicators.csv', [head.join(','), ...body].join('\n'), 'text/csv;charset=utf-8');
+        this.csvFile('defender-indicators.csv', [head].concat(body));
         const notes = [];
         if (skippedHashes) notes.push(skippedHashes + ' SHA1/MD5 skipped (Defender blocks SHA256 only)');
         if (skippedNet > 0) notes.push(skippedNet + ' unparseable network value(s) skipped');
