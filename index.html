@@ -134,6 +134,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
       <button onClick="{{ go.stories }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.stories.c }};border-bottom-color:{{ tab.stories.b }}" style-hover="color:var(--hover)">Stories <span style="font-family:var(--mono);opacity:.6">{{ counts.stories }}</span></button>
       <button onClick="{{ go.vulns }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.vulns.c }};border-bottom-color:{{ tab.vulns.b }}" style-hover="color:var(--hover)">Vulnerabilities <span style="font-family:var(--mono);opacity:.6">{{ counts.cves }}</span></button>
       <button onClick="{{ go.iocs }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.iocs.c }};border-bottom-color:{{ tab.iocs.b }}" style-hover="color:var(--hover)">IOC workbench <span style="font-family:var(--mono);opacity:.6">{{ counts.iocs }}</span></button>
+      <button onClick="{{ go.kql }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.kql.c }};border-bottom-color:{{ tab.kql.b }}" style-hover="color:var(--hover)">KQL workbench <span style="font-family:var(--mono);opacity:.6">{{ counts.kql }}</span></button>
       <button onClick="{{ go.judgments }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.judgments.c }};border-bottom-color:{{ tab.judgments.b }}" style-hover="color:var(--hover)">Key judgments <span style="font-family:var(--mono);opacity:.6">{{ counts.kj }}</span></button>
       <button onClick="{{ go.sources }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.sources.c }};border-bottom-color:{{ tab.sources.b }}" style-hover="color:var(--hover)">Sources</button>
       <div style="flex:1"></div>
@@ -365,6 +366,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
           </div>
           <button onClick="{{ copyAllIocs }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:var(--color-accent);color:#fff;border:0;text-align:left" style-hover="background:var(--accent-press)">Copy {{ iocShown }} values</button>
           <button onClick="{{ csv }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Download CSV</button>
+          <button onClick="{{ defenderCsv }}" title="Microsoft Defender indicator import format" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Defender indicators CSV <span style="opacity:.55">{{ defenderCount }}</span></button>
         </div>
         <div style="overflow:auto">
           <div style="display:grid;grid-template-columns:96px minmax(0,1.4fr) minmax(0,1fr) 200px;gap:0;padding:0 24px;position:sticky;top:0;background:var(--color-bg);border-bottom:2px solid var(--color-divider);z-index:2">
@@ -381,6 +383,39 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
               <div style="font-family:var(--mono);font-size:10.5px;color:var(--color-mute);padding:9px 0">{{ i.item }}</div>
             </div>
           </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isKql }}">
+      <div style="display:grid;grid-template-rows:auto 1fr;overflow:hidden">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 24px;border-bottom:2px solid var(--color-divider);background:var(--color-surface)">
+          <input value="{{ kqlQ }}" onInput="{{ setKqlQ }}" placeholder="Filter queries — table, technique, campaign" style="flex:1;min-width:240px;font-family:var(--mono);font-size:12px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-hair);padding:8px 10px" />
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ kqlPlatforms }}" as="p" hint-placeholder-count="3">
+              <button onClick="{{ p.pick }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.bd }}" style-hover="border-color:var(--color-accent)">{{ p.name }} <span style="opacity:.55">{{ p.n }}</span></button>
+            </sc-for>
+          </div>
+          <button onClick="{{ copyAllKql }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:var(--color-accent);color:#fff;border:0;text-align:left" style-hover="background:var(--accent-press)">Copy {{ kqlShown }} queries</button>
+          <button onClick="{{ downloadKql }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Download .kql</button>
+        </div>
+        <div style="overflow:auto;padding:0 0 40px">
+          <sc-for list="{{ kqlRows }}" as="k" hint-placeholder-count="6">
+            <div style="border-bottom:1px solid var(--color-hair);padding:16px 24px">
+              <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px">
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border:1px solid {{ k.bd }};color:{{ k.fg }}">{{ k.platform }}</span>
+                <span style="font-family:var(--mono);font-size:10.5px;color:var(--color-mute)">{{ k.story }}</span>
+                <div style="flex:1"></div>
+                <button onClick="{{ k.open }}" style="appearance:none;background:none;border:0;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:0;cursor:pointer;text-align:left;color:var(--color-mute)" style-hover="color:var(--hover)">Story ↗</button>
+                <button onClick="{{ k.copy }}" style="appearance:none;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Copy</button>
+              </div>
+              <div style="font-size:12.5px;line-height:1.6;color:var(--color-text);margin:8px 0 10px;max-width:104ch;text-wrap:pretty">{{ k.desc }}</div>
+              <pre style="margin:0;font-family:var(--mono);font-size:11.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;background:var(--color-surface);border:1px solid var(--color-hair);border-left:3px solid var(--color-accent);padding:12px 14px;color:var(--color-text)">{{ k.code }}</pre>
+            </div>
+          </sc-for>
+          <sc-if value="{{ noKql }}">
+            <div style="padding:40px 24px;font-family:var(--mono);font-size:12px;color:var(--color-mute)">No queries match this filter.</div>
+          </sc-if>
         </div>
       </div>
     </sc-if>
@@ -430,14 +465,14 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;overview&quot;,&quot;stories&quot;,&quot;vulns&quot;,&quot;iocs&quot;,&quot;judgments&quot;,&quot;sources&quot;],&quot;default&quot;:&quot;overview&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pinnedFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;overview&quot;,&quot;stories&quot;,&quot;vulns&quot;,&quot;iocs&quot;,&quot;kql&quot;,&quot;judgments&quot;,&quot;sources&quot;],&quot;default&quot;:&quot;overview&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pinnedFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 const KQL_RE = /^(DEFENDER XDR KQL|SENTINEL KQL)\s*[—–-]\s*([\s\S]*)/;
 const MUTE = 'var(--color-mute)', ACC = 'var(--color-accent)', HAIR = 'var(--color-hair)';
 
 class Component extends DCLogic {
   state = {
     ready: false, tab: null, q: '', sort: 'default', status: [], sector: '',
-    pins: [], expanded: {}, openKql: {}, pinOnly: false, iocQ: '', iocType: '', toast: '', theme: null
+    pins: [], expanded: {}, openKql: {}, pinOnly: false, iocQ: '', iocType: '', kqlQ: '', kqlPlat: '', toast: '', theme: null
   };
 
   applyTheme(t) { try { document.documentElement.dataset.theme = t; } catch (e) {} }
@@ -636,11 +671,52 @@ class Component extends DCLogic {
     return rows;
   }
 
+  allKql() {
+    const { D, STORIES } = this.data();
+    const seen = {}, out = [];
+    STORIES.forEach(s => {
+      if (seen[s.key]) return; seen[s.key] = 1;
+      const det = D[s.key] || {};
+      const list = this.splitKql(det.technical).kql.concat(this.splitKql(det.response).kql);
+      list.forEach(k => out.push({
+        platform: k.platform, desc: k.desc, code: k.code,
+        story: (det.title || s.title).slice(0, 70), key: s.key
+      }));
+    });
+    return out;
+  }
+
+  defenderRows(rows) {
+    const map = (t, v) => {
+      const s = String(v).trim(), ty = String(t).toLowerCase();
+      if (/sha-?256/.test(ty) || /^[a-f0-9]{64}$/i.test(s)) return 'FileSha256';
+      if (/sha-?1/.test(ty) || /^[a-f0-9]{40}$/i.test(s)) return 'FileSha1';
+      if (/md5/.test(ty) || /^[a-f0-9]{32}$/i.test(s)) return 'FileMd5';
+      if (/url/.test(ty) || /^https?:\/\//i.test(s)) return /^(https?:\/\/|[a-z0-9-]+(\.[a-z0-9-]+)+)/i.test(s) ? 'Url' : null;
+      if (/^ip|ipv4|ipv6|address/.test(ty)) return 'IpAddress';
+      if (/domain|host|fqdn|c2/.test(ty)) return 'DomainName';
+      if (/cert|thumbprint/.test(ty)) return 'CertificateThumbprint';
+      return null;
+    };
+    const seen = {};
+    return rows.map(r => ({ t: map(r.type, r.value), r: r })).filter(x => {
+      if (!x.t) return false;
+      const k = x.t + '|' + String(x.r.value).trim().toLowerCase();
+      if (seen[k]) return false; seen[k] = 1; return true;
+    });
+  }
+
+  download(name, text, mime) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: mime || 'text/plain' }));
+    a.download = name; a.click();
+  }
+
   renderVals() {
     const d = this.data();
     const tabId = this.tabId();
     const tabDef = {};
-    ['overview', 'stories', 'vulns', 'iocs', 'judgments', 'sources'].forEach(t => {
+    ['overview', 'stories', 'vulns', 'iocs', 'kql', 'judgments', 'sources'].forEach(t => {
       tabDef[t] = { c: tabId === t ? 'var(--color-text)' : MUTE, b: tabId === t ? 'var(--color-accent)' : 'transparent' };
     });
     const go = {}; Object.keys(tabDef).forEach(t => { go[t] = () => this.setState({ tab: t }); });
@@ -649,6 +725,7 @@ class Component extends DCLogic {
     const iocRowsAll = this.allIocs();
     const counts = {
       stories: d.STORIES.length, cves: d.CVES.length, kj: d.KJ.length, iocs: iocRowsAll.length,
+      kql: this.allKql().length,
       new: metas.filter(m => m.status === 'new').length,
       ongoing: metas.filter(m => m.status === 'ongoing').length,
       kev: d.CVES.filter(c => (c.flags || []).some(f => /kev/i.test(f))).length
@@ -729,6 +806,29 @@ class Component extends DCLogic {
       .filter(r => !iq || (r.type + ' ' + r.value + ' ' + r.note + ' ' + r.item).toLowerCase().includes(iq))
       .map(r => Object.assign({}, r, { copy: () => this.copy(r.value, 'Copied ' + r.type) }));
 
+    const kqlAll = this.allKql();
+    const platCount = {};
+    kqlAll.forEach(k => { platCount[k.platform] = (platCount[k.platform] || 0) + 1; });
+    const kqlPlatforms = [{ name: 'All', n: kqlAll.length, key: '' }].concat(
+      Object.keys(platCount).sort().map(p => ({ name: p, n: platCount[p], key: p }))
+    ).map(p => {
+      const on = this.state.kqlPlat === p.key;
+      return { name: p.name, n: p.n, bg: on ? ACC : 'transparent', fg: on ? '#fff' : 'var(--color-text)', bd: on ? ACC : HAIR, pick: () => this.setState({ kqlPlat: p.key }) };
+    });
+    const kq = this.state.kqlQ.trim().toLowerCase();
+    const kqlFiltered = kqlAll
+      .filter(k => !this.state.kqlPlat || k.platform === this.state.kqlPlat)
+      .filter(k => !kq || (k.platform + ' ' + k.desc + ' ' + k.code + ' ' + k.story).toLowerCase().includes(kq));
+    const kqlRows = kqlFiltered.map(k => ({
+      platform: k.platform, desc: k.desc, code: k.code, story: k.story,
+      bd: k.platform === 'Sentinel' ? HAIR : 'var(--accent-bd)',
+      fg: k.platform === 'Sentinel' ? MUTE : 'var(--hover)',
+      copy: () => this.copy(k.code, 'Query copied'),
+      open: () => openStory(k.key)
+    }));
+    const kqlBundle = () => kqlFiltered.map(k =>
+      '// ' + k.platform + ' — ' + k.story + '\n// ' + k.desc + '\n' + k.code).join('\n\n');
+
     const dedupe = list => { const seen = {}; return list.filter(c => { const k = (c.num || '').trim(); if (seen[k]) return false; seen[k] = 1; return true; }); };
     const exploited = dedupe((d.CVES || []).filter(c => (c.flags || []).some(f => /exploit/i.test(f)))).map(c => ({
       num: c.num, sub: c.sub, score: this.scoreLabel(c.score, c.num), scoreColor: this.scoreColor(c.score), open: () => openStory(c.key)
@@ -763,8 +863,12 @@ class Component extends DCLogic {
       },
       togglePinView: () => this.setState({ pinOnly: !this.state.pinOnly, tab: 'stories' }),
       isOverview: tabId === 'overview', isStories: tabId === 'stories', isVulns: tabId === 'vulns',
-      isIocs: tabId === 'iocs', isJudgments: tabId === 'judgments', isSources: tabId === 'sources',
-      stories, chips, sectors, actions, exploited, cves, iocRows, iocTypes,
+      isIocs: tabId === 'iocs', isKql: tabId === 'kql', isJudgments: tabId === 'judgments', isSources: tabId === 'sources',
+      stories, chips, sectors, actions, exploited, cves, iocRows, iocTypes, kqlRows, kqlPlatforms,
+      kqlQ: this.state.kqlQ, kqlShown: kqlRows.length, noKql: this.state.ready && kqlRows.length === 0,
+      setKqlQ: e => this.setState({ kqlQ: e.target.value }),
+      copyAllKql: () => this.copy(kqlBundle(), kqlRows.length + ' queries copied'),
+      downloadKql: () => { this.download('cti-hunting-queries.kql', kqlBundle()); this.flash('Queries downloaded'); },
       noResults: this.state.ready && stories.length === 0,
       resultLine: stories.length + ' of ' + d.STORIES.length + ' items',
       cveLine: cves.length + ' of ' + (d.CVES || []).length + ' tracked',
@@ -789,6 +893,20 @@ class Component extends DCLogic {
         a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
         a.download = 'cti-iocs.csv'; a.click();
         this.flash('CSV downloaded');
+      },
+      defenderCount: this.defenderRows(iocRows).length,
+      defenderCsv: () => {
+        const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+        const head = ['IndicatorType', 'IndicatorValue', 'ExpirationTime', 'Action', 'Severity', 'Title', 'Description', 'RecommendedActions', 'RbacGroups', 'Category', 'MitreTechniques', 'GenerateAlert'];
+        const mapped = this.defenderRows(iocRows);
+        if (!mapped.length) { this.flash('No Defender-compatible indicators'); return; }
+        const body = mapped.map(x => [
+          x.t, x.r.value, '', 'Block', 'Medium',
+          ('CTI ' + (d.WEEK_RANGE || '')).trim() + ' — ' + x.r.item,
+          x.r.note || x.r.item, '', '', '', '', 'TRUE'
+        ].map(q).join(','));
+        this.download('defender-indicators.csv', [head.join(','), ...body].join('\n'), 'text/csv');
+        this.flash(mapped.length + ' indicators exported');
       },
       kj: (d.KJ || []).map(k => ({ num: k.num, parts: this.parts(k.html) })),
       kjShort: (d.KJ || []).slice(0, 3).map(k => ({ num: k.num, parts: this.parts(k.html).map(p => ({ t: p.t, w: p.w, c: p.c })) })),

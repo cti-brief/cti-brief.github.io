@@ -1,8 +1,40 @@
 // CTI brief content, extracted verbatim from the source brief.
 window.CTI = {
   WEEK_RANGE: 'Week of Aug 24 – Aug 30, 2026',
-  POSTURE: { level: 'CRITICAL', text: "Edge devices are the live problem this week. Citrix NetScaler CVE-2026-8452 moved to confirmed exploitation on Aug 26 with web shells observed in the wild (KEV, Aug 29 deadline), while CVE-2026-8451 in the same SAML code path is already exploited and CVE-2026-19490 (CVSS 9.3 auth bypass) sits unexploited but public. Oracle WebLogic CVE-2026-21962 (CVSS 10.0) passed its Aug 27 deadline today. Gitea CVE-2026-60004 deadline is Aug 28. China-nexus QTFY infrastructure remains seized — check DNS and proxy logs for qtproxy.xyz, qt-proxy.org and qt-team.com back to 2018." },
+  POSTURE: { level: 'CRITICAL', text: "Edge and appliance exposure stays the live problem. CISA added three more exploited flaws on Aug 27 — ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 are due Aug 30, JFrog Artifactory CVE-2026-66384 by Sep 10, with forensic triage required on the kernel entry. Citrix NetScaler CVE-2026-8452 remains under active exploitation and CISA is urging immediate patching; the Oracle WebLogic (Aug 27) and Gitea (Aug 28) deadlines have now landed. Ubiquiti's SAB-067 patched 22 UniFi flaws on Aug 26, three of them unauthenticated and maximum severity, with no confirmed exploitation yet — the same product line went patch-to-KEV in three days in June. Manchester Airports Group disclosed a breach affecting 8.7 million customers, contact and vehicle data only. China-nexus QTFY infrastructure remains seized — check DNS and proxy logs for qtproxy.xyz, qt-proxy.org and qt-team.com back to 2018." },
   STORIES: [
+ {
+  "key": "kevaug27",
+  "tags": [["crit","CISA KEV · Aug 27"],["high","ownCloud · Linux kernel · JFrog"]],
+  "badge": "new",
+  "title": "CISA adds three more exploited flaws on Aug 27: ownCloud CVE-2023-49105, a Linux kernel IPv6 privilege escalation, and JFrog Artifactory path traversal",
+  "body": "CISA added CVE-2023-49105 (ownCloud improper authentication), CVE-2026-53362 (Linux kernel, privilege escalation via the IPv6 networking subsystem, impacting SUSE, Red Hat and other Linux products) and CVE-2026-66384 (JFrog Artifactory improper limitation of a pathname to a restricted directory) to the KEV catalog on Aug 27, 2026. Federal remediation is due Aug 30 for the ownCloud and Linux kernel entries and Sep 10 for JFrog. Forensic triage is required under BOD 26-04 for the Linux kernel entry.",
+  "src": "CISA KEV, Vulnerability-Lookup — Aug 27, 2026"
+ },
+ {
+  "key": "unifi067",
+  "tags": [["crit","Ubiquiti UniFi · SAB-067"],["high","22 flaws · No auth required"]],
+  "badge": "new",
+  "title": "Ubiquiti Security Advisory Bulletin 067 patches 22 UniFi vulnerabilities, three of them maximum severity and reachable without credentials",
+  "body": "Ubiquiti published SAB-067 on Aug 26, 2026 covering 22 vulnerabilities across the UniFi portfolio. CVE-2026-77537 is an improper input validation flaw in UniFi Protect that lets unauthenticated attackers compromise unpatched devices; CVE-2026-77550 is a CRLF injection that bypasses authentication on UniFi OS devices; CVE-2026-77554 is a command injection in UniFi Talk. Ubiquiti had not confirmed active exploitation as of the Aug 26 disclosure. In June, CISA gave federal agencies three days to fix three earlier max-severity UniFi OS flaws that were patched a month before exploitation was confirmed.",
+  "src": "Ubiquiti SAB-067, BleepingComputer, Field Effect, Cybernews, TechTimes — Aug 26–27, 2026"
+ },
+ {
+  "key": "magairports",
+  "tags": [["high","Transportation · UK"],["info","8.7M customers"]],
+  "badge": "new",
+  "title": "Manchester Airports Group says data linked to 8.7 million customers was accessed across Manchester, Stansted and East Midlands",
+  "body": "MAG confirmed on Aug 27 that an unauthorised third party obtained customer data relating to car park, lounge and Fast Track bookings and in-airport WiFi sign-ups. The data types known to be compromised are email addresses, phone numbers, vehicle registration numbers and postcodes; MAG says no bank or payment details were held on the affected systems. A MAG spokesperson told The Register the majority of the 8.7 million had only email addresses compromised. MAG became aware of the incident on Tuesday, restricted access to affected systems, notified the NCSC and ICO, and temporarily suspended its online Manage My Booking service. Airport operations and aviation security were unaffected.",
+  "src": "MAG statement via The Register, CX Today, Cybernews, TTG — Aug 27–28, 2026"
+ },
+ {
+  "key": "aithreatsignal",
+  "tags": [["info","AI threat landscape"],["info","Unit 42 · Open letter"]],
+  "badge": "new",
+  "title": "Unit 42 finds 12 of 405 AI-linked malware samples reached production endpoints, as 100+ organizations sign an open letter calling for a cyber defense surge",
+  "body": "Palo Alto Networks Unit 42 analyzed 405 AI-linked malware samples and found only 12 reached production endpoints. Separately, more than 100 technology, cybersecurity and financial-services organizations joined OpenAI in an open letter published Aug 27 as \"A call for collective action on cyber defense,\" warning that AI-enabled cyberattacks will become more widespread and sophisticated in the coming months and naming hospitals, water treatment plants and internet infrastructure as at risk.",
+  "src": "SecurityWeek, Unit 42, Cyber Security News — Aug 27–28, 2026"
+ },
  {
   "key": "bostonsci",
   "tags": [
@@ -464,6 +496,62 @@ window.CTI = {
  }
 ],
   CVES: [
+ {
+  "key": "kevaug27",
+  "level": "crit",
+  "num": "CVE-2023-49105",
+  "score": "9.8",
+  "sub": "ownCloud improper authentication — KEV Aug 27, federal deadline Aug 30",
+  "flags": ["Exploited","KEV","3-day deadline"]
+ },
+ {
+  "key": "kevaug27",
+  "level": "high",
+  "num": "CVE-2026-53362",
+  "score": "",
+  "sub": "Linux kernel privilege escalation via IPv6 networking subsystem — KEV Aug 27, deadline Aug 30, forensic triage required",
+  "flags": ["Exploited","KEV","Forensic triage"]
+ },
+ {
+  "key": "kevaug27",
+  "level": "high",
+  "num": "CVE-2026-66384",
+  "score": "",
+  "sub": "JFrog Artifactory path traversal — authenticated write outside the Docker cache path. KEV Aug 27, deadline Sep 10",
+  "flags": ["Exploited","KEV"]
+ },
+ {
+  "key": "unifi067",
+  "level": "crit",
+  "num": "CVE-2026-77537",
+  "score": "9.9",
+  "sub": "UniFi Protect improper input validation — unauthenticated compromise. Ubiquiti scored 9.9; TechTimes reported 10.0",
+  "flags": ["No auth","Patch available"]
+ },
+ {
+  "key": "unifi067",
+  "level": "crit",
+  "num": "CVE-2026-77550",
+  "score": "9.9",
+  "sub": "UniFi OS CRLF injection — authentication bypass on devices and instances",
+  "flags": ["No auth","Auth bypass"]
+ },
+ {
+  "key": "unifi067",
+  "level": "crit",
+  "num": "CVE-2026-77554",
+  "score": "9.9",
+  "sub": "UniFi Talk command injection via improper input validation",
+  "flags": ["No auth","Patch available"]
+ },
+ {
+  "key": "magairports",
+  "level": "high",
+  "num": "MAG customer data breach",
+  "score": "",
+  "sub": "8.7M customers — email, phone, vehicle registration, postcode. No payment data on affected systems",
+  "flags": ["Confirmed breach","Phishing risk"]
+ },
  {
   "key": "netscaler",
   "level": "crit",
@@ -1151,7 +1239,96 @@ window.CTI = {
       was:"Several entries pointed to vendor advisories instead of listing indicators",
       now:"Concrete defanged IOCs now listed inline where publicly available; items with genuinely no public IOCs say so explicitly" }
   ],
-  D: {"bostonsci": {
+  D: {"kevaug27": {
+   "eyebrow": "CISA KEV · Aug 27, 2026 · Three additions",
+   "title": "CISA adds ownCloud, Linux kernel and JFrog Artifactory flaws to the KEV catalog",
+   "overview": "Two of the three are short-fuse: ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 carry an Aug 30 federal deadline, and JFrog Artifactory CVE-2026-66384 is due Sep 10. The ownCloud entry is a 2023 CVE, so the operational question is whether long-lived file-sharing deployments were ever patched. The Linux kernel entry is described by CISA only as an unspecified vulnerability allowing privilege escalation through the IPv6 networking subsystem, affecting multiple distributions including SUSE and Red Hat.",
+   "technical": [
+    "CVE-2023-49105 — ownCloud improper authentication. CISA lists it as exploited; the vendor advisory covers the WebDAV API authentication path.",
+    "CVE-2026-53362 — Linux kernel, unspecified vulnerability permitting privilege escalation via the IPv6 networking subsystem. CISA notes it can impact multiple products, including but not limited to SUSE, Red Hat and others using Linux. Forensic triage is required per BOD 26-04.",
+    "CVE-2026-66384 — JFrog Artifactory improper limitation of a pathname to a restricted directory (CWE-22). An authenticated user can write data outside the intended Docker cache path under specific remote-repository conditions, writing files to arbitrary locations accessible to the Artifactory process.",
+    "Deadlines: Aug 30, 2026 for CVE-2023-49105 and CVE-2026-53362; Sep 10, 2026 for CVE-2026-66384."
+   ],
+   "mitigation": [
+    "Inventory ownCloud instances by version. Deployments that predate the 10.13.x line are the ones to confirm first.",
+    "Patch Linux hosts per distribution advisories. Where kernel reboots must be scheduled, prioritise multi-tenant hosts and anything running untrusted workloads, since the impact is local privilege escalation.",
+    "Upgrade Artifactory self-managed to a fixed release per the JFrog security advisories page. Until then, review which accounts hold permissions on remote Docker repositories — exploitation requires authentication.",
+    "Under BOD 26-04, the Linux kernel entry requires checking whether the system was compromised before the patch was applied, not just patching."
+   ],
+   "response": [
+    "Artifactory: review the artifact storage tree for files written outside expected cache directories, and audit the process account's writable paths.",
+    "ownCloud: check WebDAV access logs for requests that returned data without a corresponding authentication event.",
+    "DEFENDER XDR KQL — Artifactory process writing outside its expected storage tree (CVE-2026-66384 path traversal).\n\nDeviceFileEvents\n| where InitiatingProcessFileName in~ (\"java.exe\",\"java\")\n| where InitiatingProcessCommandLine has \"artifactory\"\n| where ActionType in (\"FileCreated\",\"FileModified\")\n| where not(FolderPath has_any (\"/var/opt/jfrog\",\"/opt/jfrog\",\"artifactory/data\",\"artifactory/backup\"))\n| project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessCommandLine\n| order by Timestamp desc",
+    "SENTINEL KQL — ownCloud WebDAV responses served without a preceding authentication event (CVE-2023-49105).\n\nlet window = 5m;\nlet dav = W3CIISLog\n| where csUriStem startswith \"/remote.php/dav\" or csUriStem startswith \"/remote.php/webdav\"\n| where scStatus in (200, 207);\ndav\n| summarize Requests = count(), Paths = make_set(csUriStem, 20) by cIP, bin(TimeGenerated, window)\n| where Requests > 20\n| order by Requests desc",
+    "Linux: review privilege-escalation telemetry on hosts with IPv6 enabled where local code execution is available to non-admin users."
+   ],
+   "iocs": []
+  },
+  "unifi067": {
+   "eyebrow": "Ubiquiti · UniFi · SAB-067",
+   "title": "Ubiquiti SAB-067: 22 UniFi vulnerabilities, three maximum severity and unauthenticated",
+   "overview": "The three maximum-severity issues each sit in a different product pillar — video surveillance, the OS itself, and VoIP — and none requires credentials. Ubiquiti scored the three at 9.9; TechTimes reported them as CVSS 10.0. Ubiquiti has not confirmed active exploitation. The precedent worth weighing is SAB-064: patched, then exploited, then a three-day CISA deadline in June, with Bishop Fox demonstrating the chain to remote code execution with elevated privileges.",
+   "technical": [
+    "CVE-2026-77537 — improper input validation in the UniFi Protect Application (video surveillance management). Unauthenticated attackers can compromise unpatched devices.",
+    "CVE-2026-77550 — improper neutralization of CRLF sequences in certain devices running UniFi OS, used to bypass authentication to those devices or instances.",
+    "CVE-2026-77554 — improper input validation in the UniFi Talk Application (VoIP), leading to command injection.",
+    "SAB-067 covers 22 vulnerabilities in total across UniFi OS, Protect, Talk, Access, Network, storage devices, gateways, routers and recorders. Cybernews counted 21 rated 9.0 or higher.",
+    "Exposure scale for the prior advisory cycle: Censys tracked over 100,000 internet-exposed UniFi OS instances, nearly 50,000 of them in the United States."
+   ],
+   "mitigation": [
+    "Apply the SAB-067 updates, prioritising internet-facing consoles and any UniFi Protect or Talk deployment reachable from an untrusted network.",
+    "Remove management interfaces from direct internet exposure. The CRLF authentication bypass is only reachable by something that can talk to the device.",
+    "Review administrative accounts on affected platforms after patching, on the assumption that an authentication bypass leaves no failed-login trail."
+   ],
+   "response": [
+    "Check for unexpected administrative sessions or configuration changes on UniFi consoles in the period before patching.",
+    "SENTINEL KQL — CRLF sequences in requests to UniFi management paths (CVE-2026-77550 authentication bypass attempts).\n\nCommonSecurityLog\n| where DeviceVendor has_any (\"Ubiquiti\",\"UniFi\") or DestinationPort in (443, 8443)\n| where RequestURL has_any (\"%0d%0a\",\"%0D%0A\",\"\\r\\n\",\"%0a\",\"%0d\")\n| project TimeGenerated, SourceIP, DestinationIP, RequestURL, DeviceAction\n| order by TimeGenerated desc",
+    "DEFENDER XDR KQL — outbound connections from hosts to UniFi consoles on management ports, to scope who can reach the vulnerable interface.\n\nDeviceNetworkEvents\n| where RemotePort in (443, 8443, 8080, 8880)\n| where RemoteIPType == \"Private\"\n| summarize Attempts = count(), Hosts = dcount(DeviceName) by RemoteIP, RemotePort\n| where Hosts > 1\n| order by Attempts desc",
+    "Watch for a public proof-of-concept: the SAB-064 chain went from patch to published PoC and detection script on GitHub, and then to a CISA deadline."
+   ],
+   "iocs": []
+  },
+  "magairports": {
+   "eyebrow": "Transportation Systems · UK · Customer data",
+   "title": "Manchester Airports Group breach affects 8.7 million customers",
+   "overview": "MAG has not disclosed how the attackers gained access or who was responsible. The data set is contact and vehicle information rather than payment data, which makes the downstream risk phishing and pretexting against a very large, identifiable population of travellers. MAG has warned customers directly and says it will never contact them unexpectedly to ask for payment or banking information.",
+   "technical": [
+    "Data obtained relates to car park, lounge and Fast Track bookings and in-airport WiFi sign-ups at Manchester, Stansted and East Midlands.",
+    "Known compromised data types: email addresses, phone numbers, vehicle registration numbers, postcodes. MAG states neither it nor the affected system held bank or payment details.",
+    "A MAG spokesperson told The Register that the majority of the 8.7 million customers had only email addresses compromised; not all data types apply to all customers.",
+    "MAG became aware of the incident on Tuesday, restricted access to affected systems, engaged specialist advisers, and notified the National Cyber Security Centre and the Information Commissioner's Office. Online Manage My Booking access was temporarily suspended; bookings remain valid."
+   ],
+   "mitigation": [
+    "Brief staff who travel through MAG airports that parking and travel-themed phishing referencing real bookings is now cheap for attackers to produce.",
+    "If your organisation books airport parking or Fast Track through corporate accounts, treat those mailboxes as a targeted phishing surface and confirm payment-change requests out of band.",
+    "Vehicle registration plus postcode is a useful identity-verification pair in some UK services; check whether any of your own verification flows rely on data of that class."
+   ],
+   "response": [
+    "Add MAG-branded domains and booking-confirmation lures to phishing-simulation and mail-filtering watchlists for the next several weeks.",
+    "DEFENDER XDR KQL — inbound mail impersonating airport parking and booking brands after the MAG disclosure.\n\nEmailEvents\n| where Timestamp > ago(30d)\n| where Subject has_any (\"car park\",\"parking\",\"Fast Track\",\"lounge\",\"booking reference\",\"Manchester Airport\",\"Stansted\",\"East Midlands\")\n| where not(SenderFromDomain in~ (\"manchesterairport.co.uk\",\"stanstedairport.com\",\"eastmidlandsairport.com\",\"magairports.com\"))\n| project Timestamp, SenderFromAddress, SenderFromDomain, RecipientEmailAddress, Subject, UrlCount, DeliveryAction\n| order by Timestamp desc",
+    "Monitor for the data appearing on leak forums, which would change the population from notified-only to publicly exposed."
+   ],
+   "iocs": []
+  },
+  "aithreatsignal": {
+   "eyebrow": "AI threat landscape · Research and policy",
+   "title": "Unit 42 measures AI-linked malware reaching production; industry coalition calls for a cyber defense surge",
+   "overview": "Two data points from the same week pull in different directions and are worth holding together. Unit 42's sample analysis puts a number on how little AI-linked malware currently reaches production endpoints, while the open letter argues the trajectory is steep. Neither is an operational alert; both are useful when setting expectations with leadership about AI-driven attack volume.",
+   "technical": [
+    "Palo Alto Networks Unit 42 analyzed 405 AI-linked malware samples and found only 12 reached production endpoints.",
+    "More than 100 technology, cybersecurity and financial-services organizations joined OpenAI in an open letter published Thursday, Aug 27, titled \"A call for collective action on cyber defense.\"",
+    "The letter states that AI-enabled cyberattacks will become far more widespread and sophisticated in the coming months, naming hospitals, water treatment plants and the infrastructure that powers the internet."
+   ],
+   "mitigation": [
+    "Use the Unit 42 figure when scoping AI-specific detection investment: the current production-endpoint hit rate is low relative to sample volume.",
+    "Where AI capability does change the picture in current reporting, it is in phishing and social-engineering quality rather than in novel malware, so continue to weight identity and email controls."
+   ],
+   "response": [
+    "No indicators. Track Unit 42 and vendor telemetry for whether the production-endpoint proportion moves in subsequent reporting periods."
+   ],
+   "iocs": []
+  },
+  "bostonsci": {
    "eyebrow": "Medical technology · Operational disruption · Global",
    "title": "Boston Scientific hit by cyberattack disrupting IT systems and causing operational disruptions globally",
    "overview": "No actor attribution or ransomware branding has been published. For healthcare delivery organizations the actionable read is supply continuity: identify which Boston Scientific product lines your clinical services depend on and whether you hold buffer stock. For manufacturers, this is the third medical-device or PLM-adjacent incident in the current cycle and reinforces that design and manufacturing systems are being selected deliberately.",
@@ -1298,17 +1475,17 @@ window.CTI = {
   ],
   "iocs": [
    {
-    "type": "filename",
+    "type": "Filename",
     "value": "x.php",
     "note": "Web shell dropped post-exploitation (Previdian, Aug 26, 2026)"
    },
    {
-    "type": "filename",
+    "type": "Filename",
     "value": "z.php",
     "note": "Second web shell name observed in the same wave"
    },
    {
-    "type": "behavior",
+    "type": "Behavior",
     "value": "id; echo <marker>",
     "note": "Discovery commands run through the web shell to confirm execution context"
    }
@@ -2370,7 +2547,47 @@ window.CTI = {
     "sourceNote": "Aug 26, 2026 — breaking"
   }
 },
-  META: {"bostonsci": {
+  META: {"kevaug27": {
+   "status": "new",
+   "cvss": 9.8,
+   "admiralty": "A1",
+   "conf": "Confirmed exploitation — CISA KEV listing",
+   "confNote": "CISA does not publish exploitation detail for these entries. The Linux kernel description is explicitly unspecified.",
+   "iocDate": "Aug 27, 2026",
+   "sectors": ["Information Technology","Government Facilities"],
+   "attack": ["T1190 Exploit Public-Facing Application","T1068 Exploitation for Privilege Escalation","T1078 Valid Accounts"]
+  },
+  "unifi067": {
+   "status": "new",
+   "cvss": 9.9,
+   "admiralty": "A2",
+   "conf": "Vendor-confirmed vulnerabilities — no confirmed exploitation as of Aug 26 disclosure",
+   "confNote": "Ubiquiti scored the three maximum-severity flaws 9.9; TechTimes reported 10.0. Score discrepancy noted rather than resolved.",
+   "iocDate": "Aug 26, 2026",
+   "sectors": ["Information Technology","Commercial Facilities","Communications"],
+   "attack": ["T1190 Exploit Public-Facing Application","T1059 Command and Scripting Interpreter","T1556 Modify Authentication Process"]
+  },
+  "magairports": {
+   "status": "new",
+   "cvss": 0,
+   "admiralty": "B2",
+   "conf": "Confirmed breach — company statement; vector and actor undisclosed",
+   "confNote": "MAG has not disclosed the intrusion vector or attributed the incident. Figures are the company's own.",
+   "iocDate": "Aug 27, 2026",
+   "sectors": ["Transportation Systems","Commercial Facilities"],
+   "attack": ["T1078 Valid Accounts","T1213 Data from Information Repositories","T1566 Phishing"]
+  },
+  "aithreatsignal": {
+   "status": "new",
+   "cvss": 0,
+   "admiralty": "B2",
+   "conf": "Vendor research and public statement — no exploitation claim",
+   "confNote": "Unit 42's sample methodology is not detailed in the summary reporting; treat the 405/12 figures as reported rather than independently verified.",
+   "iocDate": "Aug 28, 2026",
+   "sectors": ["All Sectors"],
+   "attack": ["T1566 Phishing","T1204 User Execution"]
+  },
+  "bostonsci": {
    "status": "new",
    "cvss": 0,
    "admiralty": "B2",
