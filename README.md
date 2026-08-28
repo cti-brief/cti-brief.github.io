@@ -38,7 +38,15 @@ Counters, filter chips, sector chips, the IOC workbench and CSV export are all
 derived from this data; nothing in index.html needs touching.
 
 Response/technical entries beginning "DEFENDER XDR KQL —" or "SENTINEL KQL —"
-are detected automatically and rendered as collapsible query blocks.
+are detected automatically: they render as collapsible query blocks inside the
+story and are collected into the KQL workbench tab (filter, copy, download .kql).
+
+IOC type strings are case-sensitive facet labels in the IOC workbench. Use the
+existing set exactly: SHA256, SHA1, MD5, IP, Domain, URL, Filename, Behavior,
+Actor Alias, String. Only SHA256/SHA1/MD5/IP/Domain/URL are mapped into the
+"Defender indicators CSV" export (Microsoft import schema, Action=Block,
+Severity=Medium, GenerateAlert=TRUE; duplicates and non-importable values are
+dropped, and the button shows the count that will actually export).
 
 ## Archiving a week
 Before swapping in new data, copy the whole folder to archive/YYYY-MM-DD/ and

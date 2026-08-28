@@ -1,8 +1,32 @@
 // CTI brief content, extracted verbatim from the source brief.
 window.CTI = {
   WEEK_RANGE: 'Week of Aug 24 – Aug 30, 2026',
-  POSTURE: { level: 'CRITICAL', text: "Edge and appliance exposure stays the live problem. CISA added three more exploited flaws on Aug 27 — ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 are due Aug 30, JFrog Artifactory CVE-2026-66384 by Sep 10, with forensic triage required on the kernel entry. Citrix NetScaler CVE-2026-8452 remains under active exploitation and CISA is urging immediate patching; the Oracle WebLogic (Aug 27) and Gitea (Aug 28) deadlines have now landed. Ubiquiti's SAB-067 patched 22 UniFi flaws on Aug 26, three of them unauthenticated and maximum severity, with no confirmed exploitation yet — the same product line went patch-to-KEV in three days in June. Manchester Airports Group disclosed a breach affecting 8.7 million customers, contact and vehicle data only. China-nexus QTFY infrastructure remains seized — check DNS and proxy logs for qtproxy.xyz, qt-proxy.org and qt-team.com back to 2018." },
+  POSTURE: { level: 'CRITICAL', text: "Edge, server and collaboration platforms are all under live pressure. CISA added six more exploited flaws on Aug 26 — Citrix NetScaler CVE-2026-8452 and SQL Server CVE-2019-1068 were due Aug 29, with four older Linux and Red Hat bugs due Sep 9 that CISA added on the back of Cisco Talos reporting on UAT-10147, a Chinese-speaking crimeware actor using agentic AI to exploit IIS and Linux web servers at scale and deploying the SPECTRE implant with BYOVD EDR bypass and a Linux kernel rootkit. Hunt 139.180.197[.]150 and svchosts.exe, and alert on Defender exclusions covering inetsrv. Both halves of the SharePoint CVE-2026-55040 plus CVE-2026-63520 RCE chain now have public PoCs and Defused sees the chain probed in honeypots; 8,700+ SharePoint servers are internet-exposed and CVE-2026-45659 is now in ransomware use. Ubiquiti's SAB-067 patched 22 UniFi flaws, three unauthenticated and maximum severity. Manchester Airports Group disclosed a breach affecting 8.7 million customers, contact and vehicle data only." },
   STORIES: [
+ {
+  "key": "uat10147",
+  "tags": [["crit","UAT-10147 · SPECTRE"],["high","IIS · Linux · BYOVD"]],
+  "badge": "new",
+  "title": "Cisco Talos details UAT-10147, a Chinese-speaking crimeware actor using agentic AI to exploit web servers at scale and deploying the SPECTRE implant",
+  "body": "Talos published a two-part report on UAT-10147, a financially motivated Chinese-speaking intrusion actor active since early 2026 that exploits publicly disclosed vulnerabilities in internet-facing Windows IIS and Linux web servers. Talos assesses with moderate-to-high confidence that the actor belongs to an emerging class of operators using agentic AI systems to operationalize offensive tradecraft, with AI-generated operational playbooks, exploit automation scripts and troubleshooting logic observed supporting real intrusions. Post-compromise tooling includes SPECTRE, a custom cross-platform implant with BYOVD-based EDR neutralization on Windows and a Linux kernel rootkit named Specter, alongside NoodleRAT, QuasarRAT, Gh0stCringe and Meterpreter. Victims are in government, education, media, technology and gaming across Brazil, Bolivia, China, Canada and Vietnam; a target list of roughly 170,000 URLs was recovered from the actor's C2 open directory.",
+  "src": "Cisco Talos (two-part report), The Hacker News, CISA KEV, SecureITWorld, WindowsForum — Aug 20–28, 2026"
+ },
+ {
+  "key": "kevaug26six",
+  "tags": [["crit","CISA KEV · Aug 26"],["high","NetScaler · SQL Server · Linux"]],
+  "badge": "new",
+  "title": "CISA adds six exploited flaws on Aug 26, four of them tied to the UAT-10147 campaign, with NetScaler and SQL Server due Aug 29",
+  "body": "CISA added CVE-2026-8452 (Citrix NetScaler ADC and Gateway), CVE-2019-1068 (Microsoft SQL Server RCE), CVE-2022-0995 (Linux kernel out-of-bounds write), CVE-2015-5287 (Red Hat ABRT privilege escalation), CVE-2015-3246 (Red Hat libuser race condition) and CVE-2021-23758 to the KEV catalog. The additions of CVE-2022-0995, CVE-2015-5287, CVE-2015-3246 and CVE-2021-23758 follow the Cisco Talos report on UAT-10147. FCEB agencies must fix CVE-2019-1068 and CVE-2026-8452 by Aug 29, 2026 and the rest by Sep 9, 2026. There is currently no public information on how CVE-2019-1068 is being exploited in the wild.",
+  "src": "CISA KEV, The Hacker News, Cisco Talos — Aug 26–27, 2026"
+ },
+ {
+  "key": "sp63520",
+  "tags": [["crit","SharePoint chain"],["high","8,700+ exposed servers"]],
+  "badge": "new",
+  "title": "SharePoint CVE-2026-55040 plus CVE-2026-63520 RCE chain probed in honeypots after both PoCs go public",
+  "body": "Defused reported it is seeing the SharePoint CVE-2026-55040 + CVE-2026-63520 RCE chain probed in its honeypots: the JWT bypass was exercised, followed by heavy admin enumeration and probing of the Business Data Catalog sink behind CVE-2026-63520, with no code execution observed yet. Rapid7's Stephen Fewer published a PoC for the auth bypass on Aug 11 and VulnCheck's Jonathan Peterson released a PoC for the RCE half, shipping a version scanner, Suricata and Snort rules and PCAPs alongside it. Shadowserver tracks more than 8,700 SharePoint servers exposed online. CISA ordered agencies on Aug 18 to secure servers against CVE-2026-55040 attacks and on Aug 25 confirmed CVE-2026-45659 is now being used in ransomware campaigns.",
+  "src": "BleepingComputer, VulnCheck, Rapid7, SecurityWeek, Petri, CISA — Aug 11–27, 2026"
+ },
  {
   "key": "kevaug27",
   "tags": [["crit","CISA KEV · Aug 27"],["high","ownCloud · Linux kernel · JFrog"]],
@@ -496,6 +520,78 @@ window.CTI = {
  }
 ],
   CVES: [
+ {
+  "key": "kevaug26six",
+  "level": "crit",
+  "num": "CVE-2026-8452",
+  "score": "",
+  "sub": "Citrix NetScaler ADC and Gateway improper restriction of operations within memory buffer bounds — KEV Aug 26, federal deadline Aug 29",
+  "flags": ["Exploited","KEV","3-day deadline"]
+ },
+ {
+  "key": "kevaug26six",
+  "level": "high",
+  "num": "CVE-2019-1068",
+  "score": "8.8",
+  "sub": "Microsoft SQL Server RCE in the Database Engine service account context — KEV Aug 26, deadline Aug 29. No public exploitation detail",
+  "flags": ["Exploited","KEV"]
+ },
+ {
+  "key": "kevaug26six",
+  "level": "high",
+  "num": "CVE-2022-0995",
+  "score": "7.8",
+  "sub": "Linux kernel out-of-bounds memory write — linked to UAT-10147 exploitation. KEV Aug 26, deadline Sep 9",
+  "flags": ["Exploited","KEV","UAT-10147"]
+ },
+ {
+  "key": "kevaug26six",
+  "level": "med",
+  "num": "CVE-2015-5287",
+  "score": "7.8",
+  "sub": "Red Hat Automatic Bug Reporting Tool privilege escalation — UAT-10147 post-compromise. KEV Aug 26, deadline Sep 9",
+  "flags": ["Exploited","KEV","UAT-10147"]
+ },
+ {
+  "key": "kevaug26six",
+  "level": "med",
+  "num": "CVE-2015-3246",
+  "score": "7.8",
+  "sub": "Red Hat libuser race condition — UAT-10147 post-compromise. KEV Aug 26, deadline Sep 9",
+  "flags": ["Exploited","KEV","UAT-10147"]
+ },
+ {
+  "key": "kevaug26six",
+  "level": "med",
+  "num": "CVE-2021-23758",
+  "score": "",
+  "sub": "Added alongside the UAT-10147-linked entries. KEV Aug 26, deadline Sep 9",
+  "flags": ["Exploited","KEV","UAT-10147"]
+ },
+ {
+  "key": "sp63520",
+  "level": "crit",
+  "num": "CVE-2026-63520",
+  "score": "",
+  "sub": "SharePoint Business Connectivity Services RCE — chained after CVE-2026-55040 for unauthenticated code execution. Public PoC",
+  "flags": ["Public PoC","Probing observed"]
+ },
+ {
+  "key": "sp63520",
+  "level": "crit",
+  "num": "CVE-2026-55040",
+  "score": "",
+  "sub": "SharePoint JWT token validation authentication bypass — KEV Aug 18, exploited since Aug 12",
+  "flags": ["Exploited","KEV","Public PoC"]
+ },
+ {
+  "key": "uat10147",
+  "level": "crit",
+  "num": "UAT-10147 / SPECTRE campaign",
+  "score": "",
+  "sub": "Agentic-AI-assisted exploitation of IIS and Linux web servers; SPECTRE implant, Specter Linux rootkit, BYOVD EDR bypass, ~170,000-URL target list",
+  "flags": ["Active campaign","AI-assisted","BYOVD"]
+ },
  {
   "key": "kevaug27",
   "level": "crit",
@@ -1239,7 +1335,93 @@ window.CTI = {
       was:"Several entries pointed to vendor advisories instead of listing indicators",
       now:"Concrete defanged IOCs now listed inline where publicly available; items with genuinely no public IOCs say so explicitly" }
   ],
-  D: {"kevaug27": {
+  D: {"uat10147": {
+   "eyebrow": "Cisco Talos · Crimeware · AI-assisted intrusion",
+   "title": "UAT-10147 and the SPECTRE implant: agentic AI applied to web server exploitation at scale",
+   "overview": "Talos frames this as more than AI-assisted scripting. The actor used AI-generated playbooks, exploit automation, iterative exploit refinement, adaptive troubleshooting and validation workflows, which Talos describes as a transition from AI-assisted scripting toward semi-autonomous offensive orchestration. Talos also collected prompt logs from threat actor endpoints running Claude Code, CodeX, Cursor and Gemini, and found indications of AI-assisted development in both SPECTRE and the Specter Linux rootkit. The practical exposure for defenders is unremarkable in mechanism and serious in scale: internet-facing IIS, ASP.NET, Zimbra, Nacos, Telerik UI and AjaxPro instances exploited through publicly disclosed RCE bugs.",
+   "technical": [
+    "Initial access is exploitation of publicly disclosed vulnerabilities in exposed web applications and server software, including Zimbra, Nacos, Telerik UI, AjaxPro and ASP.NET environments (T1190).",
+    "On Windows, once the actor has RCE on an IIS server, the main staging script downloads an EfsPotato privilege-escalation tool, a follow-on batch file, and a QuasarRAT payload masquerading as svchosts.exe. The script elevates privileges, deletes staging material and modifies Microsoft Defender settings.",
+    "Talos reports the actor adds C:\\Windows\\System32\\inetsrv and C:\\Windows\\SysWOW64\\inetsrv to Microsoft Defender Antivirus exclusions — the directories where IIS tooling and components reside.",
+    "Reported post-compromise activity on Windows also includes persistent web shells (including in-memory deployment), creation of local administrator accounts, IIS directory survey, and scheduled tasks disguised as \"Google Chrome Start\".",
+    "SPECTRE is a custom cross-platform implant supporting C2 communications, process injection, credential theft and anti-analysis; the Windows build uses BYOVD for EDR evasion. On Linux the actor deployed a kernel rootkit named Specter and dropped web shells after gaining RCE.",
+    "Tooling also includes NoodleRAT, Gh0stCringe, Meterpreter, SEO fraud utilities and local privilege escalation tools. Monetization combines SEO fraud with data theft.",
+    "Talos found the campaign after discovering an open directory hosted at 139.180.197[.]150, observed communicating with a compromised machine; a text file on the C2 held a target list of approximately 170,000 URLs.",
+    "DEFENDER XDR KQL — Defender Antivirus exclusion added for IIS directories, the campaign's most distinctive host artifact.\n\nlet iisPaths = dynamic([\"inetsrv\",\"System32\\\\inetsrv\",\"SysWOW64\\\\inetsrv\"]);\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where FileName in~ (\"powershell.exe\",\"pwsh.exe\",\"cmd.exe\")\n| where ProcessCommandLine has_any (\"Add-MpPreference\",\"Set-MpPreference\",\"ExclusionPath\",\"ExclusionProcess\")\n| where ProcessCommandLine has_any (iisPaths)\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, ProcessCommandLine\n| order by Timestamp desc",
+    "DEFENDER XDR KQL — w3wp.exe or Linux web service accounts spawning shells, the web shell execution signature on both platforms.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName in~ (\"w3wp.exe\",\"httpd\",\"nginx\",\"java\",\"tomcat\")\n| where FileName in~ (\"cmd.exe\",\"powershell.exe\",\"bash\",\"sh\",\"curl\",\"wget\",\"whoami\",\"certutil.exe\")\n| project Timestamp, DeviceName, InitiatingProcessFileName, FileName, ProcessCommandLine, AccountName\n| order by Timestamp desc"
+   ],
+   "mitigation": [
+    "Patch the named initial-access surface first: Zimbra, Nacos, Telerik UI, AjaxPro and exposed ASP.NET/IIS applications. The actor's advantage is breadth of scanning, not exploit novelty.",
+    "Alert on changes to Defender Antivirus exclusions and treat exclusion additions covering inetsrv as an incident, not a configuration event. Where possible, lock exclusions via tamper protection and policy so local additions fail.",
+    "Enable and enforce vulnerable-driver blocking (Microsoft vulnerable driver blocklist, HVCI where supported) to raise the cost of the BYOVD EDR neutralization step.",
+    "On Linux web servers, monitor for kernel module loads and unexpected LKM persistence; a kernel rootkit defeats host-level inspection once loaded, so detection needs to sit earlier in the chain or off-host.",
+    "Review local administrator account creation and scheduled tasks on IIS hosts, including tasks named to imitate browser updaters."
+   ],
+   "response": [
+    "Search DNS, proxy and firewall logs for 139.180.197[.]150 across the retention window; Talos identified it as an actor open directory in contact with a compromised host.",
+    "Hunt for svchosts.exe (note the trailing s) anywhere on disk or in process history — Talos reports QuasarRAT masquerading under that name.",
+    "SENTINEL KQL — outbound traffic to the Talos-reported open directory host.\n\nlet actorIp = \"139.180.197.150\";\nunion isfuzzy=true\n  (CommonSecurityLog | where DestinationIP == actorIp | project TimeGenerated, Src = SourceIP, Dst = DestinationIP, Tool = DeviceProduct),\n  (VMConnection | where RemoteIp == actorIp | project TimeGenerated, Src = Computer, Dst = RemoteIp, Tool = \"VMConnection\"),\n  (DnsEvents | where IPAddresses has actorIp | project TimeGenerated, Src = Computer, Dst = IPAddresses, Tool = \"DNS\")\n| order by TimeGenerated desc",
+    "If a Windows IIS host is implicated, treat Defender exclusions as untrustworthy for the period before discovery and rescan with exclusions removed."
+   ],
+   "iocs": [
+    { "type": "IP", "value": "139.180.197[.]150", "note": "Actor open directory observed communicating with a compromised machine (Talos)" },
+    { "type": "Filename", "value": "svchosts.exe", "note": "QuasarRAT payload masquerading as a system binary" },
+    { "type": "Behavior", "value": "Add-MpPreference -ExclusionPath C:\\Windows\\System32\\inetsrv", "note": "Defender AV exclusion added for IIS directories" },
+    { "type": "Behavior", "value": "Scheduled task named \"Google Chrome Start\"", "note": "Persistence disguised as a browser updater task" },
+    { "type": "String", "value": "EfsPotato", "note": "Privilege escalation tool staged after initial RCE" },
+    { "type": "Actor Alias", "value": "UAT-10147", "note": "Cisco Talos designation; implants SPECTRE (cross-platform) and Specter (Linux rootkit)" }
+   ]
+  },
+  "kevaug26six": {
+   "eyebrow": "CISA KEV · Aug 26, 2026 · Six additions",
+   "title": "Six KEV additions on Aug 26, four of them drawn from the UAT-10147 reporting",
+   "overview": "This batch is unusual in composition: two current-generation flaws with a three-day fuse, and four older Linux and library bugs added because Talos observed them in a live crimeware campaign. The four legacy entries are the practical test of whether long-lived Linux web servers in your estate were ever brought current, since they are exactly the post-compromise escalation path UAT-10147 used.",
+   "technical": [
+    "CVE-2026-8452 — improper restriction of operations within the bounds of a memory buffer in Citrix NetScaler ADC and NetScaler Gateway that could lead to denial-of-service. Deadline Aug 29, 2026.",
+    "CVE-2019-1068 — remote code execution in Microsoft SQL Server allowing code execution in the context of the SQL Server Database Engine service account. Deadline Aug 29, 2026. No public information exists on how it is being exploited.",
+    "CVE-2022-0995 — out-of-bounds memory write in the Linux kernel. Deadline Sep 9, 2026.",
+    "CVE-2015-5287 — Red Hat Automatic Bug Reporting Tool privilege escalation. Deadline Sep 9, 2026.",
+    "CVE-2015-3246 — Red Hat libuser race condition. Deadline Sep 9, 2026.",
+    "CVE-2021-23758 — added in the same batch. Deadline Sep 9, 2026.",
+    "CISA published the additions alongside a new vulnerability review of the root causes of insecure software; its analysis of 2024 and 2025 CVE records found injection weaknesses the most dominant category, at 7,701 CVEs in 2024 and 21,019 in 2025."
+   ],
+   "mitigation": [
+    "Treat the NetScaler and SQL Server entries as the Aug 29 work. For SQL Server, confirm the Database Engine service account is not over-privileged, since that is the blast radius of CVE-2019-1068.",
+    "For the four legacy entries, scope by asset age rather than by CVE: any internet-facing Linux web server not on a current distribution baseline is the population at risk.",
+    "abrt and libuser are present by default on older Red Hat family systems; check for them explicitly on hosts you would otherwise consider patched."
+   ],
+   "response": [
+    "Because four of the six were added on the basis of UAT-10147 activity, pair patching with the UAT-10147 hunt rather than treating them as routine KEV work.",
+    "SENTINEL KQL — local privilege escalation attempts on Linux web servers using the tooling named in the Talos reporting.\n\nSyslog\n| where TimeGenerated > ago(30d)\n| where SyslogMessage has_any (\"abrt-hook\",\"abrt-action\",\"libuser\",\"chfn\",\"chsh\")\n| where SyslogMessage has_any (\"denied\",\"failed\",\"segfault\",\"unexpected\")\n| summarize Events = count(), Sample = any(SyslogMessage) by Computer, bin(TimeGenerated, 1h)\n| where Events > 3\n| order by TimeGenerated desc"
+   ],
+   "iocs": []
+  },
+  "sp63520": {
+   "eyebrow": "Microsoft SharePoint · Exploit chain · Probing observed",
+   "title": "The SharePoint auth-bypass-to-RCE chain is now fully public and being probed",
+   "overview": "The two halves of this chain came from the same researcher and were patched a cycle apart, which left a window where the auth bypass was public and the RCE was not. Both PoCs are now out, and Defused reports honeypot activity walking the full chain — JWT bypass, admin enumeration, then probing of the Business Data Catalog sink — while stopping short of observed code execution. Patching CVE-2026-55040 alone breaks the chain, per Rapid7.",
+   "technical": [
+    "CVE-2026-55040 is an authentication bypass in SharePoint's JWT token validation pipeline; an unauthenticated attacker can perform operations as the user they identify as, including a site administrator. Microsoft fixed it in the July 2026 Patch Tuesday.",
+    "CVE-2026-63520 is a vulnerability in SharePoint's Business Connectivity Services that unauthenticated attackers can chain after CVE-2026-55040 to achieve RCE, via unsafe .NET type instantiation.",
+    "Timeline: Rapid7 disclosed the chain to Microsoft on May 18, 2026; Microsoft split the fixes across July (auth bypass) and August (RCE). Rapid7's Stephen Fewer published the CVE-2026-55040 PoC on Aug 11. Honeypot providers reported exploitation immediately; VulnCheck KEV added it Aug 12 and CISA KEV on Aug 18.",
+    "VulnCheck's Initial Access Intelligence team built a complete RCE exploit plus a version scanner, Suricata and Snort rules, encrypted and unencrypted PCAPs and ASM queries.",
+    "Defused, Aug 25: the JWT bypass was exercised, followed by heavy admin enumeration and probing of the Business Data Catalog sink behind CVE-2026-63520, with no code execution observed yet.",
+    "Shadowserver tracks more than 8,700 internet-exposed SharePoint servers; the proportion that are honeypots or already patched is not known.",
+    "BDC abuse is a recurring SharePoint pattern — CVE-2023-24955 and CVE-2019-1257 both involved uploading a BDCM file to the BusinessDataMetadataCatalog and triggering the flaw with a POST to /_vti_bin/client.svc/ProcessQuery."
+   ],
+   "mitigation": [
+    "Apply the July and August SharePoint updates. If only one can be scheduled immediately, CVE-2026-55040 is the one that breaks the chain.",
+    "Follow CISA's guidance not to expose SharePoint servers directly to the internet, and apply Microsoft's security-hardening guidance including AMSI integration and key rotation.",
+    "CISA confirmed on Aug 25 that CVE-2026-45659 is being used in ransomware campaigns; if your SharePoint patching is behind, assume the ransomware-adjacent CVEs are the more urgent half of the backlog."
+   ],
+   "response": [
+    "DEFENDER XDR KQL — SharePoint worker process spawning shells, the outcome to detect if the chain completes.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName =~ \"w3wp.exe\"\n| where InitiatingProcessCommandLine has_any (\"SharePoint\",\"SecurityTokenServiceApplicationPool\")\n| where FileName in~ (\"cmd.exe\",\"powershell.exe\",\"csc.exe\",\"certutil.exe\",\"bitsadmin.exe\")\n| project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessCommandLine\n| order by Timestamp desc",
+    "SENTINEL KQL — requests to the BDC ProcessQuery sink and BDCM upload paths used by this and prior SharePoint chains.\n\nW3CIISLog\n| where TimeGenerated > ago(30d)\n| where csUriStem has_any (\"/_vti_bin/client.svc/ProcessQuery\",\"BusinessDataMetadataCatalog\",\"/_vti_bin/\")\n| where csMethod == \"POST\"\n| summarize Requests = count(), Statuses = make_set(scStatus, 10), Agents = make_set(csUserAgent, 5) by cIP, csUriStem, bin(TimeGenerated, 1h)\n| where Requests > 5\n| order by Requests desc",
+    "No file or network indicators have been published for this activity; the honeypot reporting describes behaviour rather than infrastructure."
+   ],
+   "iocs": []
+  },
+  "kevaug27": {
    "eyebrow": "CISA KEV · Aug 27, 2026 · Three additions",
    "title": "CISA adds ownCloud, Linux kernel and JFrog Artifactory flaws to the KEV catalog",
    "overview": "Two of the three are short-fuse: ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 carry an Aug 30 federal deadline, and JFrog Artifactory CVE-2026-66384 is due Sep 10. The ownCloud entry is a 2023 CVE, so the operational question is whether long-lived file-sharing deployments were ever patched. The Linux kernel entry is described by CISA only as an unspecified vulnerability allowing privilege escalation through the IPv6 networking subsystem, affecting multiple distributions including SUSE and Red Hat.",
@@ -2547,7 +2729,37 @@ window.CTI = {
     "sourceNote": "Aug 26, 2026 — breaking"
   }
 },
-  META: {"kevaug27": {
+  META: {"uat10147": {
+   "status": "new",
+   "cvss": 0,
+   "admiralty": "A1",
+   "conf": "Vendor research — Talos moderate-to-high confidence on the AI assessment",
+   "confNote": "The AI-orchestration assessment is Talos's own, stated at moderate-to-high confidence. Victim counts are inferred from actor infrastructure, not confirmed compromises.",
+   "iocDate": "Aug 28, 2026",
+   "sectors": ["Information Technology","Government Facilities","Commercial Facilities","Communications"],
+   "attack": ["T1190 Exploit Public-Facing Application","T1505.003 Server Software Component: Web Shell","T1068 Exploitation for Privilege Escalation","T1562.001 Impair Defenses: Disable or Modify Tools","T1014 Rootkit","T1071 Application Layer Protocol","T1053.005 Scheduled Task","T1136.001 Create Account: Local Account"]
+  },
+  "kevaug26six": {
+   "status": "new",
+   "cvss": 8.8,
+   "admiralty": "A1",
+   "conf": "Confirmed exploitation — CISA KEV listing",
+   "confNote": "CISA states there is no public information on how CVE-2019-1068 is being exploited. Four entries are linked to UAT-10147 by the Talos reporting rather than by CISA attribution.",
+   "iocDate": "Aug 26, 2026",
+   "sectors": ["Information Technology","Government Facilities","All Sectors"],
+   "attack": ["T1190 Exploit Public-Facing Application","T1068 Exploitation for Privilege Escalation","T1499 Endpoint Denial of Service"]
+  },
+  "sp63520": {
+   "status": "new",
+   "cvss": 0,
+   "admiralty": "A2",
+   "conf": "Probing confirmed by honeypot telemetry — no confirmed code execution",
+   "confNote": "Defused reports the chain probed with no code execution observed. CVSS scores for CVE-2026-63520 were not published in the reviewed sources; CVE-2026-55040 is CISA KEV as of Aug 18.",
+   "iocDate": "Aug 27, 2026",
+   "sectors": ["Information Technology","Government Facilities","Commercial Facilities"],
+   "attack": ["T1190 Exploit Public-Facing Application","T1078 Valid Accounts","T1550.001 Use Alternate Authentication Material: Application Access Token","T1505.003 Server Software Component: Web Shell"]
+  },
+  "kevaug27": {
    "status": "new",
    "cvss": 9.8,
    "admiralty": "A1",

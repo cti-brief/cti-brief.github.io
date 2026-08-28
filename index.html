@@ -96,7 +96,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
         <span style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;background:var(--badge-bg);color:var(--badge-fg);padding:3px 8px">TLP:CLEAR</span>
         <span style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-mute)">{{ weekRange }}</span>
         <span style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-mute)">· Updated {{ updated }}</span>
-        <a href="./archive/" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-mute);text-decoration:none;border:1px solid var(--color-hair);padding:3px 8px" style-hover="border-color:var(--color-accent);color:var(--hover)">Archive ↗</a>
+        <a href="./archive/index.html" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-mute);text-decoration:none;border:1px solid var(--color-hair);padding:3px 8px" style-hover="border-color:var(--color-accent);color:var(--hover)">Archive ↗</a>
         <button onClick="{{ toggleTheme }}" style="appearance:none;background:none;border:1px solid var(--color-hair);cursor:pointer;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-mute);padding:3px 8px;text-align:left" style-hover="border-color:var(--color-accent);color:var(--hover)">{{ themeLabel }}</button>
       </div>
       <div style="display:flex;align-items:baseline;gap:18px;flex-wrap:wrap">
@@ -366,7 +366,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
           </div>
           <button onClick="{{ copyAllIocs }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:var(--color-accent);color:#fff;border:0;text-align:left" style-hover="background:var(--accent-press)">Copy {{ iocShown }} values</button>
           <button onClick="{{ csv }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Download CSV</button>
-          <button onClick="{{ defenderCsv }}" title="Microsoft Defender indicator import format" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Defender indicators CSV <span style="opacity:.55">{{ defenderCount }}</span></button>
+          <button onClick="{{ defenderCsv }}" title="Microsoft Defender for Endpoint indicator import format — all required fields filled. SHA256 only; SHA1 and MD5 are excluded because Defender cannot block them." style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Defender indicators CSV <span style="opacity:.55">{{ defenderCount }}</span></button>
         </div>
         <div style="overflow:auto">
           <div style="display:grid;grid-template-columns:96px minmax(0,1.4fr) minmax(0,1fr) 200px;gap:0;padding:0 24px;position:sticky;top:0;background:var(--color-bg);border-bottom:2px solid var(--color-divider);z-index:2">
@@ -686,22 +686,54 @@ class Component extends DCLogic {
     return out;
   }
 
+  refang(v) {
+    return String(v == null ? '' : v).trim()
+      .replace(/\[\.\]|\(\.\)|\{\.\}/g, '.')
+      .replace(/\[:\]/g, ':')
+      .replace(/\[\/\]/g, '/')
+      .replace(/\[at\]|\(at\)/gi, '@')
+      .replace(/^hxxps/i, 'https')
+      .replace(/^hxxp/i, 'http')
+      .replace(/^fxp/i, 'ftp');
+  }
+
+  validIndicator(type, v) {
+    const s = String(v).trim();
+    if (type === 'FileSha256') return /^[a-f0-9]{64}$/i.test(s);
+    if (type === 'CertificateThumbprint') return /^[a-f0-9]{40}$/i.test(s);
+    if (type === 'IpAddress') {
+      const v4 = /^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
+      const v6 = /^[0-9a-f:]+$/i;
+      return v4.test(s) || (s.indexOf(':') > 0 && v6.test(s));
+    }
+    if (type === 'DomainName') return /^(?!-)[a-z0-9-]{1,63}(\.[a-z0-9-]{1,63})+$/i.test(s) && !/\s/.test(s);
+    if (type === 'Url') {
+      if (!/^https?:\/\//i.test(s)) return false;
+      const host = s.replace(/^https?:\/\//i, '').split(/[\/?#]/)[0];
+      return /^[a-z0-9.-]+(:\d+)?$/i.test(host) && host.indexOf('.') > 0;
+    }
+    return false;
+  }
+
   defenderRows(rows) {
     const map = (t, v) => {
       const s = String(v).trim(), ty = String(t).toLowerCase();
       if (/sha-?256/.test(ty) || /^[a-f0-9]{64}$/i.test(s)) return 'FileSha256';
-      if (/sha-?1/.test(ty) || /^[a-f0-9]{40}$/i.test(s)) return 'FileSha1';
-      if (/md5/.test(ty) || /^[a-f0-9]{32}$/i.test(s)) return 'FileMd5';
-      if (/url/.test(ty) || /^https?:\/\//i.test(s)) return /^(https?:\/\/|[a-z0-9-]+(\.[a-z0-9-]+)+)/i.test(s) ? 'Url' : null;
+      if (/sha-?1/.test(ty) || /^[a-f0-9]{40}$/i.test(s)) return null;
+      if (/md5/.test(ty) || /^[a-f0-9]{32}$/i.test(s)) return null;
+      if (/url/.test(ty) || /^https?:\/\//i.test(s)) return 'Url';
       if (/^ip|ipv4|ipv6|address/.test(ty)) return 'IpAddress';
       if (/domain|host|fqdn|c2/.test(ty)) return 'DomainName';
       if (/cert|thumbprint/.test(ty)) return 'CertificateThumbprint';
       return null;
     };
     const seen = {};
-    return rows.map(r => ({ t: map(r.type, r.value), r: r })).filter(x => {
-      if (!x.t) return false;
-      const k = x.t + '|' + String(x.r.value).trim().toLowerCase();
+    return rows.map(r => {
+      const clean = this.refang(r.value);
+      return { t: map(r.type, clean), r: r, v: clean };
+    }).filter(x => {
+      if (!x.t || !this.validIndicator(x.t, x.v)) return false;
+      const k = x.t + '|' + x.v.toLowerCase();
       if (seen[k]) return false; seen[k] = 1; return true;
     });
   }
@@ -900,13 +932,46 @@ class Component extends DCLogic {
         const head = ['IndicatorType', 'IndicatorValue', 'ExpirationTime', 'Action', 'Severity', 'Title', 'Description', 'RecommendedActions', 'RbacGroups', 'Category', 'MitreTechniques', 'GenerateAlert'];
         const mapped = this.defenderRows(iocRows);
         if (!mapped.length) { this.flash('No Defender-compatible indicators'); return; }
-        const body = mapped.map(x => [
-          x.t, x.r.value, '', 'Block', 'Medium',
-          ('CTI ' + (d.WEEK_RANGE || '')).trim() + ' — ' + x.r.item,
-          x.r.note || x.r.item, '', '', '', '', 'TRUE'
-        ].map(q).join(','));
-        this.download('defender-indicators.csv', [head.join(','), ...body].join('\n'), 'text/csv');
-        this.flash(mapped.length + ' indicators exported');
+        const exp = new Date(Date.now() + 90 * 864e5).toISOString().replace(/\.\d+Z$/, 'Z');
+        const META = d.META || {};
+        const fileTypes = { FileSha256: 1, CertificateThumbprint: 1 };
+        const skippedHashes = iocRows.filter(r => /^(sha-?1|md5)$/i.test(String(r.type).trim())).length;
+        const netTypes = /^(ip|ipv4|ipv6|domain|url)$/i;
+        const netCandidates = iocRows.filter(r => netTypes.test(String(r.type).trim())).length;
+        const skippedNet = netCandidates - mapped.filter(x => !fileTypes[x.t]).length;
+        const catFor = (t, note) => {
+          if (fileTypes[t]) return 'Malware';
+          return /phish|credential harvest|login page/i.test(note || '') ? 'Phishing' : 'CommandAndControl';
+        };
+        const techFor = key => {
+          const list = ((META[key] || {}).attack || [])
+            .map(a => (String(a).match(/T\d{4}(\.\d{3})?/) || [])[0])
+            .filter(Boolean);
+          const uniq = list.filter((t, i) => list.indexOf(t) === i);
+          return uniq.join(',');
+        };
+        const body = mapped.map(x => {
+          const t = x.t, r = x.r;
+          const isFile = !!fileTypes[t];
+          const week = (d.WEEK_RANGE || '').trim();
+          const title = ('CTI' + (week ? ' ' + week : '') + ' \u2014 ' + r.item).slice(0, 100);
+          const desc = (r.note ? r.note + ' ' : '') + '(Source: CTI brief' + (week ? ', ' + week : '') + ' \u2014 ' + r.item + ')';
+          const rec = isFile
+            ? 'Isolate the device, collect the file for analysis, and hunt for the hash across the estate before releasing the block.'
+            : 'Confirm the destination is not business-required, then review proxy, DNS and firewall logs for prior connections from any host.';
+          const tech = techFor(r.key) || (isFile ? 'T1204' : 'T1071');
+          return [
+            t, x.v, exp,
+            isFile ? 'BlockAndRemediate' : 'Block',
+            'Medium', title, desc, rec, '',
+            catFor(t, r.note), tech, 'TRUE'
+          ].map(q).join(',');
+        });
+        this.download('defender-indicators.csv', [head.join(','), ...body].join('\n'), 'text/csv;charset=utf-8');
+        const notes = [];
+        if (skippedHashes) notes.push(skippedHashes + ' SHA1/MD5 skipped (Defender blocks SHA256 only)');
+        if (skippedNet > 0) notes.push(skippedNet + ' unparseable network value(s) skipped');
+        this.flash(mapped.length + ' indicators exported' + (notes.length ? ' \u2014 ' + notes.join('; ') : ''));
       },
       kj: (d.KJ || []).map(k => ({ num: k.num, parts: this.parts(k.html) })),
       kjShort: (d.KJ || []).slice(0, 3).map(k => ({ num: k.num, parts: this.parts(k.html).map(p => ({ t: p.t, w: p.w, c: p.c })) })),
