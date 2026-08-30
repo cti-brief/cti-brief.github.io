@@ -1,8 +1,59 @@
 // CTI brief content, extracted verbatim from the source brief.
 window.CTI = {
   WEEK_RANGE: "Week of Aug 24 – Aug 30, 2026",
-  POSTURE: {"level":"CRITICAL","text":"PaperCut is the week's emergency: CVE-2026-82078 (CVSS 9.4) and CVE-2026-81578 (CVSS 8.8) are chained for unauthenticated remote code execution on all NG and MF versions, were exploited as a zero-day, and watchTowr reports bypasses of the first emergency patch — apply the second patch, remove internet exposure, and hunt for 'Database error looking up cardID: VALUES CAST' in archived server.log copies, since the post-exploitation tooling deletes the live file. CISA added three more exploited flaws on Aug 27: ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 are due Aug 30, JFrog Artifactory CVE-2026-66384 Sep 10. Hunt.io tied the ownCloud entry to a Chinese-speaking operator that took 176 files from a Philippine nuclear research body via host 31.58.209[.]241. Citrix NetScaler CVE-2026-8452 and SQL Server CVE-2019-1068 are due today, Aug 29, alongside four older Linux and Red Hat bugs due Sep 9 that CISA added on the back of Cisco Talos reporting on UAT-10147 — hunt 139.180.197[.]150 and svchosts.exe. Island documented NovaCookies, a $320-a-month AiTM service relaying Microsoft 365 sign-ins, with 755 domains published as dedicated infrastructure. VulnCheck found two factory implants in ZBT router firmware giving unauthenticated root, with no fixed release; block inbound UDP/9992. ServiceNow patched three CVSS 10.0 AI Platform flaws that self-hosted customers must apply themselves, cPanel patched a root-RCE in all supported versions, and GeoServer's jsonArrayContains SQL injection is now fixed. Both halves of the SharePoint CVE-2026-55040 plus CVE-2026-63520 chain have public PoCs and are probed in honeypots."},
+  POSTURE: {"level":"CRITICAL","text":"PaperCut is the week's emergency: CVE-2026-82078 (CVSS 9.4) and CVE-2026-81578 (CVSS 8.8) are chained for unauthenticated remote code execution on all NG and MF versions, were exploited as a zero-day, and watchTowr reports bypasses of the first emergency patch — apply the second patch, remove internet exposure, and hunt for 'Database error looking up cardID: VALUES CAST' in archived server.log copies, since the post-exploitation tooling deletes the live file. CISA added three more exploited flaws on Aug 27: ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 are due Aug 30, JFrog Artifactory CVE-2026-66384 Sep 10. Hunt.io tied the ownCloud entry to a Chinese-speaking operator that took 176 files from a Philippine nuclear research body via host 31.58.209[.]241. Citrix NetScaler CVE-2026-8452 and SQL Server CVE-2019-1068 are due today, Aug 29, alongside four older Linux and Red Hat bugs due Sep 9 that CISA added on the back of Cisco Talos reporting on UAT-10147 — hunt 139.180.197[.]150 and svchosts.exe. Island documented NovaCookies, a $320-a-month AiTM service relaying Microsoft 365 sign-ins, with 755 domains published as dedicated infrastructure. VulnCheck found two factory implants in ZBT router firmware giving unauthenticated root, with no fixed release; block inbound UDP/9992. ServiceNow patched three CVSS 10.0 AI Platform flaws that self-hosted customers must apply themselves, cPanel patched a root-RCE in all supported versions, and GeoServer's jsonArrayContains SQL injection is now fixed. Both halves of the SharePoint CVE-2026-55040 plus CVE-2026-63520 chain have public PoCs and are probed in honeypots. Outside the CVE stream, Iran-linked activity moved to disruption: a small UK generator was offline for four days and dozens of US wastewater plants across twelve states saw flooding and pressure loss, with CISA describing operator lockout and disconnected controllers — verify that controller management paths are not internet-reachable. Next.js shipped fixes for two unauthenticated RCE paths (CVE-2026-75604 on Windows filesystems, and a libheif overflow via AVIF image optimization) with no exploitation reported, and a Cosmos EVM balance flaw was exploited across six chains after the fix went public."},
   STORIES: [
+{
+ "key": "iranot",
+ "tags": [
+  [
+   "crit",
+   "Iran-linked OT intrusions"
+  ],
+  [
+   "high",
+   "Energy · Water and Wastewater"
+  ]
+ ],
+ "badge": "new",
+ "title": "Iran-linked intrusion took a small UK power plant offline for four days, concurrent with wastewater disruption across twelve US states",
+ "body": "British security officials told multiple outlets that Iran-linked hackers were behind an intrusion that forced a small UK electricity generator offline for four days. The plant was not named for security reasons, was restored by staff, and the incident was reported to the National Cyber Security Centre. Reporting describes it as the first confirmed cyberattack of its kind against UK energy infrastructure. UK Energy Minister Michael Shanks said there was \"no threat to the wider grid and nobody lost power\", described the generator as \"tiny\", and said his department had briefed CEOs on steps to stay secure. The outage was concurrent with a wave of intrusions against US water and wastewater facilities: dozens of wastewater treatment plants across twelve states were affected, with flooding and loss of water pressure reported. The FBI attributed the US incidents to malicious cyber actors and US government sources said the threat likely originated in Iran. Foreign Policy reported on Aug 13 that water providers in at least seven states were targeted over a two-week period, with FBI, EPA and CISA officials indicating as many as a dozen states could be affected. The targeted components were programmable logic controllers governing flow and chemical composition; CISA's July 30, 2026 advisory said that in many cases the attackers \"modified passwords to lock out operators and disconnected the controllers\", forcing some facilities onto manual operation. Earlier reporting counted more than 30 community water systems in Minnesota. Researchers quoted in the coverage assess the UK intent as a demonstration of capability rather than direct harm.",
+ "src": "Security Affairs, SC Media, The Register, Fox News, Telegraph via Kurdistan24, CISA advisory (Jul 30, 2026) — Aug 23–27, 2026"
+},
+{
+ "key": "nextjs",
+ "tags": [
+  [
+   "crit",
+   "Next.js · Unauthenticated RCE"
+  ],
+  [
+   "high",
+   "libheif/sharp · Windows path traversal"
+  ]
+ ],
+ "badge": "new",
+ "title": "Next.js patched two critical unauthenticated RCE flaws: CVE-2026-75604 (CVSS 9.0) on Windows filesystems and an AVIF image-optimization flaw in libheif (CVSS 9.5)",
+ "body": "Vercel published the Next.js August 2026 security release on Aug 25, moving it forward a day after identifying an additional critical vulnerability in an upstream dependency. CVE-2026-75604 / GHSA-p293-qw3h-jr36 (CVSS 9.0, CWE-22) is a path traversal that can lead to unauthenticated remote code execution when the Next.js server runs on a Windows filesystem, in applications using both the Pages Router and App Router without Cache Components; Vercel states there is no known workaround and that Linux and macOS deployments are not affected. GHSA-2xp9-vwfh-vxw4 (CVSS 9.5) is a heap buffer overflow in the libheif library used by sharp, reachable when Image Optimization processes an attacker-controlled AVIF image; the patched releases disable AVIF optimization entirely until the upstream libheif fix propagates. The Hacker News confirmed on Aug 27 that libheif v1.23.2 had not been published. Fixes are in Next.js 15.5.24 (Maintenance LTS) and 16.3.3 (Active LTS). Affected ranges: 13.4 up to 15.5.24 and 16.0 up to 16.3.3 for the Windows flaw, 10.0.0 up to 15.5.24 and below 16.3.3 for the AVIF flaw. Vercel-hosted applications are protected with no customer action, and Netlify states its sites do not run the affected image code path. No exploitation in the wild and no public PoC have been reported. The AVIF flaw was disclosed by Hacktron; the Windows flaw by evolutionstorm and B0RI.",
+ "src": "Next.js security release (Aug 25, 2026), Vercel changelog, The Hacker News, Netlify, Cyber Security News, SecurityOnline — Aug 25–28, 2026"
+},
+{
+ "key": "cosmosevm",
+ "tags": [
+  [
+   "crit",
+   "Cosmos EVM · GHSA-7g4w-cg88-2cq2"
+  ],
+  [
+   "high",
+   "Six chains drained · Disclosure failure"
+  ]
+ ],
+ "badge": "new",
+ "title": "Cosmos EVM balance-handling flaw exploited to drain funds from six blockchains after Cosmos Labs misassessed its own bug bounty report",
+ "body": "Cosmos Labs warned that a critical balance-handling flaw in the shared Cosmos EVM module was exploited to drain funds from six blockchains between Aug 20 and Aug 25, 2026. The issue is designated GHSA-7g4w-cg88-2cq2, rated Critical by Cosmos Labs, and was published with no CVE identifier, no weakness classification and no CVSS score. Affected versions are below 0.6.2 and 0.7.0 up to but excluding 0.7.2; the fix shipped in v0.6.2 and v0.7.2 on Aug 19. The upgrade is state-breaking and requires a coordinated network upgrade, and operators who cannot upgrade immediately are told to halt the chain rather than attempt a coordinated governance upgrade. In a post-mortem published Aug 28, Cosmos Labs said the flaw was reported through its bug bounty programme on Apr 25 and was assessed at the time as posing no risk to funds on live networks: \"We were unable to reproduce the vulnerability on 18-decimal networks and incorrectly concluded that it affected only non-18-decimal networks.\" Secondary reporting describes an underflow affecting vesting accounts, names MANTRA, ZetaChain, Warden Protocol and Push Chain among the affected chains, and puts the total drained at about $5.72 million with assets sold on afterwards; those figures come from crypto-sector outlets rather than from Cosmos Labs.",
+ "src": "The Hacker News, Cosmos Labs post-mortem (Aug 28, 2026), Coin Gabbar — Aug 26–29, 2026"
+},
 {
  "key": "novacookies",
  "tags": [
@@ -34,7 +85,7 @@ window.CTI = {
  ],
  "badge": "new",
  "title": "PaperCut NG/MF zero-day exploited in the wild: CVE-2026-82078 and CVE-2026-81578 chained for unauthenticated remote code execution on all versions",
- "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26, then a second emergency patch adding hardening beyond the first. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor.",
+ "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26 at 02:10 AEST on Aug 28, followed later the same day by patches for v24, then an Emergency Patch Release 2 adding hardening beyond the first after watchTowr and Huntress found bypasses of the original fix. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor.",
  "src": "PaperCut security bulletin (Aug 27, 2026), Huntress, watchTowr, The Hacker News — Aug 27–28, 2026"
 },
 {
@@ -652,6 +703,54 @@ window.CTI = {
 ],
   CVES: [
 {
+ "key": "iranot",
+ "level": "crit",
+ "num": "Iran-linked OT intrusions",
+ "score": "",
+ "sub": "Small UK power plant offline four days; dozens of wastewater plants across twelve US states disrupted with flooding and pressure loss. PLCs targeted, operator passwords changed, controllers disconnected",
+ "flags": [
+  "Active campaign",
+  "OT/ICS impact",
+  "State-linked"
+ ]
+},
+{
+ "key": "nextjs",
+ "level": "crit",
+ "num": "CVE-2026-75604",
+ "score": "9.0",
+ "sub": "Next.js path traversal to unauthenticated RCE on Windows filesystems, Pages Router plus App Router without Cache Components. No workaround; fixed in 15.5.24 / 16.3.3",
+ "flags": [
+  "Unauthenticated RCE",
+  "Windows only",
+  "No in-the-wild reports"
+ ]
+},
+{
+ "key": "nextjs",
+ "level": "crit",
+ "num": "GHSA-2xp9-vwfh-vxw4",
+ "score": "9.5",
+ "sub": "Heap buffer overflow in libheif via sharp — unauthenticated RCE when Image Optimization processes a crafted AVIF. Patched releases disable AVIF optimization; no CVE assigned",
+ "flags": [
+  "Unauthenticated RCE",
+  "Upstream dependency",
+  "No CVE"
+ ]
+},
+{
+ "key": "cosmosevm",
+ "level": "crit",
+ "num": "GHSA-7g4w-cg88-2cq2",
+ "score": "",
+ "sub": "Cosmos EVM balance-handling flaw exploited on six chains Aug 20–25. Fixed in v0.6.2 / v0.7.2; state-breaking upgrade or chain halt. No CVE, no CWE, no CVSS published",
+ "flags": [
+  "Exploited",
+  "Funds drained",
+  "No CVE"
+ ]
+},
+{
  "key": "novacookies",
  "level": "crit",
  "num": "NovaCookies PhaaS",
@@ -1171,9 +1270,64 @@ window.CTI = {
  {
   "num": "11",
   "html": "We assess with <b>moderate confidence</b> that the convergence of ShieldBreak (Defender EoP, no patch, CISA BOD 26-04) with the Azure/Entra PhaaS campaign and Mirage2FA M365 session theft represents a coherent initial-access-to-escalation pipeline: PhaaS or Mirage2FA provides initial M365 access; lateral movement to an endpoint provides access to ShieldBreak; ShieldBreak provides SYSTEM. Defenders should instrument all three stages — AiTM detection in sign-in logs, anomalous M365 session reuse, and ShieldBreak KQL hunting in Defender for Endpoint — as a coordinated detection program rather than three separate alerts."
+ },
+ {
+  "num": "12",
+  "html": "We assess with <b>high confidence</b> that Iran-linked activity against Western critical infrastructure has moved from access and reconnaissance to disruption. A small UK generator was taken offline for four days, and dozens of US wastewater plants across twelve states were disrupted with flooding and loss of water pressure, with CISA's Jul 30 advisory describing operator lockout and disconnected controllers. Researchers quoted in the reporting assess the UK case as a capability demonstration. The exposure is structural: reporting notes attackers found far more reachable PLCs in water than in power, where binding federal requirements apply, and that a volunteer defence programme had reached 21 of roughly 50,000 unprotected small utilities. Organisations with OT should verify that controller management paths are not internet-reachable and that manual-operation fallback is exercised, not assumed."
  }
 ],
   SOURCES: [
+{
+ "group": "Iran-linked OT intrusions — UK power plant and US water sector",
+ "links": [
+  {
+   "label": "Security Affairs — UK power plant disabled for four days by Iran-linked hackers",
+   "url": "https://securityaffairs.com/197734/cyber-warfare-2/uk-power-plant-disabled-for-four-days-by-iran-linked-hackers-concurrent-with-us-water-attacks.html"
+  },
+  {
+   "label": "SC Media — Iran-linked hackers target UK power plant and US water infrastructure",
+   "url": "https://www.scworld.com/brief/iran-linked-hackers-target-uk-power-plant-and-us-water-infrastructure"
+  },
+  {
+   "label": "Fox News — Iran-linked hackers suspected in UK power-plant shutdown after alleged Minnesota water attack",
+   "url": "https://www.foxnews.com/politics/iran-linked-hackers-suspected-uk-power-plant-shutdown-alleged-minnesota-water-attack.amp"
+  }
+ ]
+},
+{
+ "group": "Next.js August 2026 security release — CVE-2026-75604 / GHSA-2xp9-vwfh-vxw4",
+ "links": [
+  {
+   "label": "Next.js — August 2026 Security Release",
+   "url": "https://nextjs.org/blog/august-2026-security-release"
+  },
+  {
+   "label": "Vercel — Applications protected from Next.js August 2026 security vulnerabilities",
+   "url": "https://vercel.com/changelog/nextjs-august-2026-security-release"
+  },
+  {
+   "label": "The Hacker News — Next.js patches critical AVIF and Windows flaws enabling unauthenticated RCE",
+   "url": "https://thehackernews.com/2026/08/nextjs-patches-critical-avif-and.html"
+  },
+  {
+   "label": "Netlify — Next.js security release (August 2026): what to know",
+   "url": "https://www.netlify.com/changelog/2026-08-25-nextjs-security-vulnerabilities/"
+  }
+ ]
+},
+{
+ "group": "Cosmos EVM GHSA-7g4w-cg88-2cq2 — six chains drained",
+ "links": [
+  {
+   "label": "The Hacker News — Cosmos EVM flaw exploited after Cosmos Labs knew every blockchain running it was vulnerable",
+   "url": "https://thehackernews.com/2026/08/cosmos-evm-flaw-exploited-after-cosmos.html"
+  },
+  {
+   "label": "Coin Gabbar — Cosmos EVM hack drains $5.72 million from six chains",
+   "url": "https://www.coingabbar.com/en/crypto-currency-news/cosmos-evm-hack-572-million-crypto-exploit-news"
+  }
+ ]
+},
 {
  "group": "PaperCut NG/MF zero-day — CVE-2026-82078 / CVE-2026-81578",
  "links": [
@@ -1728,6 +1882,93 @@ window.CTI = {
  }
 ],
   D: {
+"iranot": {
+ "eyebrow": "Iran-linked · Energy and Water/Wastewater · OT impact · UK NCSC, FBI, CISA",
+ "title": "A four-day outage at a small UK generator and wastewater disruption across twelve US states, in the same window",
+ "overview": "The reason to carry this as an OT story rather than a geopolitics story is the mechanism the reporting describes: not malware on servers, but controller-level actions — operator passwords changed and controllers disconnected — with physical consequences in the form of flooding and lost water pressure. The UK case is described by officials as small and contained; the point researchers make is intent. For defenders, the actionable content is the exposure pattern, since the same reporting says attackers found far more reachable controllers in water than in power.",
+ "technical": [
+  "UK: a small electricity generator was forced offline for four days. The plant was not named for security reasons, was restored by its own staff, and the incident was reported to the National Cyber Security Centre. Reporting describes it as the first confirmed cyberattack of its kind against UK energy infrastructure.",
+  "UK government position: Energy Minister Michael Shanks said there was \"no threat to the wider grid and nobody lost power\", described the generator as \"tiny\", and said his department had briefed CEOs on steps to stay secure.",
+  "US: dozens of wastewater treatment plants across twelve states were affected, with flooding and loss of water pressure reported. The FBI attributed the incidents to malicious cyber actors; US government sources said the threat likely originated in Iran.",
+  "Scope reporting differs by date: Foreign Policy reported on Aug 13 that providers in at least seven states were targeted over a two-week campaign, with FBI, EPA and CISA officials indicating as many as a dozen states could be affected. Earlier reporting counted more than 30 community water systems in Minnesota.",
+  "Targeted component class: programmable logic controllers used to manage the flow and chemical composition of water supplies. CISA's Jul 30, 2026 advisory states that in many cases the attackers \"modified passwords to lock out operators and disconnected the controllers\", forcing some facilities to switch to manual operation.",
+  "Structural asymmetry named in the reporting: water utilities face no binding federal cybersecurity requirements backed by financial penalties, unlike electricity providers, and a volunteer defence programme had reached only 21 of approximately 50,000 unprotected small utilities.",
+  "Context given by the coverage: Iran has increased cyber operations against Western countries since February, with activity reported in several European nations, and the UK incident follows CISA's Aug 19 advisory on AI-generated Siemens PLC reconnaissance."
+ ],
+ "iocs": [],
+ "iocNote": "No indicators have been published for either the UK incident or the US water campaign in the reviewed sources. The UK plant is deliberately unnamed and the FBI attribution statement carries no technical detail, so detection has to be built on exposure and behaviour rather than on indicators.",
+ "mitigation": [
+  "Enumerate every controller management path that is reachable from the internet — HMI web interfaces, vendor remote-support tunnels, cellular modems and engineering workstations — and remove that reachability. This is the exposure the reporting describes attackers finding at scale in the water sector.",
+  "Change default and shared credentials on controllers and HMIs, and hold operator accounts in a system that cannot be locked out from the controller itself; password modification and controller disconnection are the two actions CISA named.",
+  "Exercise manual-operation fallback rather than assuming it. Facilities in the US campaign switched to manual operation, which is only a mitigation where staff have practised it.",
+  "Alert on configuration writes, program downloads and mode changes on controllers, and treat an unexplained controller disconnection as a security event, not only as a reliability event.",
+  "For UK operators: NCSC reporting and the DESNZ CEO briefing referenced in the coverage are the route to sector-specific guidance."
+ ],
+ "response": [
+  "SENTINEL KQL — external sources reaching OT protocol ports through the perimeter firewall, the exposure pattern the reporting describes. Adapt the OT address ranges to your own plant networks.\n\nlet otPorts = dynamic([502, 102, 20000, 44818, 47808, 4840, 1911, 9600]);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(30d)\n   | where DestinationPort in (otPorts)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, DeviceAction, Activity=DeviceEventClassID),\n  (AzureNetworkAnalytics_CL\n   | where TimeGenerated > ago(30d)\n   | extend DestinationPort = toint(DestPort_d), SourceIP = tostring(SrcIP_s), DestinationIP = tostring(DestIP_s)\n   | where DestinationPort in (otPorts)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, DeviceAction=tostring(FlowStatus_s), Activity=\"AzureFlow\")\n| where not(ipv4_is_private(SourceIP))\n| summarize attempts = count(), ports = make_set(DestinationPort, 10), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated) by SourceIP, DestinationIP\n| order by attempts desc\n// Technique borrowed from the union isfuzzy multi-connector pattern published by Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules) so the query survives a missing connector.",
+  "SENTINEL KQL — engineering-workstation and HMI sign-ins from outside the plant, plus account lockouts on those hosts, to catch the operator-lockout action CISA described. Replace the host prefix with your own naming.\n\nlet otHosts = SigninLogs\n  | where TimeGenerated > ago(30d)\n  | where DeviceDetail.displayName has_any (\"HMI\", \"SCADA\", \"ENGWS\", \"PLC\")\n  | distinct tostring(DeviceDetail.displayName);\nunion isfuzzy=true\n  (SigninLogs\n   | where TimeGenerated > ago(30d)\n   | where tostring(DeviceDetail.displayName) in (otHosts)\n   | project TimeGenerated, Account=UserPrincipalName, Host=tostring(DeviceDetail.displayName), IPAddress, ResultType, Location=tostring(LocationDetails.countryOrRegion)),\n  (SecurityEvent\n   | where TimeGenerated > ago(30d)\n   | where EventID in (4740, 4723, 4724)\n   | where Computer has_any (\"HMI\", \"SCADA\", \"ENGWS\", \"PLC\")\n   | project TimeGenerated, Account=TargetAccount, Host=Computer, IPAddress=IpAddress, ResultType=tostring(EventID), Location=\"onprem\")\n| summarize events = count(), types = make_set(ResultType, 10), locations = make_set(Location, 10) by Account, Host\n| order by events desc",
+  "DEFENDER XDR KQL — controller-facing tooling running on engineering workstations, which is where a change to controller passwords or a disconnection would be issued from.\n\nlet otTooling = dynamic([\"tia portal\", \"step7\", \"s7\", \"rslinx\", \"rslogix\", \"studio 5000\", \"unity pro\", \"ecostruxure\", \"codesys\", \"kepserver\", \"modscan\", \"modbus\"]);\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where tolower(FileName) has_any (otTooling) or tolower(ProcessCommandLine) has_any (otTooling)\n| join kind=leftouter (\n    DeviceNetworkEvents\n    | where Timestamp > ago(30d)\n    | where RemotePort in (502, 102, 44818, 4840)\n    | project DeviceId, RemoteIP, RemotePort, NetworkTime = Timestamp\n) on DeviceId\n| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, RemoteIP, RemotePort\n| order by Timestamp desc",
+  "Treat any facility that switched to manual operation during the campaign window as an incident scope, not a resolved outage: controller credentials, project files and backup configurations all need review before automated control is restored."
+ ],
+ "source": "Security Affairs, SC Media, The Register, Fox News, Telegraph via Kurdistan24, CISA advisory (Jul 30, 2026), TechTimes, Foreign Policy"
+},
+"nextjs": {
+ "eyebrow": "Next.js · CVE-2026-75604 (CVSS 9.0) + GHSA-2xp9-vwfh-vxw4 (CVSS 9.5) · Patched Aug 25, 2026",
+ "title": "Two unauthenticated RCE paths in Next.js: a Windows-only path traversal and a libheif overflow reached through AVIF image optimization",
+ "overview": "Neither flaw is reported as exploited, which makes this a patching window rather than an incident. The part worth acting on is scope: the AVIF path is upstream in libheif via sharp, so it reaches back to Next.js 10 and is not fixed by a Next.js code change — the patched releases disable AVIF optimization instead. The Windows flaw has no workaround at all.",
+ "technical": [
+  "CVE-2026-75604 / GHSA-p293-qw3h-jr36 (CVSS 9.0, CWE-22, CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H) — path traversal leading to unauthenticated RCE when the Next.js server uses a Windows filesystem, in applications using both the Pages Router and App Router without Cache Components. Vercel states there is no known workaround. Linux and macOS deployments are not affected.",
+  "GHSA-2xp9-vwfh-vxw4 (CVSS 9.5, CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H) — heap buffer overflow in libheif, the library sharp uses for AVIF, reachable when the Image Optimization API processes an attacker-controlled AVIF file. No CVE has been assigned to this advisory.",
+  "Remediation shape differs: the patched Next.js releases disable AVIF optimization entirely until the upstream libheif fix propagates. The Hacker News confirmed on Aug 27, 2026 via the libheif GitHub releases page that v1.23.2 had not been published.",
+  "Fixed releases: Next.js 15.5.24 (Maintenance LTS) and 16.3.3 (Active LTS), published Aug 25, 2026. Affected ranges are 13.4 up to 15.5.24 and 16.0 up to 16.3.3 for the Windows flaw, and 10.0.0 up to 15.5.24 and below 16.3.3 for the AVIF flaw.",
+  "Hosting matters: Vercel says applications hosted on its platform are protected with no upgrades, configuration changes or redeploys required, having disabled AVIF optimization across its managed Image Optimization service. Netlify says its sites are unaffected by the Windows issue and never invoke the Next.js Image Optimization API because /_next/image requests are rewritten to Netlify Image CDN at the edge.",
+  "Release context: Vercel had scheduled the August patches for Aug 26 under the monthly security programme it announced in July 2026, and moved the release forward a day after identifying the additional critical upstream vulnerability.",
+  "Credit: the AVIF vulnerability was reported by the Hacktron team; the Windows vulnerability by evolutionstorm and B0RI. SecurityOnline notes Next.js sees over 45 million downloads."
+ ],
+ "iocs": [],
+ "iocNote": "No exploitation in the wild has been confirmed, neither advisory reports active attacks, and no public proof-of-concept exists, so there are no indicators to publish. Detection below is exposure-hunting, not compromise-hunting.",
+ "mitigation": [
+  "Upgrade to Next.js 15.5.24 or 16.3.3. For the Windows path traversal there is no workaround; Vercel's instruction is to upgrade immediately if the server is hosted on Windows.",
+  "Until patched, disable AVIF optimization to remove the libheif path — either by restricting the formats configured for Image Optimization or by putting an image CDN in front of /_next/image.",
+  "Inventory where Next.js runs on Windows filesystems and whether those applications combine the Pages Router and App Router without Cache Components; that combination is the precondition for CVE-2026-75604.",
+  "Track libheif separately. The Next.js fix is a mitigation, not an upstream fix, so the AVIF path returns whenever AVIF optimization is re-enabled before libheif ships its patched release.",
+  "Check your hosting provider's statement before scheduling emergency work — Vercel and Netlify have both published platform-level positions that change the urgency for their customers."
+ ],
+ "response": [
+  "SENTINEL KQL — AVIF traffic to the Next.js image optimization endpoint, the reachability test for the libheif flaw. Requires IIS or reverse-proxy logs.\n\nunion isfuzzy=true\n  (W3CIISLog\n   | where TimeGenerated > ago(30d)\n   | where csUriStem has \"/_next/image\"\n   | project TimeGenerated, Host=Computer, ClientIP=cIP, Uri=strcat(csUriStem, \"?\", csUriQuery), Status=scStatus, UserAgent=csUserAgent),\n  (CommonSecurityLog\n   | where TimeGenerated > ago(30d)\n   | where RequestURL has \"/_next/image\"\n   | project TimeGenerated, Host=DeviceName, ClientIP=SourceIP, Uri=RequestURL, Status=tostring(EventOutcome), UserAgent=RequestClientApplication)\n| where Uri has_any (\".avif\", \"avif\")\n| summarize requests = count(), distinctUris = dcount(Uri), sample = any(Uri), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated) by ClientIP, Host\n| order by requests desc",
+  "SENTINEL KQL — traversal-shaped requests against Windows-hosted Next.js, matching the CVE-2026-75604 precondition.\n\nW3CIISLog\n| where TimeGenerated > ago(30d)\n| extend FullUri = strcat(csUriStem, \"?\", csUriQuery)\n| where FullUri has_any (\"..%5c\", \"..\\\\\", \"%2e%2e%5c\", \"..%252f\", \"%c0%af\")\n   or FullUri matches regex @\"(\\.\\.[\\\\/]){2,}\"\n| summarize hits = count(), statuses = make_set(scStatus, 10), sample = any(FullUri) by cIP, Computer, csUserAgent\n| order by hits desc",
+  "DEFENDER XDR KQL — the post-exploitation shape for both flaws: a Next.js node process spawning a shell or reconnaissance binary on a Windows web host.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName in~ (\"node.exe\", \"next.exe\", \"w3wp.exe\", \"iisnode.exe\")\n| where FileName in~ (\"cmd.exe\", \"powershell.exe\", \"pwsh.exe\", \"whoami.exe\", \"net.exe\", \"net1.exe\", \"certutil.exe\", \"bitsadmin.exe\", \"curl.exe\", \"tasklist.exe\")\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, InitiatingProcessCommandLine, FileName, ProcessCommandLine\n| order by Timestamp desc\n// Attribution: parent/child web-tier RCE pattern follows the published approach of Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules, LinkedIn @0x534c), adapted to Next.js process names.",
+  "DEFENDER XDR KQL — sharp/libheif image processing writing outside the cache directory, which would indicate the AVIF overflow reached code execution rather than a crash.\n\nDeviceFileEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName in~ (\"node.exe\", \"next.exe\")\n| where ActionType in (\"FileCreated\", \"FileModified\")\n| where FolderPath !has \"\\\\.next\\\\cache\" and FolderPath !has \"/.next/cache\"\n| where FileName endswith \".exe\" or FileName endswith \".dll\" or FileName endswith \".ps1\" or FileName endswith \".jsp\" or FileName endswith \".js\"\n| summarize writes = count(), files = make_set(FileName, 20) by DeviceName, FolderPath\n| order by writes desc"
+ ],
+ "source": "Next.js August 2026 Security Release, Vercel changelog, The Hacker News, Netlify changelog, Cyber Security News, SecurityOnline"
+},
+"cosmosevm": {
+ "eyebrow": "Cosmos EVM · GHSA-7g4w-cg88-2cq2 · Six chains drained Aug 20–25, 2026 · No CVE",
+ "title": "A bug bounty report misassessed in April, patched publicly in August, and exploited across six chains within a week",
+ "overview": "The technical flaw matters less here than the disclosure sequence, which Cosmos Labs has documented itself: a report arrived in April, was judged not to put live funds at risk on the basis of a failed reproduction, and the eventual fix shipped publicly rather than privately — with exploitation following days later. The operator guidance is unusually blunt: upgrade, or halt the chain.",
+ "technical": [
+  "GHSA-7g4w-cg88-2cq2 — a balance-handling flaw in the shared Cosmos EVM module, rated Critical by Cosmos Labs. Published with no CVE identifier, no weakness classification and no CVSS score.",
+  "Affected versions: below 0.6.2, and 0.7.0 up to but excluding 0.7.2. The fix shipped in v0.6.2 and v0.7.2 on Aug 19, 2026.",
+  "Exploitation window: funds were drained from six blockchains between Aug 20 and Aug 25, 2026 — after the fix was public.",
+  "Cosmos Labs post-mortem, published Aug 28: the flaw was reported through its bug bounty programme on Apr 25 and assessed at the time as posing no risk to funds on live networks. \"We were unable to reproduce the vulnerability on 18-decimal networks and incorrectly concluded that it affected only non-18-decimal networks.\"",
+  "Operator guidance: upgrade to v0.6.2 or v0.7.2 or later. The change is state-breaking and requires a coordinated network upgrade; operators who cannot upgrade immediately are told to halt the chain rather than attempt a coordinated governance upgrade.",
+  "Secondary reporting, not from Cosmos Labs: the flaw is described as an underflow affecting vesting accounts; MANTRA, ZetaChain, Warden Protocol and Push Chain are named among the affected chains; the total drained is put at about $5.72 million, with assets sold on afterwards and some linked exchange accounts frozen. Treat these figures as sector reporting rather than vendor-confirmed."
+ ],
+ "iocs": [],
+ "iocNote": "No indicators have been published. Cosmos Labs' advisory and post-mortem describe versions and operator actions, not attacker addresses or transaction hashes, and the crypto-sector reporting that names amounts does not publish an indicator set in the reviewed sources.",
+ "mitigation": [
+  "Upgrade any Cosmos EVM chain to v0.6.2 or v0.7.2 or later. The upgrade is state-breaking, so it needs a coordinated network upgrade rather than a rolling one.",
+  "If an immediate upgrade is not possible, Cosmos Labs' instruction is to halt the chain rather than attempt a coordinated governance upgrade.",
+  "Where your organisation holds assets on a Cosmos EVM chain, confirm with the chain operator which release is running and whether the Aug 20–25 window is covered by their own reconciliation.",
+  "For teams running bug bounty programmes, the reproducible lesson is in the post-mortem: a failed reproduction on one configuration was treated as absence of risk. Failed reproduction should escalate the assessment, not close it.",
+  "Where a fix for a consensus-critical component must ship publicly, assume the disclosure window is measured in days and sequence operator upgrades before the release, not after."
+ ],
+ "response": [
+  "No hunting queries are provided for this story. The exploitation happened on-chain against blockchain nodes, so there is no Defender or Sentinel telemetry that would observe it; detection belongs to chain monitoring and exchange controls rather than to endpoint or SIEM tooling.",
+  "If your organisation operates a Cosmos EVM validator, the equivalent check is on the node estate rather than in KQL: confirm the running module version, review the Aug 19–25 upgrade timeline against your own change records, and reconcile balances across the exploitation window."
+ ],
+ "source": "The Hacker News, Cosmos Labs security advisory and post-mortem (Aug 28, 2026), Coin Gabbar"
+},
 "novacookies": {
  "eyebrow": "Island Security Research · NovaCookies · AiTM PhaaS · $320/month · 755 published domains",
  "title": "A rented adversary-in-the-middle relay with Entra's own MFA method taxonomy, a configurable anti-analysis engine and a Docusign-inside-Docusign delivery chain",
@@ -1875,7 +2116,7 @@ window.CTI = {
  ],
  "iocNote": "No attacker IPs, domains or file hashes have been published for this campaign. Every published indicator is behavioural or log-based, and the post-exploitation tooling deletes the logs it appears in — hunt in forwarded or archived copies of server.log, not the live file.",
  "mitigation": [
-  "Apply the latest PaperCut emergency patch for v25 or v26. The second patch includes hardening beyond the original emergency patch and is believed to close the watchTowr patch bypasses; the first patch alone should not be treated as remediation.",
+  "Apply Emergency Patch Release 2 for PaperCut NG/MF v24, v25 or v26 on Windows, Linux or macOS — patches for v24 followed the v25/v26 release later on Aug 28. PaperCut is urging customers who already installed the first emergency patch to install Release 2 as well. The second patch includes hardening beyond the original emergency patch and is believed to close the watchTowr patch bypasses; the first patch alone should not be treated as remediation.",
   "Remove public internet exposure from the PaperCut Application Server immediately, even where no suspicious activity has been observed. PaperCut's instruction is to use firewall rules, network access controls or equivalent measures so the web interfaces cannot be reached from untrusted internet addresses.",
   "Restrict Application Server web access to trusted IP ranges, or place it behind a VPN or another controlled administrative path.",
   "Treat any instance that was internet-facing before patching as potentially compromised and scope accordingly: PaperCut holds spooled document content and is an inbound pivot into the corporate network."
@@ -3435,6 +3676,68 @@ window.CTI = {
  }
 },
   META: {
+"iranot": {
+ "status": "new",
+ "cvss": null,
+ "admiralty": "B2",
+ "conf": "Confirmed impact, attribution reported not formally attributed — UK officials speaking to press; FBI attributed US incidents to malicious cyber actors with government sources naming Iran as the likely origin",
+ "confNote": "The UK plant is unnamed and the attribution comes from officials speaking to news outlets rather than from a published advisory. Scope reporting differs by date: at least seven states (Foreign Policy, Aug 13) versus twelve states in the later coverage. The intent assessment — capability demonstration rather than direct harm — is from researchers quoted in the reporting, not from government.",
+ "iocDate": "Aug 29, 2026 — no indicators published",
+ "severity": 5,
+ "sectors": [
+  "Energy",
+  "Water and Wastewater Systems",
+  "Government Facilities",
+  "Critical Manufacturing"
+ ],
+ "attack": [
+  "T0812 — Change Credential (ICS)",
+  "T0813 — Denial of Control (ICS)",
+  "T0827 — Loss of Control (ICS)",
+  "T0800 — Activate Firmware Update Mode (ICS)",
+  "T0855 — Unauthorized Command Message (ICS)",
+  "T1190 — Exploit Public-Facing Application"
+ ]
+},
+"nextjs": {
+ "status": "new",
+ "cvss": 9.5,
+ "admiralty": "A1",
+ "conf": "Vendor advisory — no exploitation reported, no public PoC",
+ "confNote": "Two advisories with different identifiers and scoring systems: CVE-2026-75604 at CVSS 9.0 (CVSS 3.1) and GHSA-2xp9-vwfh-vxw4 at CVSS 9.5 (CVSS 4.0), the latter with no CVE assigned. The META cvss carries the higher of the two. The AVIF fix is a mitigation — AVIF optimization is disabled — because the upstream libheif release had not shipped as of Aug 27.",
+ "iocDate": "Aug 28, 2026 — no indicators published",
+ "severity": 4,
+ "sectors": [
+  "Information Technology",
+  "Commercial Facilities",
+  "Financial Services",
+  "All Sectors"
+ ],
+ "attack": [
+  "T1190 — Exploit Public-Facing Application",
+  "T1083 — File and Directory Discovery",
+  "T1059 — Command and Scripting Interpreter",
+  "T1195.001 — Supply Chain Compromise: Compromise Software Dependencies and Development Tools"
+ ]
+},
+"cosmosevm": {
+ "status": "new",
+ "cvss": null,
+ "admiralty": "A1",
+ "conf": "Confirmed exploitation — vendor-confirmed drain across six chains, with a published post-mortem",
+ "confNote": "Cosmos Labs published the advisory and the post-mortem, so the exploitation and the April misassessment are vendor-confirmed. No CVE, no CWE and no CVSS were published. The dollar total (~$5.72M), the named chains and the vesting-account underflow description come from crypto-sector outlets rather than from Cosmos Labs.",
+ "iocDate": "Aug 29, 2026 — no indicators published",
+ "severity": 4,
+ "sectors": [
+  "Financial Services",
+  "Information Technology"
+ ],
+ "attack": [
+  "T1190 — Exploit Public-Facing Application",
+  "T1499 — Endpoint Denial of Service",
+  "T1657 — Financial Theft"
+ ]
+},
 "novacookies": {
  "status": "new",
  "cvss": 0,
