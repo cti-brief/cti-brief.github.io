@@ -1018,7 +1018,7 @@ class Component extends DCLogic {
           const t = x.t, r = x.r;
           const isFile = !!fileTypes[t];
           const week = (d.WEEK_RANGE || '').trim();
-          const title = this.ascii('CTI' + (week ? ' ' + week : '') + ' - ' + r.item).slice(0, 100);
+          const title = this.ascii(r.item).slice(0, 100);
           const desc = this.ascii((r.note ? r.note + ' ' : '') + '(Source: CTI brief' + (week ? ', ' + week : '') + ' - ' + r.item + ')');
           const rec = isFile
             ? 'Isolate the device, collect the file for analysis, and hunt for the hash across the estate before releasing the block.'
