@@ -3,6 +3,91 @@ window.CTI = {
   WEEK_RANGE: "Week of Aug 24 – Aug 30, 2026",
   POSTURE: {"level":"CRITICAL","text":"PaperCut is the week's emergency: CVE-2026-82078 (CVSS 9.4) and CVE-2026-81578 (CVSS 8.8) are chained for unauthenticated remote code execution on all NG and MF versions, were exploited as a zero-day, and watchTowr reports bypasses of the first emergency patch — apply the second patch, remove internet exposure, and hunt for 'Database error looking up cardID: VALUES CAST' in archived server.log copies, since the post-exploitation tooling deletes the live file. CISA added three more exploited flaws on Aug 27: ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 are due Aug 30, JFrog Artifactory CVE-2026-66384 Sep 10. Hunt.io tied the ownCloud entry to a Chinese-speaking operator that took 176 files from a Philippine nuclear research body via host 31.58.209[.]241. Citrix NetScaler CVE-2026-8452 and SQL Server CVE-2019-1068 are due today, Aug 29, alongside four older Linux and Red Hat bugs due Sep 9 that CISA added on the back of Cisco Talos reporting on UAT-10147 — hunt 139.180.197[.]150 and svchosts.exe. Island documented NovaCookies, a $320-a-month AiTM service relaying Microsoft 365 sign-ins, with 755 domains published as dedicated infrastructure. VulnCheck found two factory implants in ZBT router firmware giving unauthenticated root, with no fixed release; block inbound UDP/9992. ServiceNow patched three CVSS 10.0 AI Platform flaws that self-hosted customers must apply themselves, cPanel patched a root-RCE in all supported versions, and GeoServer's jsonArrayContains SQL injection is now fixed. Both halves of the SharePoint CVE-2026-55040 plus CVE-2026-63520 chain have public PoCs and are probed in honeypots. Outside the CVE stream, Iran-linked activity moved to disruption: a small UK generator was offline for four days and dozens of US wastewater plants across twelve states saw flooding and pressure loss, with CISA describing operator lockout and disconnected controllers — verify that controller management paths are not internet-reachable. Next.js shipped fixes for two unauthenticated RCE paths (CVE-2026-75604 on Windows filesystems, and a libheif overflow via AVIF image optimization) with no exploitation reported, and a Cosmos EVM balance flaw was exploited across six chains after the fix went public."},
   STORIES: [
+ {
+  "key": "berlin",
+  "tags": [
+   [
+    "crit",
+    "Rhysida · Land Berlin · 5.79 TB claimed"
+   ],
+   [
+    "high",
+    "Government Facilities · Extortion refused"
+   ]
+  ],
+  "badge": "new",
+  "title": "Berlin state government refuses Rhysida's ransom; group auctions a claimed 5.79 TB of administrative data three weeks before the state election",
+  "body": "Berlin's state government confirmed it is dealing with an extortion attempt following an August cyberattack on the city-state's administrative network, and refused the demand. Rhysida posted an entry titled \"Berlin, Germany\" to its leak site on Aug 28, 2026, claiming 5.79 terabytes across roughly 1.44 million files and offering the trove at auction from a starting price of 30 bitcoin (about $77,622) on a countdown just under seven days. Mayor Kai Wegner and Interior Senator Iris Spranger said in a joint statement: \"The state of Berlin will not submit to extortion.\" Spranger said the election remains secure and that the attackers have so far not taken election-related data; Berlin elects its state parliament on Sep 20. Tagesschau reported data had been flowing out of the state network since at least Aug 7. Rhysida's claimed inventory includes 124,823 maps and geodata files, 77,939 legal and complaints files, 46,522 contracts, 27,299 HR files, 11,777 marked confidential and 5,941 password files, plus PII on 12,076 individuals and plaintext credentials for named systems. The claims are Rhysida's and have not been independently verified.",
+  "src": "Reuters, Der Spiegel, RBB, Tagesschau, The Hacker News, Security Affairs, ransomware.live — Aug 28–29, 2026"
+ },
+ {
+  "key": "eo14420",
+  "tags": [
+   [
+    "high",
+    "EO 14420 · Bulk-power system"
+   ],
+   [
+    "med",
+    "Policy · Energy · ICS supply chain"
+   ]
+  ],
+  "badge": "new",
+  "title": "Executive Order 14420 declares a national emergency over foreign-produced grid equipment and gives DOE authority to unwind installed ICS",
+  "body": "President Trump issued Executive Order 14420 on Aug 26, 2026, declaring a national emergency over security risks in foreign-produced equipment used in the US bulk-power system and citing the potential for digital backdoors, malicious remote access, sabotage and supply chain disruption. Invoking IEEPA and the National Emergencies Act, the order gives the Department of Energy authority to prohibit the acquisition, importation, transfer or installation of foreign-produced power system equipment linked to a covered foreign entity and deemed to pose an unacceptable security risk, and for equipment already in service it can require identification, isolation, monitoring, replacement or removal, subject to reliability, safety, replacement availability and phased compliance. Scope is transmission rated at 69 kilovolts or higher, explicitly excluding local distribution facilities; targeted technologies include transformers, inverters, energy storage systems and industrial control systems such as remote terminal units. The order names no country or company; covered foreign entities include those subject to specified US arms embargoes or sanctions. Its structure closely mirrors a 2020 directive that led to a DOE prohibition targeting certain China-linked equipment, later revoked. Implementing regulations are expected within 120 days.",
+  "src": "Executive Order 14420 (Aug 26, 2026), SecurityWeek, Security Affairs, Crowell & Moring, ICS Cybersecurity Conference — Aug 26–28, 2026"
+ },
+ {
+  "key": "mckesson",
+  "tags": [
+   [
+    "crit",
+    "McKesson · ShinyHunters · SaaS data theft"
+   ],
+   [
+    "high",
+    "Healthcare and Public Health"
+   ]
+  ],
+  "badge": "new",
+  "title": "McKesson discloses third-party application breach after ShinyHunters claims 284 million patient-related records taken from Snowflake",
+  "body": "McKesson disclosed a cybersecurity incident in a Form 8-K filed with the SEC, saying it discovered the incident on August 25, 2026 and that its investigation remains in the early stages. In a separate customer notice the company confirmed the incident \"involved third-party applications and the unauthorized access and exfiltration of data\", said it activated incident response protocols and engaged outside experts, and warned customers may see intermittent service degradation. The filing states that as of its date the company \"has not determined that the incident is material\". McKesson has not said which third-party applications were affected, how access was gained, or what data was taken. ShinyHunters told BleepingComputer it was responsible, claiming vishing attacks against multiple McKesson employees compromised Okta single sign-on accounts, which were used to reach the company's Salesforce and Snowflake environments; BleepingComputer learned from another source that the domain mckesson[.]claims was used, matching a ShinyHunters pattern of company[.]claims help-desk impersonation domains documented by ReliaQuest. The actor claims roughly 1TB exfiltrated over four days between August 21 and 25 and about 284 million patient-related data records from Snowflake — ShinyHunters clarified that this is a raw count of records or lines, not unique individuals, and that it has not finished analysing the data. Claimed contents include names, addresses, dates of birth, Social Security numbers, patient IDs, Medicaid and medical record numbers, medication and allergy information, and physician information. The group says it demanded $55,236,150 with a 72-hour deadline and that McKesson did not respond. None of the actor's claims have been independently verified. Health-ISAC has warned of rising ShinyHunters social-engineering attacks on healthcare; other recently named targets include Medtronic, DentaQuest, iRhythm, OneMedical and AdaptHealth.",
+  "src": "McKesson SEC Form 8-K (Aug 25, 2026), McKesson customer notice, BleepingComputer, CyberInsider, ReliaQuest Threat Research — Aug 28, 2026"
+ },
+ {
+  "key": "givewp",
+  "tags": [
+   [
+    "crit",
+    "GiveWP · CVE-2026-82222 · Unauth RCE"
+   ],
+   [
+    "high",
+    "100,000+ installs · Patched Aug 27"
+   ]
+  ],
+  "badge": "new",
+  "title": "GiveWP CVE-2026-82222: unauthenticated PHP object injection to remote command execution in a WordPress donation plugin with 100,000+ installs",
+  "body": "Patchstack disclosed a maximum-severity vulnerability in the GiveWP WordPress donation plugin, tracked as CVE-2026-82222 and affecting versions through 4.16.7.1. Exploitation chains three issues: an unsafe helper for unserializing PHP data, a donation-processing flow that stores attacker-controlled serialized objects, and a gadget chain in libraries bundled with the plugin that can invoke arbitrary system commands. The attack nominally requires an account, but GiveWP \"exposes an unauthenticated registration action (give_action=user_register) that never consults the WordPress users_can_register option\", so an attacker can create an account and obtain an authentication cookie even where registration is disabled. After authenticating, the attacker stores a malicious serialized object in their profile and injects it into the plugin's session database with a crafted donation — Patchstack researcher George Johnstone says \"the server writes the gadget object into wp_give_sessions before returning an HTTP 500\" — then requests any front-end page with the authentication cookie to trigger unserialization and command execution. Versions 4.16.6 through 4.16.7.1 remain vulnerable only where the site contains a legacy donation form without formBuilderSettings, a condition Patchstack says may exist in upgraded installations, sites using the option-based form editor, or after importing or restoring older forms. GiveWP fixed the issue in 4.16.7.2 on August 27 by blocking serialized data during donation processing and restricting object creation at deserialization points; the update also removes serialized object payloads already stored in affected databases. Patchstack notes the registration action still ignores WordPress registration settings but is no longer exploitable for code execution. The flaw was reported by Udin Chan on July 28 through Patchstack. No exploitation in the wild has been reported; GiveWP was abused last year in the Pi-hole donor data breach.",
+  "src": "Patchstack advisory, BleepingComputer — Aug 27–28, 2026"
+ },
+ {
+  "key": "hookedge",
+  "tags": [
+   [
+    "high",
+    "BlueDelta / APT28 · HOOKEDGE"
+   ],
+   [
+    "high",
+    "Government Facilities · Defense Industrial Base"
+   ]
+  ],
+  "badge": "new",
+  "title": "Recorded Future documents HOOKEDGE, a BlueDelta (APT28) batch-script backdoor that runs its entire C2 through webhook.site and Microsoft Edge",
+  "body": "Recorded Future's Insikt Group documented a BlueDelta espionage campaign against government, diplomatic and defense manufacturing organisations in Romania, Spain and Türkiye, running from late September 2025 through early April 2026. Insikt attributes the activity to BlueDelta with moderate confidence — the group overlaps with APT28, Fancy Bear and Forest Blizzard and is attributed to Russia's GRU — citing significant code, infrastructure and tradecraft overlap with the earlier HEADLACE backdoor. HOOKEDGE is a Windows batch-script backdoor rather than a compiled binary: it polls attacker-controlled webhook.site endpoints for .cmd payloads, reconstructs and executes them, captures the output into a locally generated HTML page, and lets Microsoft Edge render that page so an auto-submitting form POSTs the results to a separate webhook endpoint. Edge execution moved from headless mode to hidden or off-screen windows (1x1 at coordinates 10000,10000) during the campaign. Delivery is macro-enabled Word documents, likely spearphished; the earliest lure, seen September 26, 2025, impersonated an agenda from Spain's Ministry of the Presidency, Justice and Relations with the Cortes, appearing shortly after a September 2025 meeting involving Spanish and Moldovan officials and ahead of Moldova's parliamentary elections. Later samples dropped diplomatic themes for generic \"Enable Content\" prompts followed by a fake Word error. On macro execution an AutoOpen() routine writes a batch payload, VBS launchers, an installer and HTML fragments to %userprofile%; the installer creates a scheduled task for persistence then deletes itself, its launcher and the task-definition file. Remaining files use GUID-style names matching the webhook endpoints. Remote-image references docopened.jpg and mailopened.jpg served as tracking canaries distinguishing email delivery, document opening and successful macro execution. First-stage beaconing was extended to 61 minutes, which Insikt notes both evades one-hour sandbox observation and conserves webhook.site's 100-request free-tier quota; selected high-value victims received a second HOOKEDGE stage beaconing as often as every five minutes, separating initial-access infrastructure from active collection. Lab52 separately tracked closely related activity as Operation MacroMaze.",
+  "src": "Recorded Future / Insikt Group (Aug 28, 2026), The Hacker News, Security Affairs, GBHackers, Cyber Press, Lab52 — Aug 28, 2026"
+ },
 {
  "key": "iranot",
  "tags": [
@@ -440,10 +525,10 @@ window.CTI = {
     "Exploited · CISA KEV · Aug 28 Deadline · Dev Platform"
    ]
   ],
-  "badge": "new",
+  "badge": "updated",
   "title": "Gitea CVE-2026-60004 (CVSS 9.8): code injection via diffpatch — any registered user gets RCE as Gitea OS account. CISA KEV Aug 25, federal deadline Aug 28, 2026. PoC public.",
-  "body": "CISA added to KEV Aug 25, 2026 with an Aug 28, 2026 federal deadline. An attacker with repository write access can embed a malicious Git hook in a crafted patch sent to the diffpatch endpoint. Git executes the hook automatically under the Gitea service account. With default open registration, any unauthenticated visitor can register, create a repository, and exploit immediately — no stolen credentials required. Confirmed exploitation: crypto miner dropper deployed in the wild. PoC public on GitHub. Affected: Gitea 1.17 through 1.27.0. Fix: 1.27.1. If unpatched: disable public registration immediately.",
-  "src": "The Hacker News, Help Net Security, CISA KEV — Aug 26, 2026"
+  "body": "Updated Aug 28: Shadowserver counts over 8,300 internet-exposed Gitea instances still unpatched, with remote code execution attacks ongoing past the federal deadline. CISA added to KEV Aug 25, 2026 with an Aug 28, 2026 federal deadline. An attacker with repository write access can embed a malicious Git hook in a crafted patch sent to the diffpatch endpoint. Git executes the hook automatically under the Gitea service account. With default open registration, any unauthenticated visitor can register, create a repository, and exploit immediately — no stolen credentials required. Confirmed exploitation: crypto miner dropper deployed in the wild. PoC public on GitHub. Affected: Gitea 1.17 through 1.27.0. Fix: 1.27.1. If unpatched: disable public registration immediately.",
+  "src": "The Hacker News, Help Net Security, Shadowserver via BleepingComputer, CISA KEV — Aug 26–28, 2026"
  },
  {
   "key": "mlflow",
@@ -702,6 +787,100 @@ window.CTI = {
  }
 ],
   CVES: [
+ {
+  "key": "berlin",
+  "tags": [
+   [
+    "crit",
+    "Rhysida · Land Berlin · 5.79 TB claimed"
+   ],
+   [
+    "high",
+    "Government Facilities · Extortion refused"
+   ]
+  ],
+  "badge": "new",
+  "title": "Berlin state government refuses Rhysida's ransom; group auctions a claimed 5.79 TB of administrative data three weeks before the state election",
+  "body": "Berlin's state government confirmed it is dealing with an extortion attempt following an August cyberattack on the city-state's administrative network, and refused the demand. Rhysida posted an entry titled \"Berlin, Germany\" to its leak site on Aug 28, 2026, claiming 5.79 terabytes across roughly 1.44 million files and offering the trove at auction from a starting price of 30 bitcoin (about $77,622) on a countdown just under seven days. Mayor Kai Wegner and Interior Senator Iris Spranger said in a joint statement: \"The state of Berlin will not submit to extortion.\" Spranger said the election remains secure and that the attackers have so far not taken election-related data; Berlin elects its state parliament on Sep 20. Tagesschau reported data had been flowing out of the state network since at least Aug 7. Rhysida's claimed inventory includes 124,823 maps and geodata files, 77,939 legal and complaints files, 46,522 contracts, 27,299 HR files, 11,777 marked confidential and 5,941 password files, plus PII on 12,076 individuals and plaintext credentials for named systems. The claims are Rhysida's and have not been independently verified.",
+  "src": "Reuters, Der Spiegel, RBB, Tagesschau, The Hacker News, Security Affairs, ransomware.live — Aug 28–29, 2026"
+ },
+ {
+  "key": "eo14420",
+  "tags": [
+   [
+    "high",
+    "EO 14420 · Bulk-power system"
+   ],
+   [
+    "med",
+    "Policy · Energy · ICS supply chain"
+   ]
+  ],
+  "badge": "new",
+  "title": "Executive Order 14420 declares a national emergency over foreign-produced grid equipment and gives DOE authority to unwind installed ICS",
+  "body": "President Trump issued Executive Order 14420 on Aug 26, 2026, declaring a national emergency over security risks in foreign-produced equipment used in the US bulk-power system and citing the potential for digital backdoors, malicious remote access, sabotage and supply chain disruption. Invoking IEEPA and the National Emergencies Act, the order gives the Department of Energy authority to prohibit the acquisition, importation, transfer or installation of foreign-produced power system equipment linked to a covered foreign entity and deemed to pose an unacceptable security risk, and for equipment already in service it can require identification, isolation, monitoring, replacement or removal, subject to reliability, safety, replacement availability and phased compliance. Scope is transmission rated at 69 kilovolts or higher, explicitly excluding local distribution facilities; targeted technologies include transformers, inverters, energy storage systems and industrial control systems such as remote terminal units. The order names no country or company; covered foreign entities include those subject to specified US arms embargoes or sanctions. Its structure closely mirrors a 2020 directive that led to a DOE prohibition targeting certain China-linked equipment, later revoked. Implementing regulations are expected within 120 days.",
+  "src": "Executive Order 14420 (Aug 26, 2026), SecurityWeek, Security Affairs, Crowell & Moring, ICS Cybersecurity Conference — Aug 26–28, 2026"
+ },
+ {
+  "key": "berlin",
+  "level": "crit",
+  "num": "Rhysida — Land Berlin",
+  "score": "",
+  "sub": "Data theft from the Berlin state administrative network; 5.79 TB / 1.44M files claimed and put to auction at 30 BTC. Exfiltration reported ongoing since at least Aug 7",
+  "flags": [
+   "Confirmed incident",
+   "Actor claims unverified",
+   "Ransom refused"
+  ]
+ },
+ {
+  "key": "eo14420",
+  "level": "med",
+  "num": "EO 14420",
+  "score": "",
+  "sub": "US bulk-power system: DOE may block or unwind foreign-produced transformers, inverters, storage and ICS at 69 kV and above. Implementing rules due in 120 days",
+  "flags": [
+   "Policy",
+   "No CVE",
+   "Compliance clock"
+  ]
+ },
+ {
+  "key": "mckesson",
+  "level": "crit",
+  "num": "McKesson SaaS data theft",
+  "score": "",
+  "sub": "Okta SSO compromised via vishing; Salesforce and Snowflake accessed; ~1TB and ~284M patient-related records claimed by ShinyHunters (unverified)",
+  "flags": [
+   "Confirmed incident",
+   "Actor claims unverified",
+   "Vishing"
+  ]
+ },
+ {
+  "key": "givewp",
+  "level": "crit",
+  "num": "CVE-2026-82222",
+  "score": "",
+  "sub": "GiveWP PHP object injection to RCE through unauthenticated registration action — fixed in 4.16.7.2",
+  "flags": [
+   "Max severity",
+   "Patch available",
+   "No in-the-wild reports"
+  ]
+ },
+ {
+  "key": "hookedge",
+  "level": "high",
+  "num": "HOOKEDGE / BlueDelta campaign",
+  "score": "",
+  "sub": "APT28-linked batch-script backdoor using webhook.site and Microsoft Edge for tasking and exfiltration; Romania, Spain, Türkiye",
+  "flags": [
+   "Espionage",
+   "Living off trusted services",
+   "IOCs published"
+  ]
+ },
 {
  "key": "iranot",
  "level": "crit",
@@ -1802,6 +1981,12 @@ window.CTI = {
  }
 ],
   CORRECTIONS: [
+ {
+  "date": "Aug 30, 2026",
+  "item": "Intel refresh — two stories added",
+  "was": "44 stories covering the week to Aug 29",
+  "now": "46 stories. Added Rhysida's extortion of the Berlin state government (leak-site auction Aug 28, ransom refused) and Executive Order 14420 on foreign-produced bulk-power system equipment. Candidates already covered by existing entries — cPanel CVE-2026-65643, Citrix NetScaler CVE-2026-8452, the Aug 26 and Aug 27 KEV batches, Gitea exposure counts, ServiceNow AI Platform and McKesson — were checked and not duplicated"
+ },
 {
  "date": "Aug 29, 2026",
  "item": "NovaCookies added (user-supplied source)",
@@ -1882,6 +2067,285 @@ window.CTI = {
  }
 ],
   D: {
+ "berlin": {
+  "eyebrow": "Rhysida · Land Berlin · Leak-site listing Aug 28, 2026 · Ransom refused",
+  "title": "Rhysida claims 5.79 TB from Berlin's state network and opens an auction; the state government refuses to pay",
+  "tags": [
+   [
+    "crit",
+    "Government Facilities"
+   ],
+   [
+    "high",
+    "Rhysida"
+   ]
+  ],
+  "overview": "Berlin's state government confirmed an extortion attempt following an August cyberattack on the city-state's administrative network and publicly refused the demand. What makes this operationally interesting is not the volume claimed but the credential material in the claimed inventory: Rhysida lists 5,941 password files and plaintext credentials for named municipal systems, which converts a data-theft incident into an ongoing access problem across every system those credentials touch. Tagesschau reported outbound data flow since at least Aug 7, so the exposure window predates the leak-site listing by three weeks. Every figure below is Rhysida's own claim and is not independently verified.",
+  "technical": [
+   "Leak-site entry titled \"Berlin, Germany\" added Aug 28, 2026. The listing identifies the victim only as Berlin, Germany, not as the Senate or any named department, so it does not establish which bodies were compromised.",
+   "Claimed volume: 5.79 TB across approximately 1.44 million files scanned. Category breakdown as posted: Maps/Geo 124,823; Legal/complaints 77,939; Financial 55,553; Contracts 46,522; HR 27,299; Government supervisory 13,142; Confidential 11,777; Infrastructure 8,110; Passwords 5,941; Health 2,738; Contacts 2,287.",
+   "Claimed PII: 12,076 individuals, 16,389 email addresses, 11,963 phone numbers, 148 IBANs. Claimed sensitive records include more than 5,000 personnel files, more than 5,000 administrative-offence files, payroll data and leadership information.",
+   "Claimed credentials in plaintext: GebäudeAtlas, the ePayment PAYONE payment database, Z_ADMIN database accounts, personal password safes and leadership credentials.",
+   "Auction terms: starting price 30 bitcoin (about $77,622) with a countdown of just under seven days, per Reuters. The leak-site entry itself carried no ransom figure per The Hacker News.",
+   "Timeline: Tagesschau reported data had been leaving the Berlin state network since at least Aug 7, 2026. RBB first reported the ransom demand on Aug 27; the joint refusal statement and the leak-site auction both landed Aug 28.",
+   "Election context: Berlin elects its state parliament on Sep 20, 2026. Interior Senator Iris Spranger said the election remains secure and that the attackers have not so far taken election-related data, an assessment security officials support.",
+   "Actor: Rhysida has claimed nearly 280 attacks since emerging in June 2023 per eCrime.ch, roughly half in the US followed by the UK, Canada and Italy per Ransom-DB, with a record of targeting government institutions including the British Library in October 2023.",
+   "Rhysida also asserts the material could involve violations of GDPR, German classified-information rules, criminal law and KRITIS/BSIG requirements. That framing is part of the extortion pressure, not an independent legal finding."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators of compromise have been published for this intrusion — neither Berlin's government nor German federal authorities have released technical detail, and the leak-site entry contains none. Hunting must therefore rest on Rhysida's documented tradecraft (CISA/FBI advisory AA23-319A: valid-account VPN access without MFA, Zerologon, PsExec-driven deployment, shadow-copy deletion) rather than campaign-specific artefacts. Named systems in the claimed credential dump — GebäudeAtlas, PAYONE, Z_ADMIN accounts — are the priority for credential rotation and authentication-log review by any organisation sharing those platforms.",
+  "mitigation": [
+   "Treat the claimed credential files as live: rotate anything reachable with Berlin-administration credentials, and force rotation of Z_ADMIN-class database accounts and any shared service accounts on named platforms.",
+   "Assume a Aug 7 – Aug 28 exposure window at minimum when scoping authentication-log review, not the Aug 28 disclosure date.",
+   "Enforce MFA on every remote access path. Rhysida's documented initial access is valid accounts on external-facing VPN and RDP where MFA is absent.",
+   "Patch and monitor for Zerologon (CVE-2020-1472), which the CISA/FBI advisory lists among Rhysida's privilege-escalation methods.",
+   "For public-sector peers: inventory which municipal SaaS and payment platforms hold your credentials in reusable form, and remove plaintext credential stores from file shares — the claimed 5,941 password files are the reason this incident propagates."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — Rhysida-documented pre-encryption behaviour: shadow-copy destruction and recovery tampering, the last reversible moment in the chain.\n\n// Rhysida TTPs — shadow copy and recovery tampering\n// Technique reference: community hunting patterns, github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, @0x534c)\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where FileName in~ (\"vssadmin.exe\", \"wmic.exe\", \"bcdedit.exe\", \"wbadmin.exe\")\n| where ProcessCommandLine has_any (\"delete shadows\", \"shadowcopy delete\", \"recoveryenabled no\", \"delete catalog\", \"ignoreallfailures\")\n| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName\n| sort by Timestamp desc",
+   "DEFENDER XDR KQL — remote service creation and PsExec-style lateral movement, Rhysida's documented deployment method across a domain.\n\n// Rhysida TTPs — PsExec / remote service deployment\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > ago(30d)\n   | where FileName in~ (\"psexec.exe\", \"psexesvc.exe\", \"paexec.exe\") or ProcessCommandLine has_any (\"-accepteula\", \"\\\\ADMIN$\")\n   | project Timestamp, DeviceName, AccountName, Evidence = ProcessCommandLine),\n  (DeviceFileEvents\n   | where Timestamp > ago(30d)\n   | where FolderPath has @\"\\Windows\\\" and FileName endswith \".exe\"\n   | where InitiatingProcessFileName =~ \"services.exe\"\n   | project Timestamp, DeviceName, AccountName = InitiatingProcessAccountName, Evidence = FolderPath)\n| sort by Timestamp desc",
+   "SENTINEL KQL — successful external VPN or RDP authentication without an MFA claim, the initial-access condition the CISA/FBI advisory attributes to this actor.\n\n// Rhysida TTPs — remote access sign-in with no MFA satisfied\n// Enrichment pattern adapted from community work: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com)\nlet lookback = 30d;\nSigninLogs\n| where TimeGenerated > ago(lookback)\n| where ResultType == 0\n| where AppDisplayName has_any (\"VPN\", \"RDP\", \"Remote Desktop\", \"Gateway\") or ClientAppUsed has_any (\"Other clients\", \"IMAP\", \"SMTP\")\n| extend mfa = tostring(parse_json(tostring(AuthenticationDetails))[0].authenticationStepResultDetail)\n| where AuthenticationRequirement != \"multiFactorAuthentication\"\n| summarize signins = count(), ips = make_set(IPAddress, 20), first = min(TimeGenerated), last = max(TimeGenerated)\n    by UserPrincipalName, AppDisplayName, Location\n| where signins > 0\n| sort by last desc",
+   "Where credentials for GebäudeAtlas, PAYONE or Z_ADMIN-class accounts are shared with your environment, pull authentication history for those accounts from Aug 7 forward and rotate regardless of whether anomalous use appears.",
+   "Do not treat the auction countdown as the exposure deadline. Data claimed as scanned on Aug 28 was already out; scoping and notification obligations run from the Aug 7 outbound-flow date reported by Tagesschau."
+  ],
+  "source": "Reuters, Der Spiegel, RBB, Tagesschau, The Hacker News, Security Affairs, ransomware.live, CISA/FBI advisory AA23-319A",
+  "sourceNote": "Aug 28–29, 2026"
+ },
+ "eo14420": {
+  "eyebrow": "Executive Order 14420 · Signed Aug 26, 2026 · Bulk-power system · ICS supply chain",
+  "title": "EO 14420 declares a national emergency over foreign-produced grid equipment and lets DOE unwind ICS already in service",
+  "tags": [
+   [
+    "high",
+    "Energy"
+   ],
+   [
+    "med",
+    "Policy"
+   ]
+  ],
+  "overview": "The order moves part of grid cyber defence into procurement. Its operational significance for defenders is the retroactive limb: DOE can require identification, isolation, monitoring, replacement or removal of equipment already installed, which means asset owners need a defensible inventory of vendor provenance and remote-access paths for transmission-side equipment before the implementing rules arrive. Nothing here changes patching or detection priorities this week; the work it creates is inventory and supply-chain documentation.",
+  "technical": [
+   "Legal basis: national emergency declared under the International Emergency Economic Powers Act and the National Emergencies Act, citing foreign actors' potential exploitation of vulnerabilities in US energy infrastructure, including digital backdoors built into foreign-manufactured equipment that allow remote access and potential sabotage.",
+   "Prohibited transactions: acquisition, importation, transfer or installation of foreign-produced bulk-power system electric equipment linked to a covered foreign entity where DOE determines undue risk of sabotage, subversion, unauthorized access, malicious remote action or supply disruption, or risk of catastrophic effects on US critical infrastructure or the economy.",
+   "Retroactive authority: for equipment already on the system, DOE may require identification, isolation, monitoring, replacement or removal, subject to reliability, safety, replacement availability and phased compliance.",
+   "Scope: critical infrastructure operating bulk-power system transmission lines rated at 69 kilovolts or higher; local electricity distribution facilities are explicitly excluded.",
+   "Covered technologies: transformers, inverters, energy storage systems and industrial control systems, including remote terminal units.",
+   "Covered foreign entities: countries subject to specified US arms embargoes or sanctions, plus other entities determined to be engaged in conduct detrimental to US national security or foreign policy. The order names no country or company; reporting notes its structure closely mirrors a 2020 directive that produced a DOE prohibition targeting certain China-linked equipment, later revoked during a Biden-administration review.",
+   "Stated rationale for timing: rapid growth in data centers, artificial intelligence, advanced manufacturing and defense production has increased dependence on grid reliability, so a supply-chain disruption or targeted attack now propagates beyond the energy sector.",
+   "Next milestones: DOE implementing regulations expected within 120 days, together with the covered-foreign-entity and pre-qualification determinations that define who is actually in scope."
+  ],
+  "iocs": [],
+  "iocNote": "Policy instrument — no indicators apply. The order is included because it creates near-term inventory and documentation obligations for OT asset owners, not because of any observed intrusion.",
+  "mitigation": [
+   "Build or refresh a provenance inventory for transmission-side equipment at 69 kV and above: manufacturer, ultimate parent, firmware origin and support arrangements for transformers, inverters, storage systems, RTUs and other ICS.",
+   "Document every vendor remote-access path into that equipment — who can reach it, through what channel, with what authentication and logging. This is the evidence DOE's identification and monitoring requirements will ask for.",
+   "Flag procurement in flight. Contracts for covered equipment not yet installed are the cheapest place to absorb the rule, before the 120-day implementing regulations land.",
+   "Distribution-side operators should confirm the 69 kV boundary in their own asset classification rather than assuming exclusion."
+  ],
+  "response": [
+   "No hunting queries: this is a policy and procurement instrument with no associated threat activity or telemetry to query. The relevant follow-up is an asset-provenance and vendor-remote-access inventory, tracked as a compliance task.",
+   "Where vendor remote access to covered equipment exists, ensure it is logged into the same platform as the rest of the estate — the monitoring obligations in the order presume you can produce that record."
+  ],
+  "source": "Executive Order 14420, SecurityWeek, Security Affairs, Crowell & Moring, ICS Cybersecurity Conference, Energy News Beat",
+  "sourceNote": "Aug 26–28, 2026"
+ },
+ "mckesson": {
+  "eyebrow": "McKesson · ShinyHunters · Okta SSO → Salesforce / Snowflake · Disclosed Aug 28, 2026",
+  "title": "McKesson confirms third-party application breach and data exfiltration; ShinyHunters claims 284 million patient-related records from Snowflake and a $55.2M ransom demand",
+  "tags": [
+   [
+    "crit",
+    "Confirmed incident"
+   ],
+   [
+    "high",
+    "Healthcare and Public Health · Actor claims unverified"
+   ]
+  ],
+  "overview": "McKesson discovered the incident on August 25, 2026 and disclosed it on August 28 in an SEC Form 8-K and a customer notice, confirming unauthorized access to third-party applications and exfiltration of data. The company says the investigation is in early stages, has not determined the incident to be material, and has not identified the affected applications, the access vector, or the data taken. ShinyHunters claims responsibility, describing vishing against multiple employees to compromise Okta single sign-on accounts and reach Salesforce and Snowflake. The company[.]claims help-desk impersonation pattern behind the mckesson[.]claims domain matches a wider ShinyHunters campaign tracked by ReliaQuest. Actor claims of ~1TB exfiltrated and ~284 million patient-related records are unverified; ShinyHunters itself clarified the 284 million figure is a raw record count, not unique patients.",
+  "technical": [
+   "Initial access as claimed by the actor: voice phishing against multiple employees, leading to compromise of Okta single sign-on accounts. This is the same identity-first pattern Health-ISAC has warned healthcare organisations about — no exploited CVE is involved.",
+   "Post-authentication reach: with valid SSO sessions the actor claims full compromise of the Salesforce environment including support cases, plus bulk extraction from Snowflake. Exfiltration is claimed as ~1TB over four days, August 21–25, 2026, meaning the theft predates McKesson's August 25 discovery by several days.",
+   "Impersonation infrastructure: the mckesson[.]claims domain follows the company[.]claims pattern ReliaQuest documented — the target organisation's name or abbreviation under the .claims TLD, used to impersonate help desks and IT teams. Organisations should check for lookalike .claims registrations of their own name.",
+   "Claimed data categories (unverified): names, addresses, dates of birth, Social Security numbers, patient IDs, phone numbers, email addresses, Medicaid numbers, medical record numbers, medication and allergy information, illnesses, disabilities, appointment and physician information, plus prescriptions and shipments, invoices, employee information, Salesforce records and internal communications."
+  ],
+  "iocs": [
+   {
+    "value": "mckesson.claims",
+    "type": "Domain",
+    "note": "Help-desk impersonation domain reported as used in the vishing campaign. Part of the wider ShinyHunters company[.]claims pattern.",
+    "source": "https://www.bleepingcomputer.com/news/security/mckesson-discloses-breach-after-shinyhunters-claims-patient-data-theft/"
+   }
+  ],
+  "iocNote": "No file hashes or IP indicators have been published. Detection is identity-centric: impossible-travel and new-device sign-ins on Okta, MFA reset or enrolment following an inbound help-desk call, and bulk Salesforce report or Snowflake query volume from newly registered sessions. Hunt for lookalike .claims domains carrying your own organisation's name or abbreviation.",
+  "mitigation": [
+   "Require verified callback or in-band identity proofing before any help-desk MFA reset or device enrolment. Vishing against the service desk is the initial access vector in this and the wider ShinyHunters healthcare wave.",
+   "Enforce phishing-resistant MFA (FIDO2 or platform passkeys) on the identity provider for all staff with access to Salesforce, Snowflake or other bulk-data SaaS.",
+   "Cap and alert on bulk export in SaaS: Salesforce report export limits and Snowflake query result size thresholds, with alerting on first-time large extractions per user.",
+   "Inventory third-party applications holding patient data and confirm which have IdP-enforced conditional access rather than standalone credentials."
+  ],
+  "response": [
+   "Review Okta (or equivalent IdP) system logs for MFA factor resets, new device enrolments and sign-ins from new ASNs across the August 18–25 window; correlate with help-desk ticket records.",
+   "Pull Salesforce Setup Audit Trail and Event Monitoring for report exports and API bulk queries, and Snowflake QUERY_HISTORY / ACCESS_HISTORY for large result sets, over the same window.",
+   "Register or monitor .claims variants of your own brand names; submit takedown requests for any that resolve.",
+   "DEFENDER XDR KQL — ShinyHunters-style help-desk vishing to SaaS bulk extraction: correlate lookalike .claims domain contact, MFA changes and cloud app data pulls.\n\n// McKesson / ShinyHunters — identity-first SaaS theft pattern\nlet lookalike = dynamic([\"mckesson.claims\"]);\nlet riskyIdentity =\n  AADUserRiskEvents\n  | where TimeGenerated > ago(30d)\n  | where RiskEventType has_any (\"unfamiliarFeatures\",\"impossibleTravel\",\"newCountry\",\"anomalousToken\")\n  | project TimeGenerated, UserPrincipalName, RiskEventType, IpAddress;\nlet mfaChanges =\n  CloudAppEvents\n  | where Timestamp > ago(30d)\n  | where ActionType has_any (\"Reset user MFA\",\"Update user\",\"user.mfa.factor.reset_all\",\"user.mfa.factor.deactivate\")\n  | extend Target = tostring(RawEventData.ObjectId), Actor = tostring(RawEventData.UserId)\n  | project Timestamp, ActionType, Actor, Target, IPAddress;\nlet bulkPull =\n  CloudAppEvents\n  | where Timestamp > ago(30d)\n  | where Application has_any (\"Salesforce\",\"Snowflake\")\n  | extend Rows = toint(RawEventData.ResultRowCount), Op = tostring(RawEventData.Operation)\n  | where Op has_any (\"Export\",\"ReportExport\",\"BulkQuery\",\"UNLOAD\",\"COPY INTO\") or Rows > 100000\n  | where IPTags has_any (\"Brute force attacker\",\"Password spray attacker\",\"malicious\",\"Possible Hackers\",\"Tor\") or isnotempty(Op)\n  | project Timestamp, AccountDisplayName, Application, Op, Rows, IPAddress;\nunion isfuzzy=true\n  (riskyIdentity | extend Signal = \"identity_risk\"),\n  (mfaChanges   | extend Signal = \"mfa_change\"),\n  (bulkPull     | extend Signal = \"bulk_export\"),\n  (DeviceNetworkEvents\n   | where Timestamp > ago(30d)\n   | where RemoteUrl has_any (lookalike) or RemoteUrl endswith \".claims\"\n   | extend Signal = \"lookalike_domain\"\n   | project Timestamp, DeviceName, RemoteUrl, Signal)\n| sort by Timestamp desc\n// Technique adapted from community hunting patterns: CloudAppEvents RawEventData unpacking and IPTags enrichment per Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules) and AADUserRiskEvents correlation per Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules).",
+   "SENTINEL KQL — Bulk SaaS extraction shortly after an MFA factor change on the same account.\n\n// McKesson / ShinyHunters — MFA change followed by bulk export\nlet window = 7d;\nlet mfa =\n  union isfuzzy=true\n    (AuditLogs\n     | where TimeGenerated > ago(30d)\n     | where OperationName has_any (\"Reset\",\"Update user\",\"Register security info\",\"Delete security info\")\n     | extend Account = tolower(tostring(TargetResources[0].userPrincipalName))\n     | project MfaTime = TimeGenerated, Account, OperationName),\n    (OktaV2_CL\n     | where TimeGenerated > ago(30d)\n     | where eventType_s has \"user.mfa.factor\"\n     | extend Account = tolower(tostring(actor_alternateId_s))\n     | project MfaTime = TimeGenerated, Account, OperationName = eventType_s);\nlet exports =\n  CloudAppEvents\n  | where Timestamp > ago(30d)\n  | where Application has_any (\"Salesforce\",\"Snowflake\")\n  | extend Rows = toint(RawEventData.ResultRowCount), Op = tostring(RawEventData.Operation)\n  | where Op has_any (\"Export\",\"ReportExport\",\"BulkQuery\",\"UNLOAD\") or Rows > 100000\n  | extend Account = tolower(AccountDisplayName)\n  | project ExportTime = Timestamp, Account, Application, Op, Rows, IPAddress;\nmfa\n| join kind=inner exports on Account\n| where ExportTime between (MfaTime .. MfaTime + window)\n| project MfaTime, ExportTime, Account, OperationName, Application, Op, Rows, IPAddress\n| sort by ExportTime desc\n// Adapted from community technique: union isfuzzy across identity sources so the query survives missing connectors — pattern credit Bert-Jan Pals (kqlquery.com) and Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules)."
+  ],
+  "source": "McKesson SEC Form 8-K, McKesson customer notice, BleepingComputer, CyberInsider, ReliaQuest Threat Research, Health-ISAC",
+  "sourceNote": "Aug 28, 2026"
+ },
+ "givewp": {
+  "eyebrow": "GiveWP · CVE-2026-82222 · Max severity · Patched 4.16.7.2 (Aug 27, 2026) · 100,000+ installs",
+  "title": "GiveWP CVE-2026-82222: unauthenticated PHP object injection to remote command execution, reachable even when WordPress registration is disabled",
+  "tags": [
+   [
+    "crit",
+    "Unauthenticated RCE"
+   ],
+   [
+    "high",
+    "Patched Aug 27 · No in-the-wild reports"
+   ]
+  ],
+  "overview": "Patchstack disclosed CVE-2026-82222 in the GiveWP WordPress donation plugin, affecting all versions through 4.16.7.1 across more than 100,000 installs. The chain combines an unsafe unserialize helper, a donation flow that persists attacker-controlled serialized objects, and a gadget chain in bundled libraries that reaches arbitrary system commands. The authentication requirement is bypassed by GiveWP's own give_action=user_register endpoint, which never checks the WordPress users_can_register option, so an attacker can self-register and obtain a cookie on sites with registration disabled. GiveWP shipped 4.16.7.2 on August 27, blocking serialized data in donation processing, restricting object creation at deserialization points, and purging serialized payloads already stored in the database. Reported by Udin Chan on July 28 via Patchstack. No exploitation in the wild has been reported.",
+  "technical": [
+   "Step 1 — unauthenticated account creation: give_action=user_register creates a WordPress user and returns an authentication cookie without consulting users_can_register. Patchstack notes the fix does not change this behaviour; it is simply no longer a path to code execution.",
+   "Step 2 — object storage: the attacker places a serialized gadget object in their own user profile, then submits a crafted donation. Per Patchstack, the server writes the gadget object into the wp_give_sessions table before returning an HTTP 500 — the 500 response is part of the successful path, not a failure.",
+   "Step 3 — trigger: requesting any front-end page while holding the authentication cookie causes the stored object to be unserialized, invoking the gadget chain in libraries bundled with the plugin and executing the attacker's system command as the web server user.",
+   "Residual condition in 4.16.6–4.16.7.1: exploitation requires a legacy donation form lacking formBuilderSettings. Patchstack notes these can be present in upgraded installations, on sites using the option-based form editor, or after importing or restoring older forms — so version alone does not establish safety.",
+   "Prior abuse of this plugin: a GiveWP flaw was used last year to reach Pi-hole, exposing names and email addresses of roughly 30,000 donors."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators published — the disclosure is a vendor/researcher advisory with no observed in-the-wild campaign. Detection is behavioural: POST requests carrying give_action=user_register, unexpected new WordPress subscriber accounts, HTTP 500 responses from donation endpoints followed by front-end requests from the same session, and serialized data (O:, a: prefixes) in the wp_give_sessions table.",
+  "mitigation": [
+   "Update GiveWP to 4.16.7.2 or later. The update also removes serialized object payloads already stored in the database.",
+   "Audit WordPress users created since late July 2026 and remove unexpected self-registered accounts.",
+   "Block or rate-limit give_action=user_register at the WAF or reverse proxy on sites that do not intend to accept registrations.",
+   "Review legacy donation forms without formBuilderSettings — imported, restored or option-editor forms — as these keep the chain reachable on 4.16.6–4.16.7.1."
+  ],
+  "response": [
+   "Inspect the wp_give_sessions table for values containing serialized object markers: SELECT * FROM wp_give_sessions WHERE session_value LIKE '%O:%' OR session_value LIKE '%a:%';",
+   "Grep web server access logs for the registration action: grep -i \"give_action=user_register\" access.log",
+   "If exploitation is suspected: rotate database and WordPress salts, audit uploads and theme/plugin directories for webshells, and review scheduled tasks (wp_cron) for unfamiliar hooks.",
+   "DEFENDER XDR KQL — Web server command execution following a WordPress donation-plugin request pattern.\n\n// GiveWP CVE-2026-82222 — post-exploitation behaviour on the web host\nlet webParents = dynamic([\"php-fpm\",\"php\",\"httpd\",\"apache2\",\"nginx\",\"w3wp.exe\"]);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > ago(30d)\n   | where InitiatingProcessFileName has_any (webParents)\n   | where FileName in~ (\"sh\",\"bash\",\"cmd.exe\",\"powershell.exe\",\"curl\",\"wget\",\"python3\",\"perl\")\n   | project Timestamp, DeviceName, InitiatingProcessFileName, FileName, ProcessCommandLine, AccountName),\n  (DeviceFileEvents\n   | where Timestamp > ago(30d)\n   | where FolderPath has_any (\"wp-content/uploads\",\"wp-content/plugins/give\")\n   | where FileName endswith \".php\"\n   | project Timestamp, DeviceName, FileName, FolderPath, InitiatingProcessFileName),\n  (DeviceNetworkEvents\n   | where Timestamp > ago(30d)\n   | where InitiatingProcessFileName has_any (webParents)\n   | where RemotePort in (4444, 1337, 9001) or RemoteIPType == \"Public\"\n   | summarize Connections = count() by bin(Timestamp, 1h), DeviceName, InitiatingProcessFileName, RemoteIP\n   | where Connections > 5)\n| sort by Timestamp desc\n// Web-parent-to-shell union technique adapted from community detections by Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules)."
+  ],
+  "source": "Patchstack advisory (Unauthenticated PHP Object Injection to Remote Code Execution on GiveWP), BleepingComputer",
+  "sourceNote": "Aug 27–28, 2026"
+ },
+ "hookedge": {
+  "eyebrow": "BlueDelta / APT28 · HOOKEDGE · webhook.site + Microsoft Edge C2 · Recorded Future, Aug 28, 2026",
+  "title": "HOOKEDGE: a BlueDelta batch-script backdoor that uses Microsoft Edge as its HTTP client and webhook.site as its entire command-and-control channel",
+  "tags": [
+   [
+    "high",
+    "Russia / GRU · Moderate confidence"
+   ],
+   [
+    "high",
+    "Government Facilities · Defense Industrial Base"
+   ]
+  ],
+  "overview": "Recorded Future's Insikt Group documented HOOKEDGE, a previously undocumented Windows batch-script backdoor used by BlueDelta (overlapping APT28, Fancy Bear, Forest Blizzard; attributed to Russia's GRU) against government, diplomatic and defense manufacturing organisations in Romania, Spain and Türkiye between late September 2025 and early April 2026. Attribution is moderate confidence, based on code, infrastructure and tradecraft overlap with the earlier HEADLACE backdoor. The implant has no dedicated C2 server: it polls webhook.site endpoints for .cmd payloads and exfiltrates command output by writing it into a local HTML page that Microsoft Edge renders, triggering an auto-submitting form POST to a second webhook endpoint. Delivery is macro-enabled Word documents; persistence is a scheduled task, after which the installer deletes itself and its artifacts. Insikt assesses the self-deleting installer chain as a deliberate effort to reduce the forensic footprint. Lab52 tracked closely related activity as Operation MacroMaze.",
+  "technical": [
+   "Delivery and install: macro-enabled Word documents, likely spearphished. The earliest lure (September 26, 2025) impersonated an agenda from Spain's Ministry of the Presidency, Justice and Relations with the Cortes, appearing shortly after a September 2025 Spanish–Moldovan meeting and ahead of Moldova's parliamentary elections. Later samples used generic 'Enable Content' prompts followed by a fake Microsoft Word error to suppress suspicion. On macro execution AutoOpen() writes a batch payload, VBS launchers, an installer and HTML fragments into %userprofile%.",
+   "Persistence and anti-forensics: the installer creates a scheduled task, then deletes itself, its launcher and the task-definition file. Remaining files carry GUID-style names matching the operators' webhook endpoints, which ties local artifacts directly to tasking infrastructure.",
+   "C2 via legitimate services: HOOKEDGE polls attacker-controlled webhook.site endpoints for .cmd fragments, reconstructs and executes them, captures output into a locally generated HTML page, then launches Microsoft Edge to render that page so an auto-submitting form POSTs the output to a separate webhook endpoint. Edge execution moved from --headless to hidden or off-screen windows (1x1 window at coordinates 10000,10000) as the campaign progressed. The result is malicious traffic that resembles ordinary encrypted browsing, with no custom network client and no commonly abused LOLBin.",
+   "Beacon tiering: first-stage beaconing was extended to 61 minutes, which both outlasts sandboxes that observe a process for one hour and conserves webhook.site's free-tier limit of 100 requests per endpoint (a 30-minute interval exhausts an endpoint in roughly two to three days). Confirmed high-value victims received a second HOOKEDGE payload beaconing as often as every five minutes, keeping initial-access infrastructure separate from active collection.",
+   "Campaign telemetry: embedded remote-image references docopened.jpg and mailopened.jpg acted as canaries letting operators distinguish email delivery, document opening and successful macro execution before committing follow-on tooling. Insikt notes the document-open canary was later removed, suspected to reduce network indicators.",
+   "Lineage: Insikt assesses HOOKEDGE as a direct evolution of HEADLACE, maintained by the same operators — shared batch scripting, browser-mediated communications, use of legitimate internet services, GUID-based artifacts and staged payload delivery. Earlier HEADLACE operations abused GitHub, Mocky and InfinityFree."
+  ],
+  "iocs": [
+   {
+    "value": "https://webhook.site/01d6a811-ae9a-4ecb-be3f-610075556304",
+    "type": "URL",
+    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "https://webhook.site/272f1315-14d7-458c-a4ca-e2df423490b4",
+    "type": "URL",
+    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "https://webhook.site/34f908b6-dd89-4600-b413-a29cd5e37a0b",
+    "type": "URL",
+    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "https://webhook.site/36c9aecd-19f5-4564-a354-7708d947da8e",
+    "type": "URL",
+    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "https://webhook.site/4e6cf717-e4d6-4f40-9f2d-134196fa5e7d",
+    "type": "URL",
+    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "https://webhook.site/4e81a907-cc30-45c0-8bbd-5248e9f6dacd",
+    "type": "URL",
+    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "https://webhook.site/4ef62d6a-90c0-4a70-8dd2-468879c70fd",
+    "type": "URL",
+    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint (as published).",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "docopened.jpg",
+    "type": "Filename",
+    "note": "Remote-image tracking canary referenced in lure documents to confirm document opening.",
+    "source": "https://gbhackers.com/hookedge-malware-campaign/"
+   },
+   {
+    "value": "mailopened.jpg",
+    "type": "Filename",
+    "note": "Remote-image tracking canary referenced in phishing emails to confirm email opening.",
+    "source": "https://gbhackers.com/hookedge-malware-campaign/"
+   },
+   {
+    "value": "GUID-named .bat, .vbs, .cmd, .htm and .xhtml files in %userprofile%",
+    "type": "Behavior",
+    "note": "Local artifacts named after the operators' webhook endpoints. Hunt user profile directories for GUID-style filenames with these extensions.",
+    "source": "https://gbhackers.com/hookedge-malware-campaign/"
+   },
+   {
+    "value": "Microsoft Edge launched with --headless or a 1x1 window at 10000,10000 opening a local HTML file",
+    "type": "Behavior",
+    "note": "Edge used as the HTTP client for exfiltration. Hidden or off-screen window geometry replaced headless mode during the campaign.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   },
+   {
+    "value": "BlueDelta",
+    "type": "Actor Alias",
+    "note": "Recorded Future tracking name; overlaps APT28, Fancy Bear, Forest Blizzard. Attributed to Russia's GRU.",
+    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+   }
+  ],
+  "iocNote": "Recorded Future published seven webhook.site callback URLs; no file hashes were included in the public reporting reviewed here, so no SHA256 is available. The URL indicators are the operators' own endpoints and are the highest-fidelity network detection available. Because the transport is legitimate webhook.site over TLS, blanket domain blocking (where webhook.site has no business use) is more durable than per-endpoint blocking.",
+  "mitigation": [
+   "Block macros in Office documents originating from the internet via policy (Block macros from running in Office files from the Internet), and disable VBA where business need does not exist.",
+   "Baseline and restrict outbound access to webhook.site and comparable request-inspection services where there is no legitimate business purpose.",
+   "Alert on scheduled tasks created with actions pointing at scripts in user-writable paths (%userprofile%, %appdata%, %temp%).",
+   "Alert on Microsoft Edge invocations carrying --headless, off-screen window geometry, local file:// HTML paths or data: URLs, especially when the parent is cmd.exe, wscript.exe or cscript.exe."
+  ],
+  "response": [
+   "Hunt user profile directories for GUID-named .bat, .vbs, .cmd, .htm and .xhtml files; correlate any hits against the published webhook endpoint GUIDs.",
+   "Review proxy and DNS logs for webhook.site requests over the September 2025 – April 2026 window and forward, and pull the full URL path to compare against the seven published endpoints.",
+   "Where a hit is found, treat as targeted espionage: preserve the scheduled task definitions and Edge command lines before remediation, and scope for the second-stage five-minute-beacon variant.",
+   "DEFENDER XDR KQL — HOOKEDGE execution chain: Office spawning script hosts, scheduled task creation from user paths, Edge rendering local HTML, and webhook.site egress.\n\n// BlueDelta HOOKEDGE — chain detection\nlet hookedgeUrls = dynamic([\n  \"01d6a811-ae9a-4ecb-be3f-610075556304\",\"272f1315-14d7-458c-a4ca-e2df423490b4\",\n  \"34f908b6-dd89-4600-b413-a29cd5e37a0b\",\"36c9aecd-19f5-4564-a354-7708d947da8e\",\n  \"4e6cf717-e4d6-4f40-9f2d-134196fa5e7d\",\"4e81a907-cc30-45c0-8bbd-5248e9f6dacd\",\n  \"4ef62d6a-90c0-4a70-8dd2-468879c70fd\"]);\nunion isfuzzy=true\n  (DeviceNetworkEvents\n   | where Timestamp > ago(90d)\n   | where RemoteUrl has \"webhook.site\"\n   | extend KnownEndpoint = tostring(coalesce(extract(@\"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{9,12})\", 1, RemoteUrl), \"\"))\n   | extend Signal = iff(hookedgeUrls has KnownEndpoint, \"HOOKEDGE_known_endpoint\", \"webhook_site_egress\")\n   | project Timestamp, DeviceName, InitiatingProcessFileName, RemoteUrl, Signal),\n  (DeviceProcessEvents\n   | where Timestamp > ago(90d)\n   | where InitiatingProcessFileName in~ (\"winword.exe\",\"excel.exe\",\"powerpnt.exe\")\n   | where FileName in~ (\"cmd.exe\",\"wscript.exe\",\"cscript.exe\",\"mshta.exe\",\"powershell.exe\")\n   | extend Signal = \"office_spawns_script_host\"\n   | project Timestamp, DeviceName, InitiatingProcessFileName, FileName, ProcessCommandLine, Signal),\n  (DeviceProcessEvents\n   | where Timestamp > ago(90d)\n   | where FileName =~ \"schtasks.exe\"\n   | where ProcessCommandLine has \"/create\"\n   | where ProcessCommandLine has_any (\"\\\\Users\\\\\",\"AppData\",\"Temp\",\".vbs\",\".bat\",\".cmd\")\n   | extend Signal = \"schtask_from_user_path\"\n   | project Timestamp, DeviceName, ProcessCommandLine, InitiatingProcessFileName, Signal),\n  (DeviceProcessEvents\n   | where Timestamp > ago(90d)\n   | where FileName in~ (\"msedge.exe\")\n   | where ProcessCommandLine has_any (\"--headless\",\"--window-position=10000\",\"--window-size=1,1\",\"file://\",\".xhtml\",\"data:text/html\")\n   | where InitiatingProcessFileName in~ (\"cmd.exe\",\"wscript.exe\",\"cscript.exe\",\"explorer.exe\")\n   | extend Signal = \"edge_as_http_client\"\n   | project Timestamp, DeviceName, ProcessCommandLine, InitiatingProcessFileName, Signal),\n  (DeviceFileEvents\n   | where Timestamp > ago(90d)\n   | where FolderPath has \"\\\\Users\\\\\"\n   | where FileName matches regex @\"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{9,12}\\.(bat|vbs|cmd|htm|xhtml)$\"\n   | extend Signal = \"guid_named_artifact\"\n   | project Timestamp, DeviceName, FileName, FolderPath, InitiatingProcessFileName, Signal)\n| sort by Timestamp desc\n// Union-across-tables and dynamic-indicator-list technique adapted from community detections by Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules) and Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules).",
+   "SENTINEL KQL — Hosts beaconing to webhook.site on a regular interval, which surfaces the 61-minute first stage and the five-minute second stage.\n\n// BlueDelta HOOKEDGE — webhook.site beacon interval analysis\nlet lookback = 90d;\nunion isfuzzy=true\n  (DeviceNetworkEvents | where Timestamp > ago(lookback) | where RemoteUrl has \"webhook.site\"\n   | project TimeGenerated = Timestamp, Host = DeviceName, Url = RemoteUrl),\n  (CommonSecurityLog | where TimeGenerated > ago(lookback) | where RequestURL has \"webhook.site\"\n   | project TimeGenerated, Host = SourceHostName, Url = RequestURL),\n  (_Im_WebSession(url_has=\"webhook.site\", starttime=ago(lookback))\n   | project TimeGenerated, Host = SrcHostname, Url = Url)\n| extend Endpoint = extract(@\"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{9,12})\", 1, Url)\n| order by Host asc, TimeGenerated asc\n| extend PrevTime = prev(TimeGenerated), PrevHost = prev(Host)\n| where Host == PrevHost\n| extend DeltaMin = datetime_diff('minute', TimeGenerated, PrevTime)\n| where DeltaMin between (1 .. 180)\n| summarize Hits = count(), MedianDeltaMin = percentile(DeltaMin, 50), StdDev = stdev(DeltaMin),\n            Endpoints = make_set(Endpoint, 10), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)\n            by Host\n| where Hits >= 6 and StdDev < 5\n| sort by Hits desc\n// Beacon-interval summarisation technique adapted from community hunting work by Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules) and Bert-Jan Pals (kqlquery.com); isfuzzy union keeps it running where a connector is absent."
+  ],
+  "source": "Recorded Future / Insikt Group, The Hacker News, Security Affairs, GBHackers, Cyber Press, Lab52",
+  "sourceNote": "Aug 28, 2026"
+ },
 "iranot": {
  "eyebrow": "Iran-linked · Energy and Water/Wastewater · OT impact · UK NCSC, FBI, CISA",
  "title": "A four-day outage at a small UK generator and wastewater disruption across twelve US states, in the same window",
@@ -3521,7 +3985,7 @@ window.CTI = {
   "sourceNote": "Aug 16–25, 2026"
  },
  "gitea2": {
-  "eyebrow": "Gitea · CVE-2026-60004 · CVSS 9.8 · Exploited · CISA KEV · Aug 28 Deadline",
+  "eyebrow": "Gitea · CVE-2026-60004 · CVSS 9.8 · Exploited · KEV deadline passed · 8,300+ exposed",
   "title": "Gitea CVE-2026-60004 (CVSS 9.8): diffpatch RCE exploited to deploy crypto-miner dropper — effectively unauthenticated on default installs. CISA KEV Aug 25, federal deadline Aug 28.",
   "tags": [
    [
@@ -3535,7 +3999,7 @@ window.CTI = {
   ],
   "overview": "CISA added CVE-2026-60004 to its Known Exploited Vulnerabilities catalog on August 25, 2026, with a federal remediation deadline of August 28. Critical code injection in the Gitea diffpatch endpoint allows an attacker with repository write access to plant an executable Git hook that runs arbitrary shell commands as the Gitea service account. Gitea enables open user registration by default — an automated scanner was able to register an account, create a repository, and trigger the full exploit chain with no prior credentials, deploying a crypto-miner-like dropper. Confirmed exploitation on a self-hosted instance per incident report (Habr). A public PoC is available (0xBlackash/CVE-2026-60004). Affects Gitea 1.17–1.27.0; fixed in 1.27.1. Blast radius: database credentials, OAuth tokens, SSH host keys, CI/CD pipeline tampering. Federal deadline Aug 28, 2026.",
   "technical": [
-   "Exposure (Aug 26, 2026): Shadowserver identifies close to 5,000 internet-exposed Gitea instances. The advisory names versions 1.17 through 1.27.0 as affected and 1.27.1 as the patched release; 1.27.1 shipped July 27, 2026 with the advisory published July 28. Gitea credits Shai Rod (NightRang3r) with the report.",
+   "Exposure (Aug 28, 2026): Shadowserver reports over 8,300 internet-exposed Gitea instances still unpatched against CVE-2026-60004, up from close to 5,000 counted on Aug 26 as its scanning coverage expanded — the federal deadline has passed and remote code execution attacks are described as ongoing. The advisory names versions 1.17 through 1.27.0 as affected and 1.27.1 as the patched release; 1.27.1 shipped July 27, 2026 with the advisory published July 28. Gitea credits Shai Rod (NightRang3r) with the report.",
    "Observed impact in the one publicly documented incident: the payload ran as the git user inside a Docker container, dropping a miner-like dropper. The container was unprivileged, the miner did not survive restarts, and investigators found no cron jobs, systemd services or new SSH keys — the practical exposure is repository content, service-account credentials and build-output integrity rather than host persistence.",
    "Related prior exploitation: CVE-2026-20896 in Gitea allowed authentication bypass using reverse-proxy headers such as X-WEBAUTH-USER. Instances behind a misconfigured proxy should be checked for both.",
    "CVE-2026-60004 (CVSS 9.8, CWE-94 Code Injection): The diffpatch API endpoint applies patches to a repository. An attacker submits the same malicious patch twice, triggering an add/add collision. Git's three-way merge fallback writes a file into the repository hooks/ directory as a live Git hook (post-index-change) that executes arbitrary shell commands as the Gitea OS service account on the next Git operation.",
@@ -3559,7 +4023,7 @@ window.CTI = {
   ],
   "iocNote": "No authoritative IOC set. Detection is behavioral: unexpected account registrations, unusual diffpatch API calls, unexpected files in repository hooks/ directories, processes spawned by Gitea service account, anomalous CPU spikes.",
   "mitigation": [
-   "Update to Gitea 1.27.1 immediately. Federal deadline August 28. Gitea Cloud received the update automatically.",
+   "Update to Gitea 1.27.1 or later immediately; 1.27.2 is the current stable release. Federal deadline August 28 has passed. Gitea Cloud received the update automatically.",
    "If unable to patch: disable open registration immediately (app.ini: [service] DISABLE_REGISTRATION = true). This closes the unauthenticated path.",
    "Audit all repository hooks/ directories for unexpected files. Any hook not placed by your tooling is suspect.",
    "Rotate all credentials stored in Gitea app.ini if exploitation cannot be ruled out for the July 26 – August 28 window."
@@ -3570,8 +4034,8 @@ window.CTI = {
    "If anomalous hooks found: isolate the server, rotate all secrets, revoke sessions, audit repository content for tampering.",
    "DEFENDER XDR KQL — Detect Gitea exploitation: unexpected process spawned by Gitea service or hook file written to repository hooks directory.\n\n// Gitea CVE-2026-60004 — Behavioral Detection\n(\n  DeviceProcessEvents\n  | where Timestamp > ago(14d)\n  | where InitiatingProcessFileName in~ (\"gitea\",\"gitea-linux-amd64\")\n  | where FileName !in~ (\"git\",\"gitea\",\"sh\",\"bash\")\n  | project Timestamp, DeviceName, FileName, ProcessCommandLine, AccountName\n)\n| union (\n  DeviceFileEvents\n  | where Timestamp > ago(14d)\n  | where FolderPath has \"repositories\" and FolderPath has \"hooks\"\n  | where FileName in~ (\"post-index-change\",\"pre-receive\",\"post-receive\",\"update\")\n  | where InitiatingProcessFileName !in~ (\"git\",\"gitea\")\n  | project Timestamp, DeviceName, FileName, FolderPath\n)\n| sort by Timestamp desc"
   ],
-  "source": "The Hacker News, Help Net Security, SOCPrime, SecurityArsenal, CISA, runZero",
-  "sourceNote": "Aug 25–26, 2026"
+  "source": "The Hacker News, Help Net Security, SOCPrime, SecurityArsenal, Shadowserver via BleepingComputer, CISA, runZero",
+  "sourceNote": "Aug 25–28, 2026"
  },
  "mlflow": {
   "eyebrow": "MLflow · CVE-2026-64849 · CVSS 9.3 · CISA KEV · Sep 2 Deadline · AI/ML Platform",
@@ -3676,6 +4140,97 @@ window.CTI = {
  }
 },
   META: {
+ "berlin": {
+  "status": "new",
+  "conf": "Confirmed incident — Berlin state government confirms the cyberattack and the extortion attempt and refused payment; Rhysida's volume, inventory and PII claims are unverified",
+  "confNote": "Leak-site listing Aug 28, 2026 with a 30 BTC auction; Tagesschau reports outbound data flow since at least Aug 7; officials state no election-related data taken so far; no technical indicators published",
+  "iocDate": "Aug 28, 2026 — leak-site listing; reported exfiltration from at least Aug 7, 2026",
+  "admiralty": "B2",
+  "severity": 5,
+  "cvss": null,
+  "sectors": [
+   "Government Facilities"
+  ],
+  "attack": [
+   "T1078 — Valid Accounts",
+   "T1567 — Exfiltration Over Web Service",
+   "T1657 — Financial Theft",
+   "T1490 — Inhibit System Recovery"
+  ]
+ },
+ "eo14420": {
+  "status": "new",
+  "conf": "Confirmed policy action — Executive Order 14420 signed Aug 26, 2026; no threat activity associated",
+  "confNote": "Primary source is the order itself; scope and authorities as summarised by SecurityWeek, Security Affairs and law-firm analyses. Implementing regulations, covered-entity list and pre-qualification determinations are not yet published",
+  "iocDate": "Aug 26, 2026 — order signed",
+  "admiralty": "A1",
+  "severity": 3,
+  "cvss": null,
+  "sectors": [
+   "Energy",
+   "Critical Manufacturing"
+  ],
+  "attack": [
+   "T0862 — Supply Chain Compromise",
+   "T0886 — Remote Services"
+  ]
+ },
+ "mckesson": {
+  "status": "new",
+  "conf": "Confirmed incident — McKesson SEC Form 8-K and customer notice confirm unauthorized access to third-party applications and data exfiltration; ShinyHunters claims (scale, data categories, ransom) are unverified",
+  "confNote": "Company-confirmed incident discovered Aug 25, disclosed Aug 28; actor-claimed 284M record count is a raw line count per ShinyHunters itself, not unique patients; no independent verification",
+  "iocDate": "Aug 28, 2026 — disclosure; claimed exfiltration window Aug 21–25, 2026",
+  "admiralty": "B2",
+  "severity": 5,
+  "cvss": null,
+  "sectors": [
+   "Healthcare and Public Health"
+  ],
+  "attack": [
+   "T1566.004 — Phishing: Spearphishing Voice",
+   "T1078.004 — Valid Accounts: Cloud Accounts",
+   "T1530 — Data from Cloud Storage",
+   "T1657 — Financial Theft"
+  ]
+ },
+ "givewp": {
+  "status": "new",
+  "conf": "No in-the-wild reports — Patchstack advisory and vendor patch; no observed exploitation",
+  "confNote": "Reported by Udin Chan via Patchstack Jul 28; fixed in GiveWP 4.16.7.2 on Aug 27; no PoC published and no exploitation reported at time of writing",
+  "iocDate": "Aug 27–28, 2026 — advisory and patch",
+  "admiralty": "A2",
+  "severity": 4,
+  "cvss": null,
+  "sectors": [
+   "Information Technology",
+   "Commercial Facilities"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
+   "T1136.001 — Create Account: Local Account",
+   "T1059 — Command and Scripting Interpreter"
+  ]
+ },
+ "hookedge": {
+  "status": "new",
+  "conf": "Confirmed campaign — Recorded Future / Insikt Group documents victims in Romania, Spain and Türkiye; attribution to BlueDelta (APT28) at moderate confidence",
+  "confNote": "Activity tracked late Sep 2025 – early Apr 2026; attribution moderate confidence per Insikt, on code/infrastructure/tradecraft overlap with HEADLACE; Lab52 tracks related activity as Operation MacroMaze",
+  "iocDate": "Aug 28, 2026 — Recorded Future publication; seven webhook.site endpoints published",
+  "admiralty": "A2",
+  "severity": 4,
+  "cvss": null,
+  "sectors": [
+   "Government Facilities",
+   "Defense Industrial Base"
+  ],
+  "attack": [
+   "T1566.001 — Phishing: Spearphishing Attachment",
+   "T1204.002 — User Execution: Malicious File",
+   "T1053.005 — Scheduled Task/Job: Scheduled Task",
+   "T1102 — Web Service",
+   "T1070.004 — Indicator Removal: File Deletion"
+  ]
+ },
 "iranot": {
  "status": "new",
  "cvss": null,
@@ -4416,8 +4971,8 @@ window.CTI = {
   ]
  },
  "gitea2": {
-  "status": "new",
-  "conf": "Confirmed exploitation — CISA KEV Aug 25; incident report (Habr) confirms automated scanner deployed crypto-miner dropper; PoC public (0xBlackash/CVE-2026-60004)",
+  "status": "updated",
+  "conf": "Confirmed exploitation — CISA KEV Aug 25; incident report (Habr) confirms automated scanner deployed crypto-miner dropper; PoC public (0xBlackash/CVE-2026-60004); Shadowserver counts 8,300+ exposed instances still unpatched as of Aug 28",
   "confNote": "CISA KEV Aug 25; federal deadline Aug 28; no attributed actor; automated scanner exploitation confirmed; PoC public on GitHub",
   "iocDate": "Aug 25, 2026 — CISA KEV; patch available since late July 2026",
   "admiralty": "A2",
