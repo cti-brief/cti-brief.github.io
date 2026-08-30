@@ -1007,6 +1007,26 @@ class Component extends DCLogic {
           if (fileTypes[t]) return 'Malware';
           return /phish|credential harvest|login page/i.test(note || '') ? 'Phishing' : 'CommandAndControl';
         };
+        const CVEBY = {};
+        (d.CVES || []).forEach(c => { if (!CVEBY[c.key]) CVEBY[c.key] = c; });
+        const labelFor = key => {
+          const cve = CVEBY[key] || {};
+          const num = String(cve.num || '').trim();
+          if (/^CVE-/i.test(num)) {
+            let vendor = String((d.D[key] || {}).eyebrow || '').split('\u00b7')[0].trim();
+            vendor = vendor.replace(/CVE-\d{4}-\d{4,7}/gi, '').replace(/\s{2,}/g, ' ').replace(/^[\s\-\u2013\u2014,;:\/]+|[\s\-\u2013\u2014,;:\/]+$/g, '');
+            return vendor ? vendor + ' ' + num : num;
+          }
+          if (num) return num;
+          const eyebrow = String((d.D[key] || {}).eyebrow || '').split('\u00b7')[0].trim();
+          return eyebrow || key;
+        };
+        const kindFor = (t, note) => {
+          if (fileTypes[t]) return /loader|dropper|backdoor|implant|webshell|ransom|stealer|rat\b/i.test(note || '') ? 'malware sample' : 'malicious file';
+          if (/phish|credential harvest|login page/i.test(note || '')) return 'phishing infrastructure';
+          if (/^url$/i.test(String(t)) || t === 'Url') return 'malicious URL';
+          return 'attacker infrastructure';
+        };
         const techFor = key => {
           const list = ((META[key] || {}).attack || [])
             .map(a => (String(a).match(/T\d{4}(\.\d{3})?/) || [])[0])
@@ -1018,8 +1038,15 @@ class Component extends DCLogic {
           const t = x.t, r = x.r;
           const isFile = !!fileTypes[t];
           const week = (d.WEEK_RANGE || '').trim();
-          const title = this.ascii(r.item).slice(0, 100);
-          const desc = this.ascii((r.note ? r.note + ' ' : '') + '(Source: CTI brief' + (week ? ', ' + week : '') + ' - ' + r.item + ')');
+          const clip = (s, max) => {
+            s = String(s).trim();
+            if (s.length <= max) return s;
+            const cut = s.slice(0, max);
+            const sp = cut.lastIndexOf(' ');
+            return (sp > max * 0.5 ? cut.slice(0, sp) : cut).replace(/[\s\-\u2013\u2014,;:.]+$/, '');
+          };
+          const title = clip(this.ascii(labelFor(r.key) + ' - ' + kindFor(t, r.note)), 100);
+          const desc = clip(this.ascii((r.note ? r.note + ' ' : '') + '(Source: CTI brief' + (week ? ', ' + week : '') + ' - ' + r.item + ')'), 1000);
           const rec = isFile
             ? 'Isolate the device, collect the file for analysis, and hunt for the hash across the estate before releasing the block.'
             : 'Confirm the destination is not business-required, then review proxy, DNS and firewall logs for prior connections from any host.';
