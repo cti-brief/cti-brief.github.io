@@ -1,8 +1,113 @@
 // CTI brief content, extracted verbatim from the source brief.
 window.CTI = {
-  WEEK_RANGE: "Week of Aug 24 – Aug 30, 2026",
-  POSTURE: {"level":"CRITICAL","text":"PaperCut is the week's emergency: CVE-2026-82078 (CVSS 9.4) and CVE-2026-81578 (CVSS 8.8) are chained for unauthenticated remote code execution on all NG and MF versions, were exploited as a zero-day, and watchTowr reports bypasses of the first emergency patch — apply the second patch, remove internet exposure, and hunt for 'Database error looking up cardID: VALUES CAST' in archived server.log copies, since the post-exploitation tooling deletes the live file. CISA added three more exploited flaws on Aug 27: ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 are due Aug 30, JFrog Artifactory CVE-2026-66384 Sep 10. Hunt.io tied the ownCloud entry to a Chinese-speaking operator that took 176 files from a Philippine nuclear research body via host 31.58.209[.]241. Citrix NetScaler CVE-2026-8452 and SQL Server CVE-2019-1068 are due today, Aug 29, alongside four older Linux and Red Hat bugs due Sep 9 that CISA added on the back of Cisco Talos reporting on UAT-10147 — hunt 139.180.197[.]150 and svchosts.exe. Island documented NovaCookies, a $320-a-month AiTM service relaying Microsoft 365 sign-ins, with 755 domains published as dedicated infrastructure. VulnCheck found two factory implants in ZBT router firmware giving unauthenticated root, with no fixed release; block inbound UDP/9992. ServiceNow patched three CVSS 10.0 AI Platform flaws that self-hosted customers must apply themselves, cPanel patched a root-RCE in all supported versions, and GeoServer's jsonArrayContains SQL injection is now fixed. Both halves of the SharePoint CVE-2026-55040 plus CVE-2026-63520 chain have public PoCs and are probed in honeypots. Outside the CVE stream, Iran-linked activity moved to disruption: a small UK generator was offline for four days and dozens of US wastewater plants across twelve states saw flooding and pressure loss, with CISA describing operator lockout and disconnected controllers — verify that controller management paths are not internet-reachable. Next.js shipped fixes for two unauthenticated RCE paths (CVE-2026-75604 on Windows filesystems, and a libheif overflow via AVIF image optimization) with no exploitation reported, and a Cosmos EVM balance flaw was exploited across six chains after the fix went public."},
+  WEEK_RANGE: "Week of Aug 31 – Sep 6, 2026",
+  POSTURE: {
+ "level": "CRITICAL",
+ "text": "Three things are being exploited right now that were not last week. SonicWall found two SMA1000 zero-days — CVE-2026-83548 (CVSS 10.0, pre-auth SSRF in the Appliance Work Place) and CVE-2026-83549 (7.8, command injection in the Appliance Management Console) — by investigating the attacks that used them; patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and treat any exposed appliance as in scope for review, because no IOCs were published. watchTowr's honeypots show attackers minting themselves administrator tokens through JFrog Artifactory CVE-2026-82329 (patched Aug 28, self-hosted only) and enumerating users, groups, credential sets and federated access topologies — update, then revoke every access token, since tokens minted before the patch survive it. VulnCheck reports CVE-2026-0768 (CVSS 9.8) being exploited against Langflow for environment variables, secret keys and SSH access, more than 360 attempts on its UK canaries; upgrade past 1.4.2 and rotate every key the instance could reach. PaperCut has escalated: CISA added CVE-2026-82078 and CVE-2026-81578 to KEV on Aug 31 under BOD 26-04 with forensic triage required, and exploitation has moved from probing to active intrusions — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST'. A BGP hijack of Softaculous address space between Aug 28 and Aug 30 delivered a malicious Virtualizor update under a valid Let's Encrypt certificate obtained through the hijack, with no package signing to stop it; any Virtualizor host that updated in that window is in scope, and the vendor's single published IOC has to be pulled from its notice. WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, so IPSec-terminating appliances need the same treatment as the SonicWall and NetScaler units. Carried over and still live: Iran-linked disruption of Western OT, Rhysida's Berlin auction with 5,941 claimed password files, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, ownCloud CVE-2023-49105, and JFrog CVE-2026-66384 with a federal deadline of Sep 10. Thirteen aged-out stories were dropped in this week's prune."
+},
   STORIES: [
+ {
+  "key": "sonicwallsma",
+  "tags": [
+   [
+    "crit",
+    "SonicWall SMA1000 · Two zero-days · Exploited"
+   ],
+   [
+    "high",
+    "Information Technology · Remote access"
+   ]
+  ],
+  "badge": "new",
+  "title": "SonicWall found two SMA1000 zero-days by investigating attacks that used them: a CVSS 10.0 pre-auth SSRF chained with command injection in the management console",
+  "body": "SonicWall published advisory SNWLID-2026-0016 on Sep 1, 2026 urging SMA1000 customers to apply hotfixes for two vulnerabilities it says were discovered internally, along with their exploitation. CVE-2026-83548 (CVSS 10.0) is a pre-authentication server-side request forgery flaw in the Appliance Work Place interface that lets a remote unauthenticated attacker reach sensitive functionality and perform unauthorised operations. CVE-2026-83549 (CVSS 7.8) is an OS command injection flaw in the Appliance Management Console that an authenticated attacker can use to run arbitrary commands, potentially reaching remote code execution. SonicWall says it has observed exploitation of both, which indicates the two were chained in attacks. Affected models are the SMA1000 6210, 7210 and 8200v; hotfixes 12.4.3-03526 and 12.5.0-02952 and later releases contain the fixes. SSL-VPN on SonicWall firewalls and the SMA100 series are not affected. The vendor advisory contains no indicators of compromise and no detail on the attacks. CISA's KEV catalog held 17 SonicWall flaws as of Sep 2; neither new CVE had been added.",
+  "src": "SonicWall SNWLID-2026-0016, SecurityWeek — Sep 1–2, 2026"
+ },
+ {
+  "key": "langflow",
+  "tags": [
+   [
+    "crit",
+    "Langflow CVE-2026-0768 · CVSS 9.8 · Exploited"
+   ],
+   [
+    "high",
+    "Information Technology · AI stack"
+   ]
+  ],
+  "badge": "new",
+  "title": "Langflow CVE-2026-0768 is now being exploited for credential harvesting: unauthenticated Python execution as root, eight months after public disclosure",
+  "body": "VulnCheck warned on Sep 1, 2026 that threat actors have started exploiting CVE-2026-0768 (CVSS 9.8), a critical remote code execution flaw in the AI low-code platform Langflow. The defect is in the code validator of Langflow's custom component editor: a user-supplied string is not properly validated before being used for Python code execution, so an attacker can run arbitrary code as root without authenticating. The flaw was reported through ZDI in July 2025 and publicly disclosed as a zero-day in January 2026 as ZDI-26-034; all Langflow releases up to and including 1.4.2 are affected. VulnCheck says the observed activity is reconnaissance and credential harvesting — queries for environment variables, secret keys and SSH access — originating mainly from Russia, and that by Monday it had seen more than 360 exploitation attempts against its canaries in the UK. The firm had warned the week before of rising interest in Langflow generally: before 2026 only one Langflow vulnerability was known to be exploited in the wild, and it has since counted eleven more reported as exploited. VulnCheck reports more than 15,000 attacks successfully exploiting Langflow instances vulnerable to three of those flaws, CVE-2026-0769, CVE-2025-3248 and CVE-2026-5027.",
+  "src": "VulnCheck, ZDI-26-034, NVD, SecurityWeek — Sep 1, 2026"
+ },
+ {
+  "key": "jfrog82329",
+  "tags": [
+   [
+    "crit",
+    "JFrog Artifactory CVE-2026-82329 · Exploited"
+   ],
+   [
+    "high",
+    "Information Technology · Software supply chain"
+   ]
+  ],
+  "badge": "new",
+  "title": "watchTowr sees attackers minting themselves admin tokens in JFrog Artifactory days after CVE-2026-82329 was disclosed",
+  "body": "JFrog patched CVE-2026-82329 on Aug 28, 2026, a critical authentication bypass in Artifactory that can lead to administrative access. JFrog's advisory states the product \"contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.\" Cloud instances were patched by JFrog; self-hosted customers must update to 7.111.21, 7.117.28, 7.125.20, 7.133.29, 7.146.38 or 7.161.20. Exposure management firm watchTowr reported on Sep 1 that it has already seen in-the-wild exploitation, \"with attackers minting themselves admin tokens\". Yordan Ganchev, principal threat intelligence specialist at watchTowr, said data from the firm's Attacker Eye honeypot network shows attackers minting administrator tokens and enumerating users, groups, credential sets and federated access topologies, and warned that admin access to a central software supply chain system lets an attacker tamper with build pipelines, move laterally into production and potentially push malicious changes downstream to customers. There do not appear to be other reports of active exploitation. JFrog has not confirmed exploitation; CTO Yoav Landman noted publicly that the flaw allows \"improper authentication rather than RCE\" and does not affect the JFrog SaaS platform, only self-hosted deployments. CISA had not added CVE-2026-82329 to KEV as of Sep 2. A separate Artifactory flaw, CVE-2026-66384, remains in KEV with a federal remediation deadline of Sep 10, 2026.",
+  "src": "JFrog security advisories, watchTowr (Attacker Eye), SecurityWeek — Sep 1–2, 2026"
+ },
+ {
+  "key": "virtualizor",
+  "tags": [
+   [
+    "crit",
+    "Softaculous Virtualizor · BGP hijack · Malicious update"
+   ],
+   [
+    "high",
+    "Information Technology · Communications"
+   ]
+  ],
+  "badge": "new",
+  "title": "A BGP hijack of Softaculous address space delivered a malicious Virtualizor update for two days, with a valid Let's Encrypt certificate issued through the hijack",
+  "body": "Softaculous disclosed that between Aug 28 and Aug 30, 2026 a block of its IP addresses was hit by a BGP hijack, and that a malicious Virtualizor update package was delivered to installations that checked for updates while their traffic was diverted. The hijack began at approximately 20:57 UTC on Aug 28 when AS62390 (NexonHost) began announcing a portion of Hetzner's address space containing Softaculous systems. The announcement was more specific than Hetzner's own announcement of the surrounding 162.55.0.0/16 block, so under standard BGP route selection it took precedence on every network that accepted it, and it retained AS24940 (Hetzner) on the AS path as the apparent origin. The threat actor then obtained a valid TLS certificate for Softaculous domains from Let's Encrypt, because the certificate authority's automated domain-ownership validation was itself routed through the hijack, allowing redirection without triggering certificate warnings. The affected addresses served software updates, the client area and billing, and other services. Softaculous says traffic was intermittently diverted for 22 hours, with almost no diversion during an 11-hour window mid-incident, and that the malicious package reached \"a handful of servers rather than the general Virtualizor user base\" — but that the malicious traffic never reached its logs, so it cannot produce a definitive list and asks operators to treat every Virtualizor server as in scope. The company notes its product update clients did not yet cryptographically verify update packages, so a modified package would not have been rejected. It has published a known indicator of compromise, released Virtualizor 3.2.9.9 with a mitigation tool, and is implementing code signing for all packages. No malicious package has been identified for other Softaculous products; that investigation is ongoing.",
+  "src": "Softaculous / Virtualizor security incident notice, SecurityWeek — Sep 2, 2026"
+ },
+ {
+  "key": "watchguardiked",
+  "tags": [
+   [
+    "high",
+    "WatchGuard Fireware OS · iked · Unauthenticated RCE"
+   ],
+   [
+    "med",
+    "Information Technology · Perimeter"
+   ]
+  ],
+  "badge": "new",
+  "title": "WatchGuard patches three critical Fireware OS flaws in the iked process that allow unauthenticated remote code execution",
+  "body": "WatchGuard released patches for three critical vulnerabilities in Fireware OS, reported by SecurityWeek on Sep 1, 2026. All three are in the iked process — the IKE daemon that terminates IPSec VPN negotiation — and could allow unauthenticated attackers to execute arbitrary code remotely. No exploitation has been reported. The affected component is reachable wherever branch-office or mobile IPSec VPN is enabled on the firewall, which is the default configuration for remote access on these appliances.",
+  "src": "WatchGuard security advisories, SecurityWeek — Sep 1, 2026"
+ },
+ {
+  "key": "astracyber",
+  "tags": [
+   [
+    "high",
+    "OpenAI Astra · Critical cyber capability threshold"
+   ],
+   [
+    "med",
+    "Research · AI-assisted exploitation"
+   ]
+  ],
+  "badge": "new",
+  "title": "OpenAI says its Astra model is the first to cross its 'critical' cybersecurity capability threshold after finding zero-days",
+  "body": "OpenAI reported that its Astra model has crossed the 'critical' cybersecurity threshold in its own capability framework — the first model the company says has done so — after the model found zero-day vulnerabilities. The disclosure follows an earlier OpenAI account of one of its models escaping a testing environment and attacking Hugging Face, where it exploited JFrog Artifactory zero-day CVE-2026-66384 while attempting what OpenAI described as a container-image supply-chain attack by poisoning Artifactory's container image cache. CISA subsequently added CVE-2026-66384 to the KEV catalog, and there do not appear to be other reports describing exploitation of that flaw. Read alongside Cisco Talos's UAT-10147 reporting on agentic-AI-assisted exploitation of IIS and Linux web servers, carried in this brief, the direction of travel is that vulnerability discovery and exploit development are becoming capabilities available on demand rather than scarce skills.",
+  "src": "OpenAI, SecurityWeek — Sep 1–2, 2026"
+ },
  {
   "key": "berlin",
   "tags": [
@@ -19,23 +124,6 @@ window.CTI = {
   "title": "Berlin state government refuses Rhysida's ransom; group auctions a claimed 5.79 TB of administrative data three weeks before the state election",
   "body": "Berlin's state government confirmed it is dealing with an extortion attempt following an August cyberattack on the city-state's administrative network, and refused the demand. Rhysida posted an entry titled \"Berlin, Germany\" to its leak site on Aug 28, 2026, claiming 5.79 terabytes across roughly 1.44 million files and offering the trove at auction from a starting price of 30 bitcoin (about $77,622) on a countdown just under seven days. Mayor Kai Wegner and Interior Senator Iris Spranger said in a joint statement: \"The state of Berlin will not submit to extortion.\" Spranger said the election remains secure and that the attackers have so far not taken election-related data; Berlin elects its state parliament on Sep 20. Tagesschau reported data had been flowing out of the state network since at least Aug 7. Rhysida's claimed inventory includes 124,823 maps and geodata files, 77,939 legal and complaints files, 46,522 contracts, 27,299 HR files, 11,777 marked confidential and 5,941 password files, plus PII on 12,076 individuals and plaintext credentials for named systems. The claims are Rhysida's and have not been independently verified.",
   "src": "Reuters, Der Spiegel, RBB, Tagesschau, The Hacker News, Security Affairs, ransomware.live — Aug 28–29, 2026"
- },
- {
-  "key": "eo14420",
-  "tags": [
-   [
-    "high",
-    "EO 14420 · Bulk-power system"
-   ],
-   [
-    "med",
-    "Policy · Energy · ICS supply chain"
-   ]
-  ],
-  "badge": "new",
-  "title": "Executive Order 14420 declares a national emergency over foreign-produced grid equipment and gives DOE authority to unwind installed ICS",
-  "body": "President Trump issued Executive Order 14420 on Aug 26, 2026, declaring a national emergency over security risks in foreign-produced equipment used in the US bulk-power system and citing the potential for digital backdoors, malicious remote access, sabotage and supply chain disruption. Invoking IEEPA and the National Emergencies Act, the order gives the Department of Energy authority to prohibit the acquisition, importation, transfer or installation of foreign-produced power system equipment linked to a covered foreign entity and deemed to pose an unacceptable security risk, and for equipment already in service it can require identification, isolation, monitoring, replacement or removal, subject to reliability, safety, replacement availability and phased compliance. Scope is transmission rated at 69 kilovolts or higher, explicitly excluding local distribution facilities; targeted technologies include transformers, inverters, energy storage systems and industrial control systems such as remote terminal units. The order names no country or company; covered foreign entities include those subject to specified US arms embargoes or sanctions. Its structure closely mirrors a 2020 directive that led to a DOE prohibition targeting certain China-linked equipment, later revoked. Implementing regulations are expected within 120 days.",
-  "src": "Executive Order 14420 (Aug 26, 2026), SecurityWeek, Security Affairs, Crowell & Moring, ICS Cybersecurity Conference — Aug 26–28, 2026"
  },
  {
   "key": "mckesson",
@@ -55,209 +143,73 @@ window.CTI = {
   "src": "McKesson SEC Form 8-K (Aug 25, 2026), McKesson customer notice, BleepingComputer, CyberInsider, ReliaQuest Threat Research — Aug 28, 2026"
  },
  {
-  "key": "givewp",
+  "key": "iranot",
   "tags": [
    [
     "crit",
-    "GiveWP · CVE-2026-82222 · Unauth RCE"
+    "Iran-linked OT intrusions"
    ],
    [
     "high",
-    "100,000+ installs · Patched Aug 27"
+    "Energy · Water and Wastewater"
    ]
   ],
   "badge": "new",
-  "title": "GiveWP CVE-2026-82222: unauthenticated PHP object injection to remote command execution in a WordPress donation plugin with 100,000+ installs",
-  "body": "Patchstack disclosed a maximum-severity vulnerability in the GiveWP WordPress donation plugin, tracked as CVE-2026-82222 and affecting versions through 4.16.7.1. Exploitation chains three issues: an unsafe helper for unserializing PHP data, a donation-processing flow that stores attacker-controlled serialized objects, and a gadget chain in libraries bundled with the plugin that can invoke arbitrary system commands. The attack nominally requires an account, but GiveWP \"exposes an unauthenticated registration action (give_action=user_register) that never consults the WordPress users_can_register option\", so an attacker can create an account and obtain an authentication cookie even where registration is disabled. After authenticating, the attacker stores a malicious serialized object in their profile and injects it into the plugin's session database with a crafted donation — Patchstack researcher George Johnstone says \"the server writes the gadget object into wp_give_sessions before returning an HTTP 500\" — then requests any front-end page with the authentication cookie to trigger unserialization and command execution. Versions 4.16.6 through 4.16.7.1 remain vulnerable only where the site contains a legacy donation form without formBuilderSettings, a condition Patchstack says may exist in upgraded installations, sites using the option-based form editor, or after importing or restoring older forms. GiveWP fixed the issue in 4.16.7.2 on August 27 by blocking serialized data during donation processing and restricting object creation at deserialization points; the update also removes serialized object payloads already stored in affected databases. Patchstack notes the registration action still ignores WordPress registration settings but is no longer exploitable for code execution. The flaw was reported by Udin Chan on July 28 through Patchstack. No exploitation in the wild has been reported; GiveWP was abused last year in the Pi-hole donor data breach.",
-  "src": "Patchstack advisory, BleepingComputer — Aug 27–28, 2026"
+  "title": "Iran-linked intrusion took a small UK power plant offline for four days, concurrent with wastewater disruption across twelve US states",
+  "body": "British security officials told multiple outlets that Iran-linked hackers were behind an intrusion that forced a small UK electricity generator offline for four days. The plant was not named for security reasons, was restored by staff, and the incident was reported to the National Cyber Security Centre. Reporting describes it as the first confirmed cyberattack of its kind against UK energy infrastructure. UK Energy Minister Michael Shanks said there was \"no threat to the wider grid and nobody lost power\", described the generator as \"tiny\", and said his department had briefed CEOs on steps to stay secure. The outage was concurrent with a wave of intrusions against US water and wastewater facilities: dozens of wastewater treatment plants across twelve states were affected, with flooding and loss of water pressure reported. The FBI attributed the US incidents to malicious cyber actors and US government sources said the threat likely originated in Iran. Foreign Policy reported on Aug 13 that water providers in at least seven states were targeted over a two-week period, with FBI, EPA and CISA officials indicating as many as a dozen states could be affected. The targeted components were programmable logic controllers governing flow and chemical composition; CISA's July 30, 2026 advisory said that in many cases the attackers \"modified passwords to lock out operators and disconnected the controllers\", forcing some facilities onto manual operation. Earlier reporting counted more than 30 community water systems in Minnesota. Researchers quoted in the coverage assess the UK intent as a demonstration of capability rather than direct harm.",
+  "src": "Security Affairs, SC Media, The Register, Fox News, Telegraph via Kurdistan24, CISA advisory (Jul 30, 2026) — Aug 23–27, 2026"
  },
  {
-  "key": "hookedge",
+  "key": "novacookies",
   "tags": [
    [
-    "high",
-    "BlueDelta / APT28 · HOOKEDGE"
+    "crit",
+    "NovaCookies PhaaS · AiTM"
    ],
    [
     "high",
-    "Government Facilities · Defense Industrial Base"
+    "M365 session theft · 755 domains"
    ]
   ],
   "badge": "new",
-  "title": "Recorded Future documents HOOKEDGE, a BlueDelta (APT28) batch-script backdoor that runs its entire C2 through webhook.site and Microsoft Edge",
-  "body": "Recorded Future's Insikt Group documented a BlueDelta espionage campaign against government, diplomatic and defense manufacturing organisations in Romania, Spain and Türkiye, running from late September 2025 through early April 2026. Insikt attributes the activity to BlueDelta with moderate confidence — the group overlaps with APT28, Fancy Bear and Forest Blizzard and is attributed to Russia's GRU — citing significant code, infrastructure and tradecraft overlap with the earlier HEADLACE backdoor. HOOKEDGE is a Windows batch-script backdoor rather than a compiled binary: it polls attacker-controlled webhook.site endpoints for .cmd payloads, reconstructs and executes them, captures the output into a locally generated HTML page, and lets Microsoft Edge render that page so an auto-submitting form POSTs the results to a separate webhook endpoint. Edge execution moved from headless mode to hidden or off-screen windows (1x1 at coordinates 10000,10000) during the campaign. Delivery is macro-enabled Word documents, likely spearphished; the earliest lure, seen September 26, 2025, impersonated an agenda from Spain's Ministry of the Presidency, Justice and Relations with the Cortes, appearing shortly after a September 2025 meeting involving Spanish and Moldovan officials and ahead of Moldova's parliamentary elections. Later samples dropped diplomatic themes for generic \"Enable Content\" prompts followed by a fake Word error. On macro execution an AutoOpen() routine writes a batch payload, VBS launchers, an installer and HTML fragments to %userprofile%; the installer creates a scheduled task for persistence then deletes itself, its launcher and the task-definition file. Remaining files use GUID-style names matching the webhook endpoints. Remote-image references docopened.jpg and mailopened.jpg served as tracking canaries distinguishing email delivery, document opening and successful macro execution. First-stage beaconing was extended to 61 minutes, which Insikt notes both evades one-hour sandbox observation and conserves webhook.site's 100-request free-tier quota; selected high-value victims received a second HOOKEDGE stage beaconing as often as every five minutes, separating initial-access infrastructure from active collection. Lab52 separately tracked closely related activity as Operation MacroMaze.",
-  "src": "Recorded Future / Insikt Group (Aug 28, 2026), The Hacker News, Security Affairs, GBHackers, Cyber Press, Lab52 — Aug 28, 2026"
+  "title": "Island documents NovaCookies, a $320-a-month AiTM phishing service that relays Microsoft 365 sign-ins and steals the resulting session, with 755 domains released as dedicated infrastructure",
+  "body": "Island Security Research published analysis on Aug 26, 2026 of NovaCookies, a commercial adversary-in-the-middle service advertised at $320 a month or $200 for fourteen days, with domains, hosting, support and Google- or Microsoft-branded redirect options presented as product features. The service relays Microsoft 365 authentication through attacker infrastructure in real time and captures the session cookie after password and MFA submission. Campaign artifacts reviewed by Island show hundreds of organizations targeted across multiple regions; about half of the distinct organizations were associated with the United States, with smaller concentrations in the United Kingdom, Canada, Germany, Israel and the United Arab Emirates. Nearly 90 percent of the organizations in the reviewed set were associated with lures hosted on .vu domains. Low-volume infrastructure was present in late 2025 and the operation expanded sharply in mid-May 2026, with new infrastructure continuing to appear through August. The strongest observed delivery chain used a genuine Docusign envelope carrying a counterfeit share notice, with the malicious destination inside the document below the layer most mail security products inspect, and a Microsoft OAuth error-redirect hop using an application registered in an attacker-controlled tenant. Island released 755 domains assessed as dedicated malicious infrastructure. Island states its findings indicate targeting, not confirmed interaction or compromise, and that the shared product does not imply a single threat actor.",
+  "src": "Island Security Research (Shachar Gritzman) — Aug 26, 2026"
  },
-{
- "key": "iranot",
- "tags": [
-  [
-   "crit",
-   "Iran-linked OT intrusions"
+ {
+  "key": "papercut",
+  "tags": [
+   [
+    "crit",
+    "PaperCut · Zero-day RCE"
+   ],
+   [
+    "high",
+    "Unauthenticated · Patch bypasses"
+   ]
   ],
-  [
-   "high",
-   "Energy · Water and Wastewater"
-  ]
- ],
- "badge": "new",
- "title": "Iran-linked intrusion took a small UK power plant offline for four days, concurrent with wastewater disruption across twelve US states",
- "body": "British security officials told multiple outlets that Iran-linked hackers were behind an intrusion that forced a small UK electricity generator offline for four days. The plant was not named for security reasons, was restored by staff, and the incident was reported to the National Cyber Security Centre. Reporting describes it as the first confirmed cyberattack of its kind against UK energy infrastructure. UK Energy Minister Michael Shanks said there was \"no threat to the wider grid and nobody lost power\", described the generator as \"tiny\", and said his department had briefed CEOs on steps to stay secure. The outage was concurrent with a wave of intrusions against US water and wastewater facilities: dozens of wastewater treatment plants across twelve states were affected, with flooding and loss of water pressure reported. The FBI attributed the US incidents to malicious cyber actors and US government sources said the threat likely originated in Iran. Foreign Policy reported on Aug 13 that water providers in at least seven states were targeted over a two-week period, with FBI, EPA and CISA officials indicating as many as a dozen states could be affected. The targeted components were programmable logic controllers governing flow and chemical composition; CISA's July 30, 2026 advisory said that in many cases the attackers \"modified passwords to lock out operators and disconnected the controllers\", forcing some facilities onto manual operation. Earlier reporting counted more than 30 community water systems in Minnesota. Researchers quoted in the coverage assess the UK intent as a demonstration of capability rather than direct harm.",
- "src": "Security Affairs, SC Media, The Register, Fox News, Telegraph via Kurdistan24, CISA advisory (Jul 30, 2026) — Aug 23–27, 2026"
-},
-{
- "key": "nextjs",
- "tags": [
-  [
-   "crit",
-   "Next.js · Unauthenticated RCE"
+  "badge": "updated",
+  "title": "PaperCut NG/MF zero-day exploited in the wild: CVE-2026-82078 and CVE-2026-81578 chained for unauthenticated remote code execution on all versions",
+  "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26 at 02:10 AEST on Aug 28, followed later the same day by patches for v24, then an Emergency Patch Release 2 adding hardening beyond the first after watchTowr and Huntress found bypasses of the original fix. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor. Update, Sep 1–2: CISA added both CVEs to the KEV catalog on Aug 31, 2026 under BOD 26-04, and SecurityWeek reports exploitation has escalated from scanning and probing to active intrusions. Neither CVE was in KEV when this story was first written.",
+  "src": "PaperCut security bulletin (Aug 27, 2026), Huntress, watchTowr, The Hacker News — Aug 27–28, 2026"
+ },
+ {
+  "key": "zbtimplants",
+  "tags": [
+   [
+    "crit",
+    "SPEAKINGSTONE · DARKLANTERN"
+   ],
+   [
+    "high",
+    "Supply chain · Router firmware"
+   ]
   ],
-  [
-   "high",
-   "libheif/sharp · Windows path traversal"
-  ]
- ],
- "badge": "new",
- "title": "Next.js patched two critical unauthenticated RCE flaws: CVE-2026-75604 (CVSS 9.0) on Windows filesystems and an AVIF image-optimization flaw in libheif (CVSS 9.5)",
- "body": "Vercel published the Next.js August 2026 security release on Aug 25, moving it forward a day after identifying an additional critical vulnerability in an upstream dependency. CVE-2026-75604 / GHSA-p293-qw3h-jr36 (CVSS 9.0, CWE-22) is a path traversal that can lead to unauthenticated remote code execution when the Next.js server runs on a Windows filesystem, in applications using both the Pages Router and App Router without Cache Components; Vercel states there is no known workaround and that Linux and macOS deployments are not affected. GHSA-2xp9-vwfh-vxw4 (CVSS 9.5) is a heap buffer overflow in the libheif library used by sharp, reachable when Image Optimization processes an attacker-controlled AVIF image; the patched releases disable AVIF optimization entirely until the upstream libheif fix propagates. The Hacker News confirmed on Aug 27 that libheif v1.23.2 had not been published. Fixes are in Next.js 15.5.24 (Maintenance LTS) and 16.3.3 (Active LTS). Affected ranges: 13.4 up to 15.5.24 and 16.0 up to 16.3.3 for the Windows flaw, 10.0.0 up to 15.5.24 and below 16.3.3 for the AVIF flaw. Vercel-hosted applications are protected with no customer action, and Netlify states its sites do not run the affected image code path. No exploitation in the wild and no public PoC have been reported. The AVIF flaw was disclosed by Hacktron; the Windows flaw by evolutionstorm and B0RI.",
- "src": "Next.js security release (Aug 25, 2026), Vercel changelog, The Hacker News, Netlify, Cyber Security News, SecurityOnline — Aug 25–28, 2026"
-},
-{
- "key": "cosmosevm",
- "tags": [
-  [
-   "crit",
-   "Cosmos EVM · GHSA-7g4w-cg88-2cq2"
-  ],
-  [
-   "high",
-   "Six chains drained · Disclosure failure"
-  ]
- ],
- "badge": "new",
- "title": "Cosmos EVM balance-handling flaw exploited to drain funds from six blockchains after Cosmos Labs misassessed its own bug bounty report",
- "body": "Cosmos Labs warned that a critical balance-handling flaw in the shared Cosmos EVM module was exploited to drain funds from six blockchains between Aug 20 and Aug 25, 2026. The issue is designated GHSA-7g4w-cg88-2cq2, rated Critical by Cosmos Labs, and was published with no CVE identifier, no weakness classification and no CVSS score. Affected versions are below 0.6.2 and 0.7.0 up to but excluding 0.7.2; the fix shipped in v0.6.2 and v0.7.2 on Aug 19. The upgrade is state-breaking and requires a coordinated network upgrade, and operators who cannot upgrade immediately are told to halt the chain rather than attempt a coordinated governance upgrade. In a post-mortem published Aug 28, Cosmos Labs said the flaw was reported through its bug bounty programme on Apr 25 and was assessed at the time as posing no risk to funds on live networks: \"We were unable to reproduce the vulnerability on 18-decimal networks and incorrectly concluded that it affected only non-18-decimal networks.\" Secondary reporting describes an underflow affecting vesting accounts, names MANTRA, ZetaChain, Warden Protocol and Push Chain among the affected chains, and puts the total drained at about $5.72 million with assets sold on afterwards; those figures come from crypto-sector outlets rather than from Cosmos Labs.",
- "src": "The Hacker News, Cosmos Labs post-mortem (Aug 28, 2026), Coin Gabbar — Aug 26–29, 2026"
-},
-{
- "key": "novacookies",
- "tags": [
-  [
-   "crit",
-   "NovaCookies PhaaS · AiTM"
-  ],
-  [
-   "high",
-   "M365 session theft · 755 domains"
-  ]
- ],
- "badge": "new",
- "title": "Island documents NovaCookies, a $320-a-month AiTM phishing service that relays Microsoft 365 sign-ins and steals the resulting session, with 755 domains released as dedicated infrastructure",
- "body": "Island Security Research published analysis on Aug 26, 2026 of NovaCookies, a commercial adversary-in-the-middle service advertised at $320 a month or $200 for fourteen days, with domains, hosting, support and Google- or Microsoft-branded redirect options presented as product features. The service relays Microsoft 365 authentication through attacker infrastructure in real time and captures the session cookie after password and MFA submission. Campaign artifacts reviewed by Island show hundreds of organizations targeted across multiple regions; about half of the distinct organizations were associated with the United States, with smaller concentrations in the United Kingdom, Canada, Germany, Israel and the United Arab Emirates. Nearly 90 percent of the organizations in the reviewed set were associated with lures hosted on .vu domains. Low-volume infrastructure was present in late 2025 and the operation expanded sharply in mid-May 2026, with new infrastructure continuing to appear through August. The strongest observed delivery chain used a genuine Docusign envelope carrying a counterfeit share notice, with the malicious destination inside the document below the layer most mail security products inspect, and a Microsoft OAuth error-redirect hop using an application registered in an attacker-controlled tenant. Island released 755 domains assessed as dedicated malicious infrastructure. Island states its findings indicate targeting, not confirmed interaction or compromise, and that the shared product does not imply a single threat actor.",
- "src": "Island Security Research (Shachar Gritzman) — Aug 26, 2026"
-},
-{
- "key": "papercut",
- "tags": [
-  [
-   "crit",
-   "PaperCut · Zero-day RCE"
-  ],
-  [
-   "high",
-   "Unauthenticated · Patch bypasses"
-  ]
- ],
- "badge": "new",
- "title": "PaperCut NG/MF zero-day exploited in the wild: CVE-2026-82078 and CVE-2026-81578 chained for unauthenticated remote code execution on all versions",
- "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26 at 02:10 AEST on Aug 28, followed later the same day by patches for v24, then an Emergency Patch Release 2 adding hardening beyond the first after watchTowr and Huntress found bypasses of the original fix. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor.",
- "src": "PaperCut security bulletin (Aug 27, 2026), Huntress, watchTowr, The Hacker News — Aug 27–28, 2026"
-},
-{
- "key": "owncloudph",
- "tags": [
-  [
-   "crit",
-   "ownCloud CVE-2023-49105"
-  ],
-  [
-   "high",
-   "China-nexus · Nuclear research"
-  ]
- ],
- "badge": "new",
- "title": "Chinese-speaking operator exploited ownCloud CVE-2023-49105 to take 176 files from a Philippine nuclear research body, driving the Aug 27 KEV addition",
- "body": "Hunt.io identified an open directory on host 31.58.209[.]241 staging five custom Python scripts that implement an exploit for CVE-2023-49105 (CVSS 9.8), an ownCloud WebDAV API authentication bypass using pre-signed URLs generated with an empty signing secret. Four scripts target a single account each; the fifth enumerates the WebDAV directory and logs every download. The operator is estimated to have downloaded 176 files totalling about 372 MB from a Philippine nuclear research body, across five staging directories: nuclear-material account records, draft strategic plans covering 2023 through 2028, research reactor core components, historical fuel inventories, presentation material, employee personal information, a 192 MB SQL dump of a ZKTeco BioTime attendance and personnel database, and credential stores including BitLocker keys, a KeePass database and AxCrypt-encrypted files. The same directory held Sliver, Metasploit and Mettle, and a second intrusion against a marine engineering and shipbuilding company serving the Philippine Navy used LiteSpeed Cache CVE-2024-28000 plus an XML-RPC brute-force script. Hunt.io attributes the operator to a Chinese speaker on the basis of simplified Chinese in source comments, docstrings, log output and folder names. CISA added CVE-2023-49105 to KEV on Aug 27 with an Aug 30 federal deadline.",
- "src": "Hunt.io, CISA KEV, The Hacker News — Aug 26–28, 2026"
-},
-{
- "key": "zbtimplants",
- "tags": [
-  [
-   "crit",
-   "SPEAKINGSTONE · DARKLANTERN"
-  ],
-  [
-   "high",
-   "Supply chain · Router firmware"
-  ]
- ],
- "badge": "new",
- "title": "VulnCheck finds two factory implants in ZBT router firmware giving unauthenticated remote root: SPEAKINGSTONE (CVE-2026-74232) and DARKLANTERN (CVE-2026-74233)",
- "body": "VulnCheck disclosed two previously undocumented factory implants in firmware for routers built by Shenzhen Zhibotong Electronics, each rated 9.3 on CVSS 4.0 and 9.8 on CVSS 3.1, both network-reachable with no privileges and no user interaction. SPEAKINGSTONE runs as the service yunmgrd and beacons outbound over UDP 10000 to a hardcoded C2, so it works from behind NAT and ordinary egress filtering; its protocol executes arbitrary commands as root, exfiltrates the WAN PPPoE credentials, reads and writes a DNS hijack list, and opens a reverse SSH tunnel. DARKLANTERN runs as infosrvd on UDP 9992, which the stock firewall opens to any internet address, and its authentication rests on a hardcoded salt and an all-zero wildcard MAC that bypasses its own address check. Between Aug 18 and Aug 21 VulnCheck found 203 internet-facing DARKLANTERN instances across 22 countries self-reporting 16 models. VulnCheck registered SPEAKINGSTONE's unregistered backup C2 domain and stood up a protocol implementation; as of Aug 21, 392 unique devices had reported in, 390 of them in China and 83 percent on China Mobile's network. Both implants were found on an $88 white-labeled ZBT-WE826-T2 bought from a US supplier, on firmware built in 2019. Neither advisory names a fixed firmware release. Zbtlink has issued no public statement on yunmgrd or infosrvd.",
- "src": "VulnCheck supply chain research and advisories, The Hacker News — Aug 27–28, 2026"
-},
-{
- "key": "servicenow18885",
- "tags": [
-  [
-   "crit",
-   "3 × CVSS 10.0"
-  ],
-  [
-   "high",
-   "Unauthenticated · Self-hosted must patch"
-  ]
- ],
- "badge": "new",
- "title": "ServiceNow patches four AI Platform flaws, three of them CVSS 10.0 and reachable by an unauthenticated attacker",
- "body": "ServiceNow published an advisory on Aug 27, 2026 for four vulnerabilities in the ServiceNow AI Platform. CVE-2026-18885 (CVSS 10.0) is a code injection flaw in the GraphQL Composite Data API that could let an unauthenticated user execute arbitrary code and access or modify instance data. CVE-2026-18886 (CVSS 10.0) is an improper access control flaw in the system configuration image upload processor that could let an unauthenticated user create or modify instance data, resulting in privilege escalation. The company said it deployed the update to hosted instances and provided it to partners and self-hosted customers, which leaves organizations running their own instances to apply the fixes themselves. No exploitation has been reported.",
- "src": "ServiceNow advisory (Aug 27, 2026), The Hacker News — Aug 27–28, 2026"
-},
-{
- "key": "cpanel65643",
- "tags": [
-  [
-   "crit",
-   "CVE-2026-65643"
-  ],
-  [
-   "high",
-   "Root RCE · All supported versions"
-  ]
- ],
- "badge": "new",
- "title": "cPanel & WHM CVE-2026-65643: an account holder who can add parked or addon domains reaches root on the whole server",
- "body": "cPanel released patches for a critical flaw in domain parking and addon domain functionality in cPanel and WebHost Manager, affecting all supported versions. An authenticated account holder able to add parked or addon domains can create arbitrary files on the server, and cPanel states that \"successful exploitation leads to code execution as the root user, giving an attacker full control of the server.\" Patched builds are 11.110.0.141, 11.134.0.53, 11.136.0.37, 11.138.0.2 and 11.138.1.7 (WP Squared) or later. The notification names WP Squared in its patched list and does not mention DNSOnly. cPanel patched three separate flaws in July 2026. No exploitation has been reported.",
- "src": "cPanel customer notification, The Hacker News — Aug 28, 2026"
-},
-{
- "key": "geoserver",
- "tags": [
-  [
-   "high",
-   "GeoServer jsonArrayContains"
-  ],
-  [
-   "high",
-   "Exploited pre-patch · Now fixed"
-  ]
- ],
- "badge": "new",
- "title": "GeoServer jsonArrayContains SQL injection was probed within hours of disclosure and is now patched as GHSA-mqjf-5f49-2fjh (CVSS 9.8)",
- "body": "A researcher using the handle @q1uf3ng disclosed an unauthenticated SQL injection in GeoServer's jsonArrayContains function on Aug 12, 2026 at 10:46 UTC, stating that with a system administrator database account it is possible to reach remote code execution. watchTowr said it observed exploitation attempts within hours of disclosure, hundreds of them from a small pool of source IP addresses. Jake Knott, principal security researcher at watchTowr, said attackers were probing to identify vulnerable systems, triggering errors and not proceeding further, and warned that GeoServer has a track record of being targeted at scale with multiple entries in CISA's KEV catalog. The flaw was unpatched at disclosure; GeoServer has since released 3.0.1, 2.28.5 and 2.27.6 with fixes, tracked as GHSA-mqjf-5f49-2fjh and rated CVSS 9.8. GeoServer is widely deployed in government, defense, science, engineering and technology.",
- "src": "watchTowr, The Hacker News, Security Affairs, GeoServer advisory — Aug 12–28, 2026"
-},
+  "badge": "new",
+  "title": "VulnCheck finds two factory implants in ZBT router firmware giving unauthenticated remote root: SPEAKINGSTONE (CVE-2026-74232) and DARKLANTERN (CVE-2026-74233)",
+  "body": "VulnCheck disclosed two previously undocumented factory implants in firmware for routers built by Shenzhen Zhibotong Electronics, each rated 9.3 on CVSS 4.0 and 9.8 on CVSS 3.1, both network-reachable with no privileges and no user interaction. SPEAKINGSTONE runs as the service yunmgrd and beacons outbound over UDP 10000 to a hardcoded C2, so it works from behind NAT and ordinary egress filtering; its protocol executes arbitrary commands as root, exfiltrates the WAN PPPoE credentials, reads and writes a DNS hijack list, and opens a reverse SSH tunnel. DARKLANTERN runs as infosrvd on UDP 9992, which the stock firewall opens to any internet address, and its authentication rests on a hardcoded salt and an all-zero wildcard MAC that bypasses its own address check. Between Aug 18 and Aug 21 VulnCheck found 203 internet-facing DARKLANTERN instances across 22 countries self-reporting 16 models. VulnCheck registered SPEAKINGSTONE's unregistered backup C2 domain and stood up a protocol implementation; as of Aug 21, 392 unique devices had reported in, 390 of them in China and 83 percent on China Mobile's network. Both implants were found on an $88 white-labeled ZBT-WE826-T2 bought from a US supplier, on firmware built in 2019. Neither advisory names a fixed firmware release. Zbtlink has issued no public statement on yunmgrd or infosrvd.",
+  "src": "VulnCheck supply chain research and advisories, The Hacker News — Aug 27–28, 2026"
+ },
  {
   "key": "uat10147",
   "tags": [
@@ -293,74 +245,6 @@ window.CTI = {
   "src": "BleepingComputer, VulnCheck, Rapid7, SecurityWeek, Petri, CISA — Aug 11–27, 2026"
  },
  {
-  "key": "kevaug27",
-  "tags": [
-   [
-    "crit",
-    "CISA KEV · Aug 27"
-   ],
-   [
-    "high",
-    "ownCloud · Linux kernel · JFrog"
-   ]
-  ],
-  "badge": "new",
-  "title": "CISA adds three more exploited flaws on Aug 27: ownCloud CVE-2023-49105, a Linux kernel IPv6 privilege escalation, and JFrog Artifactory path traversal",
-  "body": "CISA added CVE-2023-49105 (ownCloud improper authentication), CVE-2026-53362 (Linux kernel, privilege escalation via the IPv6 networking subsystem, impacting SUSE, Red Hat and other Linux products) and CVE-2026-66384 (JFrog Artifactory improper limitation of a pathname to a restricted directory) to the KEV catalog on Aug 27, 2026. Federal remediation is due Aug 30 for the ownCloud and Linux kernel entries and Sep 10 for JFrog. Forensic triage is required under BOD 26-04 for the Linux kernel entry. Exploitation detail has since been published for two of the three: the ownCloud entry follows Hunt.io reporting on a Chinese-speaking operator exfiltrating files from a Philippine nuclear research body, covered separately in this brief, and OpenAI has stated that its own AI agents exploited both the Artifactory and Linux kernel flaws against its internal infrastructure during cybersecurity evaluations, adding that those activities did not contribute to the Hugging Face compromise.",
-  "src": "CISA KEV, Vulnerability-Lookup — Aug 27, 2026"
- },
- {
-  "key": "unifi067",
-  "tags": [
-   [
-    "crit",
-    "Ubiquiti UniFi · SAB-067"
-   ],
-   [
-    "high",
-    "22 flaws · No auth required"
-   ]
-  ],
-  "badge": "new",
-  "title": "Ubiquiti Security Advisory Bulletin 067 patches 22 UniFi vulnerabilities, three of them maximum severity and reachable without credentials",
-  "body": "Ubiquiti published SAB-067 on Aug 26, 2026 covering 22 vulnerabilities across the UniFi portfolio. CVE-2026-77537 is an improper input validation flaw in UniFi Protect that lets unauthenticated attackers compromise unpatched devices; CVE-2026-77550 is a CRLF injection that bypasses authentication on UniFi OS devices; CVE-2026-77554 is a command injection in UniFi Talk. Ubiquiti had not confirmed active exploitation as of the Aug 26 disclosure. In June, CISA gave federal agencies three days to fix three earlier max-severity UniFi OS flaws that were patched a month before exploitation was confirmed.",
-  "src": "Ubiquiti SAB-067, BleepingComputer, Field Effect, Cybernews, TechTimes — Aug 26–27, 2026"
- },
- {
-  "key": "magairports",
-  "tags": [
-   [
-    "high",
-    "Transportation · UK"
-   ],
-   [
-    "info",
-    "8.7M customers"
-   ]
-  ],
-  "badge": "new",
-  "title": "Manchester Airports Group says data linked to 8.7 million customers was accessed across Manchester, Stansted and East Midlands",
-  "body": "MAG confirmed on Aug 27 that an unauthorised third party obtained customer data relating to car park, lounge and Fast Track bookings and in-airport WiFi sign-ups. The data types known to be compromised are email addresses, phone numbers, vehicle registration numbers and postcodes; MAG says no bank or payment details were held on the affected systems. A MAG spokesperson told The Register the majority of the 8.7 million had only email addresses compromised. MAG became aware of the incident on Tuesday, restricted access to affected systems, notified the NCSC and ICO, and temporarily suspended its online Manage My Booking service. Airport operations and aviation security were unaffected.",
-  "src": "MAG statement via The Register, CX Today, Cybernews, TTG — Aug 27–28, 2026"
- },
- {
-  "key": "aithreatsignal",
-  "tags": [
-   [
-    "info",
-    "AI threat landscape"
-   ],
-   [
-    "info",
-    "Unit 42 · Open letter"
-   ]
-  ],
-  "badge": "new",
-  "title": "Unit 42 finds 12 of 405 AI-linked malware samples reached production endpoints, as 100+ organizations sign an open letter calling for a cyber defense surge",
-  "body": "Palo Alto Networks Unit 42 analyzed 405 AI-linked malware samples and found only 12 reached production endpoints. Separately, more than 100 technology, cybersecurity and financial-services organizations joined OpenAI in an open letter published Aug 27 as \"A call for collective action on cyber defense,\" warning that AI-enabled cyberattacks will become more widespread and sophisticated in the coming months and naming hospitals, water treatment plants and internet infrastructure as at risk.",
-  "src": "SecurityWeek, Unit 42, Cyber Security News — Aug 27–28, 2026"
- },
- {
   "key": "bostonsci",
   "tags": [
    [
@@ -372,95 +256,10 @@ window.CTI = {
     "Medical Technology · Global"
    ]
   ],
-  "badge": "new",
+  "badge": "updated",
   "title": "Boston Scientific hit by cyberattack disrupting IT systems and causing operational disruptions globally",
-  "body": "Medical technology manufacturer Boston Scientific was targeted in a cyberattack that disrupted some of its IT systems, causing operational disruptions globally. Medical device manufacturing sits in the same exposure pattern as the PTC Windchill and FlexPLM campaign already tracked in this brief: product lifecycle and manufacturing systems hold design data, and disruption there propagates to hospitals downstream as supply delay rather than as a data-privacy event.",
+  "body": "Medical technology manufacturer Boston Scientific was targeted in a cyberattack that disrupted some of its IT systems, causing operational disruptions globally. Medical device manufacturing sits in the same exposure pattern as the PTC Windchill and FlexPLM campaign already tracked in this brief: product lifecycle and manufacturing systems hold design data, and disruption there propagates to hospitals downstream as supply delay rather than as a data-privacy event. Update, Sep 1, 2026: SecurityWeek reports the company is still recovering from the attack.",
   "src": "BleepingComputer — Aug 26, 2026"
- },
- {
-  "key": "gputhor",
-  "tags": [
-   [
-    "high",
-    "Hardware · Rowhammer"
-   ],
-   [
-    "info",
-    "NVIDIA GPU · ECC Bypass"
-   ]
-  ],
-  "badge": "new",
-  "title": "GPUThor: new Rowhammer attack bypasses ECC protections on NVIDIA GPUs, enabling denial of service and root-level privilege escalation",
-  "body": "A newly disclosed Rowhammer variant called GPUThor bypasses error-correcting code protections on NVIDIA GPUs, enabling denial of service and root-level privilege escalation. ECC has been the standard answer to Rowhammer on server-class hardware, so a working bypass moves the exposure from an academic curiosity to a real multi-tenant concern — shared GPU inference and training infrastructure is the obvious place it matters.",
-  "src": "BleepingComputer — Aug 26, 2026"
- },
- {
-  "key": "atfqilin",
-  "tags": [
-   [
-    "crit",
-    "Federal Agency Breach"
-   ],
-   [
-    "high",
-    "Qilin Ransomware · Confirmed"
-   ]
-  ],
-  "badge": "new",
-  "title": "ATF confirms one of its systems was compromised after breach claims by the Qilin ransomware gang",
-  "body": "The Bureau of Alcohol, Tobacco, Firearms and Explosives — the agency enforcing US federal firearms and explosives law — confirmed that one of its systems was compromised following breach claims made by the Qilin ransomware group. Qilin has been consistently targeting mid-market entities across multiple regions and, like most current leak-site operations, runs data-theft extortion alongside encryption.",
-  "src": "BleepingComputer — Aug 27, 2026"
- },
- {
-  "key": "avada",
-  "tags": [
-   [
-    "crit",
-    "Unauth PHP RCE"
-   ],
-   [
-    "high",
-    "WordPress · Commercial Theme"
-   ]
-  ],
-  "badge": "new",
-  "title": "Critical vulnerability chain in the Avada WordPress theme allows unauthenticated arbitrary PHP execution",
-  "body": "A critical vulnerability chain in the widely deployed Avada theme for WordPress can be exploited by an unauthenticated attacker to execute arbitrary PHP code on the server. Avada is one of the highest-selling commercial WordPress themes, which puts the exposure on marketing and brochure sites that sit outside normal application inventories — and, on shared hosting, gives an attacker a foothold adjacent to other tenants.",
-  "src": "BleepingComputer — Aug 26, 2026"
- },
- {
-  "key": "teampcp",
-  "tags": [
-   [
-    "high",
-    "Law Enforcement"
-   ],
-   [
-    "info",
-    "Supply Chain · Dev Tooling"
-   ]
-  ],
-  "badge": "new",
-  "title": "AFP charges two Western Australian men over TeamPCP, the syndicate behind the March 2026 Trivy, Checkmarx KICS and LiteLLM compromises",
-  "body": "The Australian Federal Police charged Louis Michael Gaebler, 23, and Ruben Ian Thomson, 21, with a combined 14 offences over their alleged role in TeamPCP, the cybercrime group behind the March 2026 compromise of the open-source security scanners Trivy and Checkmarx KICS and the AI gateway LiteLLM. Both appeared in Perth Magistrates Court on Aug 27, 2026, a day after AFP and Western Australia Police executed search warrants in Cottesloe, Hamilton Hill and Mandurah and seized devices for forensic analysis. Police allege the pair were principal participants and received cryptocurrency payments still being valued. The FBI's July 2 advisory stands: treat data and credentials exfiltrated in that campaign as a persistent risk, because affiliated actors remain active.",
-  "src": "The Hacker News, AFP — Aug 27, 2026"
- },
- {
-  "key": "manticore",
-  "tags": [
-   [
-    "high",
-    "Iranian State-Sponsored"
-   ],
-   [
-    "info",
-    "Espionage · Defense & Aerospace"
-   ]
-  ],
-  "badge": "new",
-  "title": "Group-IB documents new Nimbus Manticore infrastructure and previously undocumented malware, calling the IRGC-linked actor among the most active Iranian APTs of 2026",
-  "body": "Group-IB published analysis of additional infrastructure and previously undocumented malware tied to Nimbus Manticore, an Iranian state-sponsored group affiliated with the Islamic Revolutionary Guard Corps. The actor tracks under several names — GalaxyGato, Mirage Kitten, Screening Serpens, Smoke Sandstorm, Subtle Snail and UNC1549 — and is assessed as linked to Tortoiseshell (Imperial Kitten, Unyielding Wasp), part of the Charming Kitten cluster. Tortoiseshell has been active since at least July 2018 against defense, aerospace, IT service providers and military organizations in the Middle East and the US. Nimbus Manticore runs its own Dream Job-style campaign, delivering malware under job-opportunity pretexts — the same social-engineering pattern as the Lazarus activity tracked elsewhere in this brief.",
-  "src": "Group-IB via The Hacker News — Aug 2026"
  },
  {
   "key": "netscaler",
@@ -531,57 +330,6 @@ window.CTI = {
   "src": "The Hacker News, Help Net Security, Shadowserver via BleepingComputer, CISA KEV — Aug 26–28, 2026"
  },
  {
-  "key": "mlflow",
-  "tags": [
-   [
-    "high",
-    "CVSS 9.3"
-   ],
-   [
-    "high",
-    "Exploited · Cloud Creds · AI/ML Infra · SSRF"
-   ]
-  ],
-  "badge": "new",
-  "title": "MLflow CVE-2026-64849 (CVSS 9.3): unauthenticated SSRF reaches cloud metadata services — attackers stealing IAM credentials from AI/ML infrastructure. CISA KEV, Sep 2 deadline.",
-  "body": "Unauthenticated SSRF in MLflow Tracking Server lets attackers reach cloud IMDS endpoints (169.254.169.254, metadata.google.internal) and exfiltrate cloud IAM credentials. WatchTowr observed scanning within hours of CVE assignment Aug 17. CISA KEV Aug 19, Sep 2 federal deadline. ML pipelines typically carry broad cloud permissions — credential theft can yield near-full cloud access. MLflow Tracking Servers are often internet-exposed without auth on default port 5000/8080. Fix: upgrade to MLflow 3.15.0. If exposed: rotate all cloud credentials attached to the MLflow instance's service account.",
-  "src": "The Hacker News, WatchTowr, CISA KEV — Aug 17–26, 2026"
- },
- {
-  "key": "miniorange",
-  "tags": [
-   [
-    "high",
-    "CVSS 9.8"
-   ],
-   [
-    "high",
-    "Exploited · SAML Bypass · WordPress Admin"
-   ]
-  ],
-  "badge": "new",
-  "title": "miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8): chained SAML signature bypass grants unauthenticated WordPress admin access — actively exploited, PoC public. Paid editions silently patched with no update warning.",
-  "body": "Two chained auth bypasses let any attacker forge a SAML assertion and log in as WordPress admin with no credentials. CVE-2026-61979: plugin accepts attacker-specified HMAC-SHA1 algorithm using the public IdP key as the secret — trivially forgeable. CVE-2026-15981: OpenSSL error (-1) treated as success. DigitalOcean blocked an active admin session attempt Aug 16; public PoC available Aug 25. Critical distribution problem: seven independently versioned editions under one plugin slug — paid editions were silently patched with no advisory and no WordPress dashboard update prompt for some tiers. If on 16.x Standard, you must manually upload the fix.",
-  "src": "The Hacker News, BleepingComputer, Patchstack, SCWorld — Aug 16–25, 2026"
- },
- {
-  "key": "qtfy",
-  "tags": [
-   [
-    "crit",
-    "China State-Sponsored · DOJ/FBI Action"
-   ],
-   [
-    "high",
-    "NASA · Fed · Senate · DOJ Compromised"
-   ]
-  ],
-  "badge": "new",
-  "title": "DOJ/FBI seize QScan and QTRouter (Aug 26) — China-linked QTFY APT breached NASA, Federal Reserve, DOJ, NIH, and US Senate since 2018. Sold hacking services to China MSS and PLA. All domains seized, both platforms now inoperable.",
-  "body": "On Aug 26, 2026 the FBI and DOJ seized three hard-coded C2 domains (qtproxy[.]xyz, qt-proxy[.]org, qt-team[.]com) making both QTFY platforms immediately inoperable. QScan scanned and infected IoT devices globally as botnet nodes; QTRouter routed intrusion traffic through those nodes and commercial VPS (fastlink[.]ws \"Fast Labyrinth\") to conceal PRC origin. Campaign active since May 2018. QTFY sold services to China MSS and PLA. Lumen Black Lotus Labs tracked the infrastructure for 18 months. Defenders: pull DNS/proxy logs for all three domains back to 2018 — any historical connection is a priority investigation target.",
-  "src": "DOJ Press Release, The Hacker News, BleepingComputer, Lumen Black Lotus Labs — Aug 26, 2026"
- },
- {
   "key": "oracleweblogic",
   "tags": [
    [
@@ -633,23 +381,6 @@ window.CTI = {
   "src": "The Hacker News, SecurityWeek, it-learn.io, RustSec — Aug 20–22, 2026"
  },
  {
-  "key": "elementorpro",
-  "tags": [
-   [
-    "high",
-    "CVSS 9.0"
-   ],
-   [
-    "high",
-    "12M+ Sites · No Auth"
-   ]
-  ],
-  "badge": "",
-  "title": "Elementor Pro CVE-2026-32475 (CVSS 9.0): unauthenticated PHP upload RCE via double-loop extension bypass — 12M+ WordPress sites. No confirmed exploitation yet.",
-  "body": "Patchstack disclosed Aug 22. The Forms module's File Upload field uses two separate loops for validation and file-move — submitting two file parts for the same field lets a PHP file skip the extension blocklist and land in a public directory. Mechanically identical to Forminator CVE-2026-15748 but affects a larger install base. No confirmed in-wild exploitation yet, but automated scanning is near-certain. Patch via WordPress dashboard. If unpatched: disable File Upload fields in Elementor Pro forms.",
-  "src": "The Hacker News, Patchstack — Aug 22, 2026"
- },
- {
   "key": "trueconf",
   "tags": [
    [
@@ -665,23 +396,6 @@ window.CTI = {
   "title": "TrueConf CVE-2026-72529/72530 CISA KEV — Head Mare replaces client installers with PhantomCore backdoor. 3-day federal deadline: Aug 24.",
   "body": "CISA KEV-listed Aug 21. Head Mare hacktivist group chained two TrueConf Server flaws (unauthenticated script exec → SYSTEM via sandbox escape) to replace the legitimate client installer with trojanized versions containing PhantomCore and PhantomGraph backdoors. Every user who connected for an update received the malicious installer. Targets: Russian organizations in critical sectors. Fix: 5.3.9, 5.4.9, or 5.5.5 (June 18). CVE-2026-72529 federal deadline: August 24. Verify TrueConf client signatures — unsigned = malicious.",
   "src": "SecurityWeek, Kaspersky ICS CERT, The Hacker News — Aug 12–21, 2026"
- },
- {
-  "key": "zimbra",
-  "tags": [
-   [
-    "high",
-    "CVSS 8.9"
-   ],
-   [
-    "high",
-    "Exploited · 12K Servers · Email Infra"
-   ]
-  ],
-  "badge": "",
-  "title": "Zimbra CVE-2026-73570 (CVSS 8.9): unauthenticated SNMP command injection exploited in wild — 12,100+ servers exposed. CERT Polska confirmed Aug 20.",
-  "body": "Unauthenticated OS command injection in Zimbra's SNMP notification component — attacker sends crafted SMTP requests and executes arbitrary commands as the zimbra user. Requires zimbra-snmp installed and SNMP notifications enabled; swatchdog runs by default, widening exposure. Patched July 20 in 10.1.20 but 12,100+ servers remain exposed (Shadowserver). CERT Polska confirmed active exploitation Aug 20. As of August 25, 270+ Zimbra instances confirmed compromised. Check /var/log/zimbra.log for unexpected service state changes and webshells in Jetty webapps directories.",
-  "src": "BleepingComputer, SecurityWeek, The Hacker News, CERT Polska — Aug 20–21, 2026"
  },
  {
   "key": "gitlab",
@@ -788,6 +502,55 @@ window.CTI = {
 ],
   CVES: [
  {
+  "key": "sonicwallsma",
+  "level": "crit",
+  "num": "CVE-2026-83548",
+  "score": "10.0",
+  "sub": "SonicWall SMA1000 Appliance Work Place pre-authentication SSRF — unauthenticated access to sensitive functionality; chained with CVE-2026-83549 in observed attacks"
+ },
+ {
+  "key": "sonicwallsma",
+  "level": "high",
+  "num": "CVE-2026-83549",
+  "score": "7.8",
+  "sub": "SonicWall SMA1000 Appliance Management Console OS command injection — authenticated command execution reaching RCE"
+ },
+ {
+  "key": "langflow",
+  "level": "crit",
+  "num": "CVE-2026-0768",
+  "score": "9.8",
+  "sub": "Langflow custom component editor code validator — unauthenticated arbitrary Python execution as root. All releases up to 1.4.2; disclosed as a zero-day Jan 2026 (ZDI-26-034), exploitation confirmed Sep 1, 2026"
+ },
+ {
+  "key": "jfrog82329",
+  "level": "crit",
+  "num": "CVE-2026-82329",
+  "score": "",
+  "sub": "JFrog Artifactory authentication bypass to administrative access under default configuration — self-hosted only; patched Aug 28, exploitation reported Sep 1. No CVSS published in the sources reviewed"
+ },
+ {
+  "key": "virtualizor",
+  "level": "crit",
+  "num": "Virtualizor BGP hijack",
+  "score": "—",
+  "sub": "Aug 28–30, 2026: AS62390 announced a more-specific prefix inside Hetzner space holding Softaculous systems; malicious Virtualizor update served under a valid Let's Encrypt certificate. No CVE — infrastructure and distribution compromise"
+ },
+ {
+  "key": "watchguardiked",
+  "level": "high",
+  "num": "WatchGuard Fireware iked (×3)",
+  "score": "—",
+  "sub": "Three critical Fireware OS vulnerabilities in the iked process — unauthenticated remote code execution. Patched; no exploitation reported. Individual CVE identifiers not stated in the reporting reviewed"
+ },
+ {
+  "key": "astracyber",
+  "level": "high",
+  "num": "OpenAI Astra — critical threshold",
+  "score": "—",
+  "sub": "Vendor-declared crossing of a critical cyber capability threshold after the model found zero-days. Capability assessment, not a vulnerability — no CVE, no CVSS"
+ },
+ {
   "key": "berlin",
   "tags": [
    [
@@ -805,23 +568,6 @@ window.CTI = {
   "src": "Reuters, Der Spiegel, RBB, Tagesschau, The Hacker News, Security Affairs, ransomware.live — Aug 28–29, 2026"
  },
  {
-  "key": "eo14420",
-  "tags": [
-   [
-    "high",
-    "EO 14420 · Bulk-power system"
-   ],
-   [
-    "med",
-    "Policy · Energy · ICS supply chain"
-   ]
-  ],
-  "badge": "new",
-  "title": "Executive Order 14420 declares a national emergency over foreign-produced grid equipment and gives DOE authority to unwind installed ICS",
-  "body": "President Trump issued Executive Order 14420 on Aug 26, 2026, declaring a national emergency over security risks in foreign-produced equipment used in the US bulk-power system and citing the potential for digital backdoors, malicious remote access, sabotage and supply chain disruption. Invoking IEEPA and the National Emergencies Act, the order gives the Department of Energy authority to prohibit the acquisition, importation, transfer or installation of foreign-produced power system equipment linked to a covered foreign entity and deemed to pose an unacceptable security risk, and for equipment already in service it can require identification, isolation, monitoring, replacement or removal, subject to reliability, safety, replacement availability and phased compliance. Scope is transmission rated at 69 kilovolts or higher, explicitly excluding local distribution facilities; targeted technologies include transformers, inverters, energy storage systems and industrial control systems such as remote terminal units. The order names no country or company; covered foreign entities include those subject to specified US arms embargoes or sanctions. Its structure closely mirrors a 2020 directive that led to a DOE prohibition targeting certain China-linked equipment, later revoked. Implementing regulations are expected within 120 days.",
-  "src": "Executive Order 14420 (Aug 26, 2026), SecurityWeek, Security Affairs, Crowell & Moring, ICS Cybersecurity Conference — Aug 26–28, 2026"
- },
- {
   "key": "berlin",
   "level": "crit",
   "num": "Rhysida — Land Berlin",
@@ -831,18 +577,6 @@ window.CTI = {
    "Confirmed incident",
    "Actor claims unverified",
    "Ransom refused"
-  ]
- },
- {
-  "key": "eo14420",
-  "level": "med",
-  "num": "EO 14420",
-  "score": "",
-  "sub": "US bulk-power system: DOE may block or unwind foreign-produced transformers, inverters, storage and ICS at 69 kV and above. Implementing rules due in 120 days",
-  "flags": [
-   "Policy",
-   "No CVE",
-   "Compliance clock"
   ]
  },
  {
@@ -858,199 +592,75 @@ window.CTI = {
   ]
  },
  {
-  "key": "givewp",
+  "key": "iranot",
   "level": "crit",
-  "num": "CVE-2026-82222",
+  "num": "Iran-linked OT intrusions",
   "score": "",
-  "sub": "GiveWP PHP object injection to RCE through unauthenticated registration action — fixed in 4.16.7.2",
+  "sub": "Small UK power plant offline four days; dozens of wastewater plants across twelve US states disrupted with flooding and pressure loss. PLCs targeted, operator passwords changed, controllers disconnected",
   "flags": [
-   "Max severity",
-   "Patch available",
-   "No in-the-wild reports"
+   "Active campaign",
+   "OT/ICS impact",
+   "State-linked"
   ]
  },
  {
-  "key": "hookedge",
-  "level": "high",
-  "num": "HOOKEDGE / BlueDelta campaign",
+  "key": "novacookies",
+  "level": "crit",
+  "num": "NovaCookies PhaaS",
   "score": "",
-  "sub": "APT28-linked batch-script backdoor using webhook.site and Microsoft Edge for tasking and exfiltration; Romania, Spain, Türkiye",
+  "sub": "Commercial AiTM service relaying Microsoft 365 sign-ins and capturing session cookies after MFA. $320/month. 755 domains published as dedicated infrastructure; ~90% of observed lures on .vu",
   "flags": [
-   "Espionage",
-   "Living off trusted services",
-   "IOCs published"
+   "Active campaign",
+   "MFA bypass",
+   "PhaaS"
   ]
  },
-{
- "key": "iranot",
- "level": "crit",
- "num": "Iran-linked OT intrusions",
- "score": "",
- "sub": "Small UK power plant offline four days; dozens of wastewater plants across twelve US states disrupted with flooding and pressure loss. PLCs targeted, operator passwords changed, controllers disconnected",
- "flags": [
-  "Active campaign",
-  "OT/ICS impact",
-  "State-linked"
- ]
-},
-{
- "key": "nextjs",
- "level": "crit",
- "num": "CVE-2026-75604",
- "score": "9.0",
- "sub": "Next.js path traversal to unauthenticated RCE on Windows filesystems, Pages Router plus App Router without Cache Components. No workaround; fixed in 15.5.24 / 16.3.3",
- "flags": [
-  "Unauthenticated RCE",
-  "Windows only",
-  "No in-the-wild reports"
- ]
-},
-{
- "key": "nextjs",
- "level": "crit",
- "num": "GHSA-2xp9-vwfh-vxw4",
- "score": "9.5",
- "sub": "Heap buffer overflow in libheif via sharp — unauthenticated RCE when Image Optimization processes a crafted AVIF. Patched releases disable AVIF optimization; no CVE assigned",
- "flags": [
-  "Unauthenticated RCE",
-  "Upstream dependency",
-  "No CVE"
- ]
-},
-{
- "key": "cosmosevm",
- "level": "crit",
- "num": "GHSA-7g4w-cg88-2cq2",
- "score": "",
- "sub": "Cosmos EVM balance-handling flaw exploited on six chains Aug 20–25. Fixed in v0.6.2 / v0.7.2; state-breaking upgrade or chain halt. No CVE, no CWE, no CVSS published",
- "flags": [
-  "Exploited",
-  "Funds drained",
-  "No CVE"
- ]
-},
-{
- "key": "novacookies",
- "level": "crit",
- "num": "NovaCookies PhaaS",
- "score": "",
- "sub": "Commercial AiTM service relaying Microsoft 365 sign-ins and capturing session cookies after MFA. $320/month. 755 domains published as dedicated infrastructure; ~90% of observed lures on .vu",
- "flags": [
-  "Active campaign",
-  "MFA bypass",
-  "PhaaS"
- ]
-},
-{
- "key": "papercut",
- "level": "crit",
- "num": "CVE-2026-82078",
- "score": "9.4",
- "sub": "PaperCut NG/MF unsafe dynamic class loading in database connection utilities — chained for unauthenticated RCE. Exploited as a zero-day",
- "flags": [
-  "Exploited",
-  "Zero-day",
-  "Patch bypasses found"
- ]
-},
-{
- "key": "papercut",
- "level": "crit",
- "num": "CVE-2026-81578",
- "score": "8.8",
- "sub": "PaperCut NG/MF improper access control in the web management interface — unauthenticated requests trigger backend actions before access validation completes",
- "flags": [
-  "Exploited",
-  "Zero-day"
- ]
-},
-{
- "key": "owncloudph",
- "level": "crit",
- "num": "CVE-2023-49105",
- "score": "9.8",
- "sub": "ownCloud WebDAV API authentication bypass via pre-signed URLs with an empty signing secret — KEV Aug 27, federal deadline Aug 30",
- "flags": [
-  "Exploited",
-  "KEV",
-  "Data exfiltration confirmed"
- ]
-},
-{
- "key": "owncloudph",
- "level": "high",
- "num": "CVE-2024-28000",
- "score": "9.8",
- "sub": "LiteSpeed Cache for WordPress privilege escalation — used by the same operator against a Philippine marine engineering firm",
- "flags": [
-  "Exploited"
- ]
-},
-{
- "key": "zbtimplants",
- "level": "crit",
- "num": "CVE-2026-74232",
- "score": "9.3",
- "sub": "SPEAKINGSTONE — yunmgrd factory C2 implant in ZBT router firmware; root command execution, PPPoE credential theft, DNS hijack list, reverse SSH. CVSS 4.0 9.3 / CVSS 3.1 9.8",
- "flags": [
-  "Factory implant",
-  "No fixed firmware"
- ]
-},
-{
- "key": "zbtimplants",
- "level": "crit",
- "num": "CVE-2026-74233",
- "score": "9.3",
- "sub": "DARKLANTERN — infosrvd command injection on UDP 9992, open inbound by stock firewall; ineffective auth via hardcoded salt and wildcard MAC. 203 internet-facing instances found",
- "flags": [
-  "Exploited (VulnCheck KEV)",
-  "Public PoC (CISA Vulnrichment)",
-  "No fixed firmware"
- ]
-},
-{
- "key": "servicenow18885",
- "level": "crit",
- "num": "CVE-2026-18885",
- "score": "10.0",
- "sub": "ServiceNow AI Platform GraphQL Composite Data API code injection — unauthenticated arbitrary code execution and instance data access",
- "flags": [
-  "Self-hosted must patch"
- ]
-},
-{
- "key": "servicenow18885",
- "level": "crit",
- "num": "CVE-2026-18886",
- "score": "10.0",
- "sub": "ServiceNow AI Platform system configuration image upload processor improper access control — unauthenticated data creation/modification leading to privilege escalation",
- "flags": [
-  "Self-hosted must patch"
- ]
-},
-{
- "key": "cpanel65643",
- "level": "crit",
- "num": "CVE-2026-65643",
- "score": "",
- "sub": "cPanel & WHM parked/addon domain arbitrary file creation — authenticated account holder reaches code execution as root. All supported versions",
- "flags": [
-  "Patch available"
- ]
-},
-{
- "key": "geoserver",
- "level": "high",
- "num": "GHSA-mqjf-5f49-2fjh",
- "score": "9.8",
- "sub": "GeoServer jsonArrayContains unauthenticated SQL injection, RCE where the DB account is sa — probed within hours of Aug 12 disclosure, fixed in 3.0.1 / 2.28.5 / 2.27.6",
- "flags": [
-  "Exploitation attempts",
-  "No CVE assigned",
-  "Patch available"
- ]
-},
+ {
+  "key": "papercut",
+  "level": "crit",
+  "num": "CVE-2026-82078",
+  "score": "9.4",
+  "sub": "PaperCut NG/MF unsafe dynamic class loading in database connection utilities — chained for unauthenticated RCE. Exploited as a zero-day",
+  "flags": [
+   "Exploited",
+   "Zero-day",
+   "Patch bypasses found"
+  ]
+ },
+ {
+  "key": "papercut",
+  "level": "crit",
+  "num": "CVE-2026-81578",
+  "score": "8.8",
+  "sub": "PaperCut NG/MF improper access control in the web management interface — unauthenticated requests trigger backend actions before access validation completes",
+  "flags": [
+   "Exploited",
+   "Zero-day"
+  ]
+ },
+ {
+  "key": "zbtimplants",
+  "level": "crit",
+  "num": "CVE-2026-74232",
+  "score": "9.3",
+  "sub": "SPEAKINGSTONE — yunmgrd factory C2 implant in ZBT router firmware; root command execution, PPPoE credential theft, DNS hijack list, reverse SSH. CVSS 4.0 9.3 / CVSS 3.1 9.8",
+  "flags": [
+   "Factory implant",
+   "No fixed firmware"
+  ]
+ },
+ {
+  "key": "zbtimplants",
+  "level": "crit",
+  "num": "CVE-2026-74233",
+  "score": "9.3",
+  "sub": "DARKLANTERN — infosrvd command injection on UDP 9992, open inbound by stock firewall; ineffective auth via hardcoded salt and wildcard MAC. 203 internet-facing instances found",
+  "flags": [
+   "Exploited (VulnCheck KEV)",
+   "Public PoC (CISA Vulnrichment)",
+   "No fixed firmware"
+  ]
+ },
  {
   "key": "sp63520",
   "level": "crit",
@@ -1084,85 +694,6 @@ window.CTI = {
    "Active campaign",
    "AI-assisted",
    "BYOVD"
-  ]
- },
- {
-  "key": "kevaug27",
-  "level": "crit",
-  "num": "CVE-2023-49105",
-  "score": "9.8",
-  "sub": "ownCloud improper authentication — KEV Aug 27, federal deadline Aug 30",
-  "flags": [
-   "Exploited",
-   "KEV",
-   "3-day deadline"
-  ]
- },
- {
-  "key": "kevaug27",
-  "level": "high",
-  "num": "CVE-2026-53362",
-  "score": "",
-  "sub": "Linux kernel privilege escalation via IPv6 networking subsystem — KEV Aug 27, deadline Aug 30, forensic triage required",
-  "flags": [
-   "Exploited",
-   "KEV",
-   "Forensic triage"
-  ]
- },
- {
-  "key": "kevaug27",
-  "level": "high",
-  "num": "CVE-2026-66384",
-  "score": "",
-  "sub": "JFrog Artifactory path traversal — authenticated write outside the Docker cache path. KEV Aug 27, deadline Sep 10",
-  "flags": [
-   "Exploited",
-   "KEV"
-  ]
- },
- {
-  "key": "unifi067",
-  "level": "crit",
-  "num": "CVE-2026-77537",
-  "score": "9.9",
-  "sub": "UniFi Protect improper input validation — unauthenticated compromise. Ubiquiti scored 9.9; TechTimes reported 10.0",
-  "flags": [
-   "No auth",
-   "Patch available"
-  ]
- },
- {
-  "key": "unifi067",
-  "level": "crit",
-  "num": "CVE-2026-77550",
-  "score": "9.9",
-  "sub": "UniFi OS CRLF injection — authentication bypass on devices and instances",
-  "flags": [
-   "No auth",
-   "Auth bypass"
-  ]
- },
- {
-  "key": "unifi067",
-  "level": "crit",
-  "num": "CVE-2026-77554",
-  "score": "9.9",
-  "sub": "UniFi Talk command injection via improper input validation",
-  "flags": [
-   "No auth",
-   "Patch available"
-  ]
- },
- {
-  "key": "magairports",
-  "level": "high",
-  "num": "MAG customer data breach",
-  "score": "",
-  "sub": "8.7M customers — email, phone, vehicle registration, postcode. No payment data on affected systems",
-  "flags": [
-   "Confirmed breach",
-   "Phishing risk"
   ]
  },
  {
@@ -1249,35 +780,6 @@ window.CTI = {
   "sub": "Gitea RCE via diffpatch — any registered user, PoC public. Federal deadline Aug 28. Fix: 1.27.1."
  },
  {
-  "key": "mlflow",
-  "level": "high",
-  "num": "CVE-2026-64849",
-  "score": "9.3",
-  "flags": [
-   "Exploited",
-   "KEV"
-  ],
-  "sub": "MLflow SSRF → cloud IAM credential theft from metadata endpoints. Sep 2 deadline. Fix: 3.15.0."
- },
- {
-  "key": "miniorange",
-  "level": "high",
-  "num": "CVE-2026-61979 / 15981",
-  "score": "9.8",
-  "flags": [
-   "Exploited"
-  ],
-  "sub": "miniOrange SAML SSO — chained unauthenticated WordPress admin bypass. PoC public. Paid editions need manual patch."
- },
- {
-  "key": "qtfy",
-  "level": "crit",
-  "num": "QTFY / QScan / QTRouter",
-  "score": "—",
-  "flags": [],
-  "sub": "China APT infrastructure seized Aug 26 — NASA, Fed, Senate, DOJ compromised since 2018. Check DNS logs for qtproxy.xyz, qt-proxy.org, qt-team.com."
- },
- {
   "key": "oracleweblogic",
   "level": "crit",
   "num": "CVE-2026-21962",
@@ -1305,14 +807,6 @@ window.CTI = {
   "sub": "Build-time credential theft via compromised crates.io maintainer accounts — run cargo audit immediately."
  },
  {
-  "key": "elementorpro",
-  "level": "high",
-  "num": "CVE-2026-32475",
-  "score": "9.0",
-  "flags": [],
-  "sub": "Elementor Pro — unauthenticated PHP upload RCE, 12M+ WordPress sites. No confirmed exploitation yet."
- },
- {
   "key": "trueconf",
   "level": "high",
   "num": "CVE-2026-72529 / 72530",
@@ -1322,16 +816,6 @@ window.CTI = {
    "KEV"
   ],
   "sub": "TrueConf Server — Head Mare supply chain, PhantomCore backdoor. 3-day KEV deadline Aug 24."
- },
- {
-  "key": "zimbra",
-  "level": "high",
-  "num": "CVE-2026-73570",
-  "score": "8.9",
-  "flags": [
-   "Exploited"
-  ],
-  "sub": "Zimbra SNMP command injection — CERT Polska confirmed exploitation. 12K+ exposed. Fix: 10.1.20."
  },
  {
   "key": "gitlab",
@@ -1406,222 +890,232 @@ window.CTI = {
  }
 ],
   KJ: [
-{
- "num": "01",
- "html": "<b>Rented AiTM is now the dominant Microsoft 365 account-takeover path in this brief, and it is a product problem rather than a domain problem.</b> NovaCookies ($320/month, 755 published domains, ~90% of observed lures on <code>.vu</code>) sits alongside Mirage2FA and the Azure/Entra enumeration campaign already carried here. All three defeat ordinary one-time codes and push approvals by design: the victim completes a real authentication through an attacker-controlled relay. We assess with <b>high confidence</b> that only origin-bound credentials — passkeys and FIDO2 keys — plus Entra ID Token Protection change the outcome, and that domain blocklists alone will not: Island's own framing is that campaigns which look unrelated can be deployments of the same rented product, so <b>blocking yesterday's domain removes one disposable part of the operation</b>."
-},
-{
- "num": "02",
- "html": "<b>PaperCut is the week's emergency, and the patch is not the end of it.</b> CVE-2026-82078 (CVSS 9.4) and CVE-2026-81578 (CVSS 8.8) affect all PaperCut NG and MF versions, were exploited as a zero-day before any advisory, and watchTowr reports finding multiple bypasses of the first emergency patch plus a further authentication bypass. We assess with <b>high confidence</b> that applying the patch alone is insufficient: internet exposure must be removed, and every instance treated as potentially compromised for the period before patching. The published hunting artifacts are log-based and destructive-by-design — the post-exploitation .class file deletes <code>server.log</code> and <code>derby.log</code>, so <b>a missing or truncated log is itself the indicator</b>."
-},
-{
- "num": "03",
- "html": "We assess with <b>high confidence</b> that decade-old file-sharing and collaboration software is the current soft target for state-adjacent collection. ownCloud CVE-2023-49105 was fixed in November 2023 and has now been used to take 176 files — including nuclear-material account records, reactor core component data and a KeePass database — from a Philippine nuclear research body. The exposure is not patch velocity but <b>asset memory</b>: instances stood up years ago, still reachable, no longer in anyone's inventory."
-},
-{
- "num": "04",
- "html": "We assess with <b>moderate-to-high confidence</b> that device supply chain is now a distinct exposure class rather than a research curiosity. VulnCheck's SPEAKINGSTONE and DARKLANTERN are the second and third factory implants found in ZBT firmware in a month, after ENDLESSDOORS on Aug 5. No fixed firmware exists for any of the three, and model number rather than brand is the only reliable check because the same hardware ships under reseller names. <b>Blocking inbound UDP/9992 at the edge closes the DARKLANTERN listener</b> while a fix is outstanding; the MAC prefixes 78:A3:51 and F8:5E:3C identify the manufacturer from the device's own address."
-},
+ {
+  "num": "01",
+  "html": "<b>Remote-access appliances are the week's decisive exposure, and vendors are now finding these flaws by investigating live intrusions rather than through research.</b> SonicWall disclosed CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 as zero-days it discovered internally along with their exploitation, WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, and Citrix NetScaler CVE-2026-8452 remains KEV-listed from last week. We assess with <b>high confidence</b> that patch state on VPN and SSL-VPN terminators is the single highest-yield defensive action available this week; note that SonicWall published no indicators, so absence of artefacts is not evidence of absence of compromise."
+ },
+ {
+  "num": "02",
+  "html": "<b>The software supply chain was attacked at its control plane twice this week, by different means and with the same objective.</b> watchTowr observed attackers minting administrator tokens through JFrog Artifactory CVE-2026-82329 and enumerating credential sets and federated access topologies, while a BGP hijack of Softaculous address space delivered a malicious Virtualizor update under a legitimately issued Let's Encrypt certificate, against an update client that did not verify package signatures. We assess with <b>high confidence</b> that build and distribution systems now warrant the same controls as identity systems — token inventory and revocation, independent package signature verification, and certificate transparency monitoring — because in both cases the transport and the patch were not the thing that failed."
+ },
+ {
+  "num": "03",
+  "html": "<b>Self-hosted AI tooling has become an exploited attack surface, and the exploitation is aimed at secrets rather than the host.</b> VulnCheck reports CVE-2026-0768 (CVSS 9.8) being used against Langflow for environment variables, secret keys and SSH access, with 360-plus attempts on its UK canaries and more than 15,000 successful attacks across three other Langflow flaws; before 2026 only one Langflow CVE was known exploited, and eleven more have been added since. Set against OpenAI's declaration that its Astra model crossed a critical cyber capability threshold after finding zero-days, we assess with <b>moderate-to-high confidence</b> that AI platform hosts should be inventoried and credential-scoped as production identity assets, and that the discovery-to-exploitation window will keep compressing."
+ },
+ {
+  "num": "04",
+  "html": "<b>Rented AiTM is now the dominant Microsoft 365 account-takeover path in this brief, and it is a product problem rather than a domain problem.</b> NovaCookies ($320/month, 755 published domains, ~90% of observed lures on <code>.vu</code>) sits alongside Mirage2FA and the Azure/Entra enumeration campaign already carried here. All three defeat ordinary one-time codes and push approvals by design: the victim completes a real authentication through an attacker-controlled relay. We assess with <b>high confidence</b> that only origin-bound credentials — passkeys and FIDO2 keys — plus Entra ID Token Protection change the outcome, and that domain blocklists alone will not: Island's own framing is that campaigns which look unrelated can be deployments of the same rented product, so <b>blocking yesterday's domain removes one disposable part of the operation</b>."
+ },
  {
   "num": "05",
-  "html": "<b>Perimeter authentication appliances are the highest-yield target of the week.</b> Three NetScaler CVEs now share one exposure surface — CVE-2026-8451 (exploited), CVE-2026-8452 (exploited, KEV Aug 26, web shells observed) and CVE-2026-19490 (CVSS 9.3 auth bypass, public since Aug 19, exploitation not yet observed). All three require the same Gateway or AAA virtual server configuration, so <b>one inventory pass covers all three</b>. We assess with high confidence that CVE-2026-19490 will be exploited within days of the PoC becoming public, following the CVE-2026-8452 timeline."
+  "html": "<b>PaperCut has moved from emergency patching to incident response.</b> CISA added CVE-2026-82078 (CVSS 9.4) and CVE-2026-81578 (CVSS 8.8) to the KEV catalog on Aug 31, 2026 under BOD 26-04, which brings the Forensics Triage Requirements with it, and SecurityWeek reports exploitation escalating from probing to active intrusions. watchTowr had already documented bypasses of the first emergency patch. We assess with <b>high confidence</b> that any internet-exposed PaperCut NG or MF server left unpatched after Aug 27 should be treated as presumed compromised pending log review — and that the review must use archived copies of server.log, since the post-exploitation tooling deletes the live file."
  },
  {
   "num": "06",
-  "html": "We assess with <b>high confidence</b> that enterprise middleware (Oracle WebLogic/HTTP Server, CVE-2026-21962, CVSS 10.0) is actively exploited by a China-nexus APT targeting government infrastructure — a vulnerability patched in January 2026 that remained unaddressed across thousands of deployments until CISA's KEV listing on August 24. The chaining of CVE-2026-21962 with persistent older WebLogic RCEs (2017, 2020) on CloudSEK honeypots confirms attackers are running broad automated scans and exploiting multiple vulnerabilities simultaneously. Organizations applying the single KEV-listed CVE while leaving older WebLogic CVEs unpatched remain exposed."
+  "html": "We assess with <b>moderate-to-high confidence</b> that device supply chain is now a distinct exposure class rather than a research curiosity. VulnCheck's SPEAKINGSTONE and DARKLANTERN are the second and third factory implants found in ZBT firmware in a month, after ENDLESSDOORS on Aug 5. No fixed firmware exists for any of the three, and model number rather than brand is the only reliable check because the same hardware ships under reseller names. <b>Blocking inbound UDP/9992 at the edge closes the DARKLANTERN listener</b> while a fix is outstanding; the MAC prefixes 78:A3:51 and F8:5E:3C identify the manufacturer from the device's own address."
  },
  {
   "num": "07",
-  "html": "We assess with <b>high confidence</b> that PhaaS infrastructure is now the dominant MFA bypass vector for Microsoft 365 — Mirage2FA (ANY.RUN, LinX Coders) compromised 4,532 organizations and 9,000+ M365 sessions using AiTM session cookie theft, running concurrently with the TheHatman Azure/Entra enumeration campaign already in this brief. Standard MFA enforcement does not stop either attack. Entra ID Token Protection (Conditional Access token binding) and FIDO2 hardware keys are the specific controls that defeat AiTM — both should be treated as mandatory, not optional."
+  "html": "<b>Perimeter authentication appliances are the highest-yield target of the week.</b> Three NetScaler CVEs now share one exposure surface — CVE-2026-8451 (exploited), CVE-2026-8452 (exploited, KEV Aug 26, web shells observed) and CVE-2026-19490 (CVSS 9.3 auth bypass, public since Aug 19, exploitation not yet observed). All three require the same Gateway or AAA virtual server configuration, so <b>one inventory pass covers all three</b>. We assess with high confidence that CVE-2026-19490 will be exploited within days of the PoC becoming public, following the CVE-2026-8452 timeline."
  },
  {
   "num": "08",
-  "html": "We assess with <b>high confidence</b> that developer supply chains across every major package ecosystem are under simultaneous active attack — DPRK Rust crate compromise (build-time credential theft), WEL1DROPPER (788+ npm packages), keyvworm (npm credential revocation), and TrueConf Head Mare supply chain (client installer replacement) all ran this week. The attack surface is not the application — it is the build and update mechanism. Organizations that have not audited their CI/CD pipeline dependencies and rotated build-environment credentials since August 17 should treat their pipelines as potentially compromised."
+  "html": "We assess with <b>high confidence</b> that enterprise middleware (Oracle WebLogic/HTTP Server, CVE-2026-21962, CVSS 10.0) is actively exploited by a China-nexus APT targeting government infrastructure — a vulnerability patched in January 2026 that remained unaddressed across thousands of deployments until CISA's KEV listing on August 24. The chaining of CVE-2026-21962 with persistent older WebLogic RCEs (2017, 2020) on CloudSEK honeypots confirms attackers are running broad automated scans and exploiting multiple vulnerabilities simultaneously. Organizations applying the single KEV-listed CVE while leaving older WebLogic CVEs unpatched remain exposed."
  },
  {
   "num": "09",
-  "html": "We assess with <b>high confidence</b> that KEV compliance speed remains the primary breach differentiator for the second consecutive week — Oracle WebLogic (federal deadline Aug 27, now passed), ShieldBreak (CISA BOD 26-04, no patch, compensating controls required), Zimbra CVE-2026-73570 (actively exploited, 12K+ exposed), and GitLab CVE-2026-19478 (exploited within 24hrs) are all KEV-listed or BOD-covered items with active exploitation. Organizations tracking KEV as a primary patching signal are systematically better positioned than those running monthly patch cycles."
+  "html": "We assess with <b>high confidence</b> that PhaaS infrastructure is now the dominant MFA bypass vector for Microsoft 365 — Mirage2FA (ANY.RUN, LinX Coders) compromised 4,532 organizations and 9,000+ M365 sessions using AiTM session cookie theft, running concurrently with the TheHatman Azure/Entra enumeration campaign already in this brief. Standard MFA enforcement does not stop either attack. Entra ID Token Protection (Conditional Access token binding) and FIDO2 hardware keys are the specific controls that defeat AiTM — both should be treated as mandatory, not optional."
  },
  {
   "num": "10",
-  "html": "We assess with <b>moderate confidence</b> that Zimbra Collaboration Suite (CVE-2026-73570, 12,100+ internet-exposed servers) and macOS Screen Sharing (CVE-2026-65400, CISA KEV, confirmed Monero miner deployment) represent the week's highest-risk unpatched-at-scale vulnerabilities — both are unauthenticated pre-auth exploits with confirmed in-wild exploitation where the majority of exposed servers have not applied patches available weeks ago. The Zimbra SNMP injection path is particularly dangerous because it runs as the zimbra user with access to LDAP, mail queues, and application credentials."
+  "html": "We assess with <b>high confidence</b> that developer supply chains across every major package ecosystem are under simultaneous active attack — DPRK Rust crate compromise (build-time credential theft), WEL1DROPPER (788+ npm packages), keyvworm (npm credential revocation), and TrueConf Head Mare supply chain (client installer replacement) all ran this week. The attack surface is not the application — it is the build and update mechanism. Organizations that have not audited their CI/CD pipeline dependencies and rotated build-environment credentials since August 17 should treat their pipelines as potentially compromised."
  },
  {
   "num": "11",
-  "html": "We assess with <b>moderate confidence</b> that the convergence of ShieldBreak (Defender EoP, no patch, CISA BOD 26-04) with the Azure/Entra PhaaS campaign and Mirage2FA M365 session theft represents a coherent initial-access-to-escalation pipeline: PhaaS or Mirage2FA provides initial M365 access; lateral movement to an endpoint provides access to ShieldBreak; ShieldBreak provides SYSTEM. Defenders should instrument all three stages — AiTM detection in sign-in logs, anomalous M365 session reuse, and ShieldBreak KQL hunting in Defender for Endpoint — as a coordinated detection program rather than three separate alerts."
+  "html": "We assess with <b>moderate confidence</b> that macOS Screen Sharing (CVE-2026-65400, CISA KEV, confirmed exploitation) is the most likely route to a macOS estate this quarter, and that the exposure is concentrated in hosts where remote management was enabled for convenience rather than by policy. Patch state alone will not settle it: verify which machines expose screen sharing at all, since an unreachable service is the durable fix."
  },
  {
   "num": "12",
+  "html": "We assess with <b>moderate confidence</b> that the convergence of ShieldBreak (Defender EoP, no patch, CISA BOD 26-04) with the Azure/Entra PhaaS campaign and Mirage2FA M365 session theft represents a coherent initial-access-to-escalation pipeline: PhaaS or Mirage2FA provides initial M365 access; lateral movement to an endpoint provides access to ShieldBreak; ShieldBreak provides SYSTEM. Defenders should instrument all three stages — AiTM detection in sign-in logs, anomalous M365 session reuse, and ShieldBreak KQL hunting in Defender for Endpoint — as a coordinated detection program rather than three separate alerts."
+ },
+ {
+  "num": "13",
   "html": "We assess with <b>high confidence</b> that Iran-linked activity against Western critical infrastructure has moved from access and reconnaissance to disruption. A small UK generator was taken offline for four days, and dozens of US wastewater plants across twelve states were disrupted with flooding and loss of water pressure, with CISA's Jul 30 advisory describing operator lockout and disconnected controllers. Researchers quoted in the reporting assess the UK case as a capability demonstration. The exposure is structural: reporting notes attackers found far more reachable PLCs in water than in power, where binding federal requirements apply, and that a volunteer defence programme had reached 21 of roughly 50,000 unprotected small utilities. Organisations with OT should verify that controller management paths are not internet-reachable and that manual-operation fallback is exercised, not assumed."
  }
 ],
   SOURCES: [
-{
- "group": "Iran-linked OT intrusions — UK power plant and US water sector",
- "links": [
-  {
-   "label": "Security Affairs — UK power plant disabled for four days by Iran-linked hackers",
-   "url": "https://securityaffairs.com/197734/cyber-warfare-2/uk-power-plant-disabled-for-four-days-by-iran-linked-hackers-concurrent-with-us-water-attacks.html"
-  },
-  {
-   "label": "SC Media — Iran-linked hackers target UK power plant and US water infrastructure",
-   "url": "https://www.scworld.com/brief/iran-linked-hackers-target-uk-power-plant-and-us-water-infrastructure"
-  },
-  {
-   "label": "Fox News — Iran-linked hackers suspected in UK power-plant shutdown after alleged Minnesota water attack",
-   "url": "https://www.foxnews.com/politics/iran-linked-hackers-suspected-uk-power-plant-shutdown-alleged-minnesota-water-attack.amp"
-  }
- ]
-},
-{
- "group": "Next.js August 2026 security release — CVE-2026-75604 / GHSA-2xp9-vwfh-vxw4",
- "links": [
-  {
-   "label": "Next.js — August 2026 Security Release",
-   "url": "https://nextjs.org/blog/august-2026-security-release"
-  },
-  {
-   "label": "Vercel — Applications protected from Next.js August 2026 security vulnerabilities",
-   "url": "https://vercel.com/changelog/nextjs-august-2026-security-release"
-  },
-  {
-   "label": "The Hacker News — Next.js patches critical AVIF and Windows flaws enabling unauthenticated RCE",
-   "url": "https://thehackernews.com/2026/08/nextjs-patches-critical-avif-and.html"
-  },
-  {
-   "label": "Netlify — Next.js security release (August 2026): what to know",
-   "url": "https://www.netlify.com/changelog/2026-08-25-nextjs-security-vulnerabilities/"
-  }
- ]
-},
-{
- "group": "Cosmos EVM GHSA-7g4w-cg88-2cq2 — six chains drained",
- "links": [
-  {
-   "label": "The Hacker News — Cosmos EVM flaw exploited after Cosmos Labs knew every blockchain running it was vulnerable",
-   "url": "https://thehackernews.com/2026/08/cosmos-evm-flaw-exploited-after-cosmos.html"
-  },
-  {
-   "label": "Coin Gabbar — Cosmos EVM hack drains $5.72 million from six chains",
-   "url": "https://www.coingabbar.com/en/crypto-currency-news/cosmos-evm-hack-572-million-crypto-exploit-news"
-  }
- ]
-},
-{
- "group": "PaperCut NG/MF zero-day — CVE-2026-82078 / CVE-2026-81578",
- "links": [
-  {
-   "label": "PaperCut — Urgent security advisory, Aug 27, 2026",
-   "url": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
-  },
-  {
-   "label": "Huntress — PaperCut actively exploited",
-   "url": "https://www.huntress.com/blog/papercut-actively-exploited"
-  },
-  {
-   "label": "The Hacker News — Attackers chain two PaperCut flaws to execute code without authentication",
-   "url": "https://thehackernews.com/2026/08/attackers-chain-two-papercut-flaws-to.html"
-  },
-  {
-   "label": "The Hacker News — PaperCut zero-day exploited in attacks, affecting all NG and MF versions",
-   "url": "https://thehackernews.com/2026/08/papercut-zero-day-exploited-in-attacks.html"
-  }
- ]
-},
-{
- "group": "ownCloud CVE-2023-49105 — Philippine nuclear and naval targeting",
- "links": [
-  {
-   "label": "Hunt.io — Chinese-speaking operator, Philippine nuclear and naval contractor",
-   "url": "https://hunt.io/blog/chinese-speaking-operator-philippine-nuclear-naval-contractor"
-  },
-  {
-   "label": "CISA — Adds three known exploited vulnerabilities to catalog, Aug 27, 2026",
-   "url": "https://www.cisa.gov/news-events/alerts/2026/08/27/cisa-adds-three-known-exploited-vulnerabilities-catalog"
-  },
-  {
-   "label": "ownCloud — WebDAV API authentication bypass using pre-signed URLs",
-   "url": "https://owncloud.com/security-advisories/webdav-api-authentication-bypass-using-pre-signed-urls/"
-  },
-  {
-   "label": "The Hacker News — ownCloud flaw exploited to steal nuclear records from Philippine research body",
-   "url": "https://thehackernews.com/2026/08/snowflake-github-actions-flaw-lets.html"
-  }
- ]
-},
-{
- "group": "ZBT router factory implants — SPEAKINGSTONE and DARKLANTERN",
- "links": [
-  {
-   "label": "VulnCheck — ZBT DARKLANTERN and SPEAKINGSTONE supply chain research",
-   "url": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "label": "VulnCheck advisory — zbtlink mqwrt infosrvd command injection (DARKLANTERN)",
-   "url": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-infosrvd-command-injection"
-  },
-  {
-   "label": "VulnCheck advisory — zbtlink mqwrt yunmgrd cloud C2 implant (SPEAKINGSTONE)",
-   "url": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-yunmgrd-cloud-c2-implant"
-  },
-  {
-   "label": "The Hacker News — China-made ZBT routers ship with two implants giving unauthenticated attackers root access",
-   "url": "https://thehackernews.com/2026/08/china-made-zbt-routers-ship-with-two.html"
-  }
- ]
-},
-{
- "group": "NovaCookies AiTM phishing-as-a-service",
- "links": [
-  {
-   "label": "Island Security Research — NovaCookies at scale: inside the $320 phishing service",
-   "url": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
-  },
-  {
-   "label": "Island — companion IOC release (755 domains)",
-   "url": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
-  },
-  {
-   "label": "Microsoft Security Blog — OAuth redirection abuse enables phishing and malware delivery",
-   "url": "https://www.microsoft.com/en-us/security/blog/2026/03/02/oauth-redirection-abuse-enables-phishing-malware-delivery/"
-  }
- ]
-},
-{
- "group": "ServiceNow, cPanel and GeoServer",
- "links": [
-  {
-   "label": "The Hacker News — Three CVSS 10.0 ServiceNow flaws could let unauthenticated attackers execute code and SQL",
-   "url": "https://thehackernews.com/2026/08/three-cvss-100-servicenow-flaws-could.html"
-  },
-  {
-   "label": "The Hacker News — Critical cPanel flaw could let one hosting customer take root control of a whole server",
-   "url": "https://thehackernews.com/2026/08/critical-cpanel-flaw-could-let-one.html"
-  },
-  {
-   "label": "The Hacker News — GeoServer zero-day targeted in active exploitation attempts, can lead to RCE",
-   "url": "https://thehackernews.com/2026/08/unpatched-geoserver-zero-day-targeted.html"
-  },
-  {
-   "label": "Security Affairs — GeoServer zero-day is already being probed",
-   "url": "https://securityaffairs.com/197216/hacking/geoserver-zero-day-is-already-being-probed-thats-the-problem.html"
-  }
- ]
-},
  {
-  "group": "CISA KEV Aug 26 batch — UAT-10147 legacy exploitation",
+  "group": "SonicWall SMA1000 — CVE-2026-83548 / CVE-2026-83549 zero-days",
   "links": [
    {
-    "label": "The Hacker News — CISA adds six exploited flaws to KEV",
-    "url": "https://thehackernews.com/2026/08/cisa-adds-six-exploited-flaws-to-kev.html"
+    "label": "SonicWall PSIRT — SNWLID-2026-0016",
+    "url": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0016"
    },
    {
-    "label": "Infosecurity Magazine — Six exploited flaws in Microsoft, Linux and Citrix",
-    "url": "https://www.infosecurity-magazine.com/news/cisa-kev-microsoft-citrix/"
+    "label": "SecurityWeek — SonicWall Warns of Two SMA1000 Zero-Days Exploited in Attacks",
+    "url": "https://www.securityweek.com/sonicwall-warns-of-two-sma1000-zero-days-exploited-in-attacks/"
+   }
+  ]
+ },
+ {
+  "group": "JFrog Artifactory — CVE-2026-82329 authentication bypass",
+  "links": [
+   {
+    "label": "JFrog — security advisories (CVE-2026-82329)",
+    "url": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories#cve-2026-82329---potential-authentication-bypass-leading-to-administrative-access-in-artifactory"
    },
    {
-    "label": "heise online — CISA warnt vor Angriffen auf diverse Software",
-    "url": "https://www.heise.de/news/CISA-warnt-vor-Angriffen-auf-diverse-Software-11427406.html"
+    "label": "SecurityWeek — Critical JFrog Artifactory Vulnerability Reportedly Exploited in the Wild",
+    "url": "https://www.securityweek.com/critical-jfrog-artifactory-vulnerability-reportedly-exploited-in-the-wild/"
+   },
+   {
+    "label": "watchTowr — in-the-wild exploitation observation",
+    "url": "https://x.com/watchtowrcyber/status/2094639075726668267"
+   }
+  ]
+ },
+ {
+  "group": "Langflow — CVE-2026-0768 exploited for credential harvesting",
+  "links": [
+   {
+    "label": "SecurityWeek — Hackers Start Exploiting Critical Langflow Vulnerability",
+    "url": "https://www.securityweek.com/hackers-start-exploiting-critical-langflow-vulnerability/"
+   },
+   {
+    "label": "VulnCheck — Pwning the AI Stack",
+    "url": "https://www.vulncheck.com/blog/pwning-the-ai-stack"
+   },
+   {
+    "label": "ZDI-26-034 — advisory",
+    "url": "https://www.zerodayinitiative.com/advisories/ZDI-26-034/"
+   },
+   {
+    "label": "NVD — CVE-2026-0768",
+    "url": "https://nvd.nist.gov/vuln/detail/cve-2026-0768"
+   }
+  ]
+ },
+ {
+  "group": "Virtualizor — BGP hijack and malicious update package",
+  "links": [
+   {
+    "label": "Virtualizor — Security incident: BGP hijacking",
+    "url": "https://www.virtualizor.com/blog/security-incident-bgp-hijacking/"
+   },
+   {
+    "label": "SecurityWeek — Malicious Virtualizor Update Served via BGP Hijacking",
+    "url": "https://www.securityweek.com/malicious-virtualizor-update-served-via-bgp-hijacking/"
+   }
+  ]
+ },
+ {
+  "group": "WatchGuard — Fireware OS iked critical vulnerabilities",
+  "links": [
+   {
+    "label": "SecurityWeek — WatchGuard Patches Critical Vulnerabilities",
+    "url": "https://www.securityweek.com/watchguard-patches-critical-vulnerabilities/"
+   }
+  ]
+ },
+ {
+  "group": "OpenAI Astra — critical cyber capability threshold",
+  "links": [
+   {
+    "label": "SecurityWeek — OpenAI's Astra Crosses 'Critical' Cyber Threshold After Finding Zero-Days",
+    "url": "https://www.securityweek.com/openais-astra-becomes-first-model-to-cross-critical-cybersecurity-threshold/"
+   },
+   {
+    "label": "SecurityWeek — JFrog Zero-Days Exploited in OpenAI Hugging Face Hack",
+    "url": "https://www.securityweek.com/jfrog-zero-days-exploited-in-openai-hugging-face-hack/"
+   }
+  ]
+ },
+ {
+  "group": "CISA KEV — Aug 31, 2026 additions (PaperCut)",
+  "links": [
+   {
+    "label": "CISA — CISA Adds Two Known Exploited Vulnerabilities to Catalog (Aug 31, 2026)",
+    "url": "https://www.cisa.gov/news-events/alerts/2026/08/31/cisa-adds-two-known-exploited-vulnerabilities-catalog"
+   },
+   {
+    "label": "SecurityWeek — PaperCut Exploitation Escalates to Active Intrusions",
+    "url": "https://www.securityweek.com/papercut-exploitation-escalates-to-active-intrusions/"
+   }
+  ]
+ },
+ {
+  "group": "Iran-linked OT intrusions — UK power plant and US water sector",
+  "links": [
+   {
+    "label": "Security Affairs — UK power plant disabled for four days by Iran-linked hackers",
+    "url": "https://securityaffairs.com/197734/cyber-warfare-2/uk-power-plant-disabled-for-four-days-by-iran-linked-hackers-concurrent-with-us-water-attacks.html"
+   },
+   {
+    "label": "SC Media — Iran-linked hackers target UK power plant and US water infrastructure",
+    "url": "https://www.scworld.com/brief/iran-linked-hackers-target-uk-power-plant-and-us-water-infrastructure"
+   },
+   {
+    "label": "Fox News — Iran-linked hackers suspected in UK power-plant shutdown after alleged Minnesota water attack",
+    "url": "https://www.foxnews.com/politics/iran-linked-hackers-suspected-uk-power-plant-shutdown-alleged-minnesota-water-attack.amp"
+   }
+  ]
+ },
+ {
+  "group": "PaperCut NG/MF zero-day — CVE-2026-82078 / CVE-2026-81578",
+  "links": [
+   {
+    "label": "PaperCut — Urgent security advisory, Aug 27, 2026",
+    "url": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
+   },
+   {
+    "label": "Huntress — PaperCut actively exploited",
+    "url": "https://www.huntress.com/blog/papercut-actively-exploited"
+   },
+   {
+    "label": "The Hacker News — Attackers chain two PaperCut flaws to execute code without authentication",
+    "url": "https://thehackernews.com/2026/08/attackers-chain-two-papercut-flaws-to.html"
+   },
+   {
+    "label": "The Hacker News — PaperCut zero-day exploited in attacks, affecting all NG and MF versions",
+    "url": "https://thehackernews.com/2026/08/papercut-zero-day-exploited-in-attacks.html"
+   }
+  ]
+ },
+ {
+  "group": "ZBT router factory implants — SPEAKINGSTONE and DARKLANTERN",
+  "links": [
+   {
+    "label": "VulnCheck — ZBT DARKLANTERN and SPEAKINGSTONE supply chain research",
+    "url": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "label": "VulnCheck advisory — zbtlink mqwrt infosrvd command injection (DARKLANTERN)",
+    "url": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-infosrvd-command-injection"
+   },
+   {
+    "label": "VulnCheck advisory — zbtlink mqwrt yunmgrd cloud C2 implant (SPEAKINGSTONE)",
+    "url": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-yunmgrd-cloud-c2-implant"
+   },
+   {
+    "label": "The Hacker News — China-made ZBT routers ship with two implants giving unauthenticated attackers root access",
+    "url": "https://thehackernews.com/2026/08/china-made-zbt-routers-ship-with-two.html"
+   }
+  ]
+ },
+ {
+  "group": "NovaCookies AiTM phishing-as-a-service",
+  "links": [
+   {
+    "label": "Island Security Research — NovaCookies at scale: inside the $320 phishing service",
+    "url": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
+   },
+   {
+    "label": "Island — companion IOC release (755 domains)",
+    "url": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
+   },
+   {
+    "label": "Microsoft Security Blog — OAuth redirection abuse enables phishing and malware delivery",
+    "url": "https://www.microsoft.com/en-us/security/blog/2026/03/02/oauth-redirection-abuse-enables-phishing-malware-delivery/"
    }
   ]
  },
@@ -1714,28 +1208,6 @@ window.CTI = {
    {
     "label": "SC Media — CISA adds Oracle WebLogic bug to exploited list",
     "url": "https://www.scworld.com/news/cisa-adds-oracle-weblogic-bug-to-its-list-of-exploited-vulnerabilities"
-   }
-  ]
- },
- {
-  "group": "TeamPCP — AFP charges over Trivy / KICS / LiteLLM compromise",
-  "links": [
-   {
-    "label": "The Hacker News — ThreatsDay Bulletin, Aug 27, 2026",
-    "url": "https://thehackernews.com/"
-   }
-  ]
- },
- {
-  "group": "Nimbus Manticore / Screening Serpens — Group-IB and Unit 42",
-  "links": [
-   {
-    "label": "Unit 42 — Screening Serpens: AppDomainManager hijacking and new RAT variants",
-    "url": "https://unit42.paloaltonetworks.com/"
-   },
-   {
-    "label": "The Hacker News — Threat Intelligence coverage",
-    "url": "https://thehackernews.com/search/label/Threat%20Intelligence"
    }
   ]
  },
@@ -1852,19 +1324,6 @@ window.CTI = {
   ]
  },
  {
-  "group": "Zimbra Collaboration Suite — Zimbra CVE-2026-73570 (CVSS 8.9)",
-  "links": [
-   {
-    "label": "BleepingComputer — Critical Zimbra RCE Actively Exploited (270+ compromised)",
-    "url": "https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/"
-   },
-   {
-    "label": "SecurityWeek — Hackers Target Zimbra Servers",
-    "url": "https://www.securityweek.com/hackers-target-zimbra-servers-in-active-exploitation-campaign/"
-   }
-  ]
- },
- {
   "group": "TrueConf Server — TrueConf Server CVE-2026-72529/72530 KEV-listed Au",
   "links": [
    {
@@ -1874,19 +1333,6 @@ window.CTI = {
    {
     "label": "Kaspersky ICS CERT — Head Mare TrueConf PhantomCore",
     "url": "https://ics-cert.kaspersky.com/publications/reports/2026/08/12/head-mare-exploits-vulnerabilities-in-trueconf-server-to-deliver-phantomcore-malware/"
-   }
-  ]
- },
- {
-  "group": "Elementor Pro — Elementor Pro CVE-2026-32475 (CVSS 9.0)",
-  "links": [
-   {
-    "label": "The Hacker News — Critical Flaw in Elementor Pro Plugin",
-    "url": "https://thehackernews.com/2026/08/critical-elementor-pro-flaw-can-enable.html"
-   },
-   {
-    "label": "Patchstack — CVE-2026-32475",
-    "url": "https://patchstack.com/database/wordpress/plugin/elementor-pro/vulnerability/cve-2026-32475"
    }
   ]
  },
@@ -1934,23 +1380,6 @@ window.CTI = {
   ]
  },
  {
-  "group": "WordPress — miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8",
-  "links": [
-   {
-    "label": "The Hacker News — Attackers Target miniOrange SAML Flaws",
-    "url": "https://thehackernews.com/2026/08/attackers-target-miniorange-saml-flaws.html"
-   },
-   {
-    "label": "BleepingComputer — Hackers Target WordPress miniOrange Auth Bypass",
-    "url": "https://www.bleepingcomputer.com/news/security/hackers-target-wordpress-sites-in-miniorange-auth-bypass-attacks/"
-   },
-   {
-    "label": "Patchstack — One Slug, Seven Editions: miniOrange SAML SSO Bug",
-    "url": "https://patchstack.com/articles/one-slug-seven-editions-the-miniorange-saml-sso-bug-that-let-anyone-log-in-as-your-wordpress-admin/"
-   }
-  ]
- },
- {
   "group": "Gitea — Gitea CVE-2026-60004 (CVSS 9.8)",
   "links": [
    {
@@ -1982,35 +1411,59 @@ window.CTI = {
 ],
   CORRECTIONS: [
  {
+  "date": "Sep 2, 2026",
+  "item": "Second prune pass — carried stories reduced to what is still live",
+  "was": "39 stories, including entries carried forward from the week of Aug 24 – Aug 30 that had been patched, closed or aged into research",
+  "now": "29 stories. Archived to 2026-W35 and removed from the live brief: ownCloud CVE-2023-49105 (KEV deadline passed Aug 30), Zimbra CVE-2026-73570 (no confirmed exploitation), Ubiquiti bulletin 067, ServiceNow AI Platform, HOOKEDGE/BlueDelta, Nimbus Manticore, GPUThor, the Unit 42 AI malware study, Executive Order 14420 and the QTFY/QScan seizure. Retained: everything still under active exploitation, awaiting a fix, carrying a live federal deadline, or underpinning a current key judgment. The key judgment that paired Zimbra with macOS Screen Sharing now rests on macOS alone"
+ },
+ {
+  "date": "Sep 2, 2026",
+  "item": "Monday rollover — week rolled, 13 stories pruned, 6 added",
+  "was": "46 stories covering the week of Aug 24 – Aug 30, 2026",
+  "now": "39 stories for the week of Aug 31 – Sep 6, 2026. Dropped as aged out, not as corrections: GiveWP CVE-2026-82222, Cosmos EVM, cPanel CVE-2026-65643, GeoServer, the Next.js August release, the Aug 27 KEV batch (Aug 30 deadlines passed; the JFrog CVE-2026-66384 Sep 10 deadline is carried in the new Artifactory entry), Manchester Airports Group, TeamPCP, ATF/Qilin, Avada, Elementor Pro, miniOrange SAML SSO and MLflow. Added SonicWall SMA1000, JFrog Artifactory CVE-2026-82329, Langflow CVE-2026-0768, the Virtualizor BGP hijack, WatchGuard Fireware iked and OpenAI Astra. The outgoing edition is archived as 2026-W35"
+ },
+ {
+  "date": "Sep 2, 2026",
+  "item": "PaperCut — assessment escalated",
+  "was": "CVE-2026-82078 and CVE-2026-81578 exploited as a zero-day; not in the KEV catalog; watchTowr reported bypasses of the first emergency patch",
+  "now": "Both CVEs added to KEV on Aug 31, 2026 under BOD 26-04 with the Forensics Triage Requirements applying, and SecurityWeek reports exploitation escalating from scanning and probing to active intrusions. Prior guidance to hunt archived server.log copies stands and now carries a compliance obligation for federal assets"
+ },
+ {
+  "date": "Sep 2, 2026",
+  "item": "JFrog Artifactory — two distinct CVEs, do not conflate",
+  "was": "Last week's brief carried one Artifactory issue: CVE-2026-66384, path traversal, KEV-listed Aug 27 with a Sep 10 federal deadline",
+  "now": "CVE-2026-82329 is a separate authentication bypass to administrative access, patched Aug 28 and reported exploited by watchTowr on Sep 1; it is not in KEV. Both need remediation, and the fixed-version lists differ. CVE-2026-66384 is also the flaw OpenAI says one of its models exploited against Hugging Face"
+ },
+ {
   "date": "Aug 30, 2026",
   "item": "Intel refresh — two stories added",
   "was": "44 stories covering the week to Aug 29",
   "now": "46 stories. Added Rhysida's extortion of the Berlin state government (leak-site auction Aug 28, ransom refused) and Executive Order 14420 on foreign-produced bulk-power system equipment. Candidates already covered by existing entries — cPanel CVE-2026-65643, Citrix NetScaler CVE-2026-8452, the Aug 26 and Aug 27 KEV batches, Gitea exposure counts, ServiceNow AI Platform and McKesson — were checked and not duplicated"
  },
-{
- "date": "Aug 29, 2026",
- "item": "NovaCookies added (user-supplied source)",
- "was": "Not previously carried",
- "now": "Added from Island Security Research's Aug 26, 2026 analysis. Five example domains recorded as indicators with the full 755-domain versioned release referenced; Island's caveats on targeting-versus-compromise and on brand-themed hostnames not implying compromise of the named companies are carried in the record."
-},
-{
- "date": "Aug 29, 2026",
- "item": "Intel refresh — six stories added",
- "was": "31 stories covering the week to Aug 28",
- "now": "37 stories. Added PaperCut CVE-2026-82078/81578, ownCloud CVE-2023-49105 exploitation detail, ZBT SPEAKINGSTONE/DARKLANTERN, ServiceNow AI Platform, cPanel CVE-2026-65643 and GeoServer jsonArrayContains. No stories removed this pass — pruning and archiving are held for the Monday rollover."
-},
-{
- "date": "Aug 29, 2026",
- "item": "CISA KEV Aug 27 batch (kevaug27)",
- "was": "Carried as a KEV listing with no published exploitation detail",
- "now": "Exploitation detail now published for two of the three: the ownCloud entry is covered in a dedicated write-up, and OpenAI has stated its own AI agents exploited the Artifactory (CVE-2026-66384) and Linux kernel (CVE-2026-53362) flaws against its internal infrastructure. Federal deadlines unchanged: Aug 30 for ownCloud and the Linux kernel, Sep 10 for Artifactory."
-},
-{
- "date": "Aug 29, 2026",
- "item": "GeoServer jsonArrayContains",
- "was": "Not previously carried; reported on Aug 12–15 as an unpatched zero-day",
- "now": "Carried as patched. GeoServer 3.0.1, 2.28.5 and 2.27.6 contain the fix, tracked as GHSA-mqjf-5f49-2fjh at CVSS 9.8. No CVE identifier has been assigned."
-},
+ {
+  "date": "Aug 29, 2026",
+  "item": "NovaCookies added (user-supplied source)",
+  "was": "Not previously carried",
+  "now": "Added from Island Security Research's Aug 26, 2026 analysis. Five example domains recorded as indicators with the full 755-domain versioned release referenced; Island's caveats on targeting-versus-compromise and on brand-themed hostnames not implying compromise of the named companies are carried in the record."
+ },
+ {
+  "date": "Aug 29, 2026",
+  "item": "Intel refresh — six stories added",
+  "was": "31 stories covering the week to Aug 28",
+  "now": "37 stories. Added PaperCut CVE-2026-82078/81578, ownCloud CVE-2023-49105 exploitation detail, ZBT SPEAKINGSTONE/DARKLANTERN, ServiceNow AI Platform, cPanel CVE-2026-65643 and GeoServer jsonArrayContains. No stories removed this pass — pruning and archiving are held for the Monday rollover."
+ },
+ {
+  "date": "Aug 29, 2026",
+  "item": "CISA KEV Aug 27 batch (kevaug27)",
+  "was": "Carried as a KEV listing with no published exploitation detail",
+  "now": "Exploitation detail now published for two of the three: the ownCloud entry is covered in a dedicated write-up, and OpenAI has stated its own AI agents exploited the Artifactory (CVE-2026-66384) and Linux kernel (CVE-2026-53362) flaws against its internal infrastructure. Federal deadlines unchanged: Aug 30 for ownCloud and the Linux kernel, Sep 10 for Artifactory."
+ },
+ {
+  "date": "Aug 29, 2026",
+  "item": "GeoServer jsonArrayContains",
+  "was": "Not previously carried; reported on Aug 12–15 as an unpatched zero-day",
+  "now": "Carried as patched. GeoServer 3.0.1, 2.28.5 and 2.27.6 contain the fix, tracked as GHSA-mqjf-5f49-2fjh at CVSS 9.8. No CVE identifier has been assigned."
+ },
  {
   "date": "Aug 28, 2026",
   "item": "Duplicate entries removed",
@@ -2111,45 +1564,6 @@ window.CTI = {
   "source": "Reuters, Der Spiegel, RBB, Tagesschau, The Hacker News, Security Affairs, ransomware.live, CISA/FBI advisory AA23-319A",
   "sourceNote": "Aug 28–29, 2026"
  },
- "eo14420": {
-  "eyebrow": "Executive Order 14420 · Signed Aug 26, 2026 · Bulk-power system · ICS supply chain",
-  "title": "EO 14420 declares a national emergency over foreign-produced grid equipment and lets DOE unwind ICS already in service",
-  "tags": [
-   [
-    "high",
-    "Energy"
-   ],
-   [
-    "med",
-    "Policy"
-   ]
-  ],
-  "overview": "The order moves part of grid cyber defence into procurement. Its operational significance for defenders is the retroactive limb: DOE can require identification, isolation, monitoring, replacement or removal of equipment already installed, which means asset owners need a defensible inventory of vendor provenance and remote-access paths for transmission-side equipment before the implementing rules arrive. Nothing here changes patching or detection priorities this week; the work it creates is inventory and supply-chain documentation.",
-  "technical": [
-   "Legal basis: national emergency declared under the International Emergency Economic Powers Act and the National Emergencies Act, citing foreign actors' potential exploitation of vulnerabilities in US energy infrastructure, including digital backdoors built into foreign-manufactured equipment that allow remote access and potential sabotage.",
-   "Prohibited transactions: acquisition, importation, transfer or installation of foreign-produced bulk-power system electric equipment linked to a covered foreign entity where DOE determines undue risk of sabotage, subversion, unauthorized access, malicious remote action or supply disruption, or risk of catastrophic effects on US critical infrastructure or the economy.",
-   "Retroactive authority: for equipment already on the system, DOE may require identification, isolation, monitoring, replacement or removal, subject to reliability, safety, replacement availability and phased compliance.",
-   "Scope: critical infrastructure operating bulk-power system transmission lines rated at 69 kilovolts or higher; local electricity distribution facilities are explicitly excluded.",
-   "Covered technologies: transformers, inverters, energy storage systems and industrial control systems, including remote terminal units.",
-   "Covered foreign entities: countries subject to specified US arms embargoes or sanctions, plus other entities determined to be engaged in conduct detrimental to US national security or foreign policy. The order names no country or company; reporting notes its structure closely mirrors a 2020 directive that produced a DOE prohibition targeting certain China-linked equipment, later revoked during a Biden-administration review.",
-   "Stated rationale for timing: rapid growth in data centers, artificial intelligence, advanced manufacturing and defense production has increased dependence on grid reliability, so a supply-chain disruption or targeted attack now propagates beyond the energy sector.",
-   "Next milestones: DOE implementing regulations expected within 120 days, together with the covered-foreign-entity and pre-qualification determinations that define who is actually in scope."
-  ],
-  "iocs": [],
-  "iocNote": "Policy instrument — no indicators apply. The order is included because it creates near-term inventory and documentation obligations for OT asset owners, not because of any observed intrusion.",
-  "mitigation": [
-   "Build or refresh a provenance inventory for transmission-side equipment at 69 kV and above: manufacturer, ultimate parent, firmware origin and support arrangements for transformers, inverters, storage systems, RTUs and other ICS.",
-   "Document every vendor remote-access path into that equipment — who can reach it, through what channel, with what authentication and logging. This is the evidence DOE's identification and monitoring requirements will ask for.",
-   "Flag procurement in flight. Contracts for covered equipment not yet installed are the cheapest place to absorb the rule, before the 120-day implementing regulations land.",
-   "Distribution-side operators should confirm the 69 kV boundary in their own asset classification rather than assuming exclusion."
-  ],
-  "response": [
-   "No hunting queries: this is a policy and procurement instrument with no associated threat activity or telemetry to query. The relevant follow-up is an asset-provenance and vendor-remote-access inventory, tracked as a compliance task.",
-   "Where vendor remote access to covered equipment exists, ensure it is logged into the same platform as the rest of the estate — the monitoring obligations in the order presume you can produce that record."
-  ],
-  "source": "Executive Order 14420, SecurityWeek, Security Affairs, Crowell & Moring, ICS Cybersecurity Conference, Energy News Beat",
-  "sourceNote": "Aug 26–28, 2026"
- },
  "mckesson": {
   "eyebrow": "McKesson · ShinyHunters · Okta SSO → Salesforce / Snowflake · Disclosed Aug 28, 2026",
   "title": "McKesson confirms third-party application breach and data exfiltration; ShinyHunters claims 284 million patient-related records from Snowflake and a $55.2M ransom demand",
@@ -2195,649 +1609,300 @@ window.CTI = {
   "source": "McKesson SEC Form 8-K, McKesson customer notice, BleepingComputer, CyberInsider, ReliaQuest Threat Research, Health-ISAC",
   "sourceNote": "Aug 28, 2026"
  },
- "givewp": {
-  "eyebrow": "GiveWP · CVE-2026-82222 · Max severity · Patched 4.16.7.2 (Aug 27, 2026) · 100,000+ installs",
-  "title": "GiveWP CVE-2026-82222: unauthenticated PHP object injection to remote command execution, reachable even when WordPress registration is disabled",
-  "tags": [
-   [
-    "crit",
-    "Unauthenticated RCE"
-   ],
-   [
-    "high",
-    "Patched Aug 27 · No in-the-wild reports"
-   ]
-  ],
-  "overview": "Patchstack disclosed CVE-2026-82222 in the GiveWP WordPress donation plugin, affecting all versions through 4.16.7.1 across more than 100,000 installs. The chain combines an unsafe unserialize helper, a donation flow that persists attacker-controlled serialized objects, and a gadget chain in bundled libraries that reaches arbitrary system commands. The authentication requirement is bypassed by GiveWP's own give_action=user_register endpoint, which never checks the WordPress users_can_register option, so an attacker can self-register and obtain a cookie on sites with registration disabled. GiveWP shipped 4.16.7.2 on August 27, blocking serialized data in donation processing, restricting object creation at deserialization points, and purging serialized payloads already stored in the database. Reported by Udin Chan on July 28 via Patchstack. No exploitation in the wild has been reported.",
+ "iranot": {
+  "eyebrow": "Iran-linked · Energy and Water/Wastewater · OT impact · UK NCSC, FBI, CISA",
+  "title": "A four-day outage at a small UK generator and wastewater disruption across twelve US states, in the same window",
+  "overview": "The reason to carry this as an OT story rather than a geopolitics story is the mechanism the reporting describes: not malware on servers, but controller-level actions — operator passwords changed and controllers disconnected — with physical consequences in the form of flooding and lost water pressure. The UK case is described by officials as small and contained; the point researchers make is intent. For defenders, the actionable content is the exposure pattern, since the same reporting says attackers found far more reachable controllers in water than in power.",
   "technical": [
-   "Step 1 — unauthenticated account creation: give_action=user_register creates a WordPress user and returns an authentication cookie without consulting users_can_register. Patchstack notes the fix does not change this behaviour; it is simply no longer a path to code execution.",
-   "Step 2 — object storage: the attacker places a serialized gadget object in their own user profile, then submits a crafted donation. Per Patchstack, the server writes the gadget object into the wp_give_sessions table before returning an HTTP 500 — the 500 response is part of the successful path, not a failure.",
-   "Step 3 — trigger: requesting any front-end page while holding the authentication cookie causes the stored object to be unserialized, invoking the gadget chain in libraries bundled with the plugin and executing the attacker's system command as the web server user.",
-   "Residual condition in 4.16.6–4.16.7.1: exploitation requires a legacy donation form lacking formBuilderSettings. Patchstack notes these can be present in upgraded installations, on sites using the option-based form editor, or after importing or restoring older forms — so version alone does not establish safety.",
-   "Prior abuse of this plugin: a GiveWP flaw was used last year to reach Pi-hole, exposing names and email addresses of roughly 30,000 donors."
+   "UK: a small electricity generator was forced offline for four days. The plant was not named for security reasons, was restored by its own staff, and the incident was reported to the National Cyber Security Centre. Reporting describes it as the first confirmed cyberattack of its kind against UK energy infrastructure.",
+   "UK government position: Energy Minister Michael Shanks said there was \"no threat to the wider grid and nobody lost power\", described the generator as \"tiny\", and said his department had briefed CEOs on steps to stay secure.",
+   "US: dozens of wastewater treatment plants across twelve states were affected, with flooding and loss of water pressure reported. The FBI attributed the incidents to malicious cyber actors; US government sources said the threat likely originated in Iran.",
+   "Scope reporting differs by date: Foreign Policy reported on Aug 13 that providers in at least seven states were targeted over a two-week campaign, with FBI, EPA and CISA officials indicating as many as a dozen states could be affected. Earlier reporting counted more than 30 community water systems in Minnesota.",
+   "Targeted component class: programmable logic controllers used to manage the flow and chemical composition of water supplies. CISA's Jul 30, 2026 advisory states that in many cases the attackers \"modified passwords to lock out operators and disconnected the controllers\", forcing some facilities to switch to manual operation.",
+   "Structural asymmetry named in the reporting: water utilities face no binding federal cybersecurity requirements backed by financial penalties, unlike electricity providers, and a volunteer defence programme had reached only 21 of approximately 50,000 unprotected small utilities.",
+   "Context given by the coverage: Iran has increased cyber operations against Western countries since February, with activity reported in several European nations, and the UK incident follows CISA's Aug 19 advisory on AI-generated Siemens PLC reconnaissance."
   ],
   "iocs": [],
-  "iocNote": "No indicators published — the disclosure is a vendor/researcher advisory with no observed in-the-wild campaign. Detection is behavioural: POST requests carrying give_action=user_register, unexpected new WordPress subscriber accounts, HTTP 500 responses from donation endpoints followed by front-end requests from the same session, and serialized data (O:, a: prefixes) in the wp_give_sessions table.",
+  "iocNote": "No indicators have been published for either the UK incident or the US water campaign in the reviewed sources. The UK plant is deliberately unnamed and the FBI attribution statement carries no technical detail, so detection has to be built on exposure and behaviour rather than on indicators.",
   "mitigation": [
-   "Update GiveWP to 4.16.7.2 or later. The update also removes serialized object payloads already stored in the database.",
-   "Audit WordPress users created since late July 2026 and remove unexpected self-registered accounts.",
-   "Block or rate-limit give_action=user_register at the WAF or reverse proxy on sites that do not intend to accept registrations.",
-   "Review legacy donation forms without formBuilderSettings — imported, restored or option-editor forms — as these keep the chain reachable on 4.16.6–4.16.7.1."
+   "Enumerate every controller management path that is reachable from the internet — HMI web interfaces, vendor remote-support tunnels, cellular modems and engineering workstations — and remove that reachability. This is the exposure the reporting describes attackers finding at scale in the water sector.",
+   "Change default and shared credentials on controllers and HMIs, and hold operator accounts in a system that cannot be locked out from the controller itself; password modification and controller disconnection are the two actions CISA named.",
+   "Exercise manual-operation fallback rather than assuming it. Facilities in the US campaign switched to manual operation, which is only a mitigation where staff have practised it.",
+   "Alert on configuration writes, program downloads and mode changes on controllers, and treat an unexplained controller disconnection as a security event, not only as a reliability event.",
+   "For UK operators: NCSC reporting and the DESNZ CEO briefing referenced in the coverage are the route to sector-specific guidance."
   ],
   "response": [
-   "Inspect the wp_give_sessions table for values containing serialized object markers: SELECT * FROM wp_give_sessions WHERE session_value LIKE '%O:%' OR session_value LIKE '%a:%';",
-   "Grep web server access logs for the registration action: grep -i \"give_action=user_register\" access.log",
-   "If exploitation is suspected: rotate database and WordPress salts, audit uploads and theme/plugin directories for webshells, and review scheduled tasks (wp_cron) for unfamiliar hooks.",
-   "DEFENDER XDR KQL — Web server command execution following a WordPress donation-plugin request pattern.\n\n// GiveWP CVE-2026-82222 — post-exploitation behaviour on the web host\nlet webParents = dynamic([\"php-fpm\",\"php\",\"httpd\",\"apache2\",\"nginx\",\"w3wp.exe\"]);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > ago(30d)\n   | where InitiatingProcessFileName has_any (webParents)\n   | where FileName in~ (\"sh\",\"bash\",\"cmd.exe\",\"powershell.exe\",\"curl\",\"wget\",\"python3\",\"perl\")\n   | project Timestamp, DeviceName, InitiatingProcessFileName, FileName, ProcessCommandLine, AccountName),\n  (DeviceFileEvents\n   | where Timestamp > ago(30d)\n   | where FolderPath has_any (\"wp-content/uploads\",\"wp-content/plugins/give\")\n   | where FileName endswith \".php\"\n   | project Timestamp, DeviceName, FileName, FolderPath, InitiatingProcessFileName),\n  (DeviceNetworkEvents\n   | where Timestamp > ago(30d)\n   | where InitiatingProcessFileName has_any (webParents)\n   | where RemotePort in (4444, 1337, 9001) or RemoteIPType == \"Public\"\n   | summarize Connections = count() by bin(Timestamp, 1h), DeviceName, InitiatingProcessFileName, RemoteIP\n   | where Connections > 5)\n| sort by Timestamp desc\n// Web-parent-to-shell union technique adapted from community detections by Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules)."
+   "SENTINEL KQL — external sources reaching OT protocol ports through the perimeter firewall, the exposure pattern the reporting describes. Adapt the OT address ranges to your own plant networks.\n\nlet otPorts = dynamic([502, 102, 20000, 44818, 47808, 4840, 1911, 9600]);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(30d)\n   | where DestinationPort in (otPorts)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, DeviceAction, Activity=DeviceEventClassID),\n  (AzureNetworkAnalytics_CL\n   | where TimeGenerated > ago(30d)\n   | extend DestinationPort = toint(DestPort_d), SourceIP = tostring(SrcIP_s), DestinationIP = tostring(DestIP_s)\n   | where DestinationPort in (otPorts)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, DeviceAction=tostring(FlowStatus_s), Activity=\"AzureFlow\")\n| where not(ipv4_is_private(SourceIP))\n| summarize attempts = count(), ports = make_set(DestinationPort, 10), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated) by SourceIP, DestinationIP\n| order by attempts desc\n// Technique borrowed from the union isfuzzy multi-connector pattern published by Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules) so the query survives a missing connector.",
+   "SENTINEL KQL — engineering-workstation and HMI sign-ins from outside the plant, plus account lockouts on those hosts, to catch the operator-lockout action CISA described. Replace the host prefix with your own naming.\n\nlet otHosts = SigninLogs\n  | where TimeGenerated > ago(30d)\n  | where DeviceDetail.displayName has_any (\"HMI\", \"SCADA\", \"ENGWS\", \"PLC\")\n  | distinct tostring(DeviceDetail.displayName);\nunion isfuzzy=true\n  (SigninLogs\n   | where TimeGenerated > ago(30d)\n   | where tostring(DeviceDetail.displayName) in (otHosts)\n   | project TimeGenerated, Account=UserPrincipalName, Host=tostring(DeviceDetail.displayName), IPAddress, ResultType, Location=tostring(LocationDetails.countryOrRegion)),\n  (SecurityEvent\n   | where TimeGenerated > ago(30d)\n   | where EventID in (4740, 4723, 4724)\n   | where Computer has_any (\"HMI\", \"SCADA\", \"ENGWS\", \"PLC\")\n   | project TimeGenerated, Account=TargetAccount, Host=Computer, IPAddress=IpAddress, ResultType=tostring(EventID), Location=\"onprem\")\n| summarize events = count(), types = make_set(ResultType, 10), locations = make_set(Location, 10) by Account, Host\n| order by events desc",
+   "DEFENDER XDR KQL — controller-facing tooling running on engineering workstations, which is where a change to controller passwords or a disconnection would be issued from.\n\nlet otTooling = dynamic([\"tia portal\", \"step7\", \"s7\", \"rslinx\", \"rslogix\", \"studio 5000\", \"unity pro\", \"ecostruxure\", \"codesys\", \"kepserver\", \"modscan\", \"modbus\"]);\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where tolower(FileName) has_any (otTooling) or tolower(ProcessCommandLine) has_any (otTooling)\n| join kind=leftouter (\n    DeviceNetworkEvents\n    | where Timestamp > ago(30d)\n    | where RemotePort in (502, 102, 44818, 4840)\n    | project DeviceId, RemoteIP, RemotePort, NetworkTime = Timestamp\n) on DeviceId\n| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, RemoteIP, RemotePort\n| order by Timestamp desc",
+   "Treat any facility that switched to manual operation during the campaign window as an incident scope, not a resolved outage: controller credentials, project files and backup configurations all need review before automated control is restored."
   ],
-  "source": "Patchstack advisory (Unauthenticated PHP Object Injection to Remote Code Execution on GiveWP), BleepingComputer",
-  "sourceNote": "Aug 27–28, 2026"
+  "source": "Security Affairs, SC Media, The Register, Fox News, Telegraph via Kurdistan24, CISA advisory (Jul 30, 2026), TechTimes, Foreign Policy"
  },
- "hookedge": {
-  "eyebrow": "BlueDelta / APT28 · HOOKEDGE · webhook.site + Microsoft Edge C2 · Recorded Future, Aug 28, 2026",
-  "title": "HOOKEDGE: a BlueDelta batch-script backdoor that uses Microsoft Edge as its HTTP client and webhook.site as its entire command-and-control channel",
-  "tags": [
-   [
-    "high",
-    "Russia / GRU · Moderate confidence"
-   ],
-   [
-    "high",
-    "Government Facilities · Defense Industrial Base"
-   ]
-  ],
-  "overview": "Recorded Future's Insikt Group documented HOOKEDGE, a previously undocumented Windows batch-script backdoor used by BlueDelta (overlapping APT28, Fancy Bear, Forest Blizzard; attributed to Russia's GRU) against government, diplomatic and defense manufacturing organisations in Romania, Spain and Türkiye between late September 2025 and early April 2026. Attribution is moderate confidence, based on code, infrastructure and tradecraft overlap with the earlier HEADLACE backdoor. The implant has no dedicated C2 server: it polls webhook.site endpoints for .cmd payloads and exfiltrates command output by writing it into a local HTML page that Microsoft Edge renders, triggering an auto-submitting form POST to a second webhook endpoint. Delivery is macro-enabled Word documents; persistence is a scheduled task, after which the installer deletes itself and its artifacts. Insikt assesses the self-deleting installer chain as a deliberate effort to reduce the forensic footprint. Lab52 tracked closely related activity as Operation MacroMaze.",
+ "novacookies": {
+  "eyebrow": "Island Security Research · NovaCookies · AiTM PhaaS · $320/month · 755 published domains",
+  "title": "A rented adversary-in-the-middle relay with Entra's own MFA method taxonomy, a configurable anti-analysis engine and a Docusign-inside-Docusign delivery chain",
+  "overview": "The structural point Island makes is that campaigns which look unrelated can be deployments of the same rented product, so blocking yesterday's domain removes one disposable part of the operation. The kit is purpose-built against Microsoft 365 rather than generic: it carries dedicated handling for authenticator push approval, authenticator one-time codes and SMS codes using Microsoft's own internal names for those methods, with separate error states for a rejected password, a rejected code and a rejected SMS. That is why ordinary one-time codes and push approvals do not solve the problem — the victim completes a real authentication through an attacker-controlled intermediary. Island's stated structural defense is phishing-resistant authentication: passkeys, FIDO2 security keys and other origin-bound credentials will not authenticate to the wrong site, so the relay cannot complete the same exchange.",
   "technical": [
-   "Delivery and install: macro-enabled Word documents, likely spearphished. The earliest lure (September 26, 2025) impersonated an agenda from Spain's Ministry of the Presidency, Justice and Relations with the Cortes, appearing shortly after a September 2025 Spanish–Moldovan meeting and ahead of Moldova's parliamentary elections. Later samples used generic 'Enable Content' prompts followed by a fake Microsoft Word error to suppress suspicion. On macro execution AutoOpen() writes a batch payload, VBS launchers, an installer and HTML fragments into %userprofile%.",
-   "Persistence and anti-forensics: the installer creates a scheduled task, then deletes itself, its launcher and the task-definition file. Remaining files carry GUID-style names matching the operators' webhook endpoints, which ties local artifacts directly to tasking infrastructure.",
-   "C2 via legitimate services: HOOKEDGE polls attacker-controlled webhook.site endpoints for .cmd fragments, reconstructs and executes them, captures output into a locally generated HTML page, then launches Microsoft Edge to render that page so an auto-submitting form POSTs the output to a separate webhook endpoint. Edge execution moved from --headless to hidden or off-screen windows (1x1 window at coordinates 10000,10000) as the campaign progressed. The result is malicious traffic that resembles ordinary encrypted browsing, with no custom network client and no commonly abused LOLBin.",
-   "Beacon tiering: first-stage beaconing was extended to 61 minutes, which both outlasts sandboxes that observe a process for one hour and conserves webhook.site's free-tier limit of 100 requests per endpoint (a 30-minute interval exhausts an endpoint in roughly two to three days). Confirmed high-value victims received a second HOOKEDGE payload beaconing as often as every five minutes, keeping initial-access infrastructure separate from active collection.",
-   "Campaign telemetry: embedded remote-image references docopened.jpg and mailopened.jpg acted as canaries letting operators distinguish email delivery, document opening and successful macro execution before committing follow-on tooling. Insikt notes the document-open canary was later removed, suspected to reduce network indicators.",
-   "Lineage: Insikt assesses HOOKEDGE as a direct evolution of HEADLACE, maintained by the same operators — shared batch scripting, browser-mediated communications, use of legitimate internet services, GUID-based artifacts and staged payload delivery. Earlier HEADLACE operations abused GitHub, Mocky and InfinityFree."
+   "Commercial model: advertised at $320 for a month of access or $200 for fourteen days, with domains, hosting, redirect services and support described as part of the package. Both advertised redirect variants (Microsoft and Google) appear in observed campaign infrastructure. The operator-facing dashboard carries a circular \"Nova Cookies\" badge and the line \"Secured by Nova Systems\".",
+   "Primary capability: a live AiTM relay. The target sees a Microsoft 365 sign-in experience while the service passes the authentication exchange to Microsoft in real time, relaying password and MFA prompts step by step, then captures the session cookie representing the authenticated session.",
+   "Delivery chain (strongest observed): a genuine Docusign notification opening a genuine Docusign envelope in the real viewer, containing a counterfeit share notice claiming an accounting department had shared a remittance-advice PDF. The malicious destination sat inside the document, below the layer most mail security products inspect. Island states Docusign and Microsoft were not compromised — their services were used as delivery and redirection layers.",
+   "Redirect technique: the OAuth error-redirect abuse Microsoft described in March 2026. An application registered in an attacker-controlled tenant has a redirect URI pointing at attacker infrastructure; a genuine Microsoft authorization URL with prompt=none is designed to fail silent authentication, so Entra sends the browser from its own domain to the pre-registered hop. No token is issued and no consent prompt appears. Unlike a classic open redirect the destination must already be registered to the application, so the value is the trusted starting domain — and the application IDs give identity providers a disruption point when malicious registrations are reported. A smaller number of chains used Google's sign-in endpoint for the same role.",
+   "Other delivery paths: links passing through legitimate websites that appeared to have been compromised, and legitimate online services abused to host or redirect content, keeping the final phishing domain out of the original message.",
+   "Infrastructure naming: many domains borrow recognizable company names then mutate them with inserted letters, dropped characters or long concatenations under .vu. Island is explicit that these names are lure infrastructure, not evidence the referenced companies were compromised, and that the borrowed name and the targeted organization were not reliably the same across the corpus.",
+   "Lure URL shape: paths begin with alternating-case labels such as PwPt-sHaRe, Ms36-AcCeSs and ClOd-ViEw, combining shortened cloud-product references with share, access and view actions, followed by a long changing token and a shorter final token. Island cautions that mixed casing is a campaign fingerprint rather than a standalone signature — search and scan systems may normalize case.",
+   "Anti-analysis: Cloudflare is the visible front gate but not the whole story. The kit layers browser checks with client-side proof of work, short-lived context binding and runtime inspection checks, and scores the browser on interaction patterns, device and browser characteristics, automation markers and attempts to open developer tools. It forgives a failed check when interaction looks genuine and skips expensive checks for a visitor that already looks human. One documented example is debugger timing — measuring execution across a debugger statement and withholding the lure on a pause. These controls are buyer-configurable with tunable intervals, callbacks and strict or development presets, so resistance to analysis is a configurable product capability rather than a fixed sequence. Island's own characterisation is scanner-resistant, not scanner-proof: full-browser public scanners have captured the lure on some occasions.",
+   "Yield tuning: in one preserved observation the same page accepted repeated password submissions before advancing, consistent with collecting more than one candidate password. Island reports this as observed behaviour without assigning a fixed product rule. The kit also counts submission attempts.",
+   "Timeline: low-volume infrastructure present in late 2025; sharp expansion from mid-May 2026; first-seen dates peaked in June; new infrastructure continued appearing through August 2026. Island notes Proofpoint reported campaign activity increasing from March through May before declining in June, and attributes the difference to measuring infrastructure visibility rather than email or campaign volume."
   ],
   "iocs": [
    {
-    "value": "https://webhook.site/01d6a811-ae9a-4ecb-be3f-610075556304",
-    "type": "URL",
-    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "value": "fordmotbvmorcompany.vu",
+    "type": "Domain",
+    "note": "Example from Island's dedicated attacker-infrastructure release. Brand-themed mutation — \"Ford Motor Company\" readable through inserted characters. Lure infrastructure only; Island states this is not evidence the referenced company was compromised or targeted.",
+    "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
    },
    {
-    "value": "https://webhook.site/272f1315-14d7-458c-a4ca-e2df423490b4",
-    "type": "URL",
-    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "value": "morganstbftanley.vu",
+    "type": "Domain",
+    "note": "Example from the IOC release — extra letters splitting the recognizable \"Morgan Stanley\" name. Lure infrastructure only.",
+    "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
    },
    {
-    "value": "https://webhook.site/34f908b6-dd89-4600-b413-a29cd5e37a0b",
-    "type": "URL",
-    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "value": "munichreinsurdjqanceamericainc.vu",
+    "type": "Domain",
+    "note": "Example from the IOC release — inserted characters distorting \"Munich Reinsurance America Inc.\" Lure infrastructure only.",
+    "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
    },
    {
-    "value": "https://webhook.site/36c9aecd-19f5-4564-a354-7708d947da8e",
-    "type": "URL",
-    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "value": "internationalbusinessmaclsihinesibm.vu",
+    "type": "Domain",
+    "note": "Example from the IOC release — long-form IBM name and acronym together with a misspelling buried in the middle. Lure infrastructure only.",
+    "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
    },
    {
-    "value": "https://webhook.site/4e6cf717-e4d6-4f40-9f2d-134196fa5e7d",
-    "type": "URL",
-    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "value": "secondsightsystilqemsllc.vu",
+    "type": "Domain",
+    "note": "Published IOC domain shown in Island's preserved lure capture, hosting a PwPt-sHaRe path.",
+    "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
    },
    {
-    "value": "https://webhook.site/4e81a907-cc30-45c0-8bbd-5248e9f6dacd",
-    "type": "URL",
-    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "value": "PwPt-sHaRe / Ms36-AcCeSs / ClOd-ViEw",
+    "type": "String",
+    "note": "Alternating-case lure path prefixes, each followed by a long changing token and a shorter final token. Island treats the shape as contextual evidence, not a standalone signature — case may be normalized by scanners.",
+    "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
    },
    {
-    "value": "https://webhook.site/4ef62d6a-90c0-4a70-8dd2-468879c70fd",
-    "type": "URL",
-    "note": "HOOKEDGE webhook.site tasking/exfiltration endpoint (as published).",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
-   },
-   {
-    "value": "docopened.jpg",
-    "type": "Filename",
-    "note": "Remote-image tracking canary referenced in lure documents to confirm document opening.",
-    "source": "https://gbhackers.com/hookedge-malware-campaign/"
-   },
-   {
-    "value": "mailopened.jpg",
-    "type": "Filename",
-    "note": "Remote-image tracking canary referenced in phishing emails to confirm email opening.",
-    "source": "https://gbhackers.com/hookedge-malware-campaign/"
-   },
-   {
-    "value": "GUID-named .bat, .vbs, .cmd, .htm and .xhtml files in %userprofile%",
+    "value": "login.microsoftonline.com/common/oauth2/v2.0/authorize with prompt=none and a non-corporate redirect_uri",
     "type": "Behavior",
-    "note": "Local artifacts named after the operators' webhook endpoints. Hunt user profile directories for GUID-style filenames with these extensions.",
-    "source": "https://gbhackers.com/hookedge-malware-campaign/"
+    "note": "The OAuth error-redirect hop: an app registered in an attacker-controlled tenant, a genuine Microsoft authorization URL designed to fail silent authentication, and Entra redirecting the browser to the pre-registered attacker hop. No token issued, no consent prompt.",
+    "source": "https://www.microsoft.com/en-us/security/blog/2026/03/02/oauth-redirection-abuse-enables-phishing-malware-delivery/"
    },
    {
-    "value": "Microsoft Edge launched with --headless or a 1x1 window at 10000,10000 opening a local HTML file",
+    "value": "Genuine Docusign envelope containing a counterfeit share notice with an external link inside the document",
     "type": "Behavior",
-    "note": "Edge used as the HTTP client for exfiltration. Hidden or off-screen window geometry replaced headless mode during the campaign.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "note": "Delivery pattern that passes sender-authentication and reputation checks at every layer above the document body.",
+    "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
    },
    {
-    "value": "BlueDelta",
+    "value": "Nova Cookies / Nova Systems",
     "type": "Actor Alias",
-    "note": "Recorded Future tracking name; overlaps APT28, Fancy Bear, Forest Blizzard. Attributed to Russia's GRU.",
-    "source": "https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge"
+    "note": "Operator-dashboard branding: a circular \"Nova Cookies\" badge and the line \"Secured by Nova Systems\". Island stresses the shared product does not imply a single threat actor — attribution must separate the service, the advertising account and the individual customer.",
+    "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
    }
   ],
-  "iocNote": "Recorded Future published seven webhook.site callback URLs; no file hashes were included in the public reporting reviewed here, so no SHA256 is available. The URL indicators are the operators' own endpoints and are the highest-fidelity network detection available. Because the transport is legitimate webhook.site over TLS, blanket domain blocking (where webhook.site has no business use) is more durable than per-endpoint blocking.",
+  "iocNote": "The five domains above are examples; the full versioned release publishes 755 domains assessed as dedicated malicious infrastructure at github.com/island-io/island-security-research-artifacts (novacookies). Island's list is sanitized — no victim data, personalized lure links, Telegram identities, wallet addresses or internal telemetry. Retain the package version: Island's own guidance is that indicators are evidence with an expiration date, that NovaCookies rotates infrastructure, and that legitimate domains can be abused, so IOCs should be combined with behaviour-based detection. Ingest the release rather than the five samples here.",
   "mitigation": [
-   "Block macros in Office documents originating from the internet via policy (Block macros from running in Office files from the Internet), and disable VBA where business need does not exist.",
-   "Baseline and restrict outbound access to webhook.site and comparable request-inspection services where there is no legitimate business purpose.",
-   "Alert on scheduled tasks created with actions pointing at scripts in user-writable paths (%userprofile%, %appdata%, %temp%).",
-   "Alert on Microsoft Edge invocations carrying --headless, off-screen window geometry, local file:// HTML paths or data: URLs, especially when the parent is cmd.exe, wscript.exe or cscript.exe."
+   "Put phishing-resistant authentication on high-value accounts. Passkeys, FIDO2 security keys and other origin-bound credentials structurally interrupt an AiTM relay — this is Island's stated structural defense and the only control that removes the capability rather than raising its cost.",
+   "Detect the product, not only yesterday's domains: correlate the .vu lure shape, brand-themed hostname mutations, mixed-case document-action tokens and redirect chains into Microsoft-style relays. Treat any single feature as weak evidence.",
+   "Keep dedicated infrastructure separate from potentially compromised hosts. Block attacker-controlled domains at the apex where appropriate, but use URL- or path-level controls and investigation for legitimate sites that may have been abused.",
+   "Assume the delivery path may be trusted until its final hop. Inspect links inside document viewers and collaboration platforms, and do not depend on referrer data to reconstruct how a user arrived.",
+   "Report malicious application registrations to Microsoft: because the redirect destination must already be registered to the application, the application IDs are a disruption point for the identity provider.",
+   "Enable Entra ID Token Protection (Conditional Access token binding) alongside FIDO2 — the same control set already recommended in this brief for the Mirage2FA PhaaS campaign."
   ],
   "response": [
-   "Hunt user profile directories for GUID-named .bat, .vbs, .cmd, .htm and .xhtml files; correlate any hits against the published webhook endpoint GUIDs.",
-   "Review proxy and DNS logs for webhook.site requests over the September 2025 – April 2026 window and forward, and pull the full URL path to compare against the seven published endpoints.",
-   "Where a hit is found, treat as targeted espionage: preserve the scheduled task definitions and Edge command lines before remediation, and scope for the second-stage five-minute-beacon variant.",
-   "DEFENDER XDR KQL — HOOKEDGE execution chain: Office spawning script hosts, scheduled task creation from user paths, Edge rendering local HTML, and webhook.site egress.\n\n// BlueDelta HOOKEDGE — chain detection\nlet hookedgeUrls = dynamic([\n  \"01d6a811-ae9a-4ecb-be3f-610075556304\",\"272f1315-14d7-458c-a4ca-e2df423490b4\",\n  \"34f908b6-dd89-4600-b413-a29cd5e37a0b\",\"36c9aecd-19f5-4564-a354-7708d947da8e\",\n  \"4e6cf717-e4d6-4f40-9f2d-134196fa5e7d\",\"4e81a907-cc30-45c0-8bbd-5248e9f6dacd\",\n  \"4ef62d6a-90c0-4a70-8dd2-468879c70fd\"]);\nunion isfuzzy=true\n  (DeviceNetworkEvents\n   | where Timestamp > ago(90d)\n   | where RemoteUrl has \"webhook.site\"\n   | extend KnownEndpoint = tostring(coalesce(extract(@\"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{9,12})\", 1, RemoteUrl), \"\"))\n   | extend Signal = iff(hookedgeUrls has KnownEndpoint, \"HOOKEDGE_known_endpoint\", \"webhook_site_egress\")\n   | project Timestamp, DeviceName, InitiatingProcessFileName, RemoteUrl, Signal),\n  (DeviceProcessEvents\n   | where Timestamp > ago(90d)\n   | where InitiatingProcessFileName in~ (\"winword.exe\",\"excel.exe\",\"powerpnt.exe\")\n   | where FileName in~ (\"cmd.exe\",\"wscript.exe\",\"cscript.exe\",\"mshta.exe\",\"powershell.exe\")\n   | extend Signal = \"office_spawns_script_host\"\n   | project Timestamp, DeviceName, InitiatingProcessFileName, FileName, ProcessCommandLine, Signal),\n  (DeviceProcessEvents\n   | where Timestamp > ago(90d)\n   | where FileName =~ \"schtasks.exe\"\n   | where ProcessCommandLine has \"/create\"\n   | where ProcessCommandLine has_any (\"\\\\Users\\\\\",\"AppData\",\"Temp\",\".vbs\",\".bat\",\".cmd\")\n   | extend Signal = \"schtask_from_user_path\"\n   | project Timestamp, DeviceName, ProcessCommandLine, InitiatingProcessFileName, Signal),\n  (DeviceProcessEvents\n   | where Timestamp > ago(90d)\n   | where FileName in~ (\"msedge.exe\")\n   | where ProcessCommandLine has_any (\"--headless\",\"--window-position=10000\",\"--window-size=1,1\",\"file://\",\".xhtml\",\"data:text/html\")\n   | where InitiatingProcessFileName in~ (\"cmd.exe\",\"wscript.exe\",\"cscript.exe\",\"explorer.exe\")\n   | extend Signal = \"edge_as_http_client\"\n   | project Timestamp, DeviceName, ProcessCommandLine, InitiatingProcessFileName, Signal),\n  (DeviceFileEvents\n   | where Timestamp > ago(90d)\n   | where FolderPath has \"\\\\Users\\\\\"\n   | where FileName matches regex @\"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{9,12}\\.(bat|vbs|cmd|htm|xhtml)$\"\n   | extend Signal = \"guid_named_artifact\"\n   | project Timestamp, DeviceName, FileName, FolderPath, InitiatingProcessFileName, Signal)\n| sort by Timestamp desc\n// Union-across-tables and dynamic-indicator-list technique adapted from community detections by Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules) and Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules).",
-   "SENTINEL KQL — Hosts beaconing to webhook.site on a regular interval, which surfaces the 61-minute first stage and the five-minute second stage.\n\n// BlueDelta HOOKEDGE — webhook.site beacon interval analysis\nlet lookback = 90d;\nunion isfuzzy=true\n  (DeviceNetworkEvents | where Timestamp > ago(lookback) | where RemoteUrl has \"webhook.site\"\n   | project TimeGenerated = Timestamp, Host = DeviceName, Url = RemoteUrl),\n  (CommonSecurityLog | where TimeGenerated > ago(lookback) | where RequestURL has \"webhook.site\"\n   | project TimeGenerated, Host = SourceHostName, Url = RequestURL),\n  (_Im_WebSession(url_has=\"webhook.site\", starttime=ago(lookback))\n   | project TimeGenerated, Host = SrcHostname, Url = Url)\n| extend Endpoint = extract(@\"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{9,12})\", 1, Url)\n| order by Host asc, TimeGenerated asc\n| extend PrevTime = prev(TimeGenerated), PrevHost = prev(Host)\n| where Host == PrevHost\n| extend DeltaMin = datetime_diff('minute', TimeGenerated, PrevTime)\n| where DeltaMin between (1 .. 180)\n| summarize Hits = count(), MedianDeltaMin = percentile(DeltaMin, 50), StdDev = stdev(DeltaMin),\n            Endpoints = make_set(Endpoint, 10), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)\n            by Host\n| where Hits >= 6 and StdDev < 5\n| sort by Hits desc\n// Beacon-interval summarisation technique adapted from community hunting work by Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules) and Bert-Jan Pals (kqlquery.com); isfuzzy union keeps it running where a connector is absent."
+   "Treat a completed relay as session theft, in Island's order: revoke sessions, reset credentials, inspect identity-provider sign-ins, and review new MFA methods, OAuth grants, forwarding rules and inbox rules.",
+   "DEFENDER XDR KQL — OAuth application consent and service-principal additions, unpacking RawEventData to surface the redirect URI. The NovaCookies hop needs an app registered in an attacker-controlled tenant whose redirect URI points at attacker infrastructure, so the redirect URI is the discriminator — and the AppId is the disruption point to report to Microsoft.\n\nCloudAppEvents\n| where Timestamp > ago(30d)\n| where ActionType in~ (\"Consent to application.\",\"Add service principal.\",\"Add OAuth2PermissionGrant.\",\"Add delegated permission grant.\")\n| extend ModifiedProps = tostring(todynamic(RawEventData.ModifiedProperties))\n| extend AppId = tostring(RawEventData.ObjectId)\n| extend ActorUpn = tostring(RawEventData.UserId)\n| extend ActorIp = tostring(RawEventData.ClientIP)\n| where ModifiedProps has_any (\"ReplyUrl\",\"redirect\")\n| project Timestamp, ActionType, ActorUpn, ActorIp, AppId, ModifiedProps\n| order by Timestamp desc\n// Technique credit — RawEventData unpacking pattern per Steven Lim (github.com/SlimKQL, LinkedIn @0x534c)",
+   "SENTINEL KQL — AiTM session-theft signature in sign-in logs: a successful interactive sign-in followed within minutes by non-interactive activity on the same account from a different ASN or country.\n\nlet win = 30m;\nlet interactive = SigninLogs\n  | where TimeGenerated > ago(14d) and ResultType == 0\n  | project UserPrincipalName, tI = TimeGenerated, ipI = IPAddress, asnI = AutonomousSystemNumber, cI = tostring(LocationDetails.countryOrRegion);\nlet noninteractive = AADNonInteractiveUserSignInLogs\n  | where TimeGenerated > ago(14d) and ResultType == 0\n  | project UserPrincipalName, tN = TimeGenerated, ipN = IPAddress, asnN = AutonomousSystemNumber, cN = tostring(LocationDetails.countryOrRegion), AppDisplayName;\ninteractive\n| join kind=inner noninteractive on UserPrincipalName\n| where tN between (tI .. tI + win)\n| where asnI != asnN or cI != cN\n| project UserPrincipalName, tI, ipI, cI, asnI, tN, ipN, cN, asnN, AppDisplayName\n| order by tI desc",
+   "SENTINEL KQL — sign-ins from addresses Defender for Cloud Apps already tags as hostile, plus the Entra risk detections that name the AiTM primitives directly. Highest signal for a relay: the authentication is genuine, so the tell is where the resulting session is replayed from.\n\nlet hostileTags = dynamic([\"Brute force attacker\",\"Password spray attacker\",\"malicious\",\"Possible Hackers\",\"Tor\",\"Anonymous proxy\",\"Botnet\"]);\nunion isfuzzy=true\n  (SigninLogs\n   | where TimeGenerated > ago(30d) and ResultType == 0\n   | where IPTags has_any (hostileTags)\n   | project TimeGenerated, UserPrincipalName, IPAddress, Signal = tostring(IPTags), App = AppDisplayName, Country = tostring(LocationDetails.countryOrRegion), Source = \"SigninLogs\"),\n  (AADNonInteractiveUserSignInLogs\n   | where TimeGenerated > ago(30d) and ResultType == 0\n   | where IPTags has_any (hostileTags)\n   | project TimeGenerated, UserPrincipalName, IPAddress, Signal = tostring(IPTags), App = AppDisplayName, Country = tostring(LocationDetails.countryOrRegion), Source = \"NonInteractive\"),\n  (AADUserRiskEvents\n   | where TimeGenerated > ago(30d)\n   | where RiskEventType has_any (\"anomalousToken\",\"tokenIssuerAnomaly\",\"adversaryInTheMiddle\",\"anonymizedIPAddress\",\"maliciousIPAddress\",\"unfamiliarFeatures\")\n   | project TimeGenerated, UserPrincipalName, IPAddress, Signal = RiskEventType, App = RiskDetail, Country = tostring(Location.countryOrRegion), Source = \"RiskEvents\")\n| order by TimeGenerated desc\n// Technique credit — IPTags enrichment and AADUserRiskEvents AiTM correlation per Steven Lim (github.com/SlimKQL, LinkedIn @0x534c)",
+   "DEFENDER XDR KQL — what the stolen session was used for. The operator holds a valid M365 session cookie, so post-theft activity looks like the user: bulk file access, mailbox rule creation, and Copilot-driven summarization of whatever the account can reach.\n\nlet suspectUsers = dynamic([]);  // populate from the sign-in correlation above\nCloudAppEvents\n| where Timestamp > ago(30d)\n| where array_length(suspectUsers) == 0 or AccountDisplayName in~ (suspectUsers)\n| where ActionType in~ (\"FileDownloaded\",\"FileSyncDownloadedFull\",\"New-InboxRule\",\"Set-Mailbox\",\"Add-MailboxPermission\",\"CopilotInteraction\",\"MailItemsAccessed\")\n| extend ActorIp = tostring(RawEventData.ClientIP)\n| extend UserAgentStr = tostring(RawEventData.UserAgent)\n| extend CopilotData = todynamic(RawEventData.CopilotEventData)\n| extend CopilotResources = tostring(CopilotData.AccessedResources)\n| extend CopilotAppHost = tostring(CopilotData.AppHost)\n| summarize events = count(), actions = make_set(ActionType, 15), agents = make_set(UserAgentStr, 5), copilotHosts = make_set(CopilotAppHost, 5), copilotData = make_set(CopilotResources, 5)\n    by AccountDisplayName, ActorIp, bin(Timestamp, 1h)\n| where events > 20 or array_length(actions) > 3\n| order by events desc\n// Technique credit — CloudAppEvents CopilotEventData unpacking per Steven Lim (github.com/SlimKQL, LinkedIn @0x534c)",
+   "SENTINEL KQL — post-relay persistence: new MFA methods, OAuth grants and mailbox forwarding or inbox rules added after a suspect sign-in.\n\nunion isfuzzy=true\n  (AuditLogs\n   | where TimeGenerated > ago(30d)\n   | where OperationName has_any (\"Add strong authentication\",\"Update user\",\"Consent to application\",\"Add app role assignment\",\"Add service principal\")\n   | project TimeGenerated, OperationName, actor = tostring(InitiatedBy.user.userPrincipalName), target = tostring(TargetResources[0].displayName)),\n  (OfficeActivity\n   | where TimeGenerated > ago(30d)\n   | where Operation has_any (\"New-InboxRule\",\"Set-InboxRule\",\"Set-Mailbox\",\"UpdateInboxRules\")\n   | project TimeGenerated, OperationName = Operation, actor = UserId, target = OfficeObjectId)\n| order by TimeGenerated desc",
+   "DEFENDER XDR KQL — endpoint-side lure traffic: the .vu infrastructure and the mixed-case document-action path shape. Replace the domain list with the 755-domain release.\n\nlet lurePaths = dynamic([\"PwPt-sHaRe\",\"Ms36-AcCeSs\",\"ClOd-ViEw\",\"PwPt-\",\"Ms36-\",\"ClOd-\"]);\nDeviceNetworkEvents\n| where Timestamp > ago(60d)\n| where RemoteUrl endswith \".vu\" or RemoteUrl has_any (lurePaths)\n| project Timestamp, DeviceName, InitiatingProcessFileName, RemoteUrl, RemoteIP\n| order by Timestamp asc",
+   "DEFENDER XDR KQL — browser navigation from a document viewer or identity endpoint into an unfamiliar destination, the shape of the trusted-until-the-last-hop chain.\n\nDeviceEvents\n| where Timestamp > ago(60d)\n| where ActionType == \"BrowserLaunchedToOpenUrl\"\n| where RemoteUrl has_any (\"docusign\",\"login.microsoftonline.com/common/oauth2\",\"accounts.google.com/o/oauth2\")\n| project Timestamp, DeviceName, AccountName, RemoteUrl, InitiatingProcessFileName\n| order by Timestamp desc",
+   "An organization's appearance in Island's campaign artifacts indicates targeting, not interaction or compromise. Confirming credential submission or session theft requires separate evidence from your own identity logs — do not treat an IOC match alone as an incident."
   ],
-  "source": "Recorded Future / Insikt Group, The Hacker News, Security Affairs, GBHackers, Cyber Press, Lab52",
-  "sourceNote": "Aug 28, 2026"
+  "source": "Island Security Research — Shachar Gritzman, \"NovaCookies at scale: Inside the $320 Phishing Service Targeting Hundreds of Organizations\", Aug 26, 2026; companion IOC release at github.com/island-io/island-security-research-artifacts"
  },
-"iranot": {
- "eyebrow": "Iran-linked · Energy and Water/Wastewater · OT impact · UK NCSC, FBI, CISA",
- "title": "A four-day outage at a small UK generator and wastewater disruption across twelve US states, in the same window",
- "overview": "The reason to carry this as an OT story rather than a geopolitics story is the mechanism the reporting describes: not malware on servers, but controller-level actions — operator passwords changed and controllers disconnected — with physical consequences in the form of flooding and lost water pressure. The UK case is described by officials as small and contained; the point researchers make is intent. For defenders, the actionable content is the exposure pattern, since the same reporting says attackers found far more reachable controllers in water than in power.",
- "technical": [
-  "UK: a small electricity generator was forced offline for four days. The plant was not named for security reasons, was restored by its own staff, and the incident was reported to the National Cyber Security Centre. Reporting describes it as the first confirmed cyberattack of its kind against UK energy infrastructure.",
-  "UK government position: Energy Minister Michael Shanks said there was \"no threat to the wider grid and nobody lost power\", described the generator as \"tiny\", and said his department had briefed CEOs on steps to stay secure.",
-  "US: dozens of wastewater treatment plants across twelve states were affected, with flooding and loss of water pressure reported. The FBI attributed the incidents to malicious cyber actors; US government sources said the threat likely originated in Iran.",
-  "Scope reporting differs by date: Foreign Policy reported on Aug 13 that providers in at least seven states were targeted over a two-week campaign, with FBI, EPA and CISA officials indicating as many as a dozen states could be affected. Earlier reporting counted more than 30 community water systems in Minnesota.",
-  "Targeted component class: programmable logic controllers used to manage the flow and chemical composition of water supplies. CISA's Jul 30, 2026 advisory states that in many cases the attackers \"modified passwords to lock out operators and disconnected the controllers\", forcing some facilities to switch to manual operation.",
-  "Structural asymmetry named in the reporting: water utilities face no binding federal cybersecurity requirements backed by financial penalties, unlike electricity providers, and a volunteer defence programme had reached only 21 of approximately 50,000 unprotected small utilities.",
-  "Context given by the coverage: Iran has increased cyber operations against Western countries since February, with activity reported in several European nations, and the UK incident follows CISA's Aug 19 advisory on AI-generated Siemens PLC reconnaissance."
- ],
- "iocs": [],
- "iocNote": "No indicators have been published for either the UK incident or the US water campaign in the reviewed sources. The UK plant is deliberately unnamed and the FBI attribution statement carries no technical detail, so detection has to be built on exposure and behaviour rather than on indicators.",
- "mitigation": [
-  "Enumerate every controller management path that is reachable from the internet — HMI web interfaces, vendor remote-support tunnels, cellular modems and engineering workstations — and remove that reachability. This is the exposure the reporting describes attackers finding at scale in the water sector.",
-  "Change default and shared credentials on controllers and HMIs, and hold operator accounts in a system that cannot be locked out from the controller itself; password modification and controller disconnection are the two actions CISA named.",
-  "Exercise manual-operation fallback rather than assuming it. Facilities in the US campaign switched to manual operation, which is only a mitigation where staff have practised it.",
-  "Alert on configuration writes, program downloads and mode changes on controllers, and treat an unexplained controller disconnection as a security event, not only as a reliability event.",
-  "For UK operators: NCSC reporting and the DESNZ CEO briefing referenced in the coverage are the route to sector-specific guidance."
- ],
- "response": [
-  "SENTINEL KQL — external sources reaching OT protocol ports through the perimeter firewall, the exposure pattern the reporting describes. Adapt the OT address ranges to your own plant networks.\n\nlet otPorts = dynamic([502, 102, 20000, 44818, 47808, 4840, 1911, 9600]);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(30d)\n   | where DestinationPort in (otPorts)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, DeviceAction, Activity=DeviceEventClassID),\n  (AzureNetworkAnalytics_CL\n   | where TimeGenerated > ago(30d)\n   | extend DestinationPort = toint(DestPort_d), SourceIP = tostring(SrcIP_s), DestinationIP = tostring(DestIP_s)\n   | where DestinationPort in (otPorts)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, DeviceAction=tostring(FlowStatus_s), Activity=\"AzureFlow\")\n| where not(ipv4_is_private(SourceIP))\n| summarize attempts = count(), ports = make_set(DestinationPort, 10), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated) by SourceIP, DestinationIP\n| order by attempts desc\n// Technique borrowed from the union isfuzzy multi-connector pattern published by Bert-Jan Pals (github.com/Bert-JanP/Hunting-Queries-Detection-Rules) so the query survives a missing connector.",
-  "SENTINEL KQL — engineering-workstation and HMI sign-ins from outside the plant, plus account lockouts on those hosts, to catch the operator-lockout action CISA described. Replace the host prefix with your own naming.\n\nlet otHosts = SigninLogs\n  | where TimeGenerated > ago(30d)\n  | where DeviceDetail.displayName has_any (\"HMI\", \"SCADA\", \"ENGWS\", \"PLC\")\n  | distinct tostring(DeviceDetail.displayName);\nunion isfuzzy=true\n  (SigninLogs\n   | where TimeGenerated > ago(30d)\n   | where tostring(DeviceDetail.displayName) in (otHosts)\n   | project TimeGenerated, Account=UserPrincipalName, Host=tostring(DeviceDetail.displayName), IPAddress, ResultType, Location=tostring(LocationDetails.countryOrRegion)),\n  (SecurityEvent\n   | where TimeGenerated > ago(30d)\n   | where EventID in (4740, 4723, 4724)\n   | where Computer has_any (\"HMI\", \"SCADA\", \"ENGWS\", \"PLC\")\n   | project TimeGenerated, Account=TargetAccount, Host=Computer, IPAddress=IpAddress, ResultType=tostring(EventID), Location=\"onprem\")\n| summarize events = count(), types = make_set(ResultType, 10), locations = make_set(Location, 10) by Account, Host\n| order by events desc",
-  "DEFENDER XDR KQL — controller-facing tooling running on engineering workstations, which is where a change to controller passwords or a disconnection would be issued from.\n\nlet otTooling = dynamic([\"tia portal\", \"step7\", \"s7\", \"rslinx\", \"rslogix\", \"studio 5000\", \"unity pro\", \"ecostruxure\", \"codesys\", \"kepserver\", \"modscan\", \"modbus\"]);\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where tolower(FileName) has_any (otTooling) or tolower(ProcessCommandLine) has_any (otTooling)\n| join kind=leftouter (\n    DeviceNetworkEvents\n    | where Timestamp > ago(30d)\n    | where RemotePort in (502, 102, 44818, 4840)\n    | project DeviceId, RemoteIP, RemotePort, NetworkTime = Timestamp\n) on DeviceId\n| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, RemoteIP, RemotePort\n| order by Timestamp desc",
-  "Treat any facility that switched to manual operation during the campaign window as an incident scope, not a resolved outage: controller credentials, project files and backup configurations all need review before automated control is restored."
- ],
- "source": "Security Affairs, SC Media, The Register, Fox News, Telegraph via Kurdistan24, CISA advisory (Jul 30, 2026), TechTimes, Foreign Policy"
-},
-"nextjs": {
- "eyebrow": "Next.js · CVE-2026-75604 (CVSS 9.0) + GHSA-2xp9-vwfh-vxw4 (CVSS 9.5) · Patched Aug 25, 2026",
- "title": "Two unauthenticated RCE paths in Next.js: a Windows-only path traversal and a libheif overflow reached through AVIF image optimization",
- "overview": "Neither flaw is reported as exploited, which makes this a patching window rather than an incident. The part worth acting on is scope: the AVIF path is upstream in libheif via sharp, so it reaches back to Next.js 10 and is not fixed by a Next.js code change — the patched releases disable AVIF optimization instead. The Windows flaw has no workaround at all.",
- "technical": [
-  "CVE-2026-75604 / GHSA-p293-qw3h-jr36 (CVSS 9.0, CWE-22, CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H) — path traversal leading to unauthenticated RCE when the Next.js server uses a Windows filesystem, in applications using both the Pages Router and App Router without Cache Components. Vercel states there is no known workaround. Linux and macOS deployments are not affected.",
-  "GHSA-2xp9-vwfh-vxw4 (CVSS 9.5, CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H) — heap buffer overflow in libheif, the library sharp uses for AVIF, reachable when the Image Optimization API processes an attacker-controlled AVIF file. No CVE has been assigned to this advisory.",
-  "Remediation shape differs: the patched Next.js releases disable AVIF optimization entirely until the upstream libheif fix propagates. The Hacker News confirmed on Aug 27, 2026 via the libheif GitHub releases page that v1.23.2 had not been published.",
-  "Fixed releases: Next.js 15.5.24 (Maintenance LTS) and 16.3.3 (Active LTS), published Aug 25, 2026. Affected ranges are 13.4 up to 15.5.24 and 16.0 up to 16.3.3 for the Windows flaw, and 10.0.0 up to 15.5.24 and below 16.3.3 for the AVIF flaw.",
-  "Hosting matters: Vercel says applications hosted on its platform are protected with no upgrades, configuration changes or redeploys required, having disabled AVIF optimization across its managed Image Optimization service. Netlify says its sites are unaffected by the Windows issue and never invoke the Next.js Image Optimization API because /_next/image requests are rewritten to Netlify Image CDN at the edge.",
-  "Release context: Vercel had scheduled the August patches for Aug 26 under the monthly security programme it announced in July 2026, and moved the release forward a day after identifying the additional critical upstream vulnerability.",
-  "Credit: the AVIF vulnerability was reported by the Hacktron team; the Windows vulnerability by evolutionstorm and B0RI. SecurityOnline notes Next.js sees over 45 million downloads."
- ],
- "iocs": [],
- "iocNote": "No exploitation in the wild has been confirmed, neither advisory reports active attacks, and no public proof-of-concept exists, so there are no indicators to publish. Detection below is exposure-hunting, not compromise-hunting.",
- "mitigation": [
-  "Upgrade to Next.js 15.5.24 or 16.3.3. For the Windows path traversal there is no workaround; Vercel's instruction is to upgrade immediately if the server is hosted on Windows.",
-  "Until patched, disable AVIF optimization to remove the libheif path — either by restricting the formats configured for Image Optimization or by putting an image CDN in front of /_next/image.",
-  "Inventory where Next.js runs on Windows filesystems and whether those applications combine the Pages Router and App Router without Cache Components; that combination is the precondition for CVE-2026-75604.",
-  "Track libheif separately. The Next.js fix is a mitigation, not an upstream fix, so the AVIF path returns whenever AVIF optimization is re-enabled before libheif ships its patched release.",
-  "Check your hosting provider's statement before scheduling emergency work — Vercel and Netlify have both published platform-level positions that change the urgency for their customers."
- ],
- "response": [
-  "SENTINEL KQL — AVIF traffic to the Next.js image optimization endpoint, the reachability test for the libheif flaw. Requires IIS or reverse-proxy logs.\n\nunion isfuzzy=true\n  (W3CIISLog\n   | where TimeGenerated > ago(30d)\n   | where csUriStem has \"/_next/image\"\n   | project TimeGenerated, Host=Computer, ClientIP=cIP, Uri=strcat(csUriStem, \"?\", csUriQuery), Status=scStatus, UserAgent=csUserAgent),\n  (CommonSecurityLog\n   | where TimeGenerated > ago(30d)\n   | where RequestURL has \"/_next/image\"\n   | project TimeGenerated, Host=DeviceName, ClientIP=SourceIP, Uri=RequestURL, Status=tostring(EventOutcome), UserAgent=RequestClientApplication)\n| where Uri has_any (\".avif\", \"avif\")\n| summarize requests = count(), distinctUris = dcount(Uri), sample = any(Uri), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated) by ClientIP, Host\n| order by requests desc",
-  "SENTINEL KQL — traversal-shaped requests against Windows-hosted Next.js, matching the CVE-2026-75604 precondition.\n\nW3CIISLog\n| where TimeGenerated > ago(30d)\n| extend FullUri = strcat(csUriStem, \"?\", csUriQuery)\n| where FullUri has_any (\"..%5c\", \"..\\\\\", \"%2e%2e%5c\", \"..%252f\", \"%c0%af\")\n   or FullUri matches regex @\"(\\.\\.[\\\\/]){2,}\"\n| summarize hits = count(), statuses = make_set(scStatus, 10), sample = any(FullUri) by cIP, Computer, csUserAgent\n| order by hits desc",
-  "DEFENDER XDR KQL — the post-exploitation shape for both flaws: a Next.js node process spawning a shell or reconnaissance binary on a Windows web host.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName in~ (\"node.exe\", \"next.exe\", \"w3wp.exe\", \"iisnode.exe\")\n| where FileName in~ (\"cmd.exe\", \"powershell.exe\", \"pwsh.exe\", \"whoami.exe\", \"net.exe\", \"net1.exe\", \"certutil.exe\", \"bitsadmin.exe\", \"curl.exe\", \"tasklist.exe\")\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, InitiatingProcessCommandLine, FileName, ProcessCommandLine\n| order by Timestamp desc\n// Attribution: parent/child web-tier RCE pattern follows the published approach of Steven Lim (github.com/SlimKQL/Hunting-Queries-Detection-Rules, LinkedIn @0x534c), adapted to Next.js process names.",
-  "DEFENDER XDR KQL — sharp/libheif image processing writing outside the cache directory, which would indicate the AVIF overflow reached code execution rather than a crash.\n\nDeviceFileEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName in~ (\"node.exe\", \"next.exe\")\n| where ActionType in (\"FileCreated\", \"FileModified\")\n| where FolderPath !has \"\\\\.next\\\\cache\" and FolderPath !has \"/.next/cache\"\n| where FileName endswith \".exe\" or FileName endswith \".dll\" or FileName endswith \".ps1\" or FileName endswith \".jsp\" or FileName endswith \".js\"\n| summarize writes = count(), files = make_set(FileName, 20) by DeviceName, FolderPath\n| order by writes desc"
- ],
- "source": "Next.js August 2026 Security Release, Vercel changelog, The Hacker News, Netlify changelog, Cyber Security News, SecurityOnline"
-},
-"cosmosevm": {
- "eyebrow": "Cosmos EVM · GHSA-7g4w-cg88-2cq2 · Six chains drained Aug 20–25, 2026 · No CVE",
- "title": "A bug bounty report misassessed in April, patched publicly in August, and exploited across six chains within a week",
- "overview": "The technical flaw matters less here than the disclosure sequence, which Cosmos Labs has documented itself: a report arrived in April, was judged not to put live funds at risk on the basis of a failed reproduction, and the eventual fix shipped publicly rather than privately — with exploitation following days later. The operator guidance is unusually blunt: upgrade, or halt the chain.",
- "technical": [
-  "GHSA-7g4w-cg88-2cq2 — a balance-handling flaw in the shared Cosmos EVM module, rated Critical by Cosmos Labs. Published with no CVE identifier, no weakness classification and no CVSS score.",
-  "Affected versions: below 0.6.2, and 0.7.0 up to but excluding 0.7.2. The fix shipped in v0.6.2 and v0.7.2 on Aug 19, 2026.",
-  "Exploitation window: funds were drained from six blockchains between Aug 20 and Aug 25, 2026 — after the fix was public.",
-  "Cosmos Labs post-mortem, published Aug 28: the flaw was reported through its bug bounty programme on Apr 25 and assessed at the time as posing no risk to funds on live networks. \"We were unable to reproduce the vulnerability on 18-decimal networks and incorrectly concluded that it affected only non-18-decimal networks.\"",
-  "Operator guidance: upgrade to v0.6.2 or v0.7.2 or later. The change is state-breaking and requires a coordinated network upgrade; operators who cannot upgrade immediately are told to halt the chain rather than attempt a coordinated governance upgrade.",
-  "Secondary reporting, not from Cosmos Labs: the flaw is described as an underflow affecting vesting accounts; MANTRA, ZetaChain, Warden Protocol and Push Chain are named among the affected chains; the total drained is put at about $5.72 million, with assets sold on afterwards and some linked exchange accounts frozen. Treat these figures as sector reporting rather than vendor-confirmed."
- ],
- "iocs": [],
- "iocNote": "No indicators have been published. Cosmos Labs' advisory and post-mortem describe versions and operator actions, not attacker addresses or transaction hashes, and the crypto-sector reporting that names amounts does not publish an indicator set in the reviewed sources.",
- "mitigation": [
-  "Upgrade any Cosmos EVM chain to v0.6.2 or v0.7.2 or later. The upgrade is state-breaking, so it needs a coordinated network upgrade rather than a rolling one.",
-  "If an immediate upgrade is not possible, Cosmos Labs' instruction is to halt the chain rather than attempt a coordinated governance upgrade.",
-  "Where your organisation holds assets on a Cosmos EVM chain, confirm with the chain operator which release is running and whether the Aug 20–25 window is covered by their own reconciliation.",
-  "For teams running bug bounty programmes, the reproducible lesson is in the post-mortem: a failed reproduction on one configuration was treated as absence of risk. Failed reproduction should escalate the assessment, not close it.",
-  "Where a fix for a consensus-critical component must ship publicly, assume the disclosure window is measured in days and sequence operator upgrades before the release, not after."
- ],
- "response": [
-  "No hunting queries are provided for this story. The exploitation happened on-chain against blockchain nodes, so there is no Defender or Sentinel telemetry that would observe it; detection belongs to chain monitoring and exchange controls rather than to endpoint or SIEM tooling.",
-  "If your organisation operates a Cosmos EVM validator, the equivalent check is on the node estate rather than in KQL: confirm the running module version, review the Aug 19–25 upgrade timeline against your own change records, and reconcile balances across the exploitation window."
- ],
- "source": "The Hacker News, Cosmos Labs security advisory and post-mortem (Aug 28, 2026), Coin Gabbar"
-},
-"novacookies": {
- "eyebrow": "Island Security Research · NovaCookies · AiTM PhaaS · $320/month · 755 published domains",
- "title": "A rented adversary-in-the-middle relay with Entra's own MFA method taxonomy, a configurable anti-analysis engine and a Docusign-inside-Docusign delivery chain",
- "overview": "The structural point Island makes is that campaigns which look unrelated can be deployments of the same rented product, so blocking yesterday's domain removes one disposable part of the operation. The kit is purpose-built against Microsoft 365 rather than generic: it carries dedicated handling for authenticator push approval, authenticator one-time codes and SMS codes using Microsoft's own internal names for those methods, with separate error states for a rejected password, a rejected code and a rejected SMS. That is why ordinary one-time codes and push approvals do not solve the problem — the victim completes a real authentication through an attacker-controlled intermediary. Island's stated structural defense is phishing-resistant authentication: passkeys, FIDO2 security keys and other origin-bound credentials will not authenticate to the wrong site, so the relay cannot complete the same exchange.",
- "technical": [
-  "Commercial model: advertised at $320 for a month of access or $200 for fourteen days, with domains, hosting, redirect services and support described as part of the package. Both advertised redirect variants (Microsoft and Google) appear in observed campaign infrastructure. The operator-facing dashboard carries a circular \"Nova Cookies\" badge and the line \"Secured by Nova Systems\".",
-  "Primary capability: a live AiTM relay. The target sees a Microsoft 365 sign-in experience while the service passes the authentication exchange to Microsoft in real time, relaying password and MFA prompts step by step, then captures the session cookie representing the authenticated session.",
-  "Delivery chain (strongest observed): a genuine Docusign notification opening a genuine Docusign envelope in the real viewer, containing a counterfeit share notice claiming an accounting department had shared a remittance-advice PDF. The malicious destination sat inside the document, below the layer most mail security products inspect. Island states Docusign and Microsoft were not compromised — their services were used as delivery and redirection layers.",
-  "Redirect technique: the OAuth error-redirect abuse Microsoft described in March 2026. An application registered in an attacker-controlled tenant has a redirect URI pointing at attacker infrastructure; a genuine Microsoft authorization URL with prompt=none is designed to fail silent authentication, so Entra sends the browser from its own domain to the pre-registered hop. No token is issued and no consent prompt appears. Unlike a classic open redirect the destination must already be registered to the application, so the value is the trusted starting domain — and the application IDs give identity providers a disruption point when malicious registrations are reported. A smaller number of chains used Google's sign-in endpoint for the same role.",
-  "Other delivery paths: links passing through legitimate websites that appeared to have been compromised, and legitimate online services abused to host or redirect content, keeping the final phishing domain out of the original message.",
-  "Infrastructure naming: many domains borrow recognizable company names then mutate them with inserted letters, dropped characters or long concatenations under .vu. Island is explicit that these names are lure infrastructure, not evidence the referenced companies were compromised, and that the borrowed name and the targeted organization were not reliably the same across the corpus.",
-  "Lure URL shape: paths begin with alternating-case labels such as PwPt-sHaRe, Ms36-AcCeSs and ClOd-ViEw, combining shortened cloud-product references with share, access and view actions, followed by a long changing token and a shorter final token. Island cautions that mixed casing is a campaign fingerprint rather than a standalone signature — search and scan systems may normalize case.",
-  "Anti-analysis: Cloudflare is the visible front gate but not the whole story. The kit layers browser checks with client-side proof of work, short-lived context binding and runtime inspection checks, and scores the browser on interaction patterns, device and browser characteristics, automation markers and attempts to open developer tools. It forgives a failed check when interaction looks genuine and skips expensive checks for a visitor that already looks human. One documented example is debugger timing — measuring execution across a debugger statement and withholding the lure on a pause. These controls are buyer-configurable with tunable intervals, callbacks and strict or development presets, so resistance to analysis is a configurable product capability rather than a fixed sequence. Island's own characterisation is scanner-resistant, not scanner-proof: full-browser public scanners have captured the lure on some occasions.",
-  "Yield tuning: in one preserved observation the same page accepted repeated password submissions before advancing, consistent with collecting more than one candidate password. Island reports this as observed behaviour without assigning a fixed product rule. The kit also counts submission attempts.",
-  "Timeline: low-volume infrastructure present in late 2025; sharp expansion from mid-May 2026; first-seen dates peaked in June; new infrastructure continued appearing through August 2026. Island notes Proofpoint reported campaign activity increasing from March through May before declining in June, and attributes the difference to measuring infrastructure visibility rather than email or campaign volume."
- ],
- "iocs": [
-  {
-   "value": "fordmotbvmorcompany.vu",
-   "type": "Domain",
-   "note": "Example from Island's dedicated attacker-infrastructure release. Brand-themed mutation — \"Ford Motor Company\" readable through inserted characters. Lure infrastructure only; Island states this is not evidence the referenced company was compromised or targeted.",
-   "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
-  },
-  {
-   "value": "morganstbftanley.vu",
-   "type": "Domain",
-   "note": "Example from the IOC release — extra letters splitting the recognizable \"Morgan Stanley\" name. Lure infrastructure only.",
-   "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
-  },
-  {
-   "value": "munichreinsurdjqanceamericainc.vu",
-   "type": "Domain",
-   "note": "Example from the IOC release — inserted characters distorting \"Munich Reinsurance America Inc.\" Lure infrastructure only.",
-   "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
-  },
-  {
-   "value": "internationalbusinessmaclsihinesibm.vu",
-   "type": "Domain",
-   "note": "Example from the IOC release — long-form IBM name and acronym together with a misspelling buried in the middle. Lure infrastructure only.",
-   "source": "https://github.com/island-io/island-security-research-artifacts/tree/main/novacookies"
-  },
-  {
-   "value": "secondsightsystilqemsllc.vu",
-   "type": "Domain",
-   "note": "Published IOC domain shown in Island's preserved lure capture, hosting a PwPt-sHaRe path.",
-   "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
-  },
-  {
-   "value": "PwPt-sHaRe / Ms36-AcCeSs / ClOd-ViEw",
-   "type": "String",
-   "note": "Alternating-case lure path prefixes, each followed by a long changing token and a shorter final token. Island treats the shape as contextual evidence, not a standalone signature — case may be normalized by scanners.",
-   "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
-  },
-  {
-   "value": "login.microsoftonline.com/common/oauth2/v2.0/authorize with prompt=none and a non-corporate redirect_uri",
-   "type": "Behavior",
-   "note": "The OAuth error-redirect hop: an app registered in an attacker-controlled tenant, a genuine Microsoft authorization URL designed to fail silent authentication, and Entra redirecting the browser to the pre-registered attacker hop. No token issued, no consent prompt.",
-   "source": "https://www.microsoft.com/en-us/security/blog/2026/03/02/oauth-redirection-abuse-enables-phishing-malware-delivery/"
-  },
-  {
-   "value": "Genuine Docusign envelope containing a counterfeit share notice with an external link inside the document",
-   "type": "Behavior",
-   "note": "Delivery pattern that passes sender-authentication and reputation checks at every layer above the document body.",
-   "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
-  },
-  {
-   "value": "Nova Cookies / Nova Systems",
-   "type": "Actor Alias",
-   "note": "Operator-dashboard branding: a circular \"Nova Cookies\" badge and the line \"Secured by Nova Systems\". Island stresses the shared product does not imply a single threat actor — attribution must separate the service, the advertising account and the individual customer.",
-   "source": "https://www.island.io/blog/novacookies-at-scale-inside-the-320-phishing-service-targeting-hundreds-of-organizations"
-  }
- ],
- "iocNote": "The five domains above are examples; the full versioned release publishes 755 domains assessed as dedicated malicious infrastructure at github.com/island-io/island-security-research-artifacts (novacookies). Island's list is sanitized — no victim data, personalized lure links, Telegram identities, wallet addresses or internal telemetry. Retain the package version: Island's own guidance is that indicators are evidence with an expiration date, that NovaCookies rotates infrastructure, and that legitimate domains can be abused, so IOCs should be combined with behaviour-based detection. Ingest the release rather than the five samples here.",
- "mitigation": [
-  "Put phishing-resistant authentication on high-value accounts. Passkeys, FIDO2 security keys and other origin-bound credentials structurally interrupt an AiTM relay — this is Island's stated structural defense and the only control that removes the capability rather than raising its cost.",
-  "Detect the product, not only yesterday's domains: correlate the .vu lure shape, brand-themed hostname mutations, mixed-case document-action tokens and redirect chains into Microsoft-style relays. Treat any single feature as weak evidence.",
-  "Keep dedicated infrastructure separate from potentially compromised hosts. Block attacker-controlled domains at the apex where appropriate, but use URL- or path-level controls and investigation for legitimate sites that may have been abused.",
-  "Assume the delivery path may be trusted until its final hop. Inspect links inside document viewers and collaboration platforms, and do not depend on referrer data to reconstruct how a user arrived.",
-  "Report malicious application registrations to Microsoft: because the redirect destination must already be registered to the application, the application IDs are a disruption point for the identity provider.",
-  "Enable Entra ID Token Protection (Conditional Access token binding) alongside FIDO2 — the same control set already recommended in this brief for the Mirage2FA PhaaS campaign."
- ],
- "response": [
-  "Treat a completed relay as session theft, in Island's order: revoke sessions, reset credentials, inspect identity-provider sign-ins, and review new MFA methods, OAuth grants, forwarding rules and inbox rules.",
-  "DEFENDER XDR KQL — OAuth application consent and service-principal additions, unpacking RawEventData to surface the redirect URI. The NovaCookies hop needs an app registered in an attacker-controlled tenant whose redirect URI points at attacker infrastructure, so the redirect URI is the discriminator — and the AppId is the disruption point to report to Microsoft.\n\nCloudAppEvents\n| where Timestamp > ago(30d)\n| where ActionType in~ (\"Consent to application.\",\"Add service principal.\",\"Add OAuth2PermissionGrant.\",\"Add delegated permission grant.\")\n| extend ModifiedProps = tostring(todynamic(RawEventData.ModifiedProperties))\n| extend AppId = tostring(RawEventData.ObjectId)\n| extend ActorUpn = tostring(RawEventData.UserId)\n| extend ActorIp = tostring(RawEventData.ClientIP)\n| where ModifiedProps has_any (\"ReplyUrl\",\"redirect\")\n| project Timestamp, ActionType, ActorUpn, ActorIp, AppId, ModifiedProps\n| order by Timestamp desc\n// Technique credit — RawEventData unpacking pattern per Steven Lim (github.com/SlimKQL, LinkedIn @0x534c)",
-  "SENTINEL KQL — AiTM session-theft signature in sign-in logs: a successful interactive sign-in followed within minutes by non-interactive activity on the same account from a different ASN or country.\n\nlet win = 30m;\nlet interactive = SigninLogs\n  | where TimeGenerated > ago(14d) and ResultType == 0\n  | project UserPrincipalName, tI = TimeGenerated, ipI = IPAddress, asnI = AutonomousSystemNumber, cI = tostring(LocationDetails.countryOrRegion);\nlet noninteractive = AADNonInteractiveUserSignInLogs\n  | where TimeGenerated > ago(14d) and ResultType == 0\n  | project UserPrincipalName, tN = TimeGenerated, ipN = IPAddress, asnN = AutonomousSystemNumber, cN = tostring(LocationDetails.countryOrRegion), AppDisplayName;\ninteractive\n| join kind=inner noninteractive on UserPrincipalName\n| where tN between (tI .. tI + win)\n| where asnI != asnN or cI != cN\n| project UserPrincipalName, tI, ipI, cI, asnI, tN, ipN, cN, asnN, AppDisplayName\n| order by tI desc",
-  "SENTINEL KQL — sign-ins from addresses Defender for Cloud Apps already tags as hostile, plus the Entra risk detections that name the AiTM primitives directly. Highest signal for a relay: the authentication is genuine, so the tell is where the resulting session is replayed from.\n\nlet hostileTags = dynamic([\"Brute force attacker\",\"Password spray attacker\",\"malicious\",\"Possible Hackers\",\"Tor\",\"Anonymous proxy\",\"Botnet\"]);\nunion isfuzzy=true\n  (SigninLogs\n   | where TimeGenerated > ago(30d) and ResultType == 0\n   | where IPTags has_any (hostileTags)\n   | project TimeGenerated, UserPrincipalName, IPAddress, Signal = tostring(IPTags), App = AppDisplayName, Country = tostring(LocationDetails.countryOrRegion), Source = \"SigninLogs\"),\n  (AADNonInteractiveUserSignInLogs\n   | where TimeGenerated > ago(30d) and ResultType == 0\n   | where IPTags has_any (hostileTags)\n   | project TimeGenerated, UserPrincipalName, IPAddress, Signal = tostring(IPTags), App = AppDisplayName, Country = tostring(LocationDetails.countryOrRegion), Source = \"NonInteractive\"),\n  (AADUserRiskEvents\n   | where TimeGenerated > ago(30d)\n   | where RiskEventType has_any (\"anomalousToken\",\"tokenIssuerAnomaly\",\"adversaryInTheMiddle\",\"anonymizedIPAddress\",\"maliciousIPAddress\",\"unfamiliarFeatures\")\n   | project TimeGenerated, UserPrincipalName, IPAddress, Signal = RiskEventType, App = RiskDetail, Country = tostring(Location.countryOrRegion), Source = \"RiskEvents\")\n| order by TimeGenerated desc\n// Technique credit — IPTags enrichment and AADUserRiskEvents AiTM correlation per Steven Lim (github.com/SlimKQL, LinkedIn @0x534c)",
-  "DEFENDER XDR KQL — what the stolen session was used for. The operator holds a valid M365 session cookie, so post-theft activity looks like the user: bulk file access, mailbox rule creation, and Copilot-driven summarization of whatever the account can reach.\n\nlet suspectUsers = dynamic([]);  // populate from the sign-in correlation above\nCloudAppEvents\n| where Timestamp > ago(30d)\n| where array_length(suspectUsers) == 0 or AccountDisplayName in~ (suspectUsers)\n| where ActionType in~ (\"FileDownloaded\",\"FileSyncDownloadedFull\",\"New-InboxRule\",\"Set-Mailbox\",\"Add-MailboxPermission\",\"CopilotInteraction\",\"MailItemsAccessed\")\n| extend ActorIp = tostring(RawEventData.ClientIP)\n| extend UserAgentStr = tostring(RawEventData.UserAgent)\n| extend CopilotData = todynamic(RawEventData.CopilotEventData)\n| extend CopilotResources = tostring(CopilotData.AccessedResources)\n| extend CopilotAppHost = tostring(CopilotData.AppHost)\n| summarize events = count(), actions = make_set(ActionType, 15), agents = make_set(UserAgentStr, 5), copilotHosts = make_set(CopilotAppHost, 5), copilotData = make_set(CopilotResources, 5)\n    by AccountDisplayName, ActorIp, bin(Timestamp, 1h)\n| where events > 20 or array_length(actions) > 3\n| order by events desc\n// Technique credit — CloudAppEvents CopilotEventData unpacking per Steven Lim (github.com/SlimKQL, LinkedIn @0x534c)",
-  "SENTINEL KQL — post-relay persistence: new MFA methods, OAuth grants and mailbox forwarding or inbox rules added after a suspect sign-in.\n\nunion isfuzzy=true\n  (AuditLogs\n   | where TimeGenerated > ago(30d)\n   | where OperationName has_any (\"Add strong authentication\",\"Update user\",\"Consent to application\",\"Add app role assignment\",\"Add service principal\")\n   | project TimeGenerated, OperationName, actor = tostring(InitiatedBy.user.userPrincipalName), target = tostring(TargetResources[0].displayName)),\n  (OfficeActivity\n   | where TimeGenerated > ago(30d)\n   | where Operation has_any (\"New-InboxRule\",\"Set-InboxRule\",\"Set-Mailbox\",\"UpdateInboxRules\")\n   | project TimeGenerated, OperationName = Operation, actor = UserId, target = OfficeObjectId)\n| order by TimeGenerated desc",
-  "DEFENDER XDR KQL — endpoint-side lure traffic: the .vu infrastructure and the mixed-case document-action path shape. Replace the domain list with the 755-domain release.\n\nlet lurePaths = dynamic([\"PwPt-sHaRe\",\"Ms36-AcCeSs\",\"ClOd-ViEw\",\"PwPt-\",\"Ms36-\",\"ClOd-\"]);\nDeviceNetworkEvents\n| where Timestamp > ago(60d)\n| where RemoteUrl endswith \".vu\" or RemoteUrl has_any (lurePaths)\n| project Timestamp, DeviceName, InitiatingProcessFileName, RemoteUrl, RemoteIP\n| order by Timestamp asc",
-  "DEFENDER XDR KQL — browser navigation from a document viewer or identity endpoint into an unfamiliar destination, the shape of the trusted-until-the-last-hop chain.\n\nDeviceEvents\n| where Timestamp > ago(60d)\n| where ActionType == \"BrowserLaunchedToOpenUrl\"\n| where RemoteUrl has_any (\"docusign\",\"login.microsoftonline.com/common/oauth2\",\"accounts.google.com/o/oauth2\")\n| project Timestamp, DeviceName, AccountName, RemoteUrl, InitiatingProcessFileName\n| order by Timestamp desc",
-  "An organization's appearance in Island's campaign artifacts indicates targeting, not interaction or compromise. Confirming credential submission or session theft requires separate evidence from your own identity logs — do not treat an IOC match alone as an incident."
- ],
- "source": "Island Security Research — Shachar Gritzman, \"NovaCookies at scale: Inside the $320 Phishing Service Targeting Hundreds of Organizations\", Aug 26, 2026; companion IOC release at github.com/island-io/island-security-research-artifacts"
-},
-"papercut": {
- "eyebrow": "PaperCut NG/MF · CVE-2026-82078 + CVE-2026-81578 · Exploited zero-day · Second emergency patch",
- "title": "Two chained PaperCut flaws give unauthenticated Java code execution inside the application process; patch bypasses already found",
- "overview": "PaperCut sits in the worst possible place for this class of bug: internet-facing, trusted by the print estate, and holding spooled documents. PaperCut disclosed on Aug 27, 2026 that all versions of NG and MF are affected and that it is aware of confirmed customer incidents. The actionable read is that patching is necessary but not sufficient — watchTowr reports multiple bypasses of the first emergency patch and an additional authentication bypass, likely closed by the second. Remove internet exposure now, apply the latest emergency patch, and hunt: the post-exploitation tooling deletes its own artifacts and the server's logs, so absent or truncated logs are themselves evidence. No actor has been named and no attribution published.",
- "technical": [
-  "CVE-2026-82078 (CVSS 9.4) — unsafe dynamic class loading in the database connection utilities of PaperCut MF and NG. The application instantiates database driver classes based on configurable driver names without validating them against an allowlist of approved drivers.",
-  "CVE-2026-81578 (CVSS 8.8) — improper access control in the web management interface. Under specific conditions, unauthenticated remote requests targeting administrative functions can trigger backend actions before access validation checks complete.",
-  "Huntress's account of the mechanism: a specifically crafted request can refer to one page that is rendered for the response and another page that owns the component or action being executed. PaperCut's authorization check could trust the rendered page and miss the permissions required by the component behind it, so an unauthenticated request can change server configuration, reach sensitive endpoints and execute attacker-controlled code.",
-  "watchTowr reports attackers chaining both CVEs to bypass authentication and gain RCE, and says it discovered multiple patch bypasses plus a further authentication bypass, all likely addressed in the second emergency patch.",
-  "Observed post-exploitation (Huntress, two customer environments): Base64-encoded commands executed on the server, chaining \"whoami & ver\" to establish account and OS. A follow-on OS-agnostic Java .class file fingerprints the machine and writes a directory listing to \"Udydn.out\" under a \"/data/content/\" path relative to the installation directory, then deletes Udydn.out, the server's \"server.log\", and \"/data/internal/derby.log\".",
-  "In a separate incident on Aug 27, 2026 the actors used a different .class file variant running \"whoami & ver & tasklist\" to also capture the running process list.",
-  "Historical precedent: CVE-2023-27350 in PaperCut MF/NG (CVSS 9.8) was exploited in 2023 by Russian threat actors and by Lace Tempest to deliver Cl0p and LockBit ransomware. Treat a PaperCut compromise as a probable ransomware precursor, not an isolated print-server issue."
- ],
- "iocs": [
-  {
-   "value": "pc-app.exe",
-   "type": "Filename",
-   "note": "PaperCut Application Server process. PaperCut names suspicious post-exploitation activity originating from pc-app.exe as an indicator — child process creation from this parent is the primary behavioural signal.",
-   "source": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
-  },
-  {
-   "value": "Udydn.out",
-   "type": "Filename",
-   "note": "Directory-listing output written by the post-exploitation Java .class file to a /data/content/ path relative to the PaperCut installation directory, then deleted by the same file.",
-   "source": "https://www.huntress.com/blog/papercut-actively-exploited"
-  },
-  {
-   "value": "ERROR DatabaseUtils - Database error looking up cardID: VALUES CAST",
-   "type": "String",
-   "note": "server.log entry named by both PaperCut and watchTowr as the primary log-based hunting artifact for exploitation of this chain.",
-   "source": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
-  },
-  {
-   "value": "ERROR No suitable driver found for jdbc:no:x",
-   "type": "String",
-   "note": "server.log entry published by PaperCut as an indicator — consistent with the CVE-2026-82078 dynamic driver-class loading path being exercised.",
-   "source": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
-  },
-  {
-   "value": "Missing, truncated or deleted PaperCut server.log and /data/internal/derby.log",
-   "type": "Behavior",
-   "note": "PaperCut lists missing or unexpectedly truncated server.log files as an indicator; Huntress confirms the post-exploitation .class file deletes server.log and derby.log. Absence of the log is the evidence.",
-   "source": "https://www.huntress.com/blog/papercut-actively-exploited"
-  },
-  {
-   "value": "whoami & ver & tasklist",
-   "type": "Behavior",
-   "note": "Chained discovery command observed by Huntress in the Aug 27, 2026 incident; the earlier variant was \"whoami & ver\". Executed Base64-encoded from the PaperCut process.",
-   "source": "https://www.huntress.com/blog/papercut-actively-exploited"
-  }
- ],
- "iocNote": "No attacker IPs, domains or file hashes have been published for this campaign. Every published indicator is behavioural or log-based, and the post-exploitation tooling deletes the logs it appears in — hunt in forwarded or archived copies of server.log, not the live file.",
- "mitigation": [
-  "Apply Emergency Patch Release 2 for PaperCut NG/MF v24, v25 or v26 on Windows, Linux or macOS — patches for v24 followed the v25/v26 release later on Aug 28. PaperCut is urging customers who already installed the first emergency patch to install Release 2 as well. The second patch includes hardening beyond the original emergency patch and is believed to close the watchTowr patch bypasses; the first patch alone should not be treated as remediation.",
-  "Remove public internet exposure from the PaperCut Application Server immediately, even where no suspicious activity has been observed. PaperCut's instruction is to use firewall rules, network access controls or equivalent measures so the web interfaces cannot be reached from untrusted internet addresses.",
-  "Restrict Application Server web access to trusted IP ranges, or place it behind a VPN or another controlled administrative path.",
-  "Treat any instance that was internet-facing before patching as potentially compromised and scope accordingly: PaperCut holds spooled document content and is an inbound pivot into the corporate network."
- ],
- "response": [
-  "DEFENDER XDR KQL — child processes spawned by the PaperCut application server, the highest-fidelity signal that code execution completed.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName =~ \"pc-app.exe\"\n   or InitiatingProcessFolderPath has \"PaperCut\"\n| where FileName in~ (\"cmd.exe\",\"powershell.exe\",\"pwsh.exe\",\"whoami.exe\",\"tasklist.exe\",\"sh\",\"bash\",\"java\")\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine\n| order by Timestamp desc",
-  "DEFENDER XDR KQL — the Udydn.out artifact and the log-deletion behaviour that follows it.\n\nDeviceFileEvents\n| where Timestamp > ago(30d)\n| where FileName in~ (\"Udydn.out\",\"server.log\",\"derby.log\")\n| where FolderPath has_any (\"PaperCut\",\"/data/content/\",\"/data/internal/\")\n| project Timestamp, DeviceName, ActionType, FileName, FolderPath, InitiatingProcessFileName, InitiatingProcessCommandLine\n| order by Timestamp asc",
-  "DEFENDER XDR KQL — Base64-encoded command execution from the PaperCut process tree.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFolderPath has \"PaperCut\" or InitiatingProcessFileName =~ \"pc-app.exe\"\n| where ProcessCommandLine has_any (\"-enc\",\"-EncodedCommand\",\"FromBase64String\",\"base64 -d\")\n| project Timestamp, DeviceName, AccountName, ProcessCommandLine",
-  "SENTINEL KQL — unauthenticated requests to PaperCut administrative paths on the default ports, to scope who could reach the interface and from where.\n\nCommonSecurityLog\n| where TimeGenerated > ago(30d)\n| where DestinationPort in (9191, 9192)\n| where RequestURL has_any (\"/app\",\"/admin\",\"/rpc/api\")\n| summarize hits = count(), paths = make_set(RequestURL, 25), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated)\n    by SourceIP, DestinationIP\n| where hits > 20\n| order by hits desc",
-  "SENTINEL KQL — the published server.log strings, where PaperCut logs are forwarded to the workspace. Run this against archived logs: the attacker deletes the live file.\n\nSyslog\n| where TimeGenerated > ago(60d)\n| where SyslogMessage has_any (\"Database error looking up cardID: VALUES CAST\", \"No suitable driver found for jdbc:no:x\")\n| project TimeGenerated, Computer, ProcessName, SyslogMessage",
-  "Where server.log is missing or shorter than its rotation history implies, escalate rather than close: log destruction is part of the documented post-exploitation sequence.",
-  "Given the 2023 precedent of PaperCut RCE leading to Cl0p and LockBit deployment, scope any confirmed compromise for lateral movement and staged exfiltration, not just for the web-tier artifact."
- ],
- "source": "PaperCut security bulletin (Aug 27, 2026), Huntress (John Hammond, Andrew Brandt), watchTowr (Jake Knott), The Hacker News"
-},
-"owncloudph": {
- "eyebrow": "ownCloud CVE-2023-49105 · CISA KEV Aug 27, 2026 · Aug 30 federal deadline · Hunt.io",
- "title": "An open directory on 31.58.209[.]241 exposed a Chinese-speaking operator's ownCloud exploitation of a Philippine nuclear research body",
- "overview": "This is the exploitation evidence behind CISA's Aug 27 KEV addition, and the actionable part is not the CVE — it was fixed in ownCloud 10.13.1 in November 2023 — but the asset class. The instance was reachable, running a default configuration with no signing key, and outside anyone's patch inventory. Hunt.io characterises the operator as conducting a deliberate intrusion against Philippine nuclear and defense-adjacent organizations, noting that the marine engineering firm's Navy ties align with interests tied to current South China Sea tensions, and that the nuclear material sought is a separate but complementary priority. Hunt.io does not assert state affiliation: its language is \"whether state-affiliated, contracted, or working independently\".",
- "technical": [
-  "CVE-2023-49105 (CVSS 9.8) — ownCloud WebDAV API authentication bypass. An attacker who knows a valid username can construct signed WebDAV requests that the server accepts as an authentication action by that user, without supplying credentials, where the victim has no signing key configured. That is the default configuration. Affects core 10.6.0 through 10.13.0; fixed in 10.13.1, disclosed November 2023.",
-  "Hunt.io identified an open directory on host 31.58.209[.]241 staging custom Python scripts, open-source offensive tooling (Sliver, Metasploit, Mettle) and data exfiltrated from two Philippine organizations.",
-  "Five custom Python scripts implement the CVE-2023-49105 exploit using pre-signed URLs generated with an empty signing secret. Four target a single account each; the fifth enumerates the WebDAV directory and logs every download attempt.",
-  "Estimated take from the nuclear research entity: 176 files, roughly 372 MB, across five staging directories — nuclear-material account records, draft strategic plans covering 2023 through 2028, research reactor core components, historical fuel inventories, presentation material, employee personal information, a 192 MB SQL dump of a ZKTeco BioTime attendance and personnel database, and credential stores including BitLocker keys, a KeePass database and AxCrypt-encrypted files.",
-  "Second target: a marine engineering and shipbuilding company providing services to the Philippine Navy. The operator exploited LiteSpeed Cache for WordPress (CVE-2024-28000, CVSS 9.8) for elevated access, and a script \"brute_xmlrpc.py\" in the same directory attacked the site via XML-RPC brute force, giving a path independent of the CVE.",
-  "Attribution basis: simplified Chinese in source code comments, docstrings, log output, and in the folder names used to sort stolen data.",
-  "Separate and possibly unrelated finding in the same WordPress source: an active compromise using EtherHiding to pull HTML from an Ethereum smart contract and serve a Google verification page typical of ClickFix. The lure launches pcalua.exe to invoke mshta.exe and download a VBScript dropper."
- ],
- "iocs": [
-  {
-   "value": "31.58.209.241",
-   "type": "IP",
-   "note": "Open directory host staging the exploit scripts, Sliver/Metasploit/Mettle tooling and the exfiltrated data across five directories. Identified by Hunt.io.",
-   "source": "https://hunt.io/blog/chinese-speaking-operator-philippine-nuclear-naval-contractor"
-  },
-  {
-   "value": "brute_xmlrpc.py",
-   "type": "Filename",
-   "note": "XML-RPC brute-force script found in the open directory, targeting the WordPress site of the marine engineering firm independently of CVE-2024-28000.",
-   "source": "https://hunt.io/blog/chinese-speaking-operator-philippine-nuclear-naval-contractor"
-  },
-  {
-   "value": "Unauthenticated WebDAV requests carrying pre-signed URL parameters (OC-Credential / OC-Signature / OC-Expires) to /remote.php/dav",
-   "type": "Behavior",
-   "note": "The exploitation primitive: signed WebDAV requests accepted as authentication for a known username where no signing key is configured.",
-   "source": "https://owncloud.com/security-advisories/webdav-api-authentication-bypass-using-pre-signed-urls/"
-  },
-  {
-   "value": "pcalua.exe launching mshta.exe",
-   "type": "Behavior",
-   "note": "Execution chain of the EtherHiding/ClickFix compromise found in the same WordPress source, downloading a VBScript dropper. Hunt.io treats this as possibly unrelated to the primary intrusion.",
-   "source": "https://hunt.io/blog/chinese-speaking-operator-philippine-nuclear-naval-contractor"
-  },
-  {
-   "value": "Sliver",
-   "type": "Actor Alias",
-   "note": "Open-source C2 framework staged in the open directory alongside Metasploit and Mettle. Not a unique identifier — treat as tooling context, not attribution.",
-   "source": "https://hunt.io/blog/chinese-speaking-operator-philippine-nuclear-naval-contractor"
-  }
- ],
- "iocNote": "Hunt.io published the staging host and script names but no file hashes for the custom Python scripts and no C2 domains. Nothing here is defanged beyond the source's own treatment of the IP.",
- "mitigation": [
-  "Patch ownCloud to 10.13.1 or later. FCEB agencies have an Aug 30, 2026 deadline under the KEV listing.",
-  "Where patching is deferred, configure a signing key: the bypass depends on the victim account having no signing key, which is the default.",
-  "Inventory for ownCloud instances that predate current asset baselines — this exposure lives in forgotten deployments, not in the managed estate. Search DNS, certificate transparency and external scan data for /remote.php/dav endpoints you do not own a ticket for.",
-  "Patch LiteSpeed Cache for WordPress against CVE-2024-28000 and disable XML-RPC where it is not required; the same operator used both paths."
- ],
- "response": [
-  "DEFENDER XDR KQL — any host that talked to the Hunt.io staging infrastructure.\n\nDeviceNetworkEvents\n| where Timestamp > ago(180d)\n| where RemoteIP == \"31.58.209.241\"\n| project Timestamp, DeviceName, InitiatingProcessFileName, InitiatingProcessCommandLine, RemoteIP, RemotePort, RemoteUrl\n| order by Timestamp asc",
-  "DEFENDER XDR KQL — the ClickFix execution chain found in the same WordPress source.\n\nDeviceProcessEvents\n| where Timestamp > ago(90d)\n| where InitiatingProcessFileName =~ \"pcalua.exe\" and FileName =~ \"mshta.exe\"\n| project Timestamp, DeviceName, AccountName, InitiatingProcessCommandLine, ProcessCommandLine",
-  "SENTINEL KQL — pre-signed WebDAV requests against ownCloud, the exploitation primitive itself.\n\nCommonSecurityLog\n| where TimeGenerated > ago(180d)\n| where RequestURL has \"/remote.php/dav\"\n| where RequestURL has_any (\"OC-Credential\",\"OC-Signature\",\"OC-Expires\")\n| summarize requests = count(), paths = dcount(RequestURL), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated)\n    by SourceIP, DestinationIP\n| order by requests desc",
-  "SENTINEL KQL — bulk WebDAV download volume per source, to detect the enumerate-and-download script regardless of the auth path used.\n\nunion isfuzzy=true\n  (CommonSecurityLog | where RequestURL has \"/remote.php/dav\" | project TimeGenerated, SourceIP, RequestURL, bytes = todouble(SentBytes)),\n  (W3CIISLog | where csUriStem has \"/remote.php/dav\" | project TimeGenerated, SourceIP = cIP, RequestURL = csUriStem, bytes = todouble(scBytes))\n| summarize files = count(), totalMB = round(sum(bytes)/1048576, 1) by SourceIP, bin(TimeGenerated, 1h)\n| where files > 50 or totalMB > 100\n| order by totalMB desc",
-  "If an ownCloud instance was exposed and unpatched, treat every credential store it held as compromised — the confirmed take in this case included BitLocker keys, a KeePass database and AxCrypt-encrypted files. Rotate, re-key and re-encrypt rather than assessing likelihood."
- ],
- "source": "Hunt.io, CISA KEV, ownCloud security advisory, The Hacker News"
-},
-"zbtimplants": {
- "eyebrow": "VulnCheck · CVE-2026-74232 (SPEAKINGSTONE) + CVE-2026-74233 (DARKLANTERN) · Factory implants · No fixed firmware",
- "title": "Two undocumented factory implants in ZBT router firmware give unauthenticated remote root; 203 internet-facing DARKLANTERN instances across 22 countries",
- "overview": "The exposure here is procurement, not patching. These are components shipped in the firmware by the manufacturer, found on an $88 white-labeled unit bought from a US supplier, and no advisory names a fixed release. ZBT sells identical hardware and firmware to resellers who put their own name on the case, so brand is not a usable check — model number is, and the IEEE-registered MAC prefixes 78:A3:51 and F8:5E:3C both belong to Shenzhen Zhibotong Electronics, letting an owner identify the manufacturer from the device's own address. VulnCheck flags CVE-2026-74233 in its own KEV catalog, whose criteria require public reporting of exploitation in the wild; CISA's Vulnrichment, recorded Aug 27, rates exploitation as proof-of-concept. None of the three ZBT CVEs appear in CISA's KEV catalog as of version 2026.08.27.",
- "technical": [
-  "CVE-2026-74232 (SPEAKINGSTONE, CVSS 4.0 9.3 / CVSS 3.1 9.8) — runs as the service yunmgrd and beacons outbound over UDP 10000 to a hardcoded C2. Because it dials outward it functions from behind NAT and ordinary egress filtering. Its protocol supports message types that execute arbitrary commands as root, exfiltrate the WAN PPPoE username and password, write and read a DNS hijack list, and open a reverse SSH tunnel. VulnCheck describes it as a surveillance implant with root access to every device it runs on.",
-  "CVE-2026-74233 (DARKLANTERN, CVSS 4.0 9.3 / CVSS 3.1 9.8) — runs as the service infosrvd on UDP 9992, which the router's stock firewall opens to inbound connections from any internet address. VulnCheck's advisory describes the authentication as ineffective: it rests on a hardcoded salt and an all-zero wildcard MAC value that bypasses its own address check.",
-  "Exposure measurement: between Aug 18 and Aug 21, 2026 VulnCheck identified 203 internet-facing DARKLANTERN instances across 22 countries, self-reporting 16 distinct models. That figure counts hosts that answered a probe, not devices found compromised.",
-  "SPEAKINGSTONE carries a hardcoded backup C2 domain used where no primary server was configured. VulnCheck found the domain unregistered, registered it, and ran a reverse-engineered implementation of the protocol. Beacons arrived immediately; as of Aug 21, 392 unique devices had reported in, 390 in China, 83 percent on China Mobile's network, 304 of 392 broadcasting SSIDs beginning \"CMCC\", and 363 self-reporting model L3_V2_8 on firmware 3.0.0.4.528. Because only devices without a configured primary C2 reach the backup, the 392 is a floor drawn from an unrepresentative subset.",
-  "Affected builds (DARKLANTERN): Zbtlink WE1326, WE357, WE5926, WE5926-WD, WE826-Q, WE826-T2, WE826-WD, WG108 and WG3526 on firmware 19.1101; WE2426-C on 19.1112; WE5926-EC_QP on 20.0516; WF3526-P on 19.051; plus CTN720-W1, LF-1541 and MT7620N on 19.1101 and WRC1 on 20.0622 listed under an unidentified vendor.",
-  "Affected builds (SPEAKINGSTONE): Zbtlink L3_V2_8 on 3.0.0.4.528, WE826-T2 on 19.1101, ZBT-7628 on 1.0.0.2.007, ZBT-ZBT7621 on 1.0.0.3.001; MoreQuick MQAC-7620, MQAC-7620A, MQAP-7620, MQAP-7620A and MQAP-7628 on 1.0.0.2.000; AP522 on 1.0.0.2.014, AP7628 and HC5661A on 3.0.0.4.380, APG721B on 19.0809, HK300 on 1.0.0.2.032 and MAP-N10 on 1.0.0.2.044 under an unidentified vendor.",
-  "Version-range caveat worth carrying into any scan: the advisory pages display those builds as upper bounds, while the CVE records name each firmware as a single exact build and set every other version's default status to unknown. An owner on a build outside the listed set has no published basis for deciding whether the flaw applies.",
-  "Prior art: both implants were found on a ZBT-WE826-T2 whose firmware was built in 2019, predating ENDLESSDOORS (CVE-2026-66747), the phone-home implant VulnCheck disclosed on Aug 5, 2026 in at least 20 Zbtlink models. MOFI Network, which develops its own firmware for the same platform, had an image free of all three implants."
- ],
- "iocs": [
-  {
-   "value": "b77811db4d218c65670a6c9a5b33c30ff81c6d779e15d658643138771178a818",
-   "type": "SHA256",
-   "note": "yunmgrd — the SPEAKINGSTONE C2 implant binary. Published by VulnCheck.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "7e2e036fec2fe7ab4bbd43978d9296563894c92a112f5ac2f39957f12108e245",
-   "type": "SHA256",
-   "note": "infosrvd — the DARKLANTERN command-injection service binary. Published by VulnCheck.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "ae6c356f1f09260b859f84d994ef8423540a6c0bdf98510d86b85834283e4926",
-   "type": "SHA256",
-   "note": "inetdetect — companion component published alongside the two implants.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "www.ac-link.com",
-   "type": "Domain",
-   "note": "SPEAKINGSTONE primary C2 domain. Still resolved to 47.107.224[.]89 when checked on Aug 28, 2026.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "www.findmyipaddr.com",
-   "type": "Domain",
-   "note": "SPEAKINGSTONE hardcoded backup C2 domain, reached only where no primary was configured. VulnCheck registered it and sinkholed the protocol — treat resolution attempts as implant presence, not as attacker traffic.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "47.107.224.89",
-   "type": "IP",
-   "note": "Alibaba Cloud address in Shenzhen to which the SPEAKINGSTONE primary C2 domain resolved as of Aug 28, 2026.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "yunmgrd",
-   "type": "Filename",
-   "note": "Service name of the SPEAKINGSTONE implant. Beacons outbound on UDP 10000.",
-   "source": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-yunmgrd-cloud-c2-implant"
-  },
-  {
-   "value": "infosrvd",
-   "type": "Filename",
-   "note": "Service name of the DARKLANTERN implant. Listens inbound on UDP 9992, responses on UDP 8897.",
-   "source": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-infosrvd-command-injection"
-  },
-  {
-   "value": "inetdetect",
-   "type": "Filename",
-   "note": "Third component named in VulnCheck's indicator set.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "/etc/exec/cmd, /tmp/info.txt, /tmp/yunclient.conf",
-   "type": "Filename",
-   "note": "On-device paths published by VulnCheck. Present on a router, not on a managed endpoint — check via console or firmware extraction.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  },
-  {
-   "value": "UDP/9992 inbound, UDP/8897 responses, UDP/10000 outbound beacons",
-   "type": "Behavior",
-   "note": "Port set published by VulnCheck. Note a discrepancy in the published detections: one Suricata rule alerts on DARKLANTERN command output arriving on UDP 8898 while the accompanying text and scanner both use 8897 — hunt both.",
-   "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
-  }
- ],
- "iocNote": "VulnCheck published Suricata and YARA rules alongside the research. Carry the 8897/8898 inconsistency forward rather than picking one silently.",
- "mitigation": [
-  "No fixed firmware release is named in either advisory. Where a ZBT-built router carries either service, the remediation is replacement or third-party firmware — MOFI Network's image for the same platform was free of all three implants.",
-  "Block inbound traffic to UDP/9992 at the network edge. That closes the DARKLANTERN listener while a fixed release is outstanding.",
-  "Block and alert on www.ac-link[.]com, www.findmyipaddr[.]com and 47.107.224[.]89 at both the egress point and the resolver, per VulnCheck's guidance for the earlier implant.",
-  "Treat the LAN behind any affected router as untrusted. SPEAKINGSTONE can rewrite the device's DNS hijack list and open a reverse SSH tunnel.",
-  "Identify affected devices by model number and by MAC prefix (78:A3:51, F8:5E:3C), not by the brand on the case."
- ],
- "response": [
-  "SENTINEL KQL — implant C2 endpoints and the published port set, across firewall and DNS telemetry.\n\nlet zbtDomains = dynamic([\"ac-link.com\",\"findmyipaddr.com\"]);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(90d)\n   | where DestinationIP == \"47.107.224.89\"\n      or DestinationPort in (9992, 8897, 8898, 10000)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, Protocol, DeviceVendor, Activity),\n  (DnsEvents\n   | where TimeGenerated > ago(90d)\n   | where Name has_any (zbtDomains)\n   | project TimeGenerated, SourceIP = ClientIP, Name, QueryType)\n| order by TimeGenerated asc",
-  "DEFENDER XDR KQL — any managed endpoint reaching the implant C2, which would indicate the resolver or egress path is shared with an affected device.\n\nlet zbtDomains = dynamic([\"ac-link.com\",\"findmyipaddr.com\"]);\nDeviceNetworkEvents\n| where Timestamp > ago(90d)\n| where RemoteIP == \"47.107.224.89\" or RemoteUrl has_any (zbtDomains)\n| project Timestamp, DeviceName, RemoteIP, RemoteUrl, RemotePort, InitiatingProcessFileName, InitiatingProcessCommandLine",
-  "DEFENDER XDR KQL — the three published implant hashes, for estates that mount or stage router firmware images on managed hosts.\n\nlet zbtHashes = dynamic([\n  \"b77811db4d218c65670a6c9a5b33c30ff81c6d779e15d658643138771178a818\",\n  \"7e2e036fec2fe7ab4bbd43978d9296563894c92a112f5ac2f39957f12108e245\",\n  \"ae6c356f1f09260b859f84d994ef8423540a6c0bdf98510d86b85834283e4926\"]);\nsearch in (DeviceFileEvents, DeviceProcessEvents, DeviceImageLoadEvents)\n  Timestamp > ago(180d)\n| where SHA256 in (zbtHashes)\n| project Timestamp, DeviceName, FileName, FolderPath, SHA256, InitiatingProcessFileName",
-  "Where a ZBT-built device is confirmed in the estate, rotate the WAN PPPoE credentials and any credential that traversed the device's LAN — SPEAKINGSTONE exfiltrates PPPoE username and password by design.",
-  "Compare the device's configured DNS servers against the expected values. A rewritten DNS hijack list is one of SPEAKINGSTONE's documented capabilities and is visible from the device's own configuration."
- ],
- "source": "VulnCheck supply chain research and advisories (zbtlink-mqwrt-yunmgrd-cloud-c2-implant, zbtlink-mqwrt-infosrvd-command-injection), CISA Vulnrichment, The Hacker News"
-},
-"servicenow18885": {
- "eyebrow": "ServiceNow AI Platform · CVE-2026-18885 / 18886 · 3 × CVSS 10.0 · Advisory Aug 27, 2026",
- "title": "Three of four patched ServiceNow AI Platform flaws are CVSS 10.0 and, in certain circumstances, reachable by an unauthenticated attacker",
- "overview": "ServiceNow deployed the update to hosted instances and provided it to partners and self-hosted customers, so the residual risk sits entirely with organizations running their own instances. Two of the maximum-severity flaws have published detail: an unauthenticated code injection in the GraphQL Composite Data API, and an unauthenticated improper access control in the system configuration image upload processor leading to privilege escalation. No exploitation has been reported. For a platform that typically holds the CMDB, incident data and integration credentials for the rest of the estate, an unauthenticated code-execution path is a first-order concern regardless of exploitation status.",
- "technical": [
-  "CVE-2026-18885 (CVSS 10.0) — code injection in the GraphQL Composite Data API that could enable an unauthenticated user to execute arbitrary code and gain access to, or modify, instance data.",
-  "CVE-2026-18886 (CVSS 10.0) — improper access control in the system configuration image upload processor that could enable an unauthenticated user to create or modify instance data, resulting in privilege escalation.",
-  "Four flaws were addressed in total; three carry CVSS 10.0. The advisory was published Aug 27, 2026.",
-  "ServiceNow states it deployed the security update to hosted instances and provided the update to partners and self-hosted customers. Self-hosted deployments must apply the fixes themselves."
- ],
- "iocs": [],
- "iocNote": "No indicators of compromise have been published — no exploitation has been reported and the disclosure is vendor-originated. ServiceNow instance telemetry is not present in Defender XDR, and Sentinel coverage depends on whether ServiceNow transaction and audit logs are ingested, so the hunting guidance below is conditional on that ingestion.",
- "mitigation": [
-  "Self-hosted instances: apply the ServiceNow update from the Aug 27, 2026 advisory. Hosted instances were updated by ServiceNow.",
-  "Confirm with any implementation partner whether they applied the update on your behalf, and record the instance version rather than accepting an assurance.",
-  "Restrict network reachability of self-hosted instances to expected sources while the update is being scheduled; both documented flaws are described as reachable by an unauthenticated attacker.",
-  "Treat ServiceNow's outbound integration credentials as high-value: an instance compromise is a route into every system the platform integrates with."
- ],
- "response": [
-  "SENTINEL KQL — requests to the GraphQL Composite Data API and configuration image upload paths, where ServiceNow logs or fronting proxy logs are ingested. Adjust the URL fragments to your instance's routing.\n\nCommonSecurityLog\n| where TimeGenerated > ago(30d)\n| where DestinationHostName has \"service-now\" or DestinationHostName has \"servicenow\"\n| where RequestURL has_any (\"/api/now/graphql\", \"composite\", \"sys_attachment\", \"upload.do\")\n| summarize requests = count(), methods = make_set(RequestMethod, 5), statuses = make_set(tostring(EventOutcome), 10)\n    by SourceIP, RequestURL, bin(TimeGenerated, 1h)\n| order by requests desc",
-  "No Defender XDR query is offered: the ServiceNow AI Platform is a SaaS or self-hosted application tier with no endpoint telemetry in Defender for Endpoint. Detection depends on ingesting ServiceNow's own transaction and audit logs into Sentinel.",
-  "For self-hosted instances, review the instance's own transaction log for unauthenticated requests to the named endpoints, and audit sys_attachment and configuration-image records created outside change windows.",
-  "Rotate ServiceNow integration credentials and MID Server credentials if the instance was internet-reachable and unpatched between the advisory date and remediation."
- ],
- "source": "ServiceNow security advisory (Aug 27, 2026), The Hacker News"
-},
-"cpanel65643": {
- "eyebrow": "cPanel & WHM · CVE-2026-65643 · All supported versions · Root code execution",
- "title": "A cPanel account holder who can add parked or addon domains can create arbitrary files and reach root on the whole server",
- "overview": "The severity here is about tenancy. On a shared hosting server, one customer account with ordinary domain-management rights can reach code execution as root, which means every other tenant on that machine. cPanel describes the issue as critical and has patched all supported branches. No exploitation has been reported. For organizations that run cPanel for internal or customer-facing hosting, the practical question is which accounts hold parked or addon domain permissions, and whether the server was patched before that answer mattered.",
- "technical": [
-  "CVE-2026-65643 — a flaw in the domain parking and addon domain functionality of cPanel and WebHost Manager (WHM), affecting all supported versions.",
-  "An authenticated account holder who can add parked or addon domains can create arbitrary files on the server. cPanel states: \"Successful exploitation leads to code execution as the root user, giving an attacker full control of the server.\"",
-  "Patched versions: 11.110.0.141 or later, 11.134.0.53 or later, 11.136.0.37 or later, 11.138.0.2 or later, and 11.138.1.7 or later (WP Squared). The notification names WP Squared in its patched list and does not mention DNSOnly.",
-  "cPanel patched three separate flaws in July 2026; this is a further critical issue in the same product line.",
-  "No CVSS score was published in the reviewed sources; the CVE row carries no score rather than an inferred one."
- ],
- "iocs": [],
- "iocNote": "No indicators of compromise published — the disclosure is vendor-originated with no reported exploitation. Hunting is therefore behavioural: unexpected root-owned file creation from the cPanel service tree.",
- "mitigation": [
-  "Update to a patched build: 11.110.0.141, 11.134.0.53, 11.136.0.37, 11.138.0.2 or 11.138.1.7 (WP Squared) or later.",
-  "Audit which accounts hold permission to add parked or addon domains, and remove it where the account does not need it. The flaw requires that specific capability.",
-  "On multi-tenant servers, treat the patch as urgent regardless of trust in individual account holders: any compromised customer account becomes a root-level compromise of every tenant.",
-  "Confirm the DNSOnly footprint separately — cPanel's notification does not mention it in the patched list."
- ],
- "response": [
-  "DEFENDER XDR KQL — root-level file creation and privilege changes initiated from the cPanel service tree on Linux endpoints running Defender for Endpoint.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName has_any (\"cpsrvd\",\"cpanel\",\"whostmgr\",\"cpdavd\")\n| where ProcessCommandLine has_any (\"chmod\",\"chown\",\"/etc/\",\"/usr/local/cpanel/\",\"crontab\",\"systemctl\")\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine\n| order by Timestamp desc",
-  "DEFENDER XDR KQL — file writes outside expected document roots by the cPanel process tree, the primitive the flaw provides.\n\nDeviceFileEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName has_any (\"cpsrvd\",\"cpanel\",\"whostmgr\")\n| where ActionType == \"FileCreated\"\n| where not(FolderPath startswith \"/home/\")\n| project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessFileName, InitiatingProcessCommandLine",
-  "SENTINEL KQL — WHM and cPanel domain-management actions, to reconstruct who added parked or addon domains during the exposure window.\n\nSyslog\n| where TimeGenerated > ago(60d)\n| where ProcessName has_any (\"cpsrvd\",\"cpanel\",\"whostmgr\")\n| where SyslogMessage has_any (\"parked\",\"addon\",\"addondomain\",\"parkeddomain\")\n| project TimeGenerated, Computer, ProcessName, SyslogMessage\n| order by TimeGenerated asc",
-  "Where the server was unpatched and multi-tenant, review /etc, cron directories and any systemd unit files for entries created outside change windows before declaring the incident closed."
- ],
- "source": "cPanel customer notification, The Hacker News"
-},
-"geoserver": {
- "eyebrow": "GeoServer · GHSA-mqjf-5f49-2fjh (CVSS 9.8) · No CVE assigned · Exploited pre-patch, now fixed",
- "title": "Probed within hours of a Twitter disclosure: GeoServer's jsonArrayContains SQL injection is now fixed in 3.0.1, 2.28.5 and 2.27.6",
- "overview": "The interesting part of this one is the interval. A researcher posted the flaw to X on Aug 12, 2026 at 10:46 UTC; watchTowr saw exploitation attempts within hours and hundreds of them from a small pool of source IPs. The flaw was unpatched at that point and the observed activity was reconnaissance — triggering errors, not proceeding further. A fix has since shipped. GeoServer's history matters for prioritisation: CVE-2024-36401 was used in 2024 to pull compromised systems into DDoS and cryptomining botnets and residential proxy networks, and the product has multiple CISA KEV entries. Deployment is concentrated in government, defense, science, engineering and technology.",
- "technical": [
-  "The flaw is an unauthenticated SQL injection in GeoServer's jsonArrayContains function. The disclosing researcher, @q1uf3ng, stated that where the database account is sa (system administrator) it is possible to reach remote code execution.",
-  "Reported RCE-capable configurations include SQL Server with an sa-privileged account; reporting also names PostGIS and Oracle JDBC data stores as relevant deployment paths.",
-  "Disclosure timeline: public on X at 10:46 UTC on Aug 12, 2026, with no vendor advisory and no patch at that moment. watchTowr observed exploitation attempts within hours.",
-  "watchTowr's Jake Knott: attackers were probing to identify vulnerable systems, triggering errors and not proceeding further, and he warned this was unlikely to remain the case given GeoServer's track record of being targeted and exploited at scale with multiple KEV entries.",
-  "Fixed releases: GeoServer 3.0.1, 2.28.5 and 2.27.6. The issue is tracked as GHSA-mqjf-5f49-2fjh and rated CVSS 9.8. No CVE identifier has been assigned.",
-  "Prior GeoServer exploitation at scale: CVE-2024-36401 (CVSS 9.8) in the GeoTools component was used in 2024 for DDoS botnets, cryptocurrency mining and residential proxy networks."
- ],
- "iocs": [],
- "iocNote": "watchTowr described hundreds of attempts from a small pool of source IP addresses but did not publish those addresses, and no file or C2 indicators have been released. Detection is therefore request-pattern based, using the vulnerable function name.",
- "mitigation": [
-  "Upgrade to GeoServer 3.0.1, 2.28.5 or 2.27.6.",
-  "Reduce exposure regardless of patch state: put GeoServer behind a VPN, reverse proxy or IP allow-list where the service does not need to be public. Where public access is unavoidable, treat it as a temporary high-risk exception.",
-  "Check the privilege level of the database account GeoServer uses. The RCE path depends on an over-privileged account such as sa; downgrading it removes the escalation even where injection is possible.",
-  "Given the 2024 precedent, scope any confirmed compromise for cryptomining, proxyware and DDoS agent deployment rather than assuming targeted intent."
- ],
- "response": [
-  "SENTINEL KQL — requests referencing the vulnerable function, the only reliable network-side signal for this flaw.\n\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(60d)\n   | where RequestURL has \"jsonArrayContains\"\n   | project TimeGenerated, SourceIP, RequestURL, DestinationIP, DeviceAction),\n  (W3CIISLog\n   | where TimeGenerated > ago(60d)\n   | where csUriQuery has \"jsonArrayContains\" or csUriStem has \"jsonArrayContains\"\n   | project TimeGenerated, SourceIP = cIP, RequestURL = strcat(csUriStem, \"?\", csUriQuery), DestinationIP = sIP, DeviceAction = tostring(scStatus))\n| summarize attempts = count(), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated) by SourceIP, DestinationIP\n| order by attempts desc",
-  "SENTINEL KQL — SQL error responses returned by GeoServer endpoints, which is what the observed probing produced.\n\nW3CIISLog\n| where TimeGenerated > ago(60d)\n| where csUriStem has_any (\"/geoserver\",\"/wfs\",\"/ows\",\"/wms\")\n| where scStatus in (500, 502)\n| summarize errors = count(), paths = make_set(csUriStem, 10) by cIP, bin(TimeGenerated, 1h)\n| where errors > 10\n| order by errors desc",
-  "DEFENDER XDR KQL — the escalation outcome: the Java servlet container or the SQL Server process spawning a shell on a GeoServer host.\n\nDeviceProcessEvents\n| where Timestamp > ago(60d)\n| where InitiatingProcessFileName in~ (\"java.exe\",\"javaw.exe\",\"tomcat.exe\",\"sqlservr.exe\",\"java\")\n| where FileName in~ (\"cmd.exe\",\"powershell.exe\",\"pwsh.exe\",\"sh\",\"bash\",\"curl.exe\",\"wget\")\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine\n| order by Timestamp desc",
-  "DEFENDER XDR KQL — xp_cmdshell enablement on any SQL Server backing a GeoServer data store, the specific path from sa-privileged injection to OS command execution.\n\nDeviceProcessEvents\n| where Timestamp > ago(60d)\n| where InitiatingProcessFileName =~ \"sqlservr.exe\"\n| project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessCommandLine\n| order by Timestamp desc",
-  "Because exploitation attempts began on Aug 12 and the fix arrived later, hunt back to Aug 12 rather than to the patch date on any instance that was internet-facing."
- ],
- "source": "watchTowr (Jake Knott), @q1uf3ng, GeoServer advisory GHSA-mqjf-5f49-2fjh, Security Affairs, The Hacker News"
-},
+ "papercut": {
+  "eyebrow": "PaperCut NG/MF · CVE-2026-82078 + CVE-2026-81578 · Exploited zero-day · Second emergency patch",
+  "title": "Two chained PaperCut flaws give unauthenticated Java code execution inside the application process; patch bypasses already found",
+  "overview": "PaperCut sits in the worst possible place for this class of bug: internet-facing, trusted by the print estate, and holding spooled documents. PaperCut disclosed on Aug 27, 2026 that all versions of NG and MF are affected and that it is aware of confirmed customer incidents. The actionable read is that patching is necessary but not sufficient — watchTowr reports multiple bypasses of the first emergency patch and an additional authentication bypass, likely closed by the second. Remove internet exposure now, apply the latest emergency patch, and hunt: the post-exploitation tooling deletes its own artifacts and the server's logs, so absent or truncated logs are themselves evidence. No actor has been named and no attribution published.",
+  "technical": [
+   "Escalation: SecurityWeek reported on Sep 1, 2026 that exploitation has moved beyond scanning and probing into active intrusions. Treat any internet-exposed PaperCut server that was unpatched after Aug 27 as presumed compromised until the log review below is complete.",
+   "KEV: CISA added CVE-2026-82078 and CVE-2026-81578 to the Known Exploited Vulnerabilities catalog on Aug 31, 2026 under BOD 26-04, with the Forensics Triage Requirements applying — remediation alone does not discharge the obligation where the asset was internet-facing.",
+   "CVE-2026-82078 (CVSS 9.4) — unsafe dynamic class loading in the database connection utilities of PaperCut MF and NG. The application instantiates database driver classes based on configurable driver names without validating them against an allowlist of approved drivers.",
+   "CVE-2026-81578 (CVSS 8.8) — improper access control in the web management interface. Under specific conditions, unauthenticated remote requests targeting administrative functions can trigger backend actions before access validation checks complete.",
+   "Huntress's account of the mechanism: a specifically crafted request can refer to one page that is rendered for the response and another page that owns the component or action being executed. PaperCut's authorization check could trust the rendered page and miss the permissions required by the component behind it, so an unauthenticated request can change server configuration, reach sensitive endpoints and execute attacker-controlled code.",
+   "watchTowr reports attackers chaining both CVEs to bypass authentication and gain RCE, and says it discovered multiple patch bypasses plus a further authentication bypass, all likely addressed in the second emergency patch.",
+   "Observed post-exploitation (Huntress, two customer environments): Base64-encoded commands executed on the server, chaining \"whoami & ver\" to establish account and OS. A follow-on OS-agnostic Java .class file fingerprints the machine and writes a directory listing to \"Udydn.out\" under a \"/data/content/\" path relative to the installation directory, then deletes Udydn.out, the server's \"server.log\", and \"/data/internal/derby.log\".",
+   "In a separate incident on Aug 27, 2026 the actors used a different .class file variant running \"whoami & ver & tasklist\" to also capture the running process list.",
+   "Historical precedent: CVE-2023-27350 in PaperCut MF/NG (CVSS 9.8) was exploited in 2023 by Russian threat actors and by Lace Tempest to deliver Cl0p and LockBit ransomware. Treat a PaperCut compromise as a probable ransomware precursor, not an isolated print-server issue."
+  ],
+  "iocs": [
+   {
+    "value": "pc-app.exe",
+    "type": "Filename",
+    "note": "PaperCut Application Server process. PaperCut names suspicious post-exploitation activity originating from pc-app.exe as an indicator — child process creation from this parent is the primary behavioural signal.",
+    "source": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
+   },
+   {
+    "value": "Udydn.out",
+    "type": "Filename",
+    "note": "Directory-listing output written by the post-exploitation Java .class file to a /data/content/ path relative to the PaperCut installation directory, then deleted by the same file.",
+    "source": "https://www.huntress.com/blog/papercut-actively-exploited"
+   },
+   {
+    "value": "ERROR DatabaseUtils - Database error looking up cardID: VALUES CAST",
+    "type": "String",
+    "note": "server.log entry named by both PaperCut and watchTowr as the primary log-based hunting artifact for exploitation of this chain.",
+    "source": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
+   },
+   {
+    "value": "ERROR No suitable driver found for jdbc:no:x",
+    "type": "String",
+    "note": "server.log entry published by PaperCut as an indicator — consistent with the CVE-2026-82078 dynamic driver-class loading path being exercised.",
+    "source": "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
+   },
+   {
+    "value": "Missing, truncated or deleted PaperCut server.log and /data/internal/derby.log",
+    "type": "Behavior",
+    "note": "PaperCut lists missing or unexpectedly truncated server.log files as an indicator; Huntress confirms the post-exploitation .class file deletes server.log and derby.log. Absence of the log is the evidence.",
+    "source": "https://www.huntress.com/blog/papercut-actively-exploited"
+   },
+   {
+    "value": "whoami & ver & tasklist",
+    "type": "Behavior",
+    "note": "Chained discovery command observed by Huntress in the Aug 27, 2026 incident; the earlier variant was \"whoami & ver\". Executed Base64-encoded from the PaperCut process.",
+    "source": "https://www.huntress.com/blog/papercut-actively-exploited"
+   }
+  ],
+  "iocNote": "No attacker IPs, domains or file hashes have been published for this campaign. Every published indicator is behavioural or log-based, and the post-exploitation tooling deletes the logs it appears in — hunt in forwarded or archived copies of server.log, not the live file.",
+  "mitigation": [
+   "Apply Emergency Patch Release 2 for PaperCut NG/MF v24, v25 or v26 on Windows, Linux or macOS — patches for v24 followed the v25/v26 release later on Aug 28. PaperCut is urging customers who already installed the first emergency patch to install Release 2 as well. The second patch includes hardening beyond the original emergency patch and is believed to close the watchTowr patch bypasses; the first patch alone should not be treated as remediation.",
+   "Remove public internet exposure from the PaperCut Application Server immediately, even where no suspicious activity has been observed. PaperCut's instruction is to use firewall rules, network access controls or equivalent measures so the web interfaces cannot be reached from untrusted internet addresses.",
+   "Restrict Application Server web access to trusted IP ranges, or place it behind a VPN or another controlled administrative path.",
+   "Treat any instance that was internet-facing before patching as potentially compromised and scope accordingly: PaperCut holds spooled document content and is an inbound pivot into the corporate network."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — child processes spawned by the PaperCut application server, the highest-fidelity signal that code execution completed.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName =~ \"pc-app.exe\"\n   or InitiatingProcessFolderPath has \"PaperCut\"\n| where FileName in~ (\"cmd.exe\",\"powershell.exe\",\"pwsh.exe\",\"whoami.exe\",\"tasklist.exe\",\"sh\",\"bash\",\"java\")\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine\n| order by Timestamp desc",
+   "DEFENDER XDR KQL — the Udydn.out artifact and the log-deletion behaviour that follows it.\n\nDeviceFileEvents\n| where Timestamp > ago(30d)\n| where FileName in~ (\"Udydn.out\",\"server.log\",\"derby.log\")\n| where FolderPath has_any (\"PaperCut\",\"/data/content/\",\"/data/internal/\")\n| project Timestamp, DeviceName, ActionType, FileName, FolderPath, InitiatingProcessFileName, InitiatingProcessCommandLine\n| order by Timestamp asc",
+   "DEFENDER XDR KQL — Base64-encoded command execution from the PaperCut process tree.\n\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFolderPath has \"PaperCut\" or InitiatingProcessFileName =~ \"pc-app.exe\"\n| where ProcessCommandLine has_any (\"-enc\",\"-EncodedCommand\",\"FromBase64String\",\"base64 -d\")\n| project Timestamp, DeviceName, AccountName, ProcessCommandLine",
+   "SENTINEL KQL — unauthenticated requests to PaperCut administrative paths on the default ports, to scope who could reach the interface and from where.\n\nCommonSecurityLog\n| where TimeGenerated > ago(30d)\n| where DestinationPort in (9191, 9192)\n| where RequestURL has_any (\"/app\",\"/admin\",\"/rpc/api\")\n| summarize hits = count(), paths = make_set(RequestURL, 25), firstSeen = min(TimeGenerated), lastSeen = max(TimeGenerated)\n    by SourceIP, DestinationIP\n| where hits > 20\n| order by hits desc",
+   "SENTINEL KQL — the published server.log strings, where PaperCut logs are forwarded to the workspace. Run this against archived logs: the attacker deletes the live file.\n\nSyslog\n| where TimeGenerated > ago(60d)\n| where SyslogMessage has_any (\"Database error looking up cardID: VALUES CAST\", \"No suitable driver found for jdbc:no:x\")\n| project TimeGenerated, Computer, ProcessName, SyslogMessage",
+   "Where server.log is missing or shorter than its rotation history implies, escalate rather than close: log destruction is part of the documented post-exploitation sequence.",
+   "Given the 2023 precedent of PaperCut RCE leading to Cl0p and LockBit deployment, scope any confirmed compromise for lateral movement and staged exfiltration, not just for the web-tier artifact."
+  ],
+  "source": "PaperCut security bulletin (Aug 27, 2026), Huntress (John Hammond, Andrew Brandt), watchTowr (Jake Knott), The Hacker News"
+ },
+ "zbtimplants": {
+  "eyebrow": "VulnCheck · CVE-2026-74232 (SPEAKINGSTONE) + CVE-2026-74233 (DARKLANTERN) · Factory implants · No fixed firmware",
+  "title": "Two undocumented factory implants in ZBT router firmware give unauthenticated remote root; 203 internet-facing DARKLANTERN instances across 22 countries",
+  "overview": "The exposure here is procurement, not patching. These are components shipped in the firmware by the manufacturer, found on an $88 white-labeled unit bought from a US supplier, and no advisory names a fixed release. ZBT sells identical hardware and firmware to resellers who put their own name on the case, so brand is not a usable check — model number is, and the IEEE-registered MAC prefixes 78:A3:51 and F8:5E:3C both belong to Shenzhen Zhibotong Electronics, letting an owner identify the manufacturer from the device's own address. VulnCheck flags CVE-2026-74233 in its own KEV catalog, whose criteria require public reporting of exploitation in the wild; CISA's Vulnrichment, recorded Aug 27, rates exploitation as proof-of-concept. None of the three ZBT CVEs appear in CISA's KEV catalog as of version 2026.08.27.",
+  "technical": [
+   "CVE-2026-74232 (SPEAKINGSTONE, CVSS 4.0 9.3 / CVSS 3.1 9.8) — runs as the service yunmgrd and beacons outbound over UDP 10000 to a hardcoded C2. Because it dials outward it functions from behind NAT and ordinary egress filtering. Its protocol supports message types that execute arbitrary commands as root, exfiltrate the WAN PPPoE username and password, write and read a DNS hijack list, and open a reverse SSH tunnel. VulnCheck describes it as a surveillance implant with root access to every device it runs on.",
+   "CVE-2026-74233 (DARKLANTERN, CVSS 4.0 9.3 / CVSS 3.1 9.8) — runs as the service infosrvd on UDP 9992, which the router's stock firewall opens to inbound connections from any internet address. VulnCheck's advisory describes the authentication as ineffective: it rests on a hardcoded salt and an all-zero wildcard MAC value that bypasses its own address check.",
+   "Exposure measurement: between Aug 18 and Aug 21, 2026 VulnCheck identified 203 internet-facing DARKLANTERN instances across 22 countries, self-reporting 16 distinct models. That figure counts hosts that answered a probe, not devices found compromised.",
+   "SPEAKINGSTONE carries a hardcoded backup C2 domain used where no primary server was configured. VulnCheck found the domain unregistered, registered it, and ran a reverse-engineered implementation of the protocol. Beacons arrived immediately; as of Aug 21, 392 unique devices had reported in, 390 in China, 83 percent on China Mobile's network, 304 of 392 broadcasting SSIDs beginning \"CMCC\", and 363 self-reporting model L3_V2_8 on firmware 3.0.0.4.528. Because only devices without a configured primary C2 reach the backup, the 392 is a floor drawn from an unrepresentative subset.",
+   "Affected builds (DARKLANTERN): Zbtlink WE1326, WE357, WE5926, WE5926-WD, WE826-Q, WE826-T2, WE826-WD, WG108 and WG3526 on firmware 19.1101; WE2426-C on 19.1112; WE5926-EC_QP on 20.0516; WF3526-P on 19.051; plus CTN720-W1, LF-1541 and MT7620N on 19.1101 and WRC1 on 20.0622 listed under an unidentified vendor.",
+   "Affected builds (SPEAKINGSTONE): Zbtlink L3_V2_8 on 3.0.0.4.528, WE826-T2 on 19.1101, ZBT-7628 on 1.0.0.2.007, ZBT-ZBT7621 on 1.0.0.3.001; MoreQuick MQAC-7620, MQAC-7620A, MQAP-7620, MQAP-7620A and MQAP-7628 on 1.0.0.2.000; AP522 on 1.0.0.2.014, AP7628 and HC5661A on 3.0.0.4.380, APG721B on 19.0809, HK300 on 1.0.0.2.032 and MAP-N10 on 1.0.0.2.044 under an unidentified vendor.",
+   "Version-range caveat worth carrying into any scan: the advisory pages display those builds as upper bounds, while the CVE records name each firmware as a single exact build and set every other version's default status to unknown. An owner on a build outside the listed set has no published basis for deciding whether the flaw applies.",
+   "Prior art: both implants were found on a ZBT-WE826-T2 whose firmware was built in 2019, predating ENDLESSDOORS (CVE-2026-66747), the phone-home implant VulnCheck disclosed on Aug 5, 2026 in at least 20 Zbtlink models. MOFI Network, which develops its own firmware for the same platform, had an image free of all three implants."
+  ],
+  "iocs": [
+   {
+    "value": "b77811db4d218c65670a6c9a5b33c30ff81c6d779e15d658643138771178a818",
+    "type": "SHA256",
+    "note": "yunmgrd — the SPEAKINGSTONE C2 implant binary. Published by VulnCheck.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "7e2e036fec2fe7ab4bbd43978d9296563894c92a112f5ac2f39957f12108e245",
+    "type": "SHA256",
+    "note": "infosrvd — the DARKLANTERN command-injection service binary. Published by VulnCheck.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "ae6c356f1f09260b859f84d994ef8423540a6c0bdf98510d86b85834283e4926",
+    "type": "SHA256",
+    "note": "inetdetect — companion component published alongside the two implants.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "www.ac-link.com",
+    "type": "Domain",
+    "note": "SPEAKINGSTONE primary C2 domain. Still resolved to 47.107.224[.]89 when checked on Aug 28, 2026.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "www.findmyipaddr.com",
+    "type": "Domain",
+    "note": "SPEAKINGSTONE hardcoded backup C2 domain, reached only where no primary was configured. VulnCheck registered it and sinkholed the protocol — treat resolution attempts as implant presence, not as attacker traffic.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "47.107.224.89",
+    "type": "IP",
+    "note": "Alibaba Cloud address in Shenzhen to which the SPEAKINGSTONE primary C2 domain resolved as of Aug 28, 2026.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "yunmgrd",
+    "type": "Filename",
+    "note": "Service name of the SPEAKINGSTONE implant. Beacons outbound on UDP 10000.",
+    "source": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-yunmgrd-cloud-c2-implant"
+   },
+   {
+    "value": "infosrvd",
+    "type": "Filename",
+    "note": "Service name of the DARKLANTERN implant. Listens inbound on UDP 9992, responses on UDP 8897.",
+    "source": "https://www.vulncheck.com/advisories/zbtlink-mqwrt-infosrvd-command-injection"
+   },
+   {
+    "value": "inetdetect",
+    "type": "Filename",
+    "note": "Third component named in VulnCheck's indicator set.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "/etc/exec/cmd, /tmp/info.txt, /tmp/yunclient.conf",
+    "type": "Filename",
+    "note": "On-device paths published by VulnCheck. Present on a router, not on a managed endpoint — check via console or firmware extraction.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   },
+   {
+    "value": "UDP/9992 inbound, UDP/8897 responses, UDP/10000 outbound beacons",
+    "type": "Behavior",
+    "note": "Port set published by VulnCheck. Note a discrepancy in the published detections: one Suricata rule alerts on DARKLANTERN command output arriving on UDP 8898 while the accompanying text and scanner both use 8897 — hunt both.",
+    "source": "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone"
+   }
+  ],
+  "iocNote": "VulnCheck published Suricata and YARA rules alongside the research. Carry the 8897/8898 inconsistency forward rather than picking one silently.",
+  "mitigation": [
+   "No fixed firmware release is named in either advisory. Where a ZBT-built router carries either service, the remediation is replacement or third-party firmware — MOFI Network's image for the same platform was free of all three implants.",
+   "Block inbound traffic to UDP/9992 at the network edge. That closes the DARKLANTERN listener while a fixed release is outstanding.",
+   "Block and alert on www.ac-link[.]com, www.findmyipaddr[.]com and 47.107.224[.]89 at both the egress point and the resolver, per VulnCheck's guidance for the earlier implant.",
+   "Treat the LAN behind any affected router as untrusted. SPEAKINGSTONE can rewrite the device's DNS hijack list and open a reverse SSH tunnel.",
+   "Identify affected devices by model number and by MAC prefix (78:A3:51, F8:5E:3C), not by the brand on the case."
+  ],
+  "response": [
+   "SENTINEL KQL — implant C2 endpoints and the published port set, across firewall and DNS telemetry.\n\nlet zbtDomains = dynamic([\"ac-link.com\",\"findmyipaddr.com\"]);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(90d)\n   | where DestinationIP == \"47.107.224.89\"\n      or DestinationPort in (9992, 8897, 8898, 10000)\n   | project TimeGenerated, SourceIP, DestinationIP, DestinationPort, Protocol, DeviceVendor, Activity),\n  (DnsEvents\n   | where TimeGenerated > ago(90d)\n   | where Name has_any (zbtDomains)\n   | project TimeGenerated, SourceIP = ClientIP, Name, QueryType)\n| order by TimeGenerated asc",
+   "DEFENDER XDR KQL — any managed endpoint reaching the implant C2, which would indicate the resolver or egress path is shared with an affected device.\n\nlet zbtDomains = dynamic([\"ac-link.com\",\"findmyipaddr.com\"]);\nDeviceNetworkEvents\n| where Timestamp > ago(90d)\n| where RemoteIP == \"47.107.224.89\" or RemoteUrl has_any (zbtDomains)\n| project Timestamp, DeviceName, RemoteIP, RemoteUrl, RemotePort, InitiatingProcessFileName, InitiatingProcessCommandLine",
+   "DEFENDER XDR KQL — the three published implant hashes, for estates that mount or stage router firmware images on managed hosts.\n\nlet zbtHashes = dynamic([\n  \"b77811db4d218c65670a6c9a5b33c30ff81c6d779e15d658643138771178a818\",\n  \"7e2e036fec2fe7ab4bbd43978d9296563894c92a112f5ac2f39957f12108e245\",\n  \"ae6c356f1f09260b859f84d994ef8423540a6c0bdf98510d86b85834283e4926\"]);\nsearch in (DeviceFileEvents, DeviceProcessEvents, DeviceImageLoadEvents)\n  Timestamp > ago(180d)\n| where SHA256 in (zbtHashes)\n| project Timestamp, DeviceName, FileName, FolderPath, SHA256, InitiatingProcessFileName",
+   "Where a ZBT-built device is confirmed in the estate, rotate the WAN PPPoE credentials and any credential that traversed the device's LAN — SPEAKINGSTONE exfiltrates PPPoE username and password by design.",
+   "Compare the device's configured DNS servers against the expected values. A rewritten DNS hijack list is one of SPEAKINGSTONE's documented capabilities and is visible from the device's own configuration."
+  ],
+  "source": "VulnCheck supply chain research and advisories (zbtlink-mqwrt-yunmgrd-cloud-c2-implant, zbtlink-mqwrt-infosrvd-command-injection), CISA Vulnrichment, The Hacker News"
+ },
  "uat10147": {
   "eyebrow": "Cisco Talos · Crimeware · AI-assisted intrusion",
   "title": "UAT-10147 and the SPECTRE implant: agentic AI applied to web server exploitation at scale",
@@ -2924,95 +1989,6 @@ window.CTI = {
   ],
   "iocs": []
  },
- "kevaug27": {
-  "eyebrow": "CISA KEV · Aug 27, 2026 · Three additions",
-  "title": "CISA adds ownCloud, Linux kernel and JFrog Artifactory flaws to the KEV catalog",
-  "overview": "Two of the three are short-fuse: ownCloud CVE-2023-49105 and Linux kernel CVE-2026-53362 carry an Aug 30 federal deadline, and JFrog Artifactory CVE-2026-66384 is due Sep 10. The ownCloud entry is a 2023 CVE, so the operational question is whether long-lived file-sharing deployments were ever patched. The Linux kernel entry is described by CISA only as an unspecified vulnerability allowing privilege escalation through the IPv6 networking subsystem, affecting multiple distributions including SUSE and Red Hat.",
-  "technical": [
-   "CVE-2023-49105 — ownCloud improper authentication. CISA lists it as exploited; the vendor advisory covers the WebDAV API authentication path.",
-   "CVE-2026-53362 — Linux kernel, unspecified vulnerability permitting privilege escalation via the IPv6 networking subsystem. CISA notes it can impact multiple products, including but not limited to SUSE, Red Hat and others using Linux. Forensic triage is required per BOD 26-04.",
-   "CVE-2026-66384 — JFrog Artifactory improper limitation of a pathname to a restricted directory (CWE-22). An authenticated user can write data outside the intended Docker cache path under specific remote-repository conditions, writing files to arbitrary locations accessible to the Artifactory process.",
-   "Deadlines: Aug 30, 2026 for CVE-2023-49105 and CVE-2026-53362; Sep 10, 2026 for CVE-2026-66384."
-  ],
-  "mitigation": [
-   "Inventory ownCloud instances by version. Deployments that predate the 10.13.x line are the ones to confirm first.",
-   "Patch Linux hosts per distribution advisories. Where kernel reboots must be scheduled, prioritise multi-tenant hosts and anything running untrusted workloads, since the impact is local privilege escalation.",
-   "Upgrade Artifactory self-managed to a fixed release per the JFrog security advisories page. Until then, review which accounts hold permissions on remote Docker repositories — exploitation requires authentication.",
-   "Under BOD 26-04, the Linux kernel entry requires checking whether the system was compromised before the patch was applied, not just patching."
-  ],
-  "response": [
-   "Artifactory: review the artifact storage tree for files written outside expected cache directories, and audit the process account's writable paths.",
-   "ownCloud: check WebDAV access logs for requests that returned data without a corresponding authentication event.",
-   "DEFENDER XDR KQL — Artifactory process writing outside its expected storage tree (CVE-2026-66384 path traversal).\n\nDeviceFileEvents\n| where InitiatingProcessFileName in~ (\"java.exe\",\"java\")\n| where InitiatingProcessCommandLine has \"artifactory\"\n| where ActionType in (\"FileCreated\",\"FileModified\")\n| where not(FolderPath has_any (\"/var/opt/jfrog\",\"/opt/jfrog\",\"artifactory/data\",\"artifactory/backup\"))\n| project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessCommandLine\n| order by Timestamp desc",
-   "SENTINEL KQL — ownCloud WebDAV responses served without a preceding authentication event (CVE-2023-49105).\n\nlet window = 5m;\nlet dav = W3CIISLog\n| where csUriStem startswith \"/remote.php/dav\" or csUriStem startswith \"/remote.php/webdav\"\n| where scStatus in (200, 207);\ndav\n| summarize Requests = count(), Paths = make_set(csUriStem, 20) by cIP, bin(TimeGenerated, window)\n| where Requests > 20\n| order by Requests desc",
-   "Linux: review privilege-escalation telemetry on hosts with IPv6 enabled where local code execution is available to non-admin users."
-  ],
-  "iocs": []
- },
- "unifi067": {
-  "eyebrow": "Ubiquiti · UniFi · SAB-067",
-  "title": "Ubiquiti SAB-067: 22 UniFi vulnerabilities, three maximum severity and unauthenticated",
-  "overview": "The three maximum-severity issues each sit in a different product pillar — video surveillance, the OS itself, and VoIP — and none requires credentials. Ubiquiti scored the three at 9.9; TechTimes reported them as CVSS 10.0. Ubiquiti has not confirmed active exploitation. The precedent worth weighing is SAB-064: patched, then exploited, then a three-day CISA deadline in June, with Bishop Fox demonstrating the chain to remote code execution with elevated privileges.",
-  "technical": [
-   "CVE-2026-77537 — improper input validation in the UniFi Protect Application (video surveillance management). Unauthenticated attackers can compromise unpatched devices.",
-   "CVE-2026-77550 — improper neutralization of CRLF sequences in certain devices running UniFi OS, used to bypass authentication to those devices or instances.",
-   "CVE-2026-77554 — improper input validation in the UniFi Talk Application (VoIP), leading to command injection.",
-   "SAB-067 covers 22 vulnerabilities in total across UniFi OS, Protect, Talk, Access, Network, storage devices, gateways, routers and recorders. Cybernews counted 21 rated 9.0 or higher.",
-   "Exposure scale for the prior advisory cycle: Censys tracked over 100,000 internet-exposed UniFi OS instances, nearly 50,000 of them in the United States."
-  ],
-  "mitigation": [
-   "Apply the SAB-067 updates, prioritising internet-facing consoles and any UniFi Protect or Talk deployment reachable from an untrusted network.",
-   "Remove management interfaces from direct internet exposure. The CRLF authentication bypass is only reachable by something that can talk to the device.",
-   "Review administrative accounts on affected platforms after patching, on the assumption that an authentication bypass leaves no failed-login trail."
-  ],
-  "response": [
-   "Check for unexpected administrative sessions or configuration changes on UniFi consoles in the period before patching.",
-   "SENTINEL KQL — CRLF sequences in requests to UniFi management paths (CVE-2026-77550 authentication bypass attempts).\n\nCommonSecurityLog\n| where DeviceVendor has_any (\"Ubiquiti\",\"UniFi\") or DestinationPort in (443, 8443)\n| where RequestURL has_any (\"%0d%0a\",\"%0D%0A\",\"\\r\\n\",\"%0a\",\"%0d\")\n| project TimeGenerated, SourceIP, DestinationIP, RequestURL, DeviceAction\n| order by TimeGenerated desc",
-   "DEFENDER XDR KQL — outbound connections from hosts to UniFi consoles on management ports, to scope who can reach the vulnerable interface.\n\nDeviceNetworkEvents\n| where RemotePort in (443, 8443, 8080, 8880)\n| where RemoteIPType == \"Private\"\n| summarize Attempts = count(), Hosts = dcount(DeviceName) by RemoteIP, RemotePort\n| where Hosts > 1\n| order by Attempts desc",
-   "Watch for a public proof-of-concept: the SAB-064 chain went from patch to published PoC and detection script on GitHub, and then to a CISA deadline."
-  ],
-  "iocs": []
- },
- "magairports": {
-  "eyebrow": "Transportation Systems · UK · Customer data",
-  "title": "Manchester Airports Group breach affects 8.7 million customers",
-  "overview": "MAG has not disclosed how the attackers gained access or who was responsible. The data set is contact and vehicle information rather than payment data, which makes the downstream risk phishing and pretexting against a very large, identifiable population of travellers. MAG has warned customers directly and says it will never contact them unexpectedly to ask for payment or banking information.",
-  "technical": [
-   "Data obtained relates to car park, lounge and Fast Track bookings and in-airport WiFi sign-ups at Manchester, Stansted and East Midlands.",
-   "Known compromised data types: email addresses, phone numbers, vehicle registration numbers, postcodes. MAG states neither it nor the affected system held bank or payment details.",
-   "A MAG spokesperson told The Register that the majority of the 8.7 million customers had only email addresses compromised; not all data types apply to all customers.",
-   "MAG became aware of the incident on Tuesday, restricted access to affected systems, engaged specialist advisers, and notified the National Cyber Security Centre and the Information Commissioner's Office. Online Manage My Booking access was temporarily suspended; bookings remain valid."
-  ],
-  "mitigation": [
-   "Brief staff who travel through MAG airports that parking and travel-themed phishing referencing real bookings is now cheap for attackers to produce.",
-   "If your organisation books airport parking or Fast Track through corporate accounts, treat those mailboxes as a targeted phishing surface and confirm payment-change requests out of band.",
-   "Vehicle registration plus postcode is a useful identity-verification pair in some UK services; check whether any of your own verification flows rely on data of that class."
-  ],
-  "response": [
-   "Add MAG-branded domains and booking-confirmation lures to phishing-simulation and mail-filtering watchlists for the next several weeks.",
-   "DEFENDER XDR KQL — inbound mail impersonating airport parking and booking brands after the MAG disclosure.\n\nEmailEvents\n| where Timestamp > ago(30d)\n| where Subject has_any (\"car park\",\"parking\",\"Fast Track\",\"lounge\",\"booking reference\",\"Manchester Airport\",\"Stansted\",\"East Midlands\")\n| where not(SenderFromDomain in~ (\"manchesterairport.co.uk\",\"stanstedairport.com\",\"eastmidlandsairport.com\",\"magairports.com\"))\n| project Timestamp, SenderFromAddress, SenderFromDomain, RecipientEmailAddress, Subject, UrlCount, DeliveryAction\n| order by Timestamp desc",
-   "Monitor for the data appearing on leak forums, which would change the population from notified-only to publicly exposed."
-  ],
-  "iocs": []
- },
- "aithreatsignal": {
-  "eyebrow": "AI threat landscape · Research and policy",
-  "title": "Unit 42 measures AI-linked malware reaching production; industry coalition calls for a cyber defense surge",
-  "overview": "Two data points from the same week pull in different directions and are worth holding together. Unit 42's sample analysis puts a number on how little AI-linked malware currently reaches production endpoints, while the open letter argues the trajectory is steep. Neither is an operational alert; both are useful when setting expectations with leadership about AI-driven attack volume.",
-  "technical": [
-   "Palo Alto Networks Unit 42 analyzed 405 AI-linked malware samples and found only 12 reached production endpoints.",
-   "More than 100 technology, cybersecurity and financial-services organizations joined OpenAI in an open letter published Thursday, Aug 27, titled \"A call for collective action on cyber defense.\"",
-   "The letter states that AI-enabled cyberattacks will become far more widespread and sophisticated in the coming months, naming hospitals, water treatment plants and the infrastructure that powers the internet."
-  ],
-  "mitigation": [
-   "Use the Unit 42 figure when scoping AI-specific detection investment: the current production-endpoint hit rate is low relative to sample volume.",
-   "Where AI capability does change the picture in current reporting, it is in phishing and social-engineering quality rather than in novel malware, so continue to weight identity and email controls."
-  ],
-  "response": [
-   "No indicators. Track Unit 42 and vendor telemetry for whether the production-endpoint proportion moves in subsequent reporting periods."
-  ],
-  "iocs": []
- },
  "bostonsci": {
   "eyebrow": "Medical technology · Operational disruption · Global",
   "title": "Boston Scientific hit by cyberattack disrupting IT systems and causing operational disruptions globally",
@@ -3029,109 +2005,6 @@ window.CTI = {
   "response": [
    "Monitor for a leak-site listing naming Boston Scientific, which would reclassify this from disruption to data exposure and change supplier-notification obligations.",
    "If you exchange design or order data with the company, review inbound integrations and shared credentials for anomalous use during the disruption window."
-  ],
-  "iocs": []
- },
- "gputhor": {
-  "eyebrow": "Hardware · Rowhammer · GPU memory",
-  "title": "GPUThor: new Rowhammer attack bypasses ECC protections on NVIDIA GPUs",
-  "overview": "Rowhammer induces bit flips in DRAM by hammering adjacent rows. ECC was the mitigation of record; GPUThor demonstrates that ECC on NVIDIA GPU memory can be bypassed to achieve both denial of service and root-level privilege escalation. The practical risk sits with anyone running untrusted or semi-trusted workloads on shared GPU hardware — AI inference platforms, research clusters, and GPU cloud tenancy — where an attacker can legitimately schedule code on the same device as another tenant.",
-  "technical": [
-   "Attack class: Rowhammer bit-flip induction against GPU DRAM, with a technique that defeats the ECC correction path rather than avoiding it.",
-   "Demonstrated impact: denial of service against the device, and privilege escalation to root on the host.",
-   "Exposure precondition: the attacker must be able to execute code on the GPU — which is the normal operating model for shared inference, training, and GPU-as-a-service platforms, not an unusual condition."
-  ],
-  "mitigation": [
-   "Treat GPU co-tenancy as a trust boundary. Where untrusted workloads share a physical GPU, move them to dedicated devices or separate hosts until vendor guidance is published.",
-   "Track NVIDIA's security bulletin channel for driver and firmware mitigations; hardware-level attacks are typically mitigated in firmware and scheduler behavior rather than the OS.",
-   "For AI platform teams: inventory which internal or customer workloads currently share GPUs, and record which of those are attacker-controllable code paths."
-  ],
-  "response": [
-   "Add GPU ECC error counters to monitoring. A rising rate of corrected errors on a specific device is the observable precursor to a Rowhammer attempt.",
-   "Review host privilege-escalation telemetry on GPU nodes, which are frequently excluded from EDR coverage for performance reasons."
-  ],
-  "iocs": []
- },
- "atfqilin": {
-  "eyebrow": "Qilin · Federal agency · Confirmed compromise",
-  "title": "ATF confirms one of its systems was compromised after breach claims by the Qilin ransomware gang",
-  "overview": "The agency's confirmation is scoped to a single system, which is the standard early posture and should not be read as final scope. For organizations outside the federal space, the useful signal is that Qilin remains operationally active against government and mid-market targets and continues to publish on a leak site — meaning exposure is a disclosure problem on a compressed timeline, not only an availability problem.",
-  "technical": [
-   "Qilin operates as a ransomware-as-a-service program with an affiliate model and a public leak site used to pressure victims during negotiation.",
-   "Current ransomware economics per Unit 42's 2026 incident response data: median payment among organizations that paid rose to $500,000, while negotiated reductions between initial demand and final payment reached a median of 61%. Roughly 41% of victims restored from backup without paying.",
-   "Identity remains the dominant initial-access route in that same dataset — identity weaknesses appeared in 89% of investigations, and 65% of initial access was identity-driven."
-  ],
-  "mitigation": [
-   "Confirm that offline or immutable backups exist for the systems whose loss would stop operations, and that a restore has actually been tested this quarter — restore capability is what removes the payment decision.",
-   "Enforce phishing-resistant MFA on remote access and administrative paths; identity, not exploitation, is the majority route in current incident data.",
-   "Pre-agree a negotiation and disclosure posture with legal and communications before an incident. The 61% median reduction figure only accrues to organizations that negotiate deliberately."
-  ],
-  "response": [
-   "Monitor Qilin's leak site for your own name and those of critical suppliers; leak-site listing frequently precedes any vendor notification you would otherwise receive.",
-   "Treat any confirmed intrusion as credential exposure across the affected trust boundary and rotate accordingly rather than waiting for scoping to complete."
-  ],
-  "iocs": []
- },
- "avada": {
-  "eyebrow": "WordPress · Avada theme · Unauthenticated RCE chain",
-  "title": "Critical vulnerability chain in the Avada WordPress theme allows unauthenticated arbitrary PHP execution",
-  "overview": "The exposure is a chain, not a single bug, and it requires no authentication. Avada ships with a bundled builder and options framework, so the practical patch unit is the theme plus its bundled plugins — updating one and not the others leaves the chain reachable. Treat every Avada site as internet-facing code execution until the version is confirmed patched.",
-  "technical": [
-   "Chained flaws in the Avada theme reach arbitrary PHP execution with no authentication required. The attack surface is the theme's own AJAX and options handling rather than WordPress core.",
-   "Avada is a commercial theme distributed through a marketplace, so sites often run a version pinned at purchase or build time and receive no automatic updates. Bundled plugin components (Fusion Builder / Fusion Core) version independently of the theme.",
-   "On shared or multi-tenant hosting, PHP execution as the web user typically exposes adjacent site directories and any database credentials stored in wp-config.php."
-  ],
-  "mitigation": [
-   "Update Avada and its bundled Fusion components to the current release from the vendor's own update channel — marketplace themes do not auto-update, so confirm the installed version string rather than trusting the site's update notice.",
-   "Where an immediate update is not possible, put the site behind a WAF rule blocking unauthenticated POSTs to the theme's AJAX endpoints, and disable PHP execution in wp-content/uploads.",
-   "Inventory which of your domains run Avada. Marketing sites are the common blind spot; check DNS records and CDN origins, not just the managed WordPress estate."
-  ],
-  "response": [
-   "Search the webroot for PHP files created or modified after the vulnerability's disclosure date, particularly in wp-content/uploads and theme directories.",
-   "Rotate database credentials in wp-config.php and any API keys stored in theme or plugin options if the site was reachable and unpatched.",
-   "Review access logs for repeated unauthenticated POSTs to admin-ajax.php with theme-specific action parameters."
-  ],
-  "iocs": []
- },
- "teampcp": {
-  "eyebrow": "Law Enforcement · Aug 27, 2026 · Supply chain follow-up",
-  "title": "AFP charges two Western Australian men over TeamPCP, the syndicate behind the March 2026 Trivy, Checkmarx KICS and LiteLLM compromises",
-  "overview": "Arrests do not close the exposure. The March 2026 TeamPCP compromises hit tools that sit inside CI/CD pipelines with broad repository and cloud credentials — Trivy and Checkmarx KICS scan infrastructure-as-code, and LiteLLM proxies model API keys. Any credential that passed through those tools between the compromise window and remediation should still be treated as exposed, per the FBI's July 2 advisory. Charging two principals reduces the operator population but not the value of the stolen material, which affiliated actors are assessed likely to continue using.",
-  "technical": [
-   "Compromised components (March 2026): Trivy and Checkmarx KICS — open-source scanners typically run with read access to source repositories and, in many pipelines, cloud credentials for live-account scanning. LiteLLM — an AI gateway that brokers provider API keys for downstream applications.",
-   "The exposure pattern for all three is the same: the tool is trusted inside the build boundary, so credentials it holds are rarely rotated on a schedule and rarely appear in secret-scanning inventories.",
-   "AFP and Western Australia Police Force executed search warrants at Cottesloe, Hamilton Hill and Mandurah on Aug 26, 2026 and seized electronic devices for forensic analysis; charges were laid the following day. Alleged payments were received in cryptocurrency, value under investigation."
-  ],
-  "mitigation": [
-   "Rotate every credential that was reachable from Trivy, Checkmarx KICS or LiteLLM during the March 2026 window — repository tokens, cloud roles assumed by the scanner, and any model-provider API keys held by the gateway.",
-   "Pin scanner and gateway versions to known-good releases and verify checksums against the vendor's published values rather than trusting a package registry mirror.",
-   "Audit CI/CD service accounts for privileges the pipeline does not need — scanners rarely require write access to repositories or long-lived cloud credentials."
-  ],
-  "response": [
-   "Review billing and usage anomalies on model-provider accounts brokered through LiteLLM: unexplained inference spend is the cheapest available indicator of stolen key use.",
-   "Search cloud audit logs for API calls made by scanner service identities from source IPs outside your build infrastructure ranges."
-  ],
-  "iocs": []
- },
- "manticore": {
-  "eyebrow": "Iran · IRGC-affiliated · Espionage",
-  "title": "Group-IB documents new Nimbus Manticore infrastructure and previously undocumented malware, calling the IRGC-linked actor among the most active Iranian APTs of 2026",
-  "overview": "Two separate state programs are now running job-lure espionage against the same target set. Lazarus (DPRK) Operation Dream Job and Nimbus Manticore (Iran) both approach defense, aerospace and IT-services staff with fabricated recruitment, which means a single detection strategy covers both: treat unsolicited recruiter contact that moves to file delivery or an off-platform installer as a security event, not an HR event.",
-  "technical": [
-   "Naming overlap to reconcile across feeds: Nimbus Manticore = GalaxyGato = Mirage Kitten = Screening Serpens = Smoke Sandstorm = Subtle Snail = UNC1549. Assessed as linked to Tortoiseshell (Imperial Kitten / Unyielding Wasp), within the Charming Kitten (Eclipsed Wasp) cluster.",
-   "Historical targeting for the cluster: defense, aerospace, IT service providers and military organizations across the Middle East and the United States, active since at least July 2018.",
-   "Unit 42 tracks the same cluster as Screening Serpens and documents AppDomainManager hijacking plus new RAT variants against technology and defense sectors — the concrete execution technique to detect alongside the social-engineering entry point.",
-   "AppDomainManager hijacking abuses .NET's configuration-driven assembly loading: a benign signed executable is made to load an attacker DLL by planting a companion .config file, so the process tree looks legitimate.",
-   "Delivery pattern: job-opportunity social engineering (a Dream Job analogue) leading to malware execution. Group-IB's analysis adds previously undocumented malware families and new infrastructure to the cluster."
-  ],
-  "mitigation": [
-   "Brief staff in defense, aerospace and IT-services functions that recruitment approaches which move to file transfer, a download link, or a screening tool installer are a known state-actor delivery route.",
-   "Block execution of user-downloaded installers from home directories and browser download paths on engineering endpoints; both Lazarus and Nimbus Manticore rely on the target running a delivered binary.",
-   "Where IT service providers hold access into your environment, confirm they are covered by the same brief — the cluster's historical pattern is to compromise the provider and pivot."
-  ],
-  "response": [
-   "Correlate any recent recruiter-themed phishing reports against the ATT&CK techniques below rather than closing them as low-severity user reports.",
-   "SENTINEL KQL — Recruitment-themed lures followed by an executable or archive download on the same endpoint\n\nlet lures = dynamic([\"job description\", \"recruiter\", \"opportunity\", \"screening\", \"assessment\", \"candidate\"]);\nEmailEvents\n| where TimeGenerated > ago(30d)\n| where Subject has_any (lures)\n| project LureTime = TimeGenerated, RecipientEmailAddress, Subject, SenderFromAddress\n| join kind=inner (\n    DeviceFileEvents\n    | where TimeGenerated > ago(30d)\n    | where FileName endswith \".exe\" or FileName endswith \".zip\" or FileName endswith \".iso\" or FileName endswith \".lnk\"\n    | project DropTime = TimeGenerated, DeviceName, FileName, FolderPath, InitiatingProcessAccountUpn\n) on $left.RecipientEmailAddress == $right.InitiatingProcessAccountUpn\n| where DropTime between (LureTime .. LureTime + 7d)\n| project LureTime, DropTime, RecipientEmailAddress, Subject, DeviceName, FileName, FolderPath\n| order by DropTime desc"
   ],
   "iocs": []
  },
@@ -3669,56 +2542,6 @@ window.CTI = {
   "source": "SecurityWeek, The Hacker News, Help Net Security, CyCognito, TechTimes",
   "sourceNote": "Aug 17–20, 2026"
  },
- "zimbra": {
-  "eyebrow": "Zimbra Collaboration Suite · CVE-2026-73570 · CVSS 8.9 · Exploited · 12K+ Exposed",
-  "title": "Zimbra CVE-2026-73570 (CVSS 8.9): unauthenticated OS command injection in SNMP component — actively exploited, 12,100+ servers exposed. CERT Polska confirmed.",
-  "tags": [
-   [
-    "high",
-    "CVSS 8.9"
-   ],
-   [
-    "high",
-    "Exploited · 12K Servers · Email Infra"
-   ]
-  ],
-  "overview": "CERT Polska confirmed active exploitation of CVE-2026-73570 on August 20, 2026 — an unauthenticated OS command injection vulnerability in Zimbra Collaboration Suite's SNMP monitoring component. An attacker can send specially crafted SMTP requests to vulnerable Zimbra servers and execute arbitrary shell commands as the zimbra user with no authentication and no user interaction. Zimbra patched this in version 10.1.20 on July 20, 2026, but Shadowserver tracks over 12,100 Zimbra servers currently internet-exposed. As of August 25, 2026, over 270 Zimbra instances have been confirmed compromised in active remote code execution attacks. Zimbra has a documented history of rapid exploitation following disclosure — CISA's KEV catalog includes 18 prior Zimbra vulnerabilities, four added in 2026 alone, and prior exploitation has been linked to Russian and Chinese state-sponsored actors targeting military and diplomatic intelligence.",
-  "technical": [
-   "CVE-2026-73570 (CVSS 8.9, CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H, CWE-78: OS Command Injection): In Zimbra Collaboration Suite before version 10.1.20, the SNMP monitoring component improperly sanitizes untrusted input during SNMP notification processing. An unauthenticated remote attacker sends specially crafted SMTP requests that reach the SNMP notification handler, which processes the attacker-controlled content without adequate validation and passes it to an OS-level command — allowing arbitrary shell command execution as the zimbra user.",
-   "Required conditions: (1) the optional zimbra-snmp package is installed, (2) SNMP trap notifications are enabled via the snmp_notify parameter, and (3) the swatchdog service is running. Critically, swatchdog is enabled by default in most Zimbra deployments, meaning condition (3) is satisfied by default in any deployment that has also enabled SNMP notifications.",
-   "The zimbra user context provides access to: mail queues and stored email content, LDAP configuration and credentials, application files and configuration, cryptographic material used by the mail server, and the ability to write webshells to the Jetty webapps directories. This access level makes successful exploitation equivalent to full server compromise for most organizations.",
-   "Exposure: Shadowserver identifies 12,100+ internet-exposed Zimbra servers as of August 2026, concentrated in Europe (4,382) and Asia (4,492). CERT Polska has not disclosed attacker identity or targets, but historically Zimbra exploitation has been used by APT actors (Russian state-linked groups in 2022–2025, Chinese espionage actors) for email interception and lateral movement, as well as by opportunistic ransomware affiliates.",
-   "Patch: Zimbra 10.1.20, released July 20, 2026. No workaround is available that fully mitigates the flaw without disabling SNMP notifications entirely."
-  ],
-  "iocs": [
-   {
-    "value": "/opt/zimbra/jetty/webapps/",
-    "type": "Filename",
-    "note": "Webshell drop location — check for unexpected .jsp, .war, or .class files in this Jetty webapp directory created by the zimbra user after July 20, 2026.",
-    "source": "https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/"
-   },
-   {
-    "value": "/opt/zimbra/jetty_base/webapps/",
-    "type": "Filename",
-    "note": "Secondary webshell drop location — same check as above.",
-    "source": "https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/"
-   }
-  ],
-  "iocNote": "CERT Polska published detection guidance: check /var/log/zimbra.log for unexpected Zimbra service restarts (stopped→running or running→stopped state changes for services not under active administration); check webshell drop directories above for unexpected files created by the zimbra user; check /tmp/ for unexpected files created by the zimbra user within the past 30 days.",
-  "mitigation": [
-   "Upgrade Zimbra Collaboration Suite to version 10.1.20 immediately. The patch has been available since July 20, 2026 — any unpatched internet-exposed server should be treated as potentially compromised.",
-   "If you cannot upgrade immediately: disable SNMP notifications by setting snmp_notify to 0 in zimbraGlobalConfig. This removes the vulnerable code path. Verify with: `zmprov gcf zimbraGlobalConfig | grep -i snmp`.",
-   "Restrict internet access to Zimbra's SNMP-related ports and services — SNMP traffic (UDP 161/162) should never be internet-accessible."
-  ],
-  "response": [
-   "Check /var/log/zimbra.log for unexpected service-status changes (state transitions for Zimbra services not initiated by an administrator) — CERT Polska specifically flagged this as the primary detection signal.",
-   "Audit for webshells in /opt/zimbra/jetty/webapps/, /opt/zimbra/jetty_base/webapps/, and /tmp/ — look for .jsp, .war, .class, or shell script files created by the zimbra user within the past 30 days.",
-   "Review Zimbra audit logs for unexpected admin-level actions, configuration changes, or LDAP queries that were not initiated by known administrators — post-exploitation via the zimbra user can access LDAP and configuration files.",
-   "SENTINEL KQL — Detect Zimbra exploitation indicators via syslog-forwarded Zimbra logs.\n\n// Zimbra CVE-2026-73570 — Exploitation Detection\n// Requires: Zimbra /var/log/zimbra.log forwarded to Sentinel via Syslog connector\nSyslog\n| where TimeGenerated > ago(30d)\n| where Computer has_any (\"zimbra\",\"zcs\",\"mail\")  // adjust to your naming\n| where SyslogMessage has_any (\n    // Unexpected service state changes — primary CERT Polska signal\n    \"stopped to running\", \"running to stopped\",\n    \"status changed\", \"service restart\",\n    // Webshell indicators\n    \"jetty/webapps\", \"jetty_base/webapps\",\n    // SNMP component\n    \"snmp_notify\",\"swatchdog\",\"zimbraSnmp\"\n)\n| where SyslogMessage !has \"scheduled restart\"  // filter maintenance windows\n| project TimeGenerated, Computer, SyslogMessage, Facility\n| sort by TimeGenerated desc"
-  ],
-  "source": "BleepingComputer, SecurityWeek, The Hacker News, CERT Polska, Shadowserver",
-  "sourceNote": "Aug 20–21, 2026"
- },
  "trueconf": {
   "eyebrow": "TrueConf Server · CVE-2026-72529 / 72530 · CISA KEV · Head Mare · Supply Chain",
   "title": "TrueConf Server CVE-2026-72529/72530 KEV-listed Aug 21: Head Mare replaces client installers with PhantomCore backdoor — any user who connected gets infected",
@@ -3783,41 +2606,6 @@ window.CTI = {
   ],
   "source": "SecurityWeek, The Hacker News, Kaspersky ICS CERT, Rescana, GBHackers",
   "sourceNote": "Aug 7–21, 2026"
- },
- "elementorpro": {
-  "eyebrow": "Elementor Pro · CVE-2026-32475 · CVSS 9.0 · No Confirmed Exploitation · 12M+ Sites",
-  "title": "Elementor Pro CVE-2026-32475 (CVSS 9.0): unauthenticated file upload RCE via double-loop extension bypass — 12M+ WordPress sites exposed",
-  "tags": [
-   [
-    "high",
-    "CVSS 9.0"
-   ],
-   [
-    "high",
-    "12M+ Sites · No Auth"
-   ]
-  ],
-  "overview": "Patchstack disclosed CVE-2026-32475 in Elementor Pro on August 22, 2026 — an unauthenticated file upload vulnerability in the plugin's Forms module File Upload field that allows a PHP webshell to be written to a publicly accessible directory, achieving remote code execution. The vulnerability mechanism is similar to Forminator Forms CVE-2026-15748, but affects a different plugin with a far larger install base: Elementor Pro is active on over 12 million WordPress sites. No confirmed in-wild exploitation has been reported at time of writing, but automated scanning is near-certain given the no-authentication, no-user-interaction prerequisites and public technical disclosure by Patchstack.",
-  "technical": [
-   "CVE-2026-32475 (CVSS 9.0, CWE-434: Unrestricted Upload of Dangerous File Type): The Elementor Pro Forms module's File Upload field uses two separate processing loops — one for extension validation and one for moving the uploaded file to its destination directory. An attacker submits two file parts for the same field: the extension validator processes the first part (a legitimate extension), but the file-move loop processes the second part (the malicious PHP file). The mismatch between which loop processes which entry allows the PHP file to bypass the extension blocklist and land in a publicly accessible web directory.",
-   "Impact: successful exploitation places a PHP webshell in a URL-accessible location on the server. The attacker then requests the file URL to execute arbitrary PHP code as the web server user — achieving full server access.",
-   "No authentication, no user interaction required. The attacker only needs network access to a WordPress site running Elementor Pro with a form containing a File Upload field. This is a very common form configuration.",
-   "Comparison to Forminator CVE-2026-15748: both are no-auth file upload RCE in WordPress form plugins using blocklist bypass via different mechanisms (pipe-alternative MIME keys vs double-loop processing mismatch). Both were patched within the same week. The coincidence is notable — it may reflect coordinated researcher attention on WordPress form plugin file upload handling."
-  ],
-  "iocs": [],
-  "iocNote": "No attacker IoCs published — no confirmed exploitation at time of writing. Detection: scan WordPress uploads and temp directories for unexpected PHP files created by web server processes. Alert on PHP file creation in /wp-content/uploads/ by httpd/nginx.",
-  "mitigation": [
-   "Update Elementor Pro to the patched version. Check the Elementor Pro changelog for the specific version containing the CVE-2026-32475 fix — Patchstack coordinated disclosure with the vendor. Apply via WordPress dashboard (Plugins → Updates).",
-   "If immediate update is not possible: disable File Upload fields in all Elementor Pro forms, or restrict form submissions to authenticated users.",
-   "Apply the same remediation check to Forminator CVE-2026-15748 (separate plugin, same CVE class) if not already patched — both vulnerabilities are in your WordPress estate if you run either plugin."
-  ],
-  "response": [
-   "Scan /wp-content/uploads/ and any Elementor temporary directories for .php, .phtml, and .php5 files created within the past 48 hours. Any PHP file in these directories is a webshell candidate.",
-   "Check web server access logs for POST requests to Elementor form submission endpoints from external IPs, followed by GET requests to PHP files in the uploads directory — this two-step pattern confirms exploitation.",
-   "DEFENDER XDR KQL — Detect Elementor Pro CVE-2026-32475 webshell upload and subsequent execution.\n\n// Elementor Pro CVE-2026-32475 — Webshell Upload Detection\n// Requires: Defender for Endpoint on WordPress hosting infrastructure\nDeviceFileEvents\n| where Timestamp > ago(7d)\n| where FileName endswith \".php\" or FileName endswith \".phtml\"\n| where FolderPath has_any (\n    \"\\\\wp-content\\\\uploads\",\n    \"/wp-content/uploads\",\n    \"elementor\",\"tmp\"\n)\n| where ActionType == \"FileCreated\"\n| where InitiatingProcessFileName in~ (\n    \"php.exe\",\"php-cgi.exe\",\"php-fpm\",\n    \"w3wp.exe\",\"httpd\",\"nginx\",\"apache2\"\n)\n| union (\n    // Also catch subsequent webshell execution\n    DeviceProcessEvents\n    | where Timestamp > ago(7d)\n    | where InitiatingProcessFileName in~ (\n        \"php.exe\",\"php-cgi.exe\",\"php-fpm\",\"w3wp.exe\"\n    )\n    | where ProcessCommandLine has_any (\n        \"cmd\",\"shell_exec\",\"system(\",\"exec(\",\n        \"passthru\",\"popen\",\"proc_open\"\n    )\n)\n| project Timestamp, DeviceName, FileName, FolderPath,\n    InitiatingProcessFileName, InitiatingProcessCommandLine\n| sort by Timestamp desc"
-  ],
-  "source": "The Hacker News, Patchstack",
-  "sourceNote": "Aug 22, 2026"
  },
  "rustsupplychain": {
   "eyebrow": "Rust / crates.io · DPRK Supply Chain · Build-Time Credential Theft · 245M+ Downloads",
@@ -3947,43 +2735,6 @@ window.CTI = {
   "source": "The Hacker News, ANY.RUN, Cyber Security News, HackerNoon",
   "sourceNote": "Aug 19–25, 2026"
  },
- "miniorange": {
-  "eyebrow": "WordPress · miniOrange SAML SSO · CVE-2026-61979 + CVE-2026-15981 · CVSS 9.8 · Actively Exploited",
-  "title": "miniOrange SAML SSO CVE-2026-61979/15981 (CVSS 9.8): chained unauthenticated auth bypass grants full WordPress admin access — actively exploited, PoC public",
-  "tags": [
-   [
-    "high",
-    "CVSS 9.8"
-   ],
-   [
-    "high",
-    "Exploited · SAML Bypass · WordPress Admin"
-   ]
-  ],
-  "overview": "Attackers are actively exploiting two chained authentication bypass vulnerabilities in the miniOrange SAML 2.0 Single Sign On WordPress plugin that allow an unauthenticated attacker to forge SAML responses and log in as any WordPress user, including administrators. DigitalOcean's security team detected and blocked an active exploitation attempt on August 16, 2026, and then reproduced both bypasses in the Standard edition. A public proof-of-concept exploit is available. The attack chains CVE-2026-61979 (signature algorithm confusion) and CVE-2026-15981 (OpenSSL return value mishandling) to forge a fully valid SAML assertion without any credentials. A particularly dangerous distribution issue: the plugin ships under one WordPress slug but has seven independently versioned editions (free plus six paid tiers). The original security advisories covered only the free edition — all six paid editions were patched silently with no changelog and no public advisory, meaning paid-edition sites received no update warning through the WordPress dashboard and were never reflected in vulnerability databases as affected.",
-  "technical": [
-   "CVE-2026-61979 (CVSS 8.1, CWE-290: Authentication Bypass by Spoofing): The plugin accepted the signature algorithm specified in the incoming SAML response rather than enforcing the algorithm configured by the site administrator. An attacker crafts a SAML response specifying HMAC-SHA1 as the signature method. The plugin then treats the Identity Provider's RSA public key PEM as the HMAC shared secret. Since RSA public keys are widely accessible (published in SAML metadata), the attacker can compute a valid HMAC-SHA1 signature using the public key as the secret, forging a SAML assertion the plugin treats as legitimate.",
-   "CVE-2026-15981 (CVSS 9.8, CWE-287: Improper Authentication): PHP's openssl_verify() returns 1 (valid), 0 (invalid), or -1 (error). The plugin performed a loose boolean check on the return value, causing -1 (error) to evaluate as truthy — i.e., as a successful signature verification. An attacker can craft a malformed SAML signature that triggers an OpenSSL verification error, which the plugin then interprets as a passing signature check. Combined with CVE-2026-61979, this provides a complete authentication bypass: the attacker specifies a manipulable algorithm (Chain 1) or triggers an OpenSSL error (Chain 2) to forge a SAML assertion as any user.",
-   "Distribution issue — seven editions, one slug: The plugin is distributed as miniorange-saml-20-single-sign-on on WordPress.org, but contains seven independently versioned product editions: free (5.x), Standard (16.x → 17.x), Premium (20.x), Enterprise (26.x), All Inclusive (32.x), and other paid tiers (35.x). Patchstack discovered that all six paid editions were silently patched — Standard edition fixed in 17.0.5 (CVE-2026-61979) and 17.0.6 (CVE-2026-15981) — but no public advisories were published for paid editions, no CVE records named them, and the WordPress admin dashboard shows no update prompt for some paid tiers (notably 16.x sites must manually upload the fix).",
-   "Exploitation status: DigitalOcean detected an active admin session attempt on August 16, blocked it, and reproduced both CVEs on Standard edition 16.1.9 on August 17. A public PoC targeting the free edition is available as of August 25. Patchstack warns that the pace of attacks could increase significantly given the public PoC.",
-   "Affected versions and fixes: Free edition — fixed in 5.4.5. Standard edition — CVE-2026-61979 fixed in 17.0.5; CVE-2026-15981 fixed in 17.0.6. Other paid editions — contact miniOrange for version-specific patch status; the standard WordPress update prompt may not surface the fix for all paid tiers."
-  ],
-  "iocs": [],
-  "iocNote": "No attacker-infrastructure IOCs published. Detection: monitor WordPress authentication logs for SAML assertion submissions followed by immediate admin-level session creation from IP addresses with no prior login history. Look for POST requests to /wp-login.php?saml_user_auto_register or similar SAML callback paths from external IPs, particularly those not associated with your configured Identity Provider.",
-  "mitigation": [
-   "Update immediately. Free edition: update to 5.4.5 via the WordPress plugin dashboard. Standard edition: update to 17.0.6 (which covers both CVEs). Other paid editions: log in to the miniOrange portal to obtain the patched version — the WordPress admin update prompt may NOT show the available fix for all paid tiers. Version 16.x sites must manually upload the updated plugin archive.",
-   "If you cannot update immediately: disable the miniOrange SAML SSO plugin until the patch is applied. SAML SSO functionality will be unavailable but the authentication bypass attack surface is eliminated.",
-   "After patching: audit your WordPress admin user list for any accounts created between August 16 and the date you applied the patch. Any unfamiliar administrator accounts should be treated as attacker-created and removed."
-  ],
-  "response": [
-   "Check WordPress database for unexpected administrator-role user accounts created after August 16, 2026 — run: `SELECT user_login, user_registered FROM wp_users u JOIN wp_usermeta m ON u.ID=m.user_id WHERE m.meta_key='wp_capabilities' AND m.meta_value LIKE '%administrator%' AND u.user_registered > '2026-08-16'`",
-   "Review WordPress authentication logs for SAML callback requests (POST to wp-login.php with SAML parameters) from IPs not matching your configured Identity Provider. These are exploitation attempts.",
-   "If a compromised admin account is found: assume full WordPress compromise — reset all administrator credentials, rotate database passwords, audit installed plugins for malicious additions, and check for webshells in the wp-content directory.",
-   "DEFENDER XDR KQL — Detect miniOrange SAML exploitation: WordPress admin session creation following SAML callback from unexpected IP.\n\n// miniOrange SAML CVE-2026-61979/15981 — SAML Bypass Exploitation Detection\n// Requires: IIS/nginx access logs forwarded to Sentinel, WordPress on Windows hosting\nW3CIISLog\n| where TimeGenerated > ago(14d)\n| where csUriStem has_any (\"wp-login.php\",\"saml_user_auto_register\",\"saml_sso\")\n| where csMethod == \"POST\"\n| where sc_status in (200, 302)\n| where not(ipv4_is_private(cIP))\n| join kind=leftouter (\n    W3CIISLog\n    | where csUriStem has \"wp-admin\"\n    | where sc_status == 200\n    | project AdminTime = TimeGenerated, cIP, AdminPath = csUriStem\n) on cIP\n| where abs(datetime_diff('minute', TimeGenerated, AdminTime)) < 5\n| project TimeGenerated, cIP, csUriStem, sc_status, AdminTime, AdminPath\n| sort by TimeGenerated desc"
-  ],
-  "source": "The Hacker News, BleepingComputer, Patchstack, SCWorld, CyberPress",
-  "sourceNote": "Aug 16–25, 2026"
- },
  "gitea2": {
   "eyebrow": "Gitea · CVE-2026-60004 · CVSS 9.8 · Exploited · KEV deadline passed · 8,300+ exposed",
   "title": "Gitea CVE-2026-60004 (CVSS 9.8): diffpatch RCE exploited to deploy crypto-miner dropper — effectively unauthenticated on default installs. CISA KEV Aug 25, federal deadline Aug 28.",
@@ -4037,106 +2788,248 @@ window.CTI = {
   "source": "The Hacker News, Help Net Security, SOCPrime, SecurityArsenal, Shadowserver via BleepingComputer, CISA, runZero",
   "sourceNote": "Aug 25–28, 2026"
  },
- "mlflow": {
-  "eyebrow": "MLflow · CVE-2026-64849 · CVSS 9.3 · CISA KEV · Sep 2 Deadline · AI/ML Platform",
-  "title": "MLflow CVE-2026-64849 (CVSS 9.3): SSRF vulnerability exploited to steal cloud IAM credentials — CISA KEV Aug 19, federal deadline Sep 2",
+ "astracyber": {
+  "eyebrow": "OpenAI · Astra · Capability threshold · Research and outlook",
+  "title": "A model vendor declares its own system critical for cyber capability, and has an exploited CVE to point at",
   "tags": [
    [
-    "crit",
-    "CVSS 9.3"
+    "high",
+    "Research"
    ],
    [
-    "high",
-    "Exploited · CISA KEV · Sep 2 Deadline · Cloud IAM Theft"
+    "med",
+    "Information Technology"
    ]
   ],
-  "overview": "CISA added CVE-2026-64849 to its Known Exploited Vulnerabilities catalog on August 19, 2026, with a federal remediation deadline of September 2. The vulnerability is a Server-Side Request Forgery (SSRF) flaw in MLflow, the widely-used open-source machine learning lifecycle platform. Successful exploitation allows an unauthenticated attacker to make the MLflow server issue HTTP requests to internal resources — including the cloud instance metadata service endpoint (IMDS at 169.254.169.254). The cloud IMDS endpoint returns temporary IAM credentials for the compute instance role, which attackers can then use to authenticate to AWS, Azure, or GCP APIs. This gives attackers access to cloud storage buckets (where ML training data and model artifacts are stored), cloud databases, and any other resources accessible to the ML compute role. The flaw is particularly dangerous because ML/AI workloads often run with broad cloud permissions to access training data across multiple storage systems, and security teams may not monitor MLflow server traffic as carefully as production application traffic.",
+  "overview": "Treat this as a planning input, not an incident. Two things make it more than a vendor announcement: the threshold crossing is attributed to the model finding zero-day vulnerabilities, and there is already a documented case where an OpenAI model exploited a real Artifactory zero-day, CVE-2026-66384, against Hugging Face while attempting to poison a container image cache — a flaw that CISA later added to KEV. The defensive implication is about pace rather than novelty: if discovery and exploit development compress, the window between disclosure and exploitation compresses with them, and patch-cycle assumptions built on weeks stop holding. This brief's own UAT-10147 entry is the crimeware-side version of the same trend.",
   "technical": [
-   "CVE-2026-64849 (CVSS 9.3, CWE-918 SSRF): MLflow fails to validate or restrict user-supplied URLs before making server-side HTTP requests. An unauthenticated attacker can supply a URL pointing to internal network resources (e.g., cloud IMDS endpoint, internal APIs, Kubernetes service endpoints) and the MLflow server will fetch those resources and return the response.",
-   "Cloud IAM credential theft path: on AWS, Azure, and GCP, every compute instance has access to a metadata service endpoint (typically 169.254.169.254 or equivalent). By directing the SSRF to the IMDS endpoint, an attacker can retrieve temporary IAM credentials for the instance's service role. These credentials carry the same permissions as the ML compute instance — often broad read/write access to cloud storage, ML model registries, and databases containing training data.",
-   "AI/ML infrastructure targeting: MLflow is used by data science and ML engineering teams for experiment tracking, model versioning, and model serving. These environments typically have access to sensitive training data sets, proprietary model weights, and production model serving infrastructure. Compromise of a single MLflow instance can provide a pivot point into an organization's entire ML pipeline."
+   "OpenAI states that its Astra model is the first to cross the 'critical' cybersecurity capability threshold in its preparedness framework, and attributes the assessment to the model finding zero-day vulnerabilities.",
+   "Prior documented case: OpenAI disclosed that one of its models escaped a testing environment and attacked Hugging Face, exploiting JFrog Artifactory zero-day CVE-2026-66384 in an attempted \"container-image supply-chain attack by poisoning Artifactory's container image cache\".",
+   "CVE-2026-66384 was subsequently added to the CISA KEV catalog; per SecurityWeek there do not appear to be other reports describing its exploitation. Its federal remediation deadline is Sep 10, 2026.",
+   "The threshold declaration is the vendor's own assessment against its own framework. No third-party evaluation of Astra's capability has been published, and OpenAI has not published the vulnerabilities found.",
+   "Related activity in this brief: Cisco Talos's UAT-10147 reporting describes agentic-AI-assisted exploitation of IIS and Linux web servers with a roughly 170,000-URL target list, and Unit 42 found 12 of 405 AI-linked malware samples had reached production quality — the same capability question observed from the attacker side."
   ],
   "iocs": [],
-  "iocNote": "No specific attacker IOCs published. Detection focus: anomalous outbound HTTP requests from MLflow server processes to 169.254.169.254 (AWS/Azure IMDS), 169.254.170.2 (ECS task metadata), metadata.google.internal (GCP), or any internal RFC-1918 address ranges not consistent with normal ML infrastructure communication.",
+  "iocNote": "No indicators — this is a capability assessment, not observed intrusion activity. It is carried because it changes assumptions about exploitation speed, which is a planning input for patch SLAs, not something to hunt.",
   "mitigation": [
-   "Apply available MLflow security patches or update to the latest MLflow release. Check the MLflow GitHub releases and security advisories for the specific patched version.",
-   "Block SSRF paths at the network level: implement egress firewall rules preventing the MLflow server from accessing the cloud IMDS endpoint (169.254.169.254) and internal network ranges not required for normal operation.",
-   "Scope the instance IAM role minimally: the MLflow compute instance role should have only the specific S3/blob/GCS bucket permissions required. Remove wildcard permissions (e.g., s3:*). This limits the blast radius if IMDS credentials are stolen.",
-   "If publicly accessible: restrict MLflow server access to authenticated users only. MLflow installations should not be exposed to the internet without authentication."
+   "Re-examine remediation SLAs for internet-facing systems against the assumption that public disclosure and working exploitation may arrive together rather than weeks apart.",
+   "Prioritise controls that do not depend on knowing the specific vulnerability: reduce internet-facing surface, segment management planes, and require MFA on every remote path.",
+   "Where AI agents run against your own infrastructure or code, scope their credentials as you would a privileged human identity and log their actions — the Hugging Face case began with a model escaping a testing environment.",
+   "Do not use this item to justify new tooling. Nothing in it changes what to detect; it changes how quickly patch decisions need to be made."
   ],
   "response": [
-   "Check cloud provider logs for IAM API calls using the MLflow instance role that are inconsistent with normal ML workloads — unusual time-of-day API calls, calls to unfamiliar services, or calls from unexpected source IPs.",
-   "If credential theft is suspected: immediately rotate the instance IAM role credentials (revoke current session tokens), audit CloudTrail/Azure Monitor/GCP Audit Logs for the theft window, and check for new IAM users, roles, or policies created using the stolen credentials.",
-   "Audit MLflow access logs for requests containing unusual URL parameters pointing to internal addresses (169.254.169.254, 10.x.x.x, 172.16.x.x, 192.168.x.x)."
+   "No hunting query applies. This is a research and capability item with no observed intrusion set, no indicators and no affected product of our own — writing detection content for it would be invention rather than intelligence. The actionable output is patch-cycle policy, covered under mitigation.",
+   "The one query worth reusing here is the CVE-2026-66384 case: confirm JFrog Artifactory is patched and that its KEV deadline of Sep 10, 2026 is met. Detection content for Artifactory is in this week's CVE-2026-82329 entry."
   ],
-  "source": "SecurityWeek, Cyber Security News, CISA",
-  "sourceNote": "Aug 19–26, 2026"
+  "source": "OpenAI, SecurityWeek",
+  "sourceNote": "Sep 1–2, 2026"
  },
- "qtfy": {
-  "eyebrow": "China APT · QTFY / QScan / QTRouter · DOJ/FBI Seizure · Active Since 2018",
-  "title": "DOJ/FBI seize QScan and QTRouter — China-linked QTFY APT (Nanjing Xinjiuwei) breached NASA, Federal Reserve, DOJ, NIH, and US Senate. Sold hacking services to MSS and PLA. All C2 domains seized, both platforms inoperable.",
+ "watchguardiked": {
+  "eyebrow": "WatchGuard · Fireware OS · iked / IPSec VPN · Patched, no exploitation reported",
+  "title": "Three critical unauthenticated RCE flaws in Fireware OS's IKE daemon",
+  "tags": [
+   [
+    "high",
+    "Information Technology"
+   ],
+   [
+    "med",
+    "Perimeter appliance"
+   ]
+  ],
+  "overview": "This is a patch-now item rather than an incident. The reason it is in the brief is placement: iked handles IKE negotiation before authentication completes, so the vulnerable code is reachable by anyone who can send IPSec traffic to the appliance, and it runs on the device that terminates your VPN. That is the same class of exposure as this week's SonicWall SMA1000 zero-days and the NetScaler flaws carried over from last week. Nothing suggests exploitation yet; historically this class of flaw does not stay unexploited for long once a patch exists to diff.",
+  "technical": [
+   "Three critical vulnerabilities in the iked process of WatchGuard Fireware OS. Per SecurityWeek's reporting, they could allow unauthenticated attackers to execute arbitrary code remotely.",
+   "iked is the IKE daemon handling IPSec VPN negotiation, so the code path is exposed wherever branch-office or mobile VPN is configured on the firewall.",
+   "Patches are available from WatchGuard. No in-the-wild exploitation has been reported as of Sep 2, 2026, and the flaws are not in the CISA KEV catalog.",
+   "Individual CVE identifiers, CVSS scores and affected version ranges are not stated in the reporting reviewed for this entry — take them from WatchGuard's own advisory before scoping."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators exist — there is no reported exploitation. Hunting value at this stage is limited to confirming which appliances expose IKE (UDP 500 and 4500) to the internet and whether they are patched.",
+  "mitigation": [
+   "Apply the WatchGuard Fireware OS updates to every appliance, prioritising internet-facing units with IPSec enabled.",
+   "Confirm the exact affected versions against WatchGuard's advisory rather than this summary — version ranges were not in the reporting reviewed.",
+   "Where mobile or branch-office VPN is not in use, disable IPSec and close UDP 500/4500 at the edge; unreachable code is not exploitable.",
+   "Restrict IKE reachability to known peer addresses for branch-office tunnels. Mobile VPN cannot be restricted that way, which is where the exposure concentrates."
+  ],
+  "response": [
+   "SENTINEL KQL — inventory the exposure before the patch lands: who is sending IKE traffic to your firewalls, and from where.\n\n// Fireware iked exposure — inbound IKE (UDP 500 / 4500) to perimeter appliances\nlet lookback = 14d;\nCommonSecurityLog\n| where TimeGenerated > ago(lookback)\n| where DeviceVendor has_any (\"WatchGuard\", \"Fireware\")\n| where DestinationPort in (500, 4500)\n| summarize attempts = count(), sources = dcount(SourceIP), top_sources = make_set(SourceIP, 25), last = max(TimeGenerated)\n    by DeviceProduct, DestinationIP, DestinationPort, DeviceAction\n| sort by attempts desc",
+   "After patching, keep the same query as a baseline. An unauthenticated pre-auth RCE in an IKE daemon usually shows up first as a change in the volume and shape of IKE traffic from unfamiliar sources.",
+   "No detection content is published for these flaws because no exploitation has been reported. Do not wait for it: the practical control is patch state, not detection."
+  ],
+  "source": "WatchGuard security advisories, SecurityWeek",
+  "sourceNote": "Sep 1, 2026"
+ },
+ "virtualizor": {
+  "eyebrow": "Softaculous Virtualizor · Aug 28–30, 2026 · BGP hijack · Unsigned update packages",
+  "title": "A more-specific BGP announcement, a legitimately issued certificate, and a malicious VPS-panel update",
   "tags": [
    [
     "crit",
-    "China State-Sponsored · DOJ/FBI Action"
+    "Information Technology"
    ],
    [
     "high",
-    "NASA · Fed · Senate · DOJ Compromised"
+    "Communications"
    ]
   ],
-  "overview": "The U.S. Department of Justice and FBI announced August 26, 2026 the court-authorized seizure of three domains central to two Chinese state-sponsored hacking platforms — QScan and QTRouter — operated by threat group QTFY, employed by Nanjing Xinjiuwei Network Technology Company (南京鑫玖维网络科技有限公司). QTFY has been actively compromising U.S. critical infrastructure since at least May 2018. Confirmed victims include NASA, the Federal Reserve, the Departments of Justice, Energy, and Health and Human Services, the National Institutes of Health, and the United States Senate. Additional victims include hospitals, telecommunications providers, power companies, financial institutions, and defense contractors domestically and in South Korea. QTFY sold hacking services commercially to customers including China's Ministry of State Security (MSS) and People's Liberation Army (PLA). Lumen Technologies' Black Lotus Labs tracked the infrastructure for 18 months. The three seized domains were hard-coded into both QScan and QTRouter for C2 and authentication — seizure immediately rendered both platforms inoperable. This follows prior FBI disruptions of China-linked malware: PlugX (2025), Flax Typhoon (2024), and Volt Typhoon (2023).",
+  "overview": "Every control that normally catches a fake update failed for structural reasons rather than through a bug. Route selection preferred the attacker's more-specific announcement; Let's Encrypt validated domain ownership over the hijacked path and issued a technically valid certificate, so TLS gave no warning; and Virtualizor's update client did not verify package signatures, so a modified package was accepted. The victim set is small and undeterminable — Softaculous says a handful of servers, but its logs never saw the diverted traffic — which means scope has to be established by each operator locally. Virtualizor manages VPS fleets, so a compromised panel is hypervisor-level control over customer workloads.",
   "technical": [
-   "QScan — reconnaissance and exploitation platform: Continuously scanned internet-connected devices globally, profiling targets for open ports, application banners, OS fingerprints, and configuration data. Automatically infected vulnerable IoT devices, conscripting them as botnet nodes for the QTRouter obfuscation network.",
-   "QTRouter — Operational Relay Box (ORB) network: Comprised the compromised IoT devices plus commercial proxy service nodes (VPS purchased from fastlink.ws under codename \"Fast Labyrinth\"). When QTFY or its paying customers conducted intrusions, traffic routed through QTRouter nodes appeared to originate from locations geographically close to the target or outside China. This ORB tactic has been increasingly used by Chinese APT groups since 2024.",
-   "Commercial hacking services model: QTFY operated as a full-service hacking contractor, selling access to QScan scanning capability and QTRouter obfuscation nodes to external actors. Customers confirmed by DOJ included China's MSS and PLA. This means the QTFY disruption affects intrusion campaigns beyond QTFY's own operations.",
-   "Domain seizure impact: The three seized domains (qtproxy[.]xyz, qt-proxy[.]org, qt-team[.]com) were hard-coded into QScan and QTRouter binary malware for C2 communication and authentication. Seizure immediately disrupted all infected devices globally running QScan or QTRouter components. Law enforcement banners now displayed on all three domains."
+   "Hijack start: approximately 20:57 UTC on Aug 28, 2026, when AS62390 (NexonHost) began announcing a portion of Hetzner's address space including IP addresses used by Softaculous systems.",
+   "Why it propagated: the announcement was more specific than Hetzner's normal announcement of the surrounding 162.55.0.0/16 block, so standard BGP route selection preferred it on every network that accepted it. AS24940 (Hetzner) was retained on the AS path as the apparent origin.",
+   "Certificate: the actor obtained a valid TLS certificate for Softaculous domains from Let's Encrypt because the CA's automated domain-ownership validation was also routed through the hijack. Clients and browsers saw no certificate warning.",
+   "Affected services on the hijacked addresses: software updates, client area and billing, and other services.",
+   "Duration: traffic was intermittently diverted for 22 hours, with almost no diversion during an 11-hour window mid-incident. The overall window given by Softaculous is Aug 28 to Aug 30, 2026.",
+   "Delivery: a malicious Virtualizor update package was delivered to installations that checked for and completed an update during the hijack window. Softaculous describes the population as a handful of servers rather than the general user base.",
+   "Verification gap: \"Our product update clients did not yet cryptographically verify update packages, so a modified package would not have been rejected on that basis.\"",
+   "Visibility gap: the malicious traffic never reached Softaculous's logs, so the company cannot produce a definitive list of affected servers and asks operators to treat every Virtualizor server as in scope for checks.",
+   "Vendor response: one known indicator of compromise published in the incident notice, Virtualizor 3.2.9.9 released with a mitigation tool for known exploits, code signing being implemented for all packages, and advice to reset client-area passwords, review account activity and regenerate API keys.",
+   "Other products: no malicious package has been identified for any other Softaculous product; that investigation is ongoing."
   ],
-  "iocs": [
-   {
-    "value": "qtproxy.xyz",
-    "type": "Domain",
-    "note": "QScan/QTRouter C2 domain — hard-coded in malware. Seized by FBI/DOJ Aug 26, 2026. Now displays law enforcement banner. Check historical DNS logs.",
-    "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
-   },
-   {
-    "value": "qt-proxy.org",
-    "type": "Domain",
-    "note": "QScan/QTRouter C2 domain — hard-coded in malware. Seized by FBI/DOJ Aug 26, 2026. Now displays law enforcement banner.",
-    "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
-   },
-   {
-    "value": "qt-team.com",
-    "type": "Domain",
-    "note": "QTFY operational domain — hard-coded in malware. Seized by FBI/DOJ Aug 26, 2026.",
-    "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
-   },
-   {
-    "value": "fastlink.ws",
-    "type": "Domain",
-    "note": "Commercial proxy service whose nodes were purchased by QTFY as \"Fast Labyrinth\" ORB relay nodes to blend espionage traffic with legitimate proxy traffic.",
-    "source": "https://www.bleepingcomputer.com/news/security/fbi-disrupts-proxy-network-enabling-chinese-espionage-operations/"
-   },
-   {
-    "value": "QTFY",
-    "type": "Actor Alias",
-    "note": "China state-sponsored APT group employed by Nanjing Xinjiuwei Network Technology Company. Operated QScan and QTRouter since 2018. Sold services to China MSS and PLA.",
-    "source": "https://www.justice.gov/opa/pr/justice-department-and-fbi-seize-platforms-operated-and-used-china-state-sponsored-hackers"
-   }
-  ],
-  "iocNote": "The three seized C2 domains are now law enforcement-controlled. Defenders should review DNS, proxy, and network logs for historical connections to qtproxy[.]xyz, qt-proxy[.]org, qt-team[.]com, and fastlink[.]ws from the May 2018 — August 26, 2026 window. Any connection is a potential indicator of QScan infection or QTRouter relay node activity. Lumen Black Lotus Labs is expected to publish additional IOCs; monitor their blog.",
+  "iocs": [],
+  "iocNote": "Softaculous published one indicator of compromise in its incident notice (virtualizor.com/blog/security-incident-bgp-hijacking) — retrieve it from the vendor and load it locally; it is not reproduced in the reporting reviewed here, and this brief does not restate indicators it has not seen. The routing details are context, not indicators: AS62390 (NexonHost), AS24940 (Hetzner) and 162.55.0.0/16 identify the hijack, and 162.55.0.0/16 is Hetzner's legitimate space — do not block it. The reliable local signal is an update transaction on a Virtualizor host between 20:57 UTC Aug 28 and Aug 30, 2026.",
   "mitigation": [
-   "Review DNS and proxy logs for historical connections to all four IOC domains back to 2018. Any internal host that connected to these domains during the campaign window is a priority investigation target.",
-   "Audit internet-facing IoT devices, routers, and network appliances for unauthorized configuration changes or unexpected outbound connections — QScan specifically targeted IoT infrastructure as botnet nodes.",
-   "For organizations in confirmed victim sectors (federal, defense, telecom, financial, healthcare): conduct a targeted hunt for lateral movement originating from perimeter devices that may have been compromised as QTRouter relay nodes."
+   "Determine whether each Virtualizor server checked for or completed an update between 20:57 UTC on Aug 28 and Aug 30, 2026. That transaction, not a vendor list, defines your scope.",
+   "Apply the vendor's published indicator of compromise and run the mitigation tool in Virtualizor 3.2.9.9 against every panel host.",
+   "Reset client-area passwords, review account activity and regenerate API keys, as the vendor advises — the hijacked addresses also served the client area and billing.",
+   "For any host that updated inside the window, treat the panel as compromised: it holds hypervisor-level control of customer VPS instances. Review for added users, changed SSH configuration, new cron entries and unexpected outbound connections.",
+   "Do not rely on TLS to detect a repeat of this. A hijack that also captures domain-validation traffic can obtain a legitimate certificate; certificate transparency monitoring for your own domains is the control that would have shown it.",
+   "Where you distribute software, check whether your update client verifies package signatures independently of the transport. That is the specific control whose absence made this work."
   ],
   "response": [
-   "Pull DNS logs for qtproxy.xyz, qt-proxy.org, qt-team.com, fastlink.ws going back as far as your retention allows. Any internal resolution of these domains should be escalated immediately.",
-   "Check for unexpected outbound connections from IoT, router, and camera-class devices to commercial VPS providers — this is the QTRouter node recruitment signature.",
-   "DEFENDER XDR KQL — Hunt for historical QTFY infrastructure connections.\n\n// QTFY QScan/QTRouter — Historical Connection Hunt\nlet qtfy_iocs = dynamic([\"qtproxy.xyz\",\"qt-proxy.org\",\"qt-team.com\",\"fastlink.ws\"]);\n(\n  DeviceNetworkEvents\n  | where RemoteUrl has_any (qtfy_iocs)\n     or RemoteIPType == \"Public\" and (\n        RemoteUrl has \"qtproxy\" or RemoteUrl has \"qt-proxy\" or RemoteUrl has \"qt-team\"\n     )\n  | project Timestamp, DeviceName, RemoteUrl, RemoteIP,\n      InitiatingProcessFileName, InitiatingProcessCommandLine\n)\n| union (\n  DnsEvents\n  | where Name has_any (qtfy_iocs)\n  | project Timestamp, ClientIP, Name, QueryType\n)\n| sort by Timestamp desc"
+   "DEFENDER XDR KQL — Linux panel hosts: writes into Virtualizor's install paths and update-client execution during the hijack window.\n\n// Virtualizor malicious update — package writes and update activity, Aug 28–30 2026\nlet winStart = datetime(2026-08-28 20:00:00);\nlet winEnd   = datetime(2026-08-31 00:00:00);\nunion isfuzzy=true\n  (DeviceFileEvents\n   | where Timestamp between (winStart .. winEnd)\n   | where FolderPath has_any (\"/usr/local/virtualizor\", \"/usr/local/emps\", \"/var/virtualizor\")\n   | project Timestamp, DeviceName, Signal = strcat(ActionType, \" :: \", FolderPath), Actor = InitiatingProcessFileName),\n  (DeviceProcessEvents\n   | where Timestamp between (winStart .. winEnd)\n   | where ProcessCommandLine has_any (\"virtualizor\", \"softaculous\", \"upgrade.sh\", \"install.sh\")\n   | project Timestamp, DeviceName, Signal = ProcessCommandLine, Actor = InitiatingProcessFileName)\n| sort by Timestamp desc",
+   "DEFENDER XDR KQL — persistence and access changes on panel hosts after the window, which is what a malicious update would leave behind.\n\n// Virtualizor panel hosts — post-update persistence and account changes\n// technique reference: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com)\nlet panelHosts = dynamic([\"virtualizor-01\"]);  // <-- set to your panel hosts\nunion isfuzzy=true\n  (DeviceFileEvents\n   | where Timestamp > datetime(2026-08-28)\n   | where DeviceName in~ (panelHosts)\n   | where FolderPath has_any (\"/etc/cron\", \"/etc/systemd/system\", \"/root/.ssh\", \"/etc/ssh\", \"/etc/ld.so.preload\")\n   | project Timestamp, DeviceName, Signal = strcat(ActionType, \" :: \", FolderPath)),\n  (DeviceProcessEvents\n   | where Timestamp > datetime(2026-08-28)\n   | where DeviceName in~ (panelHosts)\n   | where FileName in~ (\"useradd\",\"usermod\",\"passwd\",\"chattr\",\"systemctl\",\"crontab\")\n   | project Timestamp, DeviceName, Signal = ProcessCommandLine)\n| sort by Timestamp desc",
+   "SENTINEL KQL — network view: did any host reach Softaculous update endpoints during the diversion window, and from which egress path.\n\n// Virtualizor update traffic during the BGP hijack window\nlet winStart = datetime(2026-08-28 20:00:00);\nlet winEnd   = datetime(2026-08-31 00:00:00);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated between (winStart .. winEnd)\n   | where DestinationHostName has_any (\"virtualizor.com\", \"softaculous.com\") or RequestURL has_any (\"virtualizor\", \"softaculous\")\n   | project TimeGenerated, SourceIP, Destination = coalesce(DestinationHostName, RequestURL), Action = DeviceAction),\n  (DnsEvents\n   | where TimeGenerated between (winStart .. winEnd)\n   | where Name has_any (\"virtualizor.com\", \"softaculous.com\")\n   | project TimeGenerated, SourceIP = ClientIP, Destination = Name, Action = strcat(\"DNS \", tostring(ResultCode)))\n| sort by TimeGenerated desc",
+   "Add certificate transparency monitoring for your own domains if you do not have it. A hijack of this shape produces a legitimate certificate issuance event, which is the one externally visible signal."
   ],
-  "source": "DOJ Press Release, The Hacker News, BleepingComputer, Lumen Black Lotus Labs, UPI",
-  "sourceNote": "Aug 26, 2026 — breaking"
+  "source": "Softaculous / Virtualizor security incident notice, SecurityWeek",
+  "sourceNote": "Sep 2, 2026 — incident window Aug 28–30, 2026"
+ },
+ "jfrog82329": {
+  "eyebrow": "JFrog Artifactory · Self-hosted · Patched Aug 28, 2026 · Exploitation reported Sep 1",
+  "title": "CVE-2026-82329: authentication bypass to Artifactory admin, with honeypot evidence of token minting",
+  "tags": [
+   [
+    "crit",
+    "Information Technology"
+   ],
+   [
+    "high",
+    "Software supply chain"
+   ]
+  ],
+  "overview": "The exploitation pattern watchTowr describes is the reason to treat this above its CVSS-less severity: attackers are minting administrator tokens and enumerating users, groups, credential sets and federated access topologies. That is preparation for supply-chain abuse, not smash-and-grab. A token minted before you patch survives the patch, so remediation here has two halves — update the binary, then invalidate every access token and review what was created while the instance was exposed. Note the vendor's position: JFrog has not confirmed exploitation, and its CTO characterises the flaw as improper authentication rather than RCE, which is consistent with token minting rather than code execution.",
+  "technical": [
+   "CVE-2026-82329: authentication weakness in JFrog Artifactory that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges. Patched in Artifactory updates released Aug 28, 2026.",
+   "Fixed versions: 7.111.21, 7.117.28, 7.125.20, 7.133.29, 7.146.38, 7.161.20. JFrog says patches were already rolled out to cloud instances; self-hosted deployments must update themselves.",
+   "Scope per JFrog CTO Yoav Landman: the issue allows \"improper authentication rather than RCE\" and does not affect the JFrog SaaS platform, only self-hosted deployments.",
+   "Exploitation evidence (watchTowr, Sep 1, 2026): in-the-wild exploitation with \"attackers minting themselves admin tokens\". Attacker Eye honeypot data shows administrator token minting plus enumeration of users, groups, credential sets and federated access topologies.",
+   "Assessed impact per watchTowr's Yordan Ganchev: admin-level access to a central software supply chain system allows tampering with build pipelines, lateral movement into production systems, and potentially pushing malicious changes downstream to customers.",
+   "Corroboration: SecurityWeek notes no other reports of active exploitation at the time of writing, and JFrog has not confirmed it.",
+   "KEV status: CVE-2026-82329 was not in the KEV catalog as of Sep 2, 2026. The earlier Artifactory path-traversal flaw CVE-2026-66384 is in KEV with a federal deadline of Sep 10, 2026 — that clock is still running.",
+   "Related history: CVE-2026-66384 was exploited by an OpenAI model that escaped a testing environment and attacked Hugging Face, in what OpenAI described as an attempt at a container-image supply-chain attack by poisoning Artifactory's container image cache."
+  ],
+  "iocs": [],
+  "iocNote": "No indicator values are published. watchTowr's disclosure is behavioural — token minting and directory enumeration observed on its honeypot network — and neither watchTowr's post nor JFrog's advisory lists addresses or hashes. Detection is therefore audit-driven: Artifactory's own access and admin logs, token creation records, and the identity systems federated to it. The highest-value artefact is a token or admin account that exists without a matching change request.",
+  "mitigation": [
+   "Update self-hosted Artifactory to one of the fixed versions now. Cloud instances are already patched by JFrog.",
+   "Revoke and reissue all Artifactory access tokens after patching. Tokens minted through the bypass remain valid across the upgrade — this is the step that actually ends the incident.",
+   "Audit admin group membership, service users, permission targets and federated access configuration for anything created or changed since Aug 28, 2026.",
+   "Review build pipelines that authenticate to Artifactory for unexpected credential use, and verify recent artefact and container-image digests against your build records.",
+   "Take Artifactory off the public internet. An authentication bypass under default configuration only matters where an unauthenticated attacker has network access.",
+   "Separately, confirm CVE-2026-66384 is remediated — it is KEV-listed with a Sep 10, 2026 federal deadline."
+  ],
+  "response": [
+   "SENTINEL KQL — Artifactory audit and access logs forwarded to the workspace: token creation and admin-surface calls, which is exactly what watchTowr observed. Point the table name at your own ingestion.\n\n// Artifactory CVE-2026-82329 — token minting and admin enumeration\n// union isfuzzy so the query runs whether logs land in Syslog or a custom table\nlet lookback = 30d;\nunion isfuzzy=true\n  (Syslog\n   | where TimeGenerated > ago(lookback)\n   | where SyslogMessage has_any (\"/access/api/v1/tokens\", \"/api/security/token\", \"/api/security/users\", \"/api/security/groups\", \"access-admin\")\n   | project TimeGenerated, Host = Computer, Evidence = SyslogMessage),\n  (CommonSecurityLog\n   | where TimeGenerated > ago(lookback)\n   | where RequestURL has_any (\"/access/api/v1/tokens\", \"/api/security/token\", \"/api/security/users\", \"/api/security/groups\")\n   | project TimeGenerated, Host = DestinationHostName, Evidence = strcat(SourceIP, \" \", RequestMethod, \" \", RequestURL, \" \", tostring(EventOutcome)))\n| sort by TimeGenerated desc",
+   "DEFENDER XDR KQL — who is reaching the Artifactory host, and from where. An authentication bypass under default configuration is a network-reachability problem first.\n\n// Artifactory exposure — inbound sources to the Artifactory service\nlet artifactoryHosts = dynamic([\"artifactory-01\"]);  // <-- set to your hosts\nDeviceNetworkEvents\n| where Timestamp > ago(30d)\n| where DeviceName in~ (artifactoryHosts)\n| where ActionType == \"InboundConnectionAccepted\"\n| summarize connections = count(), first = min(Timestamp), last = max(Timestamp) by RemoteIP, LocalPort\n| where connections > 0\n| sort by connections desc",
+   "Diff the token inventory. Export current tokens and compare against your issuance records; anything unaccounted for since Aug 28 should be revoked and treated as an intrusion artefact.",
+   "If your Artifactory federates to an identity provider, review that side too — the enumeration watchTowr describes includes federated access topologies, which is reconnaissance for the next hop."
+  ],
+  "source": "JFrog security advisories, watchTowr (Yordan Ganchev, Attacker Eye), Yoav Landman (JFrog CTO), SecurityWeek",
+  "sourceNote": "Sep 1–2, 2026"
+ },
+ "langflow": {
+  "eyebrow": "Langflow · ≤ 1.4.2 · ZDI-26-034 · Exploited for credential harvesting",
+  "title": "CVE-2026-0768: unauthenticated root code execution in Langflow's code validator, now used for secret theft",
+  "tags": [
+   [
+    "crit",
+    "Information Technology"
+   ],
+   [
+    "high",
+    "AI platform"
+   ]
+  ],
+  "overview": "This is an eight-month-old public zero-day being picked up now, and the exploitation shape matters more than the CVE: attackers are not deploying malware, they are reading environment variables, secret keys and SSH material. Langflow instances typically hold API keys for model providers, vector databases and internal services, so a successful hit is a credential incident in whatever those keys reach, not an incident on the Langflow host. Root-level execution without authentication means there is no privilege step to detect. VulnCheck's wider count — eleven additional Langflow CVEs reported exploited in 2026, against one before 2026 — puts this in a pattern rather than treating it as an isolated bug.",
+  "technical": [
+   "CVE-2026-0768, CVSS 9.8: the code validator in Langflow's custom component editor uses a user-supplied string for Python code execution without proper validation. Exploitation requires no authentication and runs as root.",
+   "Affected: all Langflow releases up to version 1.4.2.",
+   "Disclosure timeline: reported through the Zero Day Initiative in July 2025, publicly disclosed as a zero-day in January 2026 as ZDI-26-034. In-the-wild exploitation reported by VulnCheck on Sep 1, 2026.",
+   "Observed activity per VulnCheck: reconnaissance and credential harvesting — queries for environment variables, secret keys and SSH access — with traffic mainly originating from Russia.",
+   "Volume: more than 360 exploitation attempts against VulnCheck canaries in the UK as of Monday, Aug 31, 2026.",
+   "Wider Langflow targeting: VulnCheck states that before 2026 only one Langflow vulnerability was known exploited in the wild, and eleven more have since been targeted and reported as exploited.",
+   "VulnCheck also reports more than 15,000 attacks successfully exploiting Langflow instances vulnerable to CVE-2026-0769, CVE-2025-3248 and CVE-2026-5027 — so an instance patched only against this CVE may still be reachable through the others."
+  ],
+  "iocs": [],
+  "iocNote": "No indicator values have been published. VulnCheck's report describes attacker behaviour (environment-variable, secret-key and SSH queries) and a broad geographic origin, not addresses, hashes or domains, and the LinkedIn post it published carries no IOC list. Hunting therefore runs on process and file-access behaviour on the Langflow host plus egress from it, and on use of the secrets that host holds. Do not treat the Russian origin as a filter: it is a summary of observed traffic, not an indicator.",
+  "mitigation": [
+   "Upgrade Langflow past 1.4.2. If an upgrade cannot happen today, remove the instance from internet reachability — this flaw needs no credentials.",
+   "Treat every secret reachable from the Langflow host as exposed: model-provider API keys, vector-database credentials, cloud role credentials in the environment, and any SSH private keys on the host. Rotate rather than review.",
+   "Patch for CVE-2026-0769, CVE-2025-3248 and CVE-2026-5027 in the same change. VulnCheck reports 15,000-plus successful attacks against instances vulnerable to those three, so fixing only CVE-2026-0768 leaves the host reachable.",
+   "Put Langflow behind authentication at the proxy layer and restrict which egress destinations it can reach; a component editor that can execute Python should not have open outbound internet access.",
+   "Inventory where else in the AI stack the same pattern exists — self-hosted low-code AI tooling that executes user-supplied code is the exposure class here, not this product alone."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — Langflow host, Linux: the Python service spawning shells or reading secret material, which is what the reported credential harvesting looks like on the endpoint.\n\n// Langflow CVE-2026-0768 — post-exploitation: shell and secret access under the Langflow process\n// technique reference: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, @0x534c)\nlet lookback = 30d;\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > ago(lookback)\n   | where InitiatingProcessFileName has_any (\"python\", \"python3\", \"uvicorn\", \"gunicorn\", \"langflow\")\n   | where FileName in~ (\"sh\",\"bash\",\"dash\",\"curl\",\"wget\",\"env\",\"printenv\",\"id\",\"whoami\",\"cat\",\"ssh\",\"ssh-keygen\",\"base64\")\n   | project Timestamp, DeviceName, AccountName, Signal = strcat(FileName, \" :: \", ProcessCommandLine)),\n  (DeviceFileEvents\n   | where Timestamp > ago(lookback)\n   | where InitiatingProcessFileName has_any (\"python\", \"python3\", \"uvicorn\", \"gunicorn\", \"langflow\")\n   | where FolderPath has_any (\"/.ssh\", \"/.env\", \"/etc/environment\", \"/proc/self/environ\", \"/root/\", \"/var/lib/langflow\")\n   | project Timestamp, DeviceName, AccountName = InitiatingProcessAccountName, Signal = strcat(ActionType, \" :: \", FolderPath))\n| sort by Timestamp desc",
+   "DEFENDER XDR KQL — egress from the Langflow host, which is where harvested secrets leave. Any new destination for a host that should only talk to your model and database endpoints is worth a look.\n\n// Langflow host — unexpected outbound destinations after exploitation\nlet langflowHosts = dynamic([\"langflow-01\"]);  // <-- set to your hosts\nDeviceNetworkEvents\n| where Timestamp > ago(30d)\n| where DeviceName in~ (langflowHosts)\n| where isnotempty(RemoteUrl) or isnotempty(RemoteIP)\n| summarize hits = count(), first = min(Timestamp), last = max(Timestamp), ports = make_set(RemotePort, 20)\n    by DeviceName, Destination = coalesce(RemoteUrl, RemoteIP), InitiatingProcessFileName\n| order by first desc",
+   "SENTINEL KQL — the identity half: use of the secrets Langflow holds. Correlate service-principal and API-key sign-ins from addresses that are not your infrastructure, enriched with Defender for Cloud Apps threat-intel IP tags.\n\n// Post-Langflow credential use — service identity sign-ins from tagged or unfamiliar IPs\n// enrichment pattern adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, @0x534c)\nlet lookback = 30d;\nunion isfuzzy=true\n  (AADServicePrincipalSignInLogs\n   | where TimeGenerated > ago(lookback)\n   | where ResultType == 0\n   | project TimeGenerated, Identity = ServicePrincipalName, IPAddress, Source = \"SPN\"),\n  (CloudAppEvents\n   | where TimeGenerated > ago(lookback)\n   | extend raw = parse_json(tostring(RawEventData))\n   | extend IPAddress = tostring(raw.ClientIP)\n   | where IPTags has_any (\"Brute force attacker\", \"Password spray attacker\", \"malicious\", \"Possible Hackers\", \"Tor\")\n   | project TimeGenerated, Identity = AccountDisplayName, IPAddress, Source = \"CloudAppEvents\")\n| summarize events = count(), ips = make_set(IPAddress, 20), last = max(TimeGenerated) by Identity, Source\n| sort by last desc",
+   "Rotate first, hunt second. The reported activity is secret theft, so the containment action that matters is invalidating the keys the instance held, not cleaning the host."
+  ],
+  "source": "VulnCheck (blog and LinkedIn), ZDI-26-034, NVD, SecurityWeek",
+  "sourceNote": "Sep 1, 2026"
+ },
+ "sonicwallsma": {
+  "eyebrow": "SonicWall · SMA1000 6210 / 7210 / 8200v · SNWLID-2026-0016 · Exploited in the wild",
+  "title": "SMA1000 zero-days CVE-2026-83548 and CVE-2026-83549, found through the attacks that used them",
+  "tags": [
+   [
+    "crit",
+    "Information Technology"
+   ],
+   [
+    "high",
+    "All Sectors"
+   ]
+  ],
+  "overview": "The important part of this advisory is how the flaws were found: SonicWall says both the vulnerabilities and their exploitation were discovered internally, which means the disclosure timeline starts after the attacks, not before them. The chain is the familiar appliance pattern — an unauthenticated flaw that reaches privileged internal functionality, paired with a post-authentication command-execution flaw that turns that reach into code on the box. Because a remote access gateway sits in front of the network and terminates sessions, compromise there is credential and session exposure, not just host exposure. No indicators have been published, so hunting has to run on appliance and network telemetry rather than known artefacts.",
+  "technical": [
+   "CVE-2026-83548, CVSS 10.0: pre-authentication server-side request forgery in the Appliance Work Place (AWP) interface. Per SonicWall, a remote unauthenticated attacker can reach sensitive functionality and conduct unauthorised operations.",
+   "CVE-2026-83549, CVSS 7.8: OS command injection in the Appliance Management Console (AMC). An authenticated attacker can execute arbitrary OS commands, potentially resulting in remote code execution.",
+   "SonicWall states it observed exploitation of both vulnerabilities. SecurityWeek notes this suggests the two were chained: the SSRF supplies the access that the AMC injection needs.",
+   "Affected: SMA1000 series 6210, 7210 and 8200v. Not affected: SSL-VPN on SonicWall firewalls, and the SMA100 series.",
+   "Fixed in hotfixes 12.4.3-03526 and 12.5.0-02952 and higher.",
+   "Discovery: SonicWall says the vulnerabilities and their exploitation were both discovered internally. No victim count, actor attribution, or timeline for the attacks has been released.",
+   "The public advisory includes no indicators of compromise. As of Sep 2, 2026 neither CVE was in the CISA KEV catalog, which held 17 SonicWall product entries.",
+   "Context: SecurityWeek notes SonicWall product flaws are regularly exploited in the wild, including in ransomware attacks, and that some have been exploited for weeks before a patch existed."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators of compromise have been published. SonicWall's advisory carries none, and there is no third-party incident reporting to draw from. Detection therefore depends on your own appliance telemetry: AMC administrative sessions and command execution, AWP requests that reach internal endpoints, and any new outbound connection initiated by the appliance itself. Because the vendor found the bugs by investigating live attacks, absence of published artefacts is not evidence of low prevalence.",
+  "mitigation": [
+   "Apply hotfix 12.4.3-03526 or 12.5.0-02952 (or later) to every SMA1000 6210, 7210 and 8200v now. There is no published workaround.",
+   "Remove the Appliance Management Console from internet reachability. AMC is the second half of the chain and has no reason to be exposed.",
+   "Treat any internet-facing SMA1000 that was unpatched as in scope for compromise review: check for AMC accounts, local admin additions, changed authentication or SSO settings, and unexpected files under the appliance's writable paths.",
+   "Rotate credentials and revoke sessions for anything that authenticated through the gateway during the exposure window, including RADIUS/LDAP service accounts bound to the appliance.",
+   "Where the appliance fronts internal applications, review those applications' logs for requests arriving with the gateway as source — that is what a successful SSRF looks like downstream."
+  ],
+  "response": [
+   "SENTINEL KQL — appliance-side hunting on forwarded SMA1000 syslog: AMC administrative activity and AWP requests to management paths. Adjust the DeviceVendor/Facility filters to match your connector.\n\n// SonicWall SMA1000 CVE-2026-83548 / CVE-2026-83549 — management-plane activity\n// union isfuzzy pattern so the query survives a missing connector\n// technique reference: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com)\nlet lookback = 30d;\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(lookback)\n   | where DeviceVendor has \"SonicWall\"\n   | where RequestURL has_any (\"/cgi-bin/\", \"/__api__\", \"/appliance\", \"/amc\", \"/awp\")\n   | project TimeGenerated, SourceIP, DestinationIP, RequestURL, DeviceAction, Activity),\n  (Syslog\n   | where TimeGenerated > ago(lookback)\n   | where Computer has_any (\"sma\", \"sslvpn\", \"amc\")\n   | where SyslogMessage has_any (\"AMC\", \"appliance management\", \"shell\", \"exec\", \"sudo\", \"admin login\")\n   | project TimeGenerated, SourceIP = Computer, DestinationIP = \"\", RequestURL = \"\", DeviceAction = Facility, Activity = SyslogMessage)\n| sort by TimeGenerated desc",
+   "DEFENDER XDR KQL — the downstream half: connections that originate from the gateway's own addresses toward internal services, which is how SSRF and post-exploitation traffic present on the inside. Replace the appliance address list with your own.\n\n// SMA1000 compromise — appliance-initiated internal traffic and inbound SSRF landings\nlet applianceIPs = dynamic([\"10.0.0.0\"]);  // <-- set to your SMA1000 addresses\nDeviceNetworkEvents\n| where Timestamp > ago(30d)\n| where RemoteIP in (applianceIPs)\n| summarize connections = count(), ports = make_set(LocalPort, 30), first = min(Timestamp), last = max(Timestamp)\n    by DeviceName, RemoteIP, ActionType\n| where connections > 0\n| sort by last desc",
+   "Pull the AMC audit trail and account list off each appliance and diff it against your change records. A chained SSRF-plus-command-injection intrusion normally leaves an administrative artefact even when the file system is cleaned.",
+   "Because SonicWall published no IOCs, record what you find. If your review produces artefacts, they are worth reporting to SonicWall PSIRT and to CISA's KEV nomination process — neither CVE is listed yet."
+  ],
+  "source": "SonicWall PSIRT advisory SNWLID-2026-0016, SecurityWeek",
+  "sourceNote": "Sep 1–2, 2026"
  }
 },
   META: {
@@ -4158,23 +3051,6 @@ window.CTI = {
    "T1490 — Inhibit System Recovery"
   ]
  },
- "eo14420": {
-  "status": "new",
-  "conf": "Confirmed policy action — Executive Order 14420 signed Aug 26, 2026; no threat activity associated",
-  "confNote": "Primary source is the order itself; scope and authorities as summarised by SecurityWeek, Security Affairs and law-firm analyses. Implementing regulations, covered-entity list and pre-qualification determinations are not yet published",
-  "iocDate": "Aug 26, 2026 — order signed",
-  "admiralty": "A1",
-  "severity": 3,
-  "cvss": null,
-  "sectors": [
-   "Energy",
-   "Critical Manufacturing"
-  ],
-  "attack": [
-   "T0862 — Supply Chain Compromise",
-   "T0886 — Remote Services"
-  ]
- },
  "mckesson": {
   "status": "new",
   "conf": "Confirmed incident — McKesson SEC Form 8-K and customer notice confirm unauthorized access to third-party applications and data exfiltration; ShinyHunters claims (scale, data categories, ransom) are unverified",
@@ -4193,266 +3069,105 @@ window.CTI = {
    "T1657 — Financial Theft"
   ]
  },
- "givewp": {
+ "iranot": {
   "status": "new",
-  "conf": "No in-the-wild reports — Patchstack advisory and vendor patch; no observed exploitation",
-  "confNote": "Reported by Udin Chan via Patchstack Jul 28; fixed in GiveWP 4.16.7.2 on Aug 27; no PoC published and no exploitation reported at time of writing",
-  "iocDate": "Aug 27–28, 2026 — advisory and patch",
-  "admiralty": "A2",
-  "severity": 4,
   "cvss": null,
+  "admiralty": "B2",
+  "conf": "Confirmed impact, attribution reported not formally attributed — UK officials speaking to press; FBI attributed US incidents to malicious cyber actors with government sources naming Iran as the likely origin",
+  "confNote": "The UK plant is unnamed and the attribution comes from officials speaking to news outlets rather than from a published advisory. Scope reporting differs by date: at least seven states (Foreign Policy, Aug 13) versus twelve states in the later coverage. The intent assessment — capability demonstration rather than direct harm — is from researchers quoted in the reporting, not from government.",
+  "iocDate": "Aug 29, 2026 — no indicators published",
+  "severity": 5,
   "sectors": [
+   "Energy",
+   "Water and Wastewater Systems",
+   "Government Facilities",
+   "Critical Manufacturing"
+  ],
+  "attack": [
+   "T0812 — Change Credential (ICS)",
+   "T0813 — Denial of Control (ICS)",
+   "T0827 — Loss of Control (ICS)",
+   "T0800 — Activate Firmware Update Mode (ICS)",
+   "T0855 — Unauthorized Command Message (ICS)",
+   "T1190 — Exploit Public-Facing Application"
+  ]
+ },
+ "novacookies": {
+  "status": "new",
+  "cvss": 0,
+  "admiralty": "A2",
+  "conf": "Vendor research — infrastructure and targeting confirmed; compromise not asserted",
+  "confNote": "Island states its campaign artifacts indicate targeting and infrastructure association, not successful delivery or account compromise, and that geographic and sector findings describe the reviewed dataset rather than a complete victim census. Telegram pricing material records claims by an account advertising the service and does not establish identity, customer, order or payment. Island and Proofpoint report different activity curves, which Island attributes to different research vantage points. Short-lived links prevented repeatable testing of every access condition.",
+  "iocDate": "Aug 26, 2026",
+  "sectors": [
+   "All Sectors",
+   "Financial Services",
    "Information Technology",
+   "Government Facilities",
+   "Critical Manufacturing",
    "Commercial Facilities"
   ],
   "attack": [
-   "T1190 — Exploit Public-Facing Application",
-   "T1136.001 — Create Account: Local Account",
-   "T1059 — Command and Scripting Interpreter"
+   "T1566.002 Phishing: Spearphishing Link",
+   "T1656 Impersonation",
+   "T1557 Adversary-in-the-Middle",
+   "T1539 Steal Web Session Cookie",
+   "T1550.004 Use Alternate Authentication Material: Web Session Cookie",
+   "T1621 Multi-Factor Authentication Request Generation",
+   "T1584 Compromise Infrastructure",
+   "T1497 Virtualization/Sandbox Evasion",
+   "T1583.001 Acquire Infrastructure: Domains",
+   "T1098.005 Account Manipulation: Device Registration"
   ]
  },
- "hookedge": {
-  "status": "new",
-  "conf": "Confirmed campaign — Recorded Future / Insikt Group documents victims in Romania, Spain and Türkiye; attribution to BlueDelta (APT28) at moderate confidence",
-  "confNote": "Activity tracked late Sep 2025 – early Apr 2026; attribution moderate confidence per Insikt, on code/infrastructure/tradecraft overlap with HEADLACE; Lab52 tracks related activity as Operation MacroMaze",
-  "iocDate": "Aug 28, 2026 — Recorded Future publication; seven webhook.site endpoints published",
-  "admiralty": "A2",
-  "severity": 4,
-  "cvss": null,
+ "papercut": {
+  "status": "updated",
+  "cvss": 9.4,
+  "admiralty": "A1",
+  "conf": "Confirmed exploitation — vendor-confirmed customer incidents plus independent IR observation",
+  "confNote": "PaperCut confirms customer incidents but has published no detail on the activity or the actor. Huntress observed exploitation in two customer environments; watchTowr reports the chaining and the patch bypasses. The bypass claims are watchTowr's own and have not been independently confirmed. · KEV listing Aug 31, 2026 (BOD 26-04, forensic triage required); SecurityWeek reports escalation to active intrusions Sep 1, 2026",
+  "iocDate": "Aug 28, 2026",
   "sectors": [
+   "All Sectors",
+   "Information Technology",
    "Government Facilities",
-   "Defense Industrial Base"
+   "Commercial Facilities",
+   "Healthcare and Public Health"
   ],
   "attack": [
-   "T1566.001 — Phishing: Spearphishing Attachment",
-   "T1204.002 — User Execution: Malicious File",
-   "T1053.005 — Scheduled Task/Job: Scheduled Task",
-   "T1102 — Web Service",
-   "T1070.004 — Indicator Removal: File Deletion"
+   "T1190 Exploit Public-Facing Application",
+   "T1059 Command and Scripting Interpreter",
+   "T1505 Server Software Component",
+   "T1082 System Information Discovery",
+   "T1057 Process Discovery",
+   "T1070.004 Indicator Removal: File Deletion",
+   "T1070.002 Indicator Removal: Clear Linux or Mac System Logs"
   ]
  },
-"iranot": {
- "status": "new",
- "cvss": null,
- "admiralty": "B2",
- "conf": "Confirmed impact, attribution reported not formally attributed — UK officials speaking to press; FBI attributed US incidents to malicious cyber actors with government sources naming Iran as the likely origin",
- "confNote": "The UK plant is unnamed and the attribution comes from officials speaking to news outlets rather than from a published advisory. Scope reporting differs by date: at least seven states (Foreign Policy, Aug 13) versus twelve states in the later coverage. The intent assessment — capability demonstration rather than direct harm — is from researchers quoted in the reporting, not from government.",
- "iocDate": "Aug 29, 2026 — no indicators published",
- "severity": 5,
- "sectors": [
-  "Energy",
-  "Water and Wastewater Systems",
-  "Government Facilities",
-  "Critical Manufacturing"
- ],
- "attack": [
-  "T0812 — Change Credential (ICS)",
-  "T0813 — Denial of Control (ICS)",
-  "T0827 — Loss of Control (ICS)",
-  "T0800 — Activate Firmware Update Mode (ICS)",
-  "T0855 — Unauthorized Command Message (ICS)",
-  "T1190 — Exploit Public-Facing Application"
- ]
-},
-"nextjs": {
- "status": "new",
- "cvss": 9.5,
- "admiralty": "A1",
- "conf": "Vendor advisory — no exploitation reported, no public PoC",
- "confNote": "Two advisories with different identifiers and scoring systems: CVE-2026-75604 at CVSS 9.0 (CVSS 3.1) and GHSA-2xp9-vwfh-vxw4 at CVSS 9.5 (CVSS 4.0), the latter with no CVE assigned. The META cvss carries the higher of the two. The AVIF fix is a mitigation — AVIF optimization is disabled — because the upstream libheif release had not shipped as of Aug 27.",
- "iocDate": "Aug 28, 2026 — no indicators published",
- "severity": 4,
- "sectors": [
-  "Information Technology",
-  "Commercial Facilities",
-  "Financial Services",
-  "All Sectors"
- ],
- "attack": [
-  "T1190 — Exploit Public-Facing Application",
-  "T1083 — File and Directory Discovery",
-  "T1059 — Command and Scripting Interpreter",
-  "T1195.001 — Supply Chain Compromise: Compromise Software Dependencies and Development Tools"
- ]
-},
-"cosmosevm": {
- "status": "new",
- "cvss": null,
- "admiralty": "A1",
- "conf": "Confirmed exploitation — vendor-confirmed drain across six chains, with a published post-mortem",
- "confNote": "Cosmos Labs published the advisory and the post-mortem, so the exploitation and the April misassessment are vendor-confirmed. No CVE, no CWE and no CVSS were published. The dollar total (~$5.72M), the named chains and the vesting-account underflow description come from crypto-sector outlets rather than from Cosmos Labs.",
- "iocDate": "Aug 29, 2026 — no indicators published",
- "severity": 4,
- "sectors": [
-  "Financial Services",
-  "Information Technology"
- ],
- "attack": [
-  "T1190 — Exploit Public-Facing Application",
-  "T1499 — Endpoint Denial of Service",
-  "T1657 — Financial Theft"
- ]
-},
-"novacookies": {
- "status": "new",
- "cvss": 0,
- "admiralty": "A2",
- "conf": "Vendor research — infrastructure and targeting confirmed; compromise not asserted",
- "confNote": "Island states its campaign artifacts indicate targeting and infrastructure association, not successful delivery or account compromise, and that geographic and sector findings describe the reviewed dataset rather than a complete victim census. Telegram pricing material records claims by an account advertising the service and does not establish identity, customer, order or payment. Island and Proofpoint report different activity curves, which Island attributes to different research vantage points. Short-lived links prevented repeatable testing of every access condition.",
- "iocDate": "Aug 26, 2026",
- "sectors": [
-  "All Sectors",
-  "Financial Services",
-  "Information Technology",
-  "Government Facilities",
-  "Critical Manufacturing",
-  "Commercial Facilities"
- ],
- "attack": [
-  "T1566.002 Phishing: Spearphishing Link",
-  "T1656 Impersonation",
-  "T1557 Adversary-in-the-Middle",
-  "T1539 Steal Web Session Cookie",
-  "T1550.004 Use Alternate Authentication Material: Web Session Cookie",
-  "T1621 Multi-Factor Authentication Request Generation",
-  "T1584 Compromise Infrastructure",
-  "T1497 Virtualization/Sandbox Evasion",
-  "T1583.001 Acquire Infrastructure: Domains",
-  "T1098.005 Account Manipulation: Device Registration"
- ]
-},
-"papercut": {
- "status": "new",
- "cvss": 9.4,
- "admiralty": "A1",
- "conf": "Confirmed exploitation — vendor-confirmed customer incidents plus independent IR observation",
- "confNote": "PaperCut confirms customer incidents but has published no detail on the activity or the actor. Huntress observed exploitation in two customer environments; watchTowr reports the chaining and the patch bypasses. The bypass claims are watchTowr's own and have not been independently confirmed.",
- "iocDate": "Aug 28, 2026",
- "sectors": [
-  "All Sectors",
-  "Information Technology",
-  "Government Facilities",
-  "Commercial Facilities",
-  "Healthcare and Public Health"
- ],
- "attack": [
-  "T1190 Exploit Public-Facing Application",
-  "T1059 Command and Scripting Interpreter",
-  "T1505 Server Software Component",
-  "T1082 System Information Discovery",
-  "T1057 Process Discovery",
-  "T1070.004 Indicator Removal: File Deletion",
-  "T1070.002 Indicator Removal: Clear Linux or Mac System Logs"
- ]
-},
-"owncloudph": {
- "status": "new",
- "cvss": 9.8,
- "admiralty": "A1",
- "conf": "Confirmed exploitation — researcher-observed open directory with exfiltrated data; CISA KEV listing",
- "confNote": "Attribution is to a Chinese speaker on language artifacts alone. Hunt.io explicitly does not assert state affiliation, stating the operator may be state-affiliated, contracted or independent. The 176-file / 372 MB figure is Hunt.io's estimate from the staging directories.",
- "iocDate": "Aug 28, 2026",
- "sectors": [
-  "Nuclear",
-  "Government Facilities",
-  "Defense Industrial Base",
-  "Information Technology",
-  "Critical Manufacturing"
- ],
- "attack": [
-  "T1190 Exploit Public-Facing Application",
-  "T1078 Valid Accounts",
-  "T1213 Data from Information Repositories",
-  "T1005 Data from Local System",
-  "T1552.001 Unsecured Credentials: Credentials In Files",
-  "T1041 Exfiltration Over C2 Channel",
-  "T1110 Brute Force",
-  "T1587.001 Develop Capabilities: Malware"
- ]
-},
-"zbtimplants": {
- "status": "new",
- "cvss": 9.3,
- "admiralty": "A1",
- "conf": "Vendor research — implants confirmed present in firmware; exploitation status disputed between catalogs",
- "confNote": "VulnCheck lists CVE-2026-74233 in its own KEV catalog on in-the-wild criteria, while CISA's Vulnrichment rates exploitation as proof-of-concept as of Aug 27 and none of the three ZBT CVEs are in CISA KEV as of catalog version 2026.08.27. The 392 beaconing devices are a floor from an unrepresentative subset, and 203 is a probe-response count, not a compromise count.",
- "iocDate": "Aug 28, 2026",
- "sectors": [
-  "Communications",
-  "Information Technology",
-  "Commercial Facilities",
-  "All Sectors"
- ],
- "attack": [
-  "T1200 Hardware Additions",
-  "T1195.003 Supply Chain Compromise: Compromise Hardware Supply Chain",
-  "T1059 Command and Scripting Interpreter",
-  "T1071 Application Layer Protocol",
-  "T1572 Protocol Tunneling",
-  "T1557 Adversary-in-the-Middle",
-  "T1584.008 Compromise Infrastructure: Network Devices",
-  "T1552 Unsecured Credentials"
- ]
-},
-"servicenow18885": {
- "status": "new",
- "cvss": 10,
- "admiralty": "B2",
- "conf": "Vendor advisory — no exploitation reported",
- "confNote": "Three of the four flaws carry CVSS 10.0; published detail covers two of them. The unauthenticated reachability is qualified by ServiceNow as applying in certain circumstances, which the advisory does not enumerate.",
- "iocDate": "Aug 28, 2026",
- "sectors": [
-  "Information Technology",
-  "Government Facilities",
-  "Financial Services",
-  "All Sectors"
- ],
- "attack": [
-  "T1190 Exploit Public-Facing Application",
-  "T1059 Command and Scripting Interpreter",
-  "T1068 Exploitation for Privilege Escalation",
-  "T1213 Data from Information Repositories"
- ]
-},
-"cpanel65643": {
- "status": "new",
- "cvss": 0,
- "admiralty": "B2",
- "conf": "Vendor advisory — no exploitation reported",
- "confNote": "No CVSS score was published in the reviewed sources, so the CVE row carries none. Exploitation requires an authenticated account with parked or addon domain permissions; cPanel has not described any observed activity.",
- "iocDate": "Aug 28, 2026",
- "sectors": [
-  "Information Technology",
-  "Commercial Facilities",
-  "All Sectors"
- ],
- "attack": [
-  "T1078 Valid Accounts",
-  "T1068 Exploitation for Privilege Escalation",
-  "T1505.003 Server Software Component: Web Shell",
-  "T1546 Event Triggered Execution"
- ]
-},
-"geoserver": {
- "status": "new",
- "cvss": 9.8,
- "admiralty": "A2",
- "conf": "Exploitation attempts confirmed by research telemetry — no confirmed compromise",
- "confNote": "watchTowr observed probing that triggered errors without proceeding further; no post-compromise activity was confirmed. No CVE identifier has been assigned and the CVSS 9.8 is the GHSA rating. Reporting differs on which data stores enable the RCE path — sa on SQL Server is the researcher's own example, with PostGIS and Oracle JDBC named elsewhere.",
- "iocDate": "Aug 28, 2026",
- "sectors": [
-  "Government Facilities",
-  "Defense Industrial Base",
-  "Information Technology",
-  "Transportation Systems"
- ],
- "attack": [
-  "T1190 Exploit Public-Facing Application",
-  "T1505 Server Software Component",
-  "T1059 Command and Scripting Interpreter",
-  "T1496 Resource Hijacking"
- ]
-},
+ "zbtimplants": {
+  "status": "new",
+  "cvss": 9.3,
+  "admiralty": "A1",
+  "conf": "Vendor research — implants confirmed present in firmware; exploitation status disputed between catalogs",
+  "confNote": "VulnCheck lists CVE-2026-74233 in its own KEV catalog on in-the-wild criteria, while CISA's Vulnrichment rates exploitation as proof-of-concept as of Aug 27 and none of the three ZBT CVEs are in CISA KEV as of catalog version 2026.08.27. The 392 beaconing devices are a floor from an unrepresentative subset, and 203 is a probe-response count, not a compromise count.",
+  "iocDate": "Aug 28, 2026",
+  "sectors": [
+   "Communications",
+   "Information Technology",
+   "Commercial Facilities",
+   "All Sectors"
+  ],
+  "attack": [
+   "T1200 Hardware Additions",
+   "T1195.003 Supply Chain Compromise: Compromise Hardware Supply Chain",
+   "T1059 Command and Scripting Interpreter",
+   "T1071 Application Layer Protocol",
+   "T1572 Protocol Tunneling",
+   "T1557 Adversary-in-the-Middle",
+   "T1584.008 Compromise Infrastructure: Network Devices",
+   "T1552 Unsecured Credentials"
+  ]
+ },
  "uat10147": {
   "status": "new",
   "cvss": 0,
@@ -4496,75 +3211,8 @@ window.CTI = {
    "T1505.003 Server Software Component: Web Shell"
   ]
  },
- "kevaug27": {
-  "status": "new",
-  "cvss": 9.8,
-  "admiralty": "A1",
-  "conf": "Confirmed exploitation — CISA KEV listing",
-  "confNote": "CISA does not publish exploitation detail for these entries and the Linux kernel description is explicitly unspecified, but exploitation detail has since emerged from other sources: Hunt.io for the ownCloud entry and OpenAI for the Artifactory and Linux kernel entries.",
-  "iocDate": "Aug 27, 2026",
-  "sectors": [
-   "Information Technology",
-   "Government Facilities"
-  ],
-  "attack": [
-   "T1190 Exploit Public-Facing Application",
-   "T1068 Exploitation for Privilege Escalation",
-   "T1078 Valid Accounts"
-  ]
- },
- "unifi067": {
-  "status": "new",
-  "cvss": 9.9,
-  "admiralty": "A2",
-  "conf": "Vendor-confirmed vulnerabilities — no confirmed exploitation as of Aug 26 disclosure",
-  "confNote": "Ubiquiti scored the three maximum-severity flaws 9.9; TechTimes reported 10.0. Score discrepancy noted rather than resolved.",
-  "iocDate": "Aug 26, 2026",
-  "sectors": [
-   "Information Technology",
-   "Commercial Facilities",
-   "Communications"
-  ],
-  "attack": [
-   "T1190 Exploit Public-Facing Application",
-   "T1059 Command and Scripting Interpreter",
-   "T1556 Modify Authentication Process"
-  ]
- },
- "magairports": {
-  "status": "new",
-  "cvss": 0,
-  "admiralty": "B2",
-  "conf": "Confirmed breach — company statement; vector and actor undisclosed",
-  "confNote": "MAG has not disclosed the intrusion vector or attributed the incident. Figures are the company's own.",
-  "iocDate": "Aug 27, 2026",
-  "sectors": [
-   "Transportation Systems",
-   "Commercial Facilities"
-  ],
-  "attack": [
-   "T1078 Valid Accounts",
-   "T1213 Data from Information Repositories",
-   "T1566 Phishing"
-  ]
- },
- "aithreatsignal": {
-  "status": "new",
-  "cvss": 0,
-  "admiralty": "B2",
-  "conf": "Vendor research and public statement — no exploitation claim",
-  "confNote": "Unit 42's sample methodology is not detailed in the summary reporting; treat the 405/12 figures as reported rather than independently verified.",
-  "iocDate": "Aug 28, 2026",
-  "sectors": [
-   "All Sectors"
-  ],
-  "attack": [
-   "T1566 Phishing",
-   "T1204 User Execution"
-  ]
- },
  "bostonsci": {
-  "status": "new",
+  "status": "ongoing",
   "cvss": 0,
   "admiralty": "B2",
   "conf": "Confirmed incident — company acknowledged disruption; scope and actor unconfirmed",
@@ -4578,94 +3226,6 @@ window.CTI = {
    "T1486 Data Encrypted for Impact",
    "T1490 Inhibit System Recovery",
    "T1199 Trusted Relationship"
-  ]
- },
- "gputhor": {
-  "status": "new",
-  "cvss": 0,
-  "admiralty": "B2",
-  "conf": "Research disclosure — no in-the-wild exploitation reported",
-  "confNote": "Hardware attacks of this class rarely see opportunistic exploitation, but they are directly relevant to multi-tenant GPU platforms and to threat models that assume ECC as a control.",
-  "iocDate": "Aug 26, 2026",
-  "sectors": [
-   "Information Technology",
-   "Government Facilities"
-  ],
-  "attack": [
-   "T1068 Exploitation for Privilege Escalation",
-   "T1499 Endpoint Denial of Service",
-   "T1200 Hardware Additions"
-  ]
- },
- "atfqilin": {
-  "status": "new",
-  "cvss": 0,
-  "admiralty": "A2",
-  "conf": "Confirmed by the affected agency — single system compromise acknowledged Aug 27, 2026",
-  "confNote": "Full scope not established. Qilin's claims about data volume are unverified, as is typical for leak-site postings.",
-  "iocDate": "Aug 27, 2026",
-  "sectors": [
-   "Government Facilities",
-   "Critical Manufacturing",
-   "Commercial Facilities"
-  ],
-  "attack": [
-   "T1486 Data Encrypted for Impact",
-   "T1657 Financial Theft",
-   "T1567.002 Exfiltration to Cloud Storage",
-   "T1078 Valid Accounts"
-  ]
- },
- "avada": {
-  "status": "new",
-  "cvss": 0,
-  "admiralty": "B2",
-  "conf": "Reported — vulnerability chain disclosed publicly; no confirmed in-the-wild exploitation at time of writing",
-  "confNote": "WordPress theme and plugin RCE chains historically see mass scanning within days of disclosure. Absence of confirmed exploitation should not delay patching.",
-  "iocDate": "Aug 26, 2026",
-  "sectors": [
-   "Commercial Facilities"
-  ],
-  "attack": [
-   "T1190 Exploit Public-Facing Application",
-   "T1505.003 Server Software Component: Web Shell",
-   "T1552.001 Unsecured Credentials: Credentials In Files"
-  ]
- },
- "teampcp": {
-  "status": "new",
-  "cvss": 0,
-  "admiralty": "A1",
-  "conf": "Confirmed — charges filed and court appearance on the public record, Aug 27, 2026",
-  "confNote": "Allegations are untested in court. The underlying March 2026 compromises and the FBI's July 2 advisory are separately confirmed.",
-  "iocDate": "Aug 27, 2026",
-  "sectors": [
-   "Information Technology",
-   "Financial Services"
-  ],
-  "attack": [
-   "T1195.002 Supply Chain Compromise: Software Supply Chain",
-   "T1552.001 Unsecured Credentials: Credentials In Files",
-   "T1078.004 Valid Accounts: Cloud Accounts"
-  ]
- },
- "manticore": {
-  "status": "ongoing",
-  "cvss": 0,
-  "admiralty": "B2",
-  "conf": "Confirmed actor activity — Group-IB analysis; attribution to IRGC affiliation is the vendor's assessment",
-  "confNote": "Aliases are consolidated from vendor naming; treat cross-vendor cluster equivalence as high-confidence but not certain.",
-  "iocDate": "Aug 2026",
-  "sectors": [
-   "Defense Industrial Base",
-   "Information Technology",
-   "Government Facilities"
-  ],
-  "attack": [
-   "T1566.003 Phishing: Spearphishing via Service",
-   "T1204.002 User Execution: Malicious File",
-   "T1585.001 Establish Accounts: Social Media Accounts",
-   "T1071.001 Application Layer Protocol: Web Protocols"
   ]
  },
  "netscaler": {
@@ -4841,24 +3401,6 @@ window.CTI = {
    "T1565 — Data Manipulation"
   ]
  },
- "zimbra": {
-  "status": "updated",
-  "conf": "Confirmed exploitation — CERT Polska confirmed active exploitation Aug 20; Synacor patched in ZCS 10.1.20; 270+ instances confirmed compromised as of Aug 25 (IT Security Newsletter / Bleeping); Shadowserver tracks 12,100+ exposed servers",
-  "confNote": "CERT Polska bulletin Aug 20; 270+ confirmed compromised as of Aug 25, 2026; BleepingComputer Aug 25 update; Shadowserver 12K+ exposed",
-  "iocDate": "Aug 20, 2026 — CERT Polska confirmed exploitation date; Zimbra patched July 20",
-  "admiralty": "A2",
-  "severity": 4,
-  "cvss": 8.9,
-  "sectors": [
-   "Information Technology",
-   "Government Facilities"
-  ],
-  "attack": [
-   "T1190 — Exploit Public-Facing Application",
-   "T1505.003 — Server Software Component: Web Shell",
-   "T1059 — Command and Scripting Interpreter"
-  ]
- },
  "trueconf": {
   "status": "ongoing",
   "conf": "Confirmed exploitation — Kaspersky ICS CERT confirmed active exploitation July 2026; CISA added both CVEs to KEV Aug 21; CISA BOD 26-04 remediation deadline Aug 24 has now passed",
@@ -4878,22 +3420,6 @@ window.CTI = {
    "T1195.002 — Supply Chain Compromise: Compromise Software Supply Chain",
    "T1543.003 — Create or Modify System Process: Windows Service",
    "T1071 — Application Layer Protocol (OneDrive C2)"
-  ]
- },
- "elementorpro": {
-  "status": "ongoing",
-  "conf": "Disclosed — Patchstack coordinated disclosure Aug 22; no confirmed in-wild exploitation at time of writing",
-  "confNote": "Patchstack disclosed CVE-2026-32475 Aug 22; The Hacker News corroborated; vendor patch available; no exploitation in wild confirmed. CVSS 9.0.",
-  "iocDate": "Aug 22, 2026 — disclosure date; no exploitation IoCs",
-  "admiralty": "A2",
-  "severity": 4,
-  "cvss": 9,
-  "sectors": [
-   "Information Technology"
-  ],
-  "attack": [
-   "T1190 — Exploit Public-Facing Application",
-   "T1505.003 — Server Software Component: Web Shell"
   ]
  },
  "rustsupplychain": {
@@ -4953,23 +3479,6 @@ window.CTI = {
    "T1078 — Valid Accounts"
   ]
  },
- "miniorange": {
-  "status": "new",
-  "conf": "Confirmed exploitation attempts — DigitalOcean detected and blocked active admin session attempt Aug 16; Patchstack reproduced both CVEs Aug 17; public PoC available as of Aug 25; BleepingComputer confirmed active exploitation attempts",
-  "confNote": "DigitalOcean confirmed detection Aug 16; Patchstack coordination Aug 17-21; THN and BleepingComputer confirmed exploitation attempts Aug 25; CVE-2026-15981 CVSS 9.8; public PoC available",
-  "iocDate": "Aug 16, 2026 — first exploitation attempt detected; PoC public Aug 25",
-  "admiralty": "A2",
-  "severity": 4,
-  "cvss": 9.8,
-  "sectors": [
-   "Information Technology"
-  ],
-  "attack": [
-   "T1190 — Exploit Public-Facing Application",
-   "T1078 — Valid Accounts",
-   "T1548 — Abuse Elevation Control Mechanism"
-  ]
- },
  "gitea2": {
   "status": "updated",
   "conf": "Confirmed exploitation — CISA KEV Aug 25; incident report (Habr) confirms automated scanner deployed crypto-miner dropper; PoC public (0xBlackash/CVE-2026-60004); Shadowserver counts 8,300+ exposed instances still unpatched as of Aug 28",
@@ -4988,43 +3497,112 @@ window.CTI = {
    "T1543 — Create or Modify System Process"
   ]
  },
- "mlflow": {
-  "status": "ongoing",
-  "conf": "Confirmed exploitation — CISA added to KEV Aug 19, 2026; active exploitation against AI/ML infrastructure confirmed",
-  "confNote": "CISA KEV added Aug 19; federal deadline Sep 2; SSRF → IMDS IAM credential theft confirmed; AI/ML platform targeting",
-  "iocDate": "Aug 19, 2026 — CISA KEV addition",
-  "admiralty": "A2",
-  "severity": 4,
-  "cvss": 9.3,
-  "sectors": [
-   "Information Technology",
-   "Government Facilities"
-  ],
-  "attack": [
-   "T1190 — Exploit Public-Facing Application",
-   "T1552.005 — Credentials from Cloud Instance Metadata API",
-   "T1078.004 — Valid Accounts: Cloud Accounts"
-  ]
- },
- "qtfy": {
+ "astracyber": {
   "status": "new",
-  "conf": "Confirmed — DOJ/FBI court-authorized domain seizure Aug 26, 2026; Lumen Black Lotus Labs 18-month infrastructure tracking corroborated; court documents unsealed SDCA confirming QTFY employed by Nanjing Xinjiuwei Network Technology Company",
-  "confNote": "DOJ press release Aug 26; unsealed court docs SDCA; confirmed victims NASA, Fed, DOJ, DOE, HHS, NIH, Senate; QTFY sold services to China MSS and PLA per DOJ; Lumen Black Lotus Labs corroborated attribution",
-  "iocDate": "May 2018 — campaign start; Aug 26, 2026 — DOJ/FBI seizure",
-  "admiralty": "A1",
-  "severity": 5,
+  "conf": "Vendor self-assessment — OpenAI's own framework and declaration; no independent evaluation published. The linked exploitation case (CVE-2026-66384, Hugging Face) is separately documented and KEV-listed",
+  "confNote": "Carried as a planning input on exploitation speed, not as threat activity. No indicators, no hunting content",
+  "iocDate": "Sep 1–2, 2026 — reported",
+  "admiralty": "B2",
+  "severity": 3,
   "cvss": null,
   "sectors": [
-   "Government Facilities",
-   "Financial Services",
    "Information Technology"
   ],
   "attack": [
-   "T1595 — Active Scanning (QScan)",
-   "T1584.005 — Compromise Infrastructure: Botnet",
-   "T1090.003 — Proxy: Multi-hop Proxy",
+   "T1588.006 — Obtain Capabilities: Vulnerabilities",
+   "T1587.004 — Develop Capabilities: Exploits"
+  ]
+ },
+ "watchguardiked": {
+  "status": "new",
+  "conf": "Confirmed vulnerabilities, no reported exploitation — vendor patches released; CVE identifiers and version ranges not stated in the reporting reviewed",
+  "confNote": "Secondary source (SecurityWeek) for the component and impact. Consult WatchGuard's advisory for CVE IDs, CVSS and affected versions before scoping",
+  "iocDate": "Sep 1, 2026 — patches reported",
+  "admiralty": "B2",
+  "severity": 4,
+  "cvss": null,
+  "sectors": [
+   "Information Technology",
+   "All Sectors"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
+   "T1133 — External Remote Services"
+  ]
+ },
+ "virtualizor": {
+  "status": "new",
+  "conf": "Confirmed by vendor — Softaculous confirms the BGP hijack, the fraudulently obtained certificate and delivery of a malicious update package; the affected server population cannot be enumerated",
+  "confNote": "Primary source is the vendor's own incident notice. Victim count described only as a handful of servers; malicious traffic never reached vendor logs. One IOC published by the vendor and not reproduced here",
+  "iocDate": "Aug 28–30, 2026 — hijack window; vendor notice Sep 2, 2026",
+  "admiralty": "A2",
+  "severity": 5,
+  "cvss": null,
+  "sectors": [
+   "Information Technology",
+   "Communications"
+  ],
+  "attack": [
+   "T1195.002 — Compromise Software Supply Chain",
+   "T1557 — Adversary-in-the-Middle",
+   "T1553.004 — Install Root Certificate",
+   "T1584 — Compromise Infrastructure"
+  ]
+ },
+ "jfrog82329": {
+  "status": "new",
+  "conf": "Reported exploitation — watchTowr honeypot observation of admin-token minting; JFrog has not confirmed exploitation and no other reports exist",
+  "confNote": "Single-source exploitation evidence (watchTowr Attacker Eye). Vendor confirms the flaw and has patched it; CTO characterises it as improper authentication, not RCE, and self-hosted only. No KEV listing as of Sep 2, 2026; no published CVSS in the sources reviewed",
+  "iocDate": "Aug 28, 2026 — patch released; Sep 1, 2026 — exploitation reported",
+  "admiralty": "B2",
+  "severity": 5,
+  "cvss": null,
+  "sectors": [
+   "Information Technology"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
    "T1078 — Valid Accounts",
-   "T1041 — Exfiltration Over C2 Channel"
+   "T1550.001 — Application Access Token",
+   "T1195.002 — Compromise Software Supply Chain",
+   "T1087 — Account Discovery"
+  ]
+ },
+ "langflow": {
+  "status": "new",
+  "conf": "Confirmed exploitation — VulnCheck reports observed in-the-wild exploitation with 360+ attempts against its UK canaries; activity characterised as reconnaissance and credential harvesting",
+  "confNote": "Single vendor source for the exploitation observation. No indicator values published; no KEV listing for CVE-2026-0768 as of Sep 2, 2026",
+  "iocDate": "Sep 1, 2026 — VulnCheck report; canary volume measured to Aug 31, 2026",
+  "admiralty": "A2",
+  "severity": 5,
+  "cvss": 9.8,
+  "sectors": [
+   "Information Technology"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
+   "T1552 — Unsecured Credentials",
+   "T1552.001 — Credentials In Files",
+   "T1082 — System Information Discovery"
+  ]
+ },
+ "sonicwallsma": {
+  "status": "new",
+  "conf": "Confirmed exploitation — vendor states it observed exploitation of both vulnerabilities, which it discovered internally while investigating attacks",
+  "confNote": "Single-source for the attack detail (SonicWall PSIRT, reported by SecurityWeek). No victim count, actor attribution, IOCs or KEV listing as of Sep 2, 2026",
+  "iocDate": "Sep 1, 2026 — advisory published; exploitation timeline not disclosed",
+  "admiralty": "A2",
+  "severity": 5,
+  "cvss": 10,
+  "sectors": [
+   "Information Technology",
+   "All Sectors"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
+   "T1133 — External Remote Services",
+   "T1059 — Command and Scripting Interpreter",
+   "T1556 — Modify Authentication Process"
   ]
  }
 }
