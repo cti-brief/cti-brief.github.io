@@ -1,57 +1,46 @@
-# CTI Brief — deployment
+# CTI Brief — upload package
 
-Static site. No build step, no server-side code.
+**Edition:** Week of Aug 31 – Sep 6, 2026
+**Prepared:** Sep 2, 2026 · Monday rollover + prune
+**Posture:** CRITICAL
 
-## Files
-- index.html    the dashboard (open this)
-- cti-data.js   all brief content — this is the only file you edit weekly
-- support.js    runtime the dashboard needs; do not edit
-- .nojekyll     tells GitHub Pages to serve files as-is
-- archive/      past weeks (add your own; the header "Archive" link points here)
+## Contents
+29 stories · 37 vulnerability rows · 75 indicators · 60 hunting queries · 13 key judgments · 18 corrections
 
-## Deploy to GitHub Pages
-1. Copy the contents of this folder to the root of your Pages repo (or to /docs).
-2. Commit and push.
-3. Settings -> Pages -> Source: the branch and folder you used.
+## Upload to the web root, preserving paths
 
-All four files must sit in the same directory. Opening index.html straight off
-your local disk works too.
+    index.html                    # week strings + social card text updated
+    cti-data.js                   # all brief content for this edition
+    og-image.png                  # link preview, re-snapshotted this edition
+    support.js                    # runtime — unchanged, upload only on first deploy
+    .nojekyll                     # required for GitHub Pages, upload once
+    archive/index.html            # archive listing — unchanged
+    archive/archive-index.js      # NEW row: W35 2026
+    archive/2026-W35.html         # NEW frozen edition (Aug 24 – Aug 30, 46 stories)
+    archive/2026-W34.html         # already deployed
+    archive/2026-W33.html         # already deployed
 
-## Weekly update
-Edit cti-data.js only. Its shape:
+## Changed this edition
+- **Overview tab rebuilt as a hunting pack.** Landing view now leads with three actions for the
+  next hour (PaperCut log review, Artifactory token revocation, Langflow key rotation), each with
+  its Defender/Sentinel query inline and a copy button. Below it: patch-only items with no published
+  hunt content, the full posture statement collapsed behind a disclosure, and a Continuity panel of
+  archive-derived figures. Stories, vulnerabilities, both workbenches, judgments and sources are
+  unchanged.
+- Rolled the week to Week of Aug 31 – Sep 6, 2026 and rewrote the posture statement.
+- Archived the outgoing edition as `archive/2026-W35.html` and added its archive row.
+- Added six stories: SonicWall SMA1000 CVE-2026-83548 / CVE-2026-83549, JFrog Artifactory
+  CVE-2026-82329, Langflow CVE-2026-0768, the Softaculous Virtualizor BGP hijack,
+  WatchGuard Fireware `iked`, and OpenAI Astra's capability threshold.
+- Updated PaperCut (KEV Aug 31, escalated to active intrusions) and Boston Scientific.
+- Pruned 23 stories across two passes; everything removed is preserved in `archive/2026-W35.html`.
+- Three new key judgments (remote-access appliances, supply-chain control planes, self-hosted
+  AI tooling); the Zimbra/macOS judgment now rests on macOS Screen Sharing alone.
+- Four corrections logged, covering the rollover, both prunes, the PaperCut escalation and the
+  two distinct JFrog Artifactory CVEs.
 
-  window.CTI = {
-    WEEK_RANGE: 'Week of ...',
-    POSTURE:    { level, text },
-    KJ:         [ { num, html } ],          // <b>...</b> renders as accent bold
-    STORIES:    [ { key, title, body, src, badge, tags } ],
-    CVES:       [ { key, num, score, sub, flags, level } ],
-    D:          { <key>: { overview, technical[], mitigation[], response[], iocs[] } },
-    META:       { <key>: { status, cvss, admiralty, conf, sectors[], attack[], iocDate } },
-    SOURCES:    [ { group, links[] } ],
-    CORRECTIONS:[ { date, item, was, now, why } ]
-  };
-
-STORIES[].key ties a story to its D and META entries and to any CVE row sharing
-that key — keep the keys consistent and everything else wires up on its own.
-Counters, filter chips, sector chips, the IOC workbench and CSV export are all
-derived from this data; nothing in index.html needs touching.
-
-Response/technical entries beginning "DEFENDER XDR KQL —" or "SENTINEL KQL —"
-are detected automatically: they render as collapsible query blocks inside the
-story and are collected into the KQL workbench tab (filter, copy, download .kql).
-
-IOC type strings are case-sensitive facet labels in the IOC workbench. Use the
-existing set exactly: SHA256, SHA1, MD5, IP, Domain, URL, Filename, Behavior,
-Actor Alias, String. Only SHA256/SHA1/MD5/IP/Domain/URL are mapped into the
-"Defender indicators CSV" export (Microsoft import schema, Action=Block,
-Severity=Medium, GenerateAlert=TRUE; duplicates and non-importable values are
-dropped, and the button shows the count that will actually export).
-
-## Archiving a week
-Before swapping in new data, copy the whole folder to archive/YYYY-MM-DD/ and
-link it from your archive index.
-
-## Notes
-- Theme (dark/light) and pins are stored per browser in localStorage.
-- Fonts load from Google Fonts; offline use falls back to a system sans.
+## Verify after upload
+- Header reads "Week of Aug 31 – Sep 6, 2026".
+- Archive page lists W35 2026 and the frozen copy opens.
+- IOC and KQL workbenches populate (75 indicators, 60 queries).
+- Social preview shows the new card: posture CRITICAL, 29 stories.
