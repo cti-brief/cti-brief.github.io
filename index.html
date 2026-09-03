@@ -223,7 +223,15 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
                 <span style="font-family:var(--mono);font-size:10.5px;color:var(--color-accent)">{{ postureLabel }}</span>
               </button>
               <sc-if value="{{ postureOpen }}">
-                <p style="font-size:13px;line-height:1.6;margin:0;padding:14px 20px 20px;text-wrap:pretty">{{ posture.text }}</p>
+                <div style="padding:14px 20px 20px">
+                  <p style="margin:0 0 10px;font-size:13.5px;line-height:1.6;font-weight:600;text-wrap:pretty">{{ postureLead }}</p>
+                  <sc-for list="{{ postureLines }}" as="pl" hint-placeholder-count="6">
+                    <div style="display:grid;grid-template-columns:14px minmax(0,1fr);gap:9px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--color-hair)">
+                      <span style="font-family:var(--mono);font-size:11px;color:var(--color-accent)">·</span>
+                      <p style="margin:0;font-size:13px;line-height:1.6;text-wrap:pretty">{{ pl }}</p>
+                    </div>
+                  </sc-for>
+                </div>
               </sc-if>
             </div>
 
@@ -1055,6 +1063,9 @@ class Component extends DCLogic {
         { figure: '3rd escalation', label: 'PaperCut', note: 'Zero-day exploitation, then bypasses of the first emergency patch, now KEV listing and active intrusions — inside nine days of this brief.' },
         { figure: '3 vendors, 1 week', label: 'Remote access', note: 'SonicWall SMA1000, WatchGuard Fireware and Citrix NetScaler. Two of the three were found through live intrusions rather than research.' }
       ],
+      postureLead: (d.POSTURE || {}).lead || '',
+      postureLines: ((d.POSTURE || {}).lines || String((d.POSTURE || {}).text || '').split(/(?<=[.;])\s+/))
+        .map(t => String(t).trim()).filter(Boolean),
       postureOpen: this.state.postureOpen,
       postureLabel: this.state.postureOpen ? 'Hide' : 'Read',
       togglePosture: () => this.setState(st => ({ postureOpen: !st.postureOpen })),
