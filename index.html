@@ -285,7 +285,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
     </sc-if>
 
     <sc-if value="{{ isStories }}">
-      <div style="display:grid;grid-template-rows:auto 1fr;overflow:hidden">
+      <div style="display:grid;grid-template-rows:auto auto 1fr;overflow:hidden">
         <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 24px;border-bottom:2px solid var(--color-divider);background:var(--color-surface)">
           <input value="{{ q }}" onInput="{{ setQ }}" placeholder="Search titles, actors, CVEs, sources  ( / )" style="flex:1;min-width:240px;font-family:var(--font-body);font-size:13px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-hair);padding:8px 10px" />
           <div style="display:flex;gap:6px;flex-wrap:wrap">
@@ -303,6 +303,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
           <button onClick="{{ reset }}" style="appearance:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;background:none;color:var(--color-mute);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Reset</button>
           <span style="font-family:var(--mono);font-size:11px;color:var(--color-mute)">{{ resultLine }}</span>
         </div>
+        <sc-if value="{{ sectorActive }}">
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:9px 24px;border-bottom:1px solid var(--accent-bd);background:var(--accent-soft)">
+            <span style="font-family:var(--mono);font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--hover)">Filtered by sector</span>
+            <button onClick="{{ clearSector }}" title="Clear sector filter" style="appearance:none;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:4px 9px;cursor:pointer;background:var(--color-accent);color:#fff;border:1px solid var(--color-accent)" style-hover="background:var(--accent-press);border-color:var(--accent-press)">{{ sectorLabel }} <span style="opacity:.75;font-size:12px">✕</span></button>
+            <span style="font-family:var(--mono);font-size:11px;color:var(--color-mute)">Showing only stories tagged to this sector.</span>
+          </div>
+        </sc-if>
         <div style="overflow:auto">
           <sc-for list="{{ stories }}" as="s" hint-placeholder-count="6">
             <article id="{{ s.domId }}" style="border-bottom:1px solid var(--color-hair);background:{{ s.bg }}">
@@ -1108,6 +1115,9 @@ class Component extends DCLogic {
       setIocQ: e => this.setState({ iocQ: e.target.value }),
       setSort: e => this.setState({ sort: e.target.value }),
       reset: () => this.setState({ q: '', status: [], sector: '', pinOnly: false, sort: 'default' }),
+      sectorActive: !!this.state.sector,
+      sectorLabel: this.state.sector,
+      clearSector: () => this.setState({ sector: '' }),
       expandLabel: anyExpanded ? 'Collapse all' : 'Expand all',
       expandAll: () => {
         if (anyExpanded) return this.setState({ expanded: {} });
