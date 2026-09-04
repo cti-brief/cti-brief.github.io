@@ -3,21 +3,39 @@ window.CTI = {
   WEEK_RANGE: "Week of Aug 31 – Sep 6, 2026",
   POSTURE: {
  "level": "CRITICAL",
- "text": "Five new items today, and three stories moved: a seven-flaw KEV batch weighted toward the build and AI chain, VoIP exploitation, and two vendor reports on attacks against self-hosted AI infrastructure. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are now KEV-listed with a Sep 5 deadline; patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and treat any exposed appliance as in scope for review, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is now KEV-listed at CVSS 9.8 with a Sep 5 deadline; update self-hosted instances, then revoke every access token, since tokens minted before the patch survive it. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
+ "text": "One new item today and one story enriched: Cisco's September advisory set brings two CVSS 9.8 IOS XR groupings and a root-level Nexus 9000 RCE with no fixed-release table, against a backdrop of yesterday's seven-flaw KEV batch still inside its Sep 5 deadline. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE on Nexus 9000 Silicon One switches with no fixed-release table; apply the September SMUs, block the two Nexus ports with an iACL, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 deadline; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is now KEV-listed at CVSS 9.8 with a Sep 5 deadline; update self-hosted instances, then revoke every access token, since tokens minted before the patch survive it. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
  "lines": [
+  "Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE on Nexus 9000 Silicon One switches with no fixed-release table; apply the September SMUs, block the two Nexus ports with an iACL, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting.",
   "CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances.",
   "Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected.",
   "Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact.",
-  "SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are now KEV-listed with a Sep 5 deadline; patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and treat any exposed appliance as in scope for review, because no IOCs were published.",
+  "SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 deadline; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published.",
   "JFrog Artifactory CVE-2026-82329 is now KEV-listed at CVSS 9.8 with a Sep 5 deadline; update self-hosted instances, then revoke every access token, since tokens minted before the patch survive it.",
   "PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt.",
   "Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637.",
   "Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility.",
   "Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10."
  ],
- "lead": "Five new items today, and three stories moved: a seven-flaw KEV batch weighted toward the build and AI chain, VoIP exploitation, and two vendor reports on attacks against self-hosted AI infrastructure."
+ "lead": "One new item today and one story enriched: Cisco's September advisory set brings two CVSS 9.8 IOS XR groupings and a root-level Nexus 9000 RCE with no fixed-release table, against a backdrop of yesterday's seven-flaw KEV batch still inside its Sep 5 deadline."
 },
   STORIES: [
+ {
+  "key": "ciscosep",
+  "badge": "new",
+  "tags": [
+   [
+    "crit",
+    "Cisco IOS XR · Nexus 9000 · CVSS 9.8"
+   ],
+   [
+    "high",
+    "Communications · Core network infrastructure"
+   ]
+  ],
+  "title": "Cisco patches critical IOS XR and Nexus 9000 flaws found by internal testing and frontier AI models, days after Fire Ant implants were found on IOS XR routers",
+  "body": "Cisco PSIRT published its September 2026 advisory set on Sep 2, 2026. The IOS XR Software Security Hardening Release groups multiple internally discovered vulnerabilities by CWE class under seven CVEs: CVE-2026-20274 and CVE-2026-20279 are rated CVSS 9.8, and CVE-2026-20275 through CVE-2026-20278 and CVE-2026-20280 top out between 8.2 and 8.8. CVE-2026-20274 covers memory-safety and resource-lifetime bugs including buffer overflows and use-after-free conditions, reachable by sending malformed network packets to trigger memory corruption inside core routing daemons; CVE-2026-20279 covers access-control bugs including missing authentication for critical functions and improper certificate validation, allowing authorization checks to be bypassed to perform administrative actions without valid credentials. The affected services are fundamental routing components — BGP, OSPF, IS-IS and gRPC endpoints. Cisco's advisory states the vulnerabilities affect all releases regardless of device configuration, that there are no workarounds, and that they were found during internal security testing \"using existing testing processes as well as frontier AI models.\" Cisco says they are not known to be actively exploited. Separately, CVE-2026-20212 (CVSS 9.8) in Nexus 9000 Series switches running Silicon One lets a remote unauthenticated attacker connect to by-default accessible TCP ports and execute code with root privileges; Cisco published no fixed-release table for it, directing customers to its Software Checker and offering an infrastructure access control list blocking the two ports plus a temporary Live Protect shield as stopgaps. The same publication fixed CVE-2026-20281 (CVSS 7.5), a denial-of-service flaw in Desk Phone 9800, IP Phone 7800 and 8800 and Video Phone 8875 devices registered to Unified Communications Manager with Web Access enabled, a setting off by default, and disclosed CVE-2026-20354 and CVE-2026-20355 (CVSS 5.9), two publicly disclosed S/MIME decryption flaws in Secure Email that let a machine-in-the-middle attacker recover plaintext from mail passing between gateways running AsyncOS 16.5.0 or earlier with S/MIME configured — fixed releases for that pair are stated only in the bug records. The Hacker News notes the disclosure came six days after Sygnia reported that the China-nexus actor Fire Ant, first documented in 2025, ran purpose-built implants on IOS XR routers that suppressed syslog delivery.",
+  "src": "Cisco PSIRT advisories (Sep 2, 2026), SecurityWeek, The Hacker News, securityonline.info, CVE Brief — Sep 2–3, 2026"
+ },
  {
   "key": "kevsep02",
   "tags": [
@@ -117,7 +135,7 @@ window.CTI = {
   ],
   "badge": "updated",
   "title": "SonicWall found two SMA1000 zero-days by investigating attacks that used them: a CVSS 10.0 pre-auth SSRF chained with command injection in the management console",
-  "body": "SonicWall published advisory SNWLID-2026-0016 on Sep 1, 2026 urging SMA1000 customers to apply hotfixes for two vulnerabilities it says were discovered internally, along with their exploitation. CVE-2026-83548 (CVSS 10.0) is a pre-authentication server-side request forgery flaw in the Appliance Work Place interface that lets a remote unauthenticated attacker reach sensitive functionality and perform unauthorised operations. CVE-2026-83549 (CVSS 7.8) is an OS command injection flaw in the Appliance Management Console that an authenticated attacker can use to run arbitrary commands, potentially reaching remote code execution. SonicWall says it has observed exploitation of both, which indicates the two were chained in attacks. Affected models are the SMA1000 6210, 7210 and 8200v; hotfixes 12.4.3-03526 and 12.5.0-02952 and later releases contain the fixes. SSL-VPN on SonicWall firewalls and the SMA100 series are not affected. The vendor advisory contains no indicators of compromise and no detail on the attacks. Update, Sep 3: CISA added both CVEs to the KEV catalog on Sep 2, 2026 as part of a seven-flaw batch; under BOD 26-04 federal civilian agencies have until Sep 5, 2026 to remediate. When this story was first written neither CVE was listed.",
+  "body": "SonicWall published advisory SNWLID-2026-0016 on Sep 1, 2026 urging SMA1000 customers to apply hotfixes for two vulnerabilities it says were discovered internally, along with their exploitation. CVE-2026-83548 (CVSS 10.0) is a pre-authentication server-side request forgery flaw in the Appliance Work Place interface that lets a remote unauthenticated attacker reach sensitive functionality and perform unauthorised operations. CVE-2026-83549 (CVSS 7.8) is an OS command injection flaw in the Appliance Management Console that an authenticated attacker can use to run arbitrary commands, potentially reaching remote code execution. SonicWall says it has observed exploitation of both, which indicates the two were chained in attacks. Affected models are the SMA1000 6210, 7210 and 8200v; hotfixes 12.4.3-03526 and 12.5.0-02952 and later releases contain the fixes. SSL-VPN on SonicWall firewalls and the SMA100 series are not affected. The vendor advisory contains no indicators of compromise and no detail on the attacks. Update, Sep 3: CISA added both CVEs to the KEV catalog on Sep 2, 2026 as part of a seven-flaw batch; under BOD 26-04 federal civilian agencies have until Sep 5, 2026 to remediate. When this story was first written neither CVE was listed. Rapid7's Sep 2 analysis adds that CVE-2026-83548 is a pre-authentication SSRF in the SMA1000 Appliance Work Place interface and CVE-2026-83549 an OS command injection in the Appliance Management Console which on its own requires an authenticated administrator and specific system conditions, that the two can be chained for unauthenticated remote code execution, and that affected models are the 6210, 7210 and 8200v. Rapid7 states no public proof-of-concept, indicators of compromise or attribution were identified at the time of publication, and that because exploitation was occurring before public disclosure organisations should not rely on patching alone to determine whether an appliance has already been compromised.",
   "src": "SonicWall SNWLID-2026-0016, CISA KEV (Sep 2, 2026), SecurityWeek, The Hacker News — Sep 1–3, 2026"
  },
  {
@@ -599,6 +617,27 @@ window.CTI = {
 ],
   CVES: [
  {
+  "key": "ciscosep",
+  "level": "crit",
+  "num": "CVE-2026-20274",
+  "score": "9.8",
+  "sub": "Cisco IOS XR memory-safety and resource-lifetime bugs (buffer overflow, use-after-free) grouped under one CVE — malformed packets corrupt memory in core routing daemons. Affects all releases regardless of configuration; no workarounds. Not known to be exploited"
+ },
+ {
+  "key": "ciscosep",
+  "level": "crit",
+  "num": "CVE-2026-20279",
+  "score": "9.8",
+  "sub": "Cisco IOS XR access-control bugs including missing authentication for critical functions and improper certificate validation — authorization bypass to administrative actions without valid credentials. Affects all releases; no workarounds"
+ },
+ {
+  "key": "ciscosep",
+  "level": "crit",
+  "num": "CVE-2026-20212",
+  "score": "9.8",
+  "sub": "Cisco Nexus 9000 Series Silicon One remote code execution — unauthenticated attacker connects to by-default accessible TCP ports and executes code as root. No fixed-release table published; Cisco directs customers to Software Checker, with an iACL and Live Protect shield as stopgaps"
+ },
+ {
   "key": "switchvox",
   "level": "crit",
   "num": "CVE-2026-9586",
@@ -1077,9 +1116,38 @@ window.CTI = {
  {
   "num": "14",
   "html": "<b>The Sep 2 KEV batch is the clearest signal yet that the exploited attack surface has moved into the build and AI chain.</b> Four of the seven additions — JFrog Artifactory, Starlette, Kestra OSS and LiteLLM — are components owned by engineering rather than by IT operations, and two of them (Starlette, LiteLLM) are dependencies that will not appear in an asset inventory under their own name. We assess with <b>high confidence</b> that organisations reconciling this batch against a CMDB will under-count their exposure, and that the reliable method is dependency and container inventory rather than asset lists; note also that the Kestra listing rests on a single Microsoft report of likely exploitation in late June, which is a lower evidentiary bar than the honeypot captures behind the other entries."
+ },
+ {
+  "num": "15",
+  "html": "<b>Cisco's IOS XR bundle is a disclosure-model change as much as a patch cycle.</b> Seven CVEs stand in for many underlying bugs grouped by weakness class, the advisory states all releases are affected regardless of configuration with no workarounds, and Cisco credits \"frontier AI models\" alongside existing processes for finding them. We assess with <b>moderate confidence</b> that CWE-grouped CVEs will make severity-based prioritisation less reliable over the coming quarters, because one identifier no longer maps to one defect or one exploitation path; and we note that Sygnia's report of Fire Ant implants suppressing syslog on IOS XR routers, six days earlier, means router log gaps deserve investigation on their own merits while patching proceeds."
  }
 ],
   SOURCES: [
+ {
+  "group": "Cisco — September 2026 advisory set",
+  "links": [
+   {
+    "label": "Cisco PSIRT — IOS XR Software Security Hardening Release: September 2026",
+    "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-iosxr-qg64NcM"
+   },
+   {
+    "label": "Cisco PSIRT — Advance Notification for September 2, 2026 advisories",
+    "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-notice-f2SiMFxl"
+   },
+   {
+    "label": "SecurityWeek — Cisco Warns of Unpatched Secure Email Flaws, Patches Critical Switch Vulnerabilities",
+    "url": "https://www.securityweek.com/cisco-warns-of-unpatched-secure-email-flaws-patches-critical-switch-vulnerabilities/"
+   },
+   {
+    "label": "The Hacker News — Critical Cisco Nexus 9000 Flaw Lets Unauthenticated Remote Attackers Run Code as Root",
+    "url": "https://thehackernews.com/2026/09/critical-cisco-nexus-9000-flaw-lets.html"
+   },
+   {
+    "label": "securityonline.info — Cisco Fixes Critical Cisco IOS XR Vulnerabilities",
+    "url": "https://securityonline.info/cisco-ios-xr-vulnerabilities/"
+   }
+  ]
+ },
  {
   "group": "CISA KEV — seven additions, Sep 2, 2026",
   "links": [
@@ -1175,6 +1243,10 @@ window.CTI = {
    {
     "label": "SecurityWeek — SonicWall Warns of Two SMA1000 Zero-Days Exploited in Attacks",
     "url": "https://www.securityweek.com/sonicwall-warns-of-two-sma1000-zero-days-exploited-in-attacks/"
+   },
+   {
+    "label": "Rapid7 — Critical SonicWall SMA1000 Vulnerabilities CVE-2026-83548, CVE-2026-83549 Exploited in the Wild",
+    "url": "https://www.rapid7.com/blog/post/etr-critical-sonicwall-sma1000-vulnerabilities-cve-2026-83548-cve-2026-83549-exploited-in-the-wild/"
    }
   ]
  },
@@ -1631,6 +1703,12 @@ window.CTI = {
  }
 ],
   CORRECTIONS: [
+ {
+  "date": "Sep 3, 2026",
+  "item": "SonicWall SMA1000 — component detail and affected models added",
+  "was": "The record described two chained zero-days without identifying which interface each affected or which models were in scope",
+  "now": "Rapid7's Sep 2 analysis places CVE-2026-83548 in the Appliance Work Place interface as a pre-authentication SSRF and CVE-2026-83549 in the Appliance Management Console as an OS command injection requiring an authenticated administrator and specific system conditions, with SMA1000 6210, 7210 and 8200v affected. Rapid7 also confirms no public PoC, IOCs or attribution as of Sep 2"
+ },
  {
   "date": "Sep 3, 2026",
   "item": "SonicWall SMA1000 — now KEV-listed",
@@ -3256,7 +3334,8 @@ window.CTI = {
    "Fixed in hotfixes 12.4.3-03526 and 12.5.0-02952 and higher.",
    "Discovery: SonicWall says the vulnerabilities and their exploitation were both discovered internally. No victim count, actor attribution, or timeline for the attacks has been released.",
    "The public advisory includes no indicators of compromise. As of Sep 2, 2026 neither CVE was in the CISA KEV catalog, which held 17 SonicWall product entries.",
-   "Context: SecurityWeek notes SonicWall product flaws are regularly exploited in the wild, including in ransomware attacks, and that some have been exploited for weeks before a patch existed."
+   "Context: SecurityWeek notes SonicWall product flaws are regularly exploited in the wild, including in ransomware attacks, and that some have been exploited for weeks before a patch existed.",
+   "Rapid7 (Sep 2, 2026): CVE-2026-83548 is a pre-authentication SSRF in the SMA1000 Appliance Work Place interface; CVE-2026-83549 is an OS command injection in the Appliance Management Console that on its own requires an authenticated administrator and specific system conditions. Chained, they achieve unauthenticated RCE. Affected models: SMA1000 6210, 7210 and 8200v."
   ],
   "iocs": [],
   "iocNote": "No indicators of compromise have been published. SonicWall's advisory carries none, and there is no third-party incident reporting to draw from. Detection therefore depends on your own appliance telemetry: AMC administrative sessions and command execution, AWP requests that reach internal endpoints, and any new outbound connection initiated by the appliance itself. Because the vendor found the bugs by investigating live attacks, absence of published artefacts is not evidence of low prevalence.",
@@ -3265,7 +3344,8 @@ window.CTI = {
    "Remove the Appliance Management Console from internet reachability. AMC is the second half of the chain and has no reason to be exposed.",
    "Treat any internet-facing SMA1000 that was unpatched as in scope for compromise review: check for AMC accounts, local admin additions, changed authentication or SSO settings, and unexpected files under the appliance's writable paths.",
    "Rotate credentials and revoke sessions for anything that authenticated through the gateway during the exposure window, including RADIUS/LDAP service accounts bound to the appliance.",
-   "Where the appliance fronts internal applications, review those applications' logs for requests arriving with the gateway as source — that is what a successful SSRF looks like downstream."
+   "Where the appliance fronts internal applications, review those applications' logs for requests arriving with the gateway as source — that is what a successful SSRF looks like downstream.",
+   "Rapid7's guidance: because exploitation was occurring before public disclosure, do not rely solely on patching to determine whether an appliance has already been compromised. Treat any exposed SMA1000 as requiring forensic review, not just a version check."
   ],
   "response": [
    "SENTINEL KQL — appliance-side hunting on forwarded SMA1000 syslog: AMC administrative activity and AWP requests to management paths. Adjust the DeviceVendor/Facility filters to match your connector.\n\n// SonicWall SMA1000 CVE-2026-83548 / CVE-2026-83549 — management-plane activity\n// union isfuzzy pattern so the query survives a missing connector\n// technique reference: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com)\nlet lookback = 30d;\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(lookback)\n   | where DeviceVendor has \"SonicWall\"\n   | where RequestURL has_any (\"/cgi-bin/\", \"/__api__\", \"/appliance\", \"/amc\", \"/awp\")\n   | project TimeGenerated, SourceIP, DestinationIP, RequestURL, DeviceAction, Activity),\n  (Syslog\n   | where TimeGenerated > ago(lookback)\n   | where Computer has_any (\"sma\", \"sslvpn\", \"amc\")\n   | where SyslogMessage has_any (\"AMC\", \"appliance management\", \"shell\", \"exec\", \"sudo\", \"admin login\")\n   | project TimeGenerated, SourceIP = Computer, DestinationIP = \"\", RequestURL = \"\", DeviceAction = Facility, Activity = SyslogMessage)\n| sort by TimeGenerated desc",
@@ -3568,6 +3648,49 @@ window.CTI = {
    "No hunting queries: this is a legislative and funding item with no adversary activity of its own. The related operational record is the Iran-linked OT disruption story in this brief."
   ],
   "source": "SecurityWeek, Foundation for Defense of Democracies, Security Boulevard Daily OT Security News",
+  "sourceNote": "Sep 2–3, 2026"
+ },
+ "ciscosep": {
+  "eyebrow": "Cisco PSIRT · September 2026 advisory set · Sep 2, 2026",
+  "title": "Seven CWE-grouped IOS XR CVEs and a root-level Nexus 9000 RCE, with no workarounds",
+  "tags": [
+   [
+    "crit",
+    "Communications"
+   ],
+   [
+    "high",
+    "Not known to be exploited"
+   ]
+  ],
+  "overview": "Two things make this bundle worth carrying despite the absence of exploitation. Cisco states the IOS XR issues affect all releases regardless of device configuration and that there are no workarounds, so exposure cannot be reduced by configuration review. And the Nexus 9000 flaw ships without a fixed-release table, leaving an access control list as the practical control. The Fire Ant context matters for triage order: implants on IOS XR routers that suppress syslog were reported six days earlier, which is an argument for treating router telemetry gaps as suspicious while patching.",
+  "technical": [
+   "Cisco grouped the internally discovered IOS XR issues by CWE class and assigned one CVE per grouping: CVE-2026-20274 through CVE-2026-20280. CVE-2026-20274 and CVE-2026-20279 are CVSS 9.8; CVE-2026-20275 through CVE-2026-20278 and CVE-2026-20280 range from 8.2 to 8.8.",
+   "CVE-2026-20274 — resource-lifecycle flaws such as buffer overflows and use-after-free. An attacker sends malformed network packets to trigger memory corruption inside core routing daemons.",
+   "CVE-2026-20279 — broken access control, including missing authentication for critical functions and improper certificate validation. A threat actor bypasses authorization checks to perform administrative actions without valid credentials.",
+   "CVE-2026-20278 covers input sanitisation failures in dynamic commands. The affected services span BGP, OSPF, IS-IS and gRPC endpoints.",
+   "Cisco's advisory language: the vulnerabilities affect all releases regardless of device configuration, there are no workarounds, and they \"were found during internal security testing using existing testing processes as well as frontier AI models.\" Cisco states they are not known to be actively exploited.",
+   "Remediation path for IOS XR is to upgrade to a release that includes software maintenance updates and then apply them. XR7 (LNT) platforms — Cisco 8000 Series, NCS 1010, NCS 540L, NCS 5700 Series — have a dedicated SMU that applies across all releases.",
+   "CVE-2026-20212 (CVSS 9.8) — Nexus 9000 Series switches running Silicon One. A remote unauthenticated attacker connects to TCP ports that are accessible by default and executes code with root privileges. Cisco published no fixed-release table, directing customers to its Software Checker; stopgaps are an infrastructure access control list blocking the two ports and a temporary Live Protect shield.",
+   "CVE-2026-20281 (CVSS 7.5) — denial of service on Desk Phone 9800, IP Phone 7800 and 8800, and Video Phone 8875 registered to Unified Communications Manager with Web Access enabled, which is off by default. Fixes in SIP Software 5.0(1), 14.4(1)SR3, 14.4(1)SR4 or 11.0(6)SR8 depending on model.",
+   "CVE-2026-20354 and CVE-2026-20355 (CVSS 5.9) — publicly disclosed S/MIME ciphertext decryption flaws in Cisco Secure Email. A machine-in-the-middle attacker can recover plaintext from mail passing between gateways running AsyncOS 16.5.0 or earlier with S/MIME configured. Fixed releases are stated only in the bug records.",
+   "Context reported by The Hacker News: the advisories came six days after Sygnia described the China-nexus actor Fire Ant, first documented in 2025, running purpose-built implants on IOS XR routers that suppressed syslog delivery."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators — these are vendor-discovered vulnerabilities with no known exploitation. Indicators for the separate Fire Ant IOS XR implant activity are in Sygnia's own reporting and are not reproduced here.",
+  "mitigation": [
+   "IOS XR: upgrade to a release carrying the September 2026 SMUs and apply them. There are no workarounds and configuration review will not reduce exposure, because all releases are affected regardless of configuration.",
+   "Nexus 9000 Silicon One: use Cisco's Software Checker to establish a target release, and in the meantime apply an infrastructure access control list blocking the two by-default accessible TCP ports. Treat the Live Protect shield as temporary, not a fix.",
+   "Cisco Secure Email: where S/MIME is configured on AsyncOS 16.5.0 or earlier, the fixed releases are only in the bug records — confirm the target build against the bug entry rather than the advisory table.",
+   "IP phones: confirm Web Access is disabled, which is the default and removes the CVE-2026-20281 path without patching.",
+   "Given the Fire Ant reporting, treat any unexplained gap in router syslog delivery as an investigation trigger rather than a logging fault, and verify router log continuity independently of the routers themselves."
+  ],
+  "response": [
+   "SENTINEL KQL — router syslog continuity, which is the detection that matters given implants reported to suppress syslog delivery. Absence of logs is the signal.\n\n// Cisco IOS XR — syslog delivery gaps by device\n// Gap-detection technique adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, @0x534c)\nlet lookback = 14d;\nlet bin_size = 1h;\nSyslog\n| where TimeGenerated > ago(lookback)\n| where ProcessName has_any (\"bgp\",\"ospf\",\"isis\",\"emsd\",\"ios_xr\",\"nx-os\") or Computer has_any (\"xr\",\"ncs\",\"nexus\")\n| summarize events = count() by Computer, bin(TimeGenerated, bin_size)\n| summarize hours_reported = dcount(TimeGenerated), total = sum(events), first = min(TimeGenerated), last = max(TimeGenerated) by Computer\n| extend expected_hours = toint(lookback / bin_size)\n| extend missing_hours = expected_hours - hours_reported\n| where missing_hours > 4\n| project Computer, hours_reported, missing_hours, total, first, last\n| sort by missing_hours desc",
+   "SENTINEL KQL — management-plane reachability of the Nexus 9000 ports the iACL is meant to block, to confirm the stopgap is actually in force.\n\n// Cisco Nexus 9000 CVE-2026-20212 — inbound reach to by-default open ports\nlet lookback = 7d;\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > ago(lookback)\n   | where DeviceProduct has_any (\"Nexus\",\"NX-OS\") or DestinationHostName has \"nexus\"\n   | where DeviceAction !in~ (\"deny\",\"drop\",\"denied\",\"blocked\")\n   | project TimeGenerated, Src = SourceIP, Dst = DestinationIP, Port = DestinationPort, Action = DeviceAction),\n  (AzureDiagnostics\n   | where TimeGenerated > ago(lookback)\n   | where Category has \"Firewall\"\n   | where msg_s has \"nexus\"\n   | project TimeGenerated, Src = \"\", Dst = \"\", Port = 0, Action = msg_s)\n| summarize attempts = count(), sources = dcount(Src) by Dst, Port, Action\n| sort by attempts desc",
+   "No exploitation-based hunting is possible yet: Cisco reports no known exploitation and published no indicators. The two queries above test your own visibility and control state, which is the actionable work while patching proceeds."
+  ],
+  "source": "Cisco PSIRT — IOS XR Software Security Hardening Release: September 2026 (cisco-sa-hardening-iosxr-qg64NcM) and Nexus 9000 Silicon One advisory; SecurityWeek; The Hacker News; securityonline.info; CVE Brief",
   "sourceNote": "Sep 2–3, 2026"
  }
 },
@@ -4128,7 +4251,7 @@ window.CTI = {
  "sonicwallsma": {
   "status": "updated",
   "conf": "Confirmed exploitation — vendor states it observed exploitation of both vulnerabilities, which it discovered internally while investigating attacks",
-  "confNote": "Single-source for the attack detail (SonicWall PSIRT, reported by SecurityWeek). No victim count, actor attribution, IOCs or KEV listing as of Sep 2, 2026 · Both CVEs added to CISA KEV Sep 2, 2026 (BOD 26-04, federal deadline Sep 5)",
+  "confNote": "Single-source for the attack detail (SonicWall PSIRT, reported by SecurityWeek). No victim count, actor attribution, IOCs or KEV listing as of Sep 2, 2026 · Both CVEs added to CISA KEV Sep 2, 2026 (BOD 26-04, federal deadline Sep 5) · Rapid7 confirms no public PoC, IOCs or attribution identified as of Sep 2",
   "iocDate": "Sep 1, 2026 — advisory published; exploitation timeline not disclosed",
   "admiralty": "A2",
   "severity": 5,
@@ -4242,6 +4365,28 @@ window.CTI = {
    "Water and Wastewater Systems"
   ],
   "attack": []
+ },
+ "ciscosep": {
+  "status": "new",
+  "conf": "Vendor advisory — Cisco PSIRT publication; Cisco states the IOS XR issues were found in internal testing and are not known to be actively exploited",
+  "confNote": "Published Sep 2, 2026. Two CVSS 9.8 IOS XR CVEs are CWE groupings covering multiple underlying bugs, not single defects, so a per-CVE severity reading understates the spread. The Nexus 9000 flaw has no fixed-release table. The Fire Ant syslog-suppression reporting is separate Sygnia research, not part of this advisory set",
+  "iocDate": "n/a — no exploitation reported",
+  "admiralty": "A2",
+  "severity": 4,
+  "cvss": 9.8,
+  "sectors": [
+   "Communications",
+   "Information Technology",
+   "Government Facilities",
+   "Financial Services"
+  ],
+  "attack": [
+   "T1190 Exploit Public-Facing Application",
+   "T1499 Endpoint Denial of Service",
+   "T1562.002 Impair Defenses: Disable Windows Event Logging",
+   "T1078 Valid Accounts",
+   "T1557 Adversary-in-the-Middle"
+  ]
  }
 }
 };

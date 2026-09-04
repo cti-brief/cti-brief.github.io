@@ -530,6 +530,14 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 
     <sc-if value="{{ isSources }}">
       <div style="overflow:auto;padding:0 0 40px">
+        <div style="border-bottom:2px solid var(--color-divider);padding:16px 24px;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;justify-content:space-between;background:var(--color-surface)">
+          <div style="max-width:62ch;display:flex;flex-direction:column;gap:6px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-mute)">Feed list — OPML</div>
+            <p style="margin:0;font-size:13px;line-height:1.55;color:var(--color-text);text-wrap:pretty">The reading list behind this brief, as an OPML file you can import into any RSS reader. Originally compiled by <a href="https://github.com/AndrewRathbun" target="_blank" rel="noopener" style="color:var(--link)" style-hover="color:var(--hover);text-decoration:underline">Andrew Rathbun</a> and published in his DFIR feed collection; extended here with additional DFIR bloggers, podcasts and vendor research feeds. New sources found while researching each refresh are added to it, so the file grows with the brief.</p>
+            <p style="margin:0;font-size:12px;line-height:1.5;color:var(--color-mute)">{{ opmlCount }}</p>
+          </div>
+          <a href="./security-dfir-feeds.opml" download="security-dfir-feeds.opml" style="flex:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border:1px solid var(--color-accent);color:var(--color-accent);text-decoration:none" style-hover="background:var(--color-accent);color:#fff">Download OPML ↓</a>
+        </div>
         <sc-for list="{{ sources }}" as="g" hint-placeholder-count="6">
           <div style="border-bottom:1px solid var(--color-hair);padding:0 24px">
             <div style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-mute);padding:16px 0 8px">{{ g.group }}</div>
@@ -1190,6 +1198,7 @@ class Component extends DCLogic {
       kjShort: (d.KJ || []).slice(0, 3).map(k => ({ num: k.num, parts: this.parts(k.html).map(p => ({ t: p.t, w: p.w, c: p.c })) })),
       corrections: (d.CORRECTIONS || []).map(c => ({ date: c.date, item: c.item, was: c.was, now: c.now, why: c.why || c.note || '' })),
       sources: d.SOURCES || [],
+      opmlCount: '151 feeds across 7 categories · last extended Sep 3, 2026',
       toast: this.state.toast
     };
   }
