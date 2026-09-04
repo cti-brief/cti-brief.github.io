@@ -1208,7 +1208,7 @@ class Component extends DCLogic {
       kjShort: (d.KJ || []).slice(0, 3).map(k => ({ num: k.num, parts: this.parts(k.html).map(p => ({ t: p.t, w: p.w, c: p.c })) })),
       corrections: (d.CORRECTIONS || []).map(c => ({ date: c.date, item: c.item, was: c.was, now: c.now, why: c.why || c.note || '' })),
       sources: d.SOURCES || [],
-      opmlCount: '151 feeds across 7 categories · last extended Sep 3, 2026',
+      opmlCount: '154 feeds across 7 categories · last extended Sep 4, 2026',
       toast: this.state.toast
     };
   }

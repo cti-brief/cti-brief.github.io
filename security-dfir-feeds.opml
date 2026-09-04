@@ -4,7 +4,7 @@
     <title>Security &amp; DFIR feeds — originally compiled by Andrew Rathbun, extended by dfir-rick</title>
     <ownerName>Andrew Rathbun (original), dfir-rick (additions)</ownerName>
     <ownerId>https://github.com/AndrewRathbun</ownerId>
-    <dateModified>Thu, 03 Sep 2026 18:00:00 GMT</dateModified>
+    <dateModified>Fri, 04 Sep 2026 18:00:00 GMT</dateModified>
   </head>
   <body>
         <outline text="DFIR YouTube Feeds" title="DFIR YouTube Feeds">
@@ -161,6 +161,9 @@
       <outline type="rss" text="The Mitten Mac" title="The Mitten Mac" xmlUrl="https://themittenmac.com/feed/" htmlUrl="https://themittenmac.com/"/>
     </outline>
     <outline text="CTI Brief sources" title="CTI Brief sources">
+      <outline type="rss" text="Wordfence" title="Wordfence" xmlUrl="https://www.wordfence.com/feed/" htmlUrl="https://www.wordfence.com/blog/"/>
+      <outline type="rss" text="Group-IB Blog" title="Group-IB Blog" xmlUrl="https://www.group-ib.com/blog/rss.xml" htmlUrl="https://www.group-ib.com/blog/"/>
+      <outline type="rss" text="SOC Prime Blog" title="SOC Prime Blog" xmlUrl="https://socprime.com/blog/feed/" htmlUrl="https://socprime.com/blog/"/>
       <outline type="rss" text="Wiz Blog" title="Wiz Blog" xmlUrl="https://www.wiz.io/feed/rss.xml" htmlUrl="https://www.wiz.io/blog"/>
       <outline type="rss" text="Huntress Blog" title="Huntress Blog" xmlUrl="https://www.huntress.com/blog/rss.xml" htmlUrl="https://www.huntress.com/blog"/>
       <outline type="rss" text="Bishop Fox" title="Bishop Fox" xmlUrl="https://bishopfox.com/feeds/blog.rss" htmlUrl="https://bishopfox.com/blog"/>

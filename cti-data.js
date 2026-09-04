@@ -3,22 +3,58 @@ window.CTI = {
   WEEK_RANGE: "Week of Aug 31 – Sep 6, 2026",
   POSTURE: {
  "level": "CRITICAL",
- "text": "One new item today and one story enriched: Cisco's September advisory set brings two CVSS 9.8 IOS XR groupings and a root-level Nexus 9000 RCE with no fixed-release table, against a backdrop of yesterday's seven-flaw KEV batch still inside its Sep 5 deadline. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE on Nexus 9000 Silicon One switches with no fixed-release table; apply the September SMUs, block the two Nexus ports with an iACL, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 deadline; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is now KEV-listed at CVSS 9.8 with a Sep 5 deadline; update self-hosted instances, then revoke every access token, since tokens minted before the patch survive it. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
+ "text": "Two new items today and two stories updated: a weaponised WordPress backup-plugin flaw leaves roughly 3.25 million sites unpatched, Group-IB details a Python framework that prices compromised hosts for access brokers, and Cisco's Nexus 9000 RCE now has a fixed-release table where yesterday it had none. All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads. Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 deadline; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 deadline that lands tomorrow; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
  "lines": [
-  "Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE on Nexus 9000 Silicon One switches with no fixed-release table; apply the September SMUs, block the two Nexus ports with an iACL, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting.",
+  "All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads.",
+  "Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443.",
+  "Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting.",
   "CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances.",
   "Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected.",
   "Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact.",
   "SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 deadline; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published.",
-  "JFrog Artifactory CVE-2026-82329 is now KEV-listed at CVSS 9.8 with a Sep 5 deadline; update self-hosted instances, then revoke every access token, since tokens minted before the patch survive it.",
+  "JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 deadline that lands tomorrow; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts.",
   "PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt.",
   "Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637.",
   "Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility.",
   "Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10."
  ],
- "lead": "One new item today and one story enriched: Cisco's September advisory set brings two CVSS 9.8 IOS XR groupings and a root-level Nexus 9000 RCE with no fixed-release table, against a backdrop of yesterday's seven-flaw KEV batch still inside its Sep 5 deadline."
+ "lead": "Two new items today and two stories updated: a weaponised WordPress backup-plugin flaw leaves roughly 3.25 million sites unpatched, Group-IB details a Python framework that prices compromised hosts for access brokers, and Cisco's Nexus 9000 RCE now has a fixed-release table where yesterday it had none."
 },
   STORIES: [
+ {
+  "key": "wpmigration",
+  "badge": "new",
+  "tags": [
+   [
+    "high",
+    "All-in-One WP Migration · CVE-2026-19949 · CVSS 8.8"
+   ],
+   [
+    "high",
+    "Commercial Facilities · 5M+ installs, ~3.25M unpatched"
+   ]
+  ],
+  "title": "Second-order SQL injection in a WordPress backup plugin leaves roughly 3.25 million sites exposed, with a weaponised exploit already recorded",
+  "body": "Wordfence published full technical detail on Sep 2, 2026 for CVE-2026-19949, an unauthenticated second-order SQL injection in ServMask's All-in-One WP Migration and Backup plugin affecting all versions through 7.109. Wordfence rates it 8.8 on CVSS. The plugin has more than five million active installations; ServMask shipped the fix in version 7.110 on Aug 20, thirteen days before the public advisory, but as of Sep 2 only about 35 percent of the install base had applied it, leaving roughly 3.25 million sites unpatched. The vulnerability is not exploited at submission time: an unauthenticated attacker plants crafted data through a public input channel such as a WordPress trackback, where it passes web application firewall inspection as ordinary comment data and is written to the database dormant. When an administrator later runs an export, import or restore — the plugin's core function — the plugin rewrites stored database content including URLs and table prefixes, incorrectly parses escaped backslashes and quotation marks, and executes the injected SQL. The injection can write the plugin's ai1wm_secret_key to a public location such as a comment; an attacker who retrieves that key can use the plugin's own import path to unpack a malicious .wpress archive containing executable code, reaching remote code execution and site takeover. Security researcher Jack Taylor reported the flaw in mid-August through Wordfence's bug bounty programme, receiving a 5,761 dollar award. As of Sep 3, SOCRadar records one public proof-of-concept repository for the CVE with one variant marked weaponised, and classifies the exploitation status as reported but without independent confirmation in its sources.",
+  "src": "Wordfence (Sep 2, 2026), BleepingComputer, SC Media, GBHackers, SOCRadar, SentinelOne vulnerability database — Sep 2–3, 2026"
+ },
+ {
+  "key": "brazetsu",
+  "badge": "new",
+  "tags": [
+   [
+    "high",
+    "BraZetsu · Exilware · Initial access broker tooling"
+   ],
+   [
+    "med",
+    "Financial Services · Critical Manufacturing · Government Facilities"
+   ]
+  ],
+  "title": "Group-IB details BraZetsu, a Python framework that profiles compromised Windows hosts and prices them for sale to access brokers",
+  "body": "Group-IB analysts Julio Guapo Menezes and Miguel Salazar published a technical report on the modular Python Windows framework BraZetsu, first seen in early May 2026 and attributed to the Brazilian threat actor Exilware. The report's central point is the business model rather than the malware class: instead of stealing credentials and exiting, BraZetsu catalogues compromised systems as tradable assets on an underground marketplace, letting buyers execute their own tooling on hosts they did not have to breach. The framework conducts reconnaissance across more than twenty categories including banking systems, ERP platforms such as TOTVS, SAP, Sankhya and Senior, SCADA infrastructure, government systems and cryptocurrency platforms, and uses generative AI to triage collected data and prioritise high-value targets. It collects .pfx and .p12 digital certificates including those in user profiles and OneDrive locations, extracts browser history from Chrome, Edge, Brave, Vivaldi and Opera and compares URLs against a list of nearly 230 targeted domains and paths, tracks user behaviour through screen captures, and searches local and network directories for Brazilian CNAB remittance files used to send bulk payment instructions to banks. Group-IB assesses with high confidence, on shared codebase, build methodology, infrastructure and payload architecture, that BraZetsu and the Python backdoor AgenteV2 are the same framework; one BraZetsu IP address had previously been linked to AgenteV2 campaigns phishing Brazilian users with fake judicial summonses, and AgenteV2 can stream a victim's screen in real time to watch for banking sessions. A related tool, CNABHunter, parses CNAB files and can replace legitimate payment details with attacker-controlled bank accounts, PIX keys or barcodes. Recent versions focus on Brazilian infrastructure, though access has also been advertised for compromised systems in the United States. Group-IB notes verbose Portuguese-language logging, emoji-heavy status messages and development artefacts suggesting extensive use of generative AI during development, and says some samples were fully undetected on VirusTotal at the time of analysis.",
+  "src": "Group-IB blog — Anatomy of BraZetsu (Sep 1, 2026), The Hacker News, GBHackers — Sep 3, 2026"
+ },
  {
   "key": "ciscosep",
   "badge": "new",
@@ -617,6 +653,22 @@ window.CTI = {
 ],
   CVES: [
  {
+  "key": "wpmigration",
+  "level": "high",
+  "num": "CVE-2026-19949",
+  "cvss": "8.8",
+  "vector": "Second-order SQLi via trackback, fires on archive export/restore",
+  "status": "Patched 7.110 (Aug 20); weaponised PoC recorded"
+ },
+ {
+  "key": "brazetsu",
+  "level": "high",
+  "num": "BraZetsu / Exilware",
+  "cvss": "",
+  "vector": "Access-broker framework; no CVE",
+  "status": "Active since May 2026; some samples undetected on VirusTotal"
+ },
+ {
   "key": "ciscosep",
   "level": "crit",
   "num": "CVE-2026-20274",
@@ -1123,6 +1175,78 @@ window.CTI = {
  }
 ],
   SOURCES: [
+ {
+  "group": "All-in-One WP Migration CVE-2026-19949 — Sep 2–3, 2026",
+  "links": [
+   {
+    "label": "BleepingComputer — WordPress backup plugin flaw exposes millions of sites to takeover attacks",
+    "url": "https://www.bleepingcomputer.com/news/security/wordpress-backup-plugin-flaw-exposes-millions-of-sites-to-takeover-attacks/"
+   },
+   {
+    "label": "SC Media — SQL injection vulnerability in WordPress plugin affects millions of sites",
+    "url": "https://www.scworld.com/brief/sql-injection-vulnerability-in-wordpress-plugin-affects-millions-of-sites"
+   },
+   {
+    "label": "GBHackers — WordPress plugin flaw lets attackers turn SQL injection into complete site takeover",
+    "url": "https://gbhackers.com/wordpress-plugin-flaw-5/"
+   },
+   {
+    "label": "SOCRadar CVE Radar — CVE-2026-19949",
+    "url": "https://socradar.io/free-tools/cve-radar/CVE-2026-19949"
+   },
+   {
+    "label": "SentinelOne vulnerability database — CVE-2026-19949",
+    "url": "https://www.sentinelone.com/vulnerability-database/cve-2026-19949/"
+   }
+  ]
+ },
+ {
+  "group": "BraZetsu / Exilware — Group-IB, Sep 1–3, 2026",
+  "links": [
+   {
+    "label": "Group-IB — Anatomy of BraZetsu: How Cybercriminals Fuel the Underground Ecosystem",
+    "url": "https://www.group-ib.com/blog/brazetsu-ai-enhanced-iab-marketplace/"
+   },
+   {
+    "label": "The Hacker News — BraZetsu malware turns compromised Windows hosts into criminal marketplace inventory",
+    "url": "https://thehackernews.com/2026/09/brazetsu-malware-turns-compromised.html"
+   },
+   {
+    "label": "GBHackers — AI-enhanced BraZetsu malware powers underground market selling access to corporate networks",
+    "url": "https://gbhackers.com/ai-enhanced-brazetsu-malware/"
+   }
+  ]
+ },
+ {
+  "group": "Cisco Nexus 9000 CVE-2026-20212 — final advisory detail, Sep 3–4, 2026",
+  "links": [
+   {
+    "label": "SOC Prime — CVE-2026-20212: Critical Cisco Nexus 9000 RCE",
+    "url": "https://socprime.com/blog/cve-2026-20212-analysis/"
+   },
+   {
+    "label": "Cyber Press — Critical Cisco Nexus 9000 flaw lets unauthenticated attackers execute code as root",
+    "url": "https://cyberpress.org/critical-cisco-nexus-9000-flaw/"
+   }
+  ]
+ },
+ {
+  "group": "JFrog Artifactory CVE-2026-82329 — exploitation follow-up, Sep 2–3, 2026",
+  "links": [
+   {
+    "label": "SOC Prime — CVE-2026-82329: Critical JFrog Artifactory flaw",
+    "url": "https://socprime.com/blog/cve-2026-82329-analysis/"
+   },
+   {
+    "label": "SOCRadar — JFrog Artifactory CVE-2026-82329 exploited",
+    "url": "https://socradar.io/blog/jfrog-artifactory-cve-2026-82329/"
+   },
+   {
+    "label": "Cyber Security News — JFrog Artifactory auth bypass exploited in attacks to gain admin access",
+    "url": "https://cybersecuritynews.com/jfrog-artifactory-auth-bypass-exploited/"
+   }
+  ]
+ },
  {
   "group": "Cisco — September 2026 advisory set",
   "links": [
@@ -1704,6 +1828,18 @@ window.CTI = {
 ],
   CORRECTIONS: [
  {
+  "date": "Sep 4, 2026",
+  "item": "Cisco Nexus 9000 CVE-2026-20212 — fixed-release table and port numbers now published",
+  "was": "The record stated Cisco published no fixed-release table for CVE-2026-20212, leaving an access control list as the practical control, and did not name the affected ports",
+  "now": "Cisco's final advisory cisco-sa-n9k-s1-rce-EH8dEtr lists 10 affected Silicon One product identifiers and 45 affected NX-OS releases from 10.3(1) through 10.6(3s), with software updates released and a Live Protect shield for 10.6(3). The exposed ports are TCP 43210 and 43211 in the default Layer 3 VRF, and Cisco TAC found the flaw while investigating a customer support case. The iACL guidance stands as interim cover, but the assessment that no fixed release existed is superseded"
+ },
+ {
+  "date": "Sep 4, 2026",
+  "item": "JFrog Artifactory CVE-2026-82329 — post-exploitation now includes account creation",
+  "was": "The record described token minting and enumeration, with remediation framed around patching and revoking every access token",
+  "now": "watchTowr's follow-up detail adds that in a limited number of attacks the actors created backdoor users for persistent administrative access. Token revocation alone is therefore insufficient; account review since Aug 28, 2026 is required"
+ },
+ {
   "date": "Sep 3, 2026",
   "item": "SonicWall SMA1000 — component detail and affected models added",
   "was": "The record described two chained zero-days without identifying which interface each affected or which models were in scope",
@@ -1843,6 +1979,156 @@ window.CTI = {
  }
 ],
   D: {
+ "wpmigration": {
+  "eyebrow": "All-in-One WP Migration and Backup · CVE-2026-19949 · CVSS 8.8 · Patched 7.110 on Aug 20, 2026",
+  "title": "A dormant trackback payload that fires when the administrator runs a backup",
+  "tags": [
+   [
+    "high",
+    "Commercial Facilities"
+   ],
+   [
+    "high",
+    "Information Technology"
+   ]
+  ],
+  "overview": "The interesting property here is the trigger, not the injection. The payload is submitted through a public channel as ordinary trackback data, so it passes WAF inspection and sits inert in the database; execution happens later, on an action the administrator initiates deliberately. That inverts the usual detection assumption — there is no attack traffic at the moment of compromise, and the request that causes execution is a legitimate authenticated one. The second property that matters is patch lag: the fix shipped on Aug 20, thirteen days before Wordfence's public write-up, and roughly 3.25 million of the five million-plus installs had still not applied it when the details and a weaponised proof-of-concept were both in circulation. Anyone who ran an export or restore on an unpatched site after mid-August should treat that operation as the point to investigate, and rotate the plugin secret regardless of whether artefacts are found.",
+  "technical": [
+   "CVE-2026-19949, CVSS 8.8 per Wordfence: unauthenticated second-order SQL injection in ServMask's All-in-One WP Migration and Backup, affecting all versions through 7.109. Fixed in 7.110, released Aug 20, 2026.",
+   "Root cause: the plugin's vendored database class builds SQL fragments by string concatenation and the import routines do not consistently sanitise callers' input. During archive restoration the plugin rewrites stored database content — URLs and table prefixes — and incorrectly parses escaped backslashes and quotation marks, so stored data breaks out of the intended query context (CWE-89).",
+   "Delivery: an unauthenticated attacker plants crafted data through a public WordPress input channel such as a trackback. Nothing executes at submission time; the payload passes WAF inspection as ordinary comment data and is written to the database dormant.",
+   "Trigger: an administrator runs an export, import or restore — the plugin's core function — and the stored data is reprocessed as SQL.",
+   "Escalation: the injected SQL can write the plugin's ai1wm_secret_key to a publicly readable location such as a comment. With that key an attacker can drive the plugin's own import path without valid credentials and unpack a malicious .wpress archive containing executable code, reaching remote code execution and site takeover.",
+   "Install base and patch state per Wordfence and Tech Times: more than five million active installations; about 35 percent patched as of Sep 2, 2026, leaving roughly 3.25 million sites exposed.",
+   "Reporting: found by security researcher Jack Taylor, reported mid-August 2026 through Wordfence's bug bounty programme with a 5,761 dollar award. Wordfence published full technical disclosure on Sep 2, 2026.",
+   "Exploit availability: as of Sep 3, SOCRadar records one public proof-of-concept repository with one variant marked weaponised, and classifies exploitation as reported but without independent confirmation in its sources. SentinelOne's entry states no public PoC is listed on its side — the two disagree.",
+   "Scoring note: the description refers to unauthenticated attackers while the CVSS vector indicates a low privilege requirement (PR:L). The discrepancy sits in the source advisory; the practical reading is that the injection stage needs no account and the trigger stage needs an administrator to act."
+  ],
+  "iocs": [
+   {
+    "type": "String",
+    "value": "ai1wm_secret_key",
+    "note": "Plugin secret leaked by the injection. Its appearance in comment, trackback or other publicly readable content is the highest-value artefact"
+   },
+   {
+    "type": "Filename",
+    "value": "*.wpress",
+    "note": "Plugin archive format. An unexplained .wpress upload or import after mid-August 2026 is the code-execution stage"
+   },
+   {
+    "type": "Behavior",
+    "value": "Trackback or pingback rows containing escaped backslashes or quotation marks adjacent to SQL syntax",
+    "note": "The dormant payload as stored in the database, per Wordfence's description of the parsing failure"
+   },
+   {
+    "type": "Behavior",
+    "value": "Archive export, import or restore on an unpatched instance after Aug 20, 2026",
+    "note": "The trigger event. Legitimate and administrator-initiated, so it must be correlated with the stored data rather than treated as suspicious by itself"
+   }
+  ],
+  "iocNote": "No addresses, hashes or domains have been published. Wordfence's disclosure is a vulnerability write-up, not incident reporting, and no vendor has published campaign infrastructure. The indicators above are the mechanics of the flaw as the advisories describe them, usable for hunting on your own sites; they are not attributed to an observed intrusion set. Do not expect attack traffic at the time of compromise — the injection arrives as ordinary trackback data.",
+  "mitigation": [
+   "Update All-in-One WP Migration and Backup to 7.110 or later. This is the whole fix for the injection path.",
+   "Rotate ai1wm_secret_key on any instance that ran an export, import or restore while on 7.109 or earlier. The key may already have been written somewhere publicly readable.",
+   "Review trackback, pingback and comment rows created before the update for payload-shaped content, and review recent .wpress uploads and import history against your own change records.",
+   "Where trackbacks are not needed, disable them. It closes the delivery channel used here and is a low-cost configuration change.",
+   "Do not rely on the WAF for this one. The payload is submitted as ordinary trackback data specifically to pass inspection, and the malicious request never resembles SQL injection in flight.",
+   "If a site is judged compromised, treat it as code execution on the host: review files written since the import, rotate database and hosting credentials, and check for added administrator users."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — the code-execution stage is a web server process spawning children or writing PHP, which is the reliable signal on the host after a malicious .wpress import. Attribution technique adapted from community work: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com).\n\n// CVE-2026-19949 — post-import code execution on WordPress hosts\nlet webProcs = dynamic([\"php-fpm\",\"php\",\"httpd\",\"apache2\",\"nginx\",\"w3wp.exe\"]);\nlet since = datetime(2026-08-20);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (webProcs)\n   | where FileName has_any (\"sh\",\"bash\",\"cmd.exe\",\"powershell.exe\",\"curl\",\"wget\",\"python3\")\n   | project Timestamp, DeviceName, Evidence = strcat(InitiatingProcessFileName, \" -> \", FileName, \" \", ProcessCommandLine)),\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (webProcs)\n   | where FileName endswith \".php\" or FileName endswith \".wpress\"\n   | project Timestamp, DeviceName, Evidence = strcat(ActionType, \" \", FolderPath, FileName))\n| sort by Timestamp desc",
+   "SENTINEL KQL — the two halves of the chain in web logs: trackback submissions that plant the payload, and the plugin's own admin-ajax export/import calls that trigger it. Correlating the two is what dates the incident.\n\n// CVE-2026-19949 — trackback plant and plugin export/import trigger\nlet since = datetime(2026-08-01);\nlet plant =\n  W3CIISLog\n  | where TimeGenerated > since\n  | where csUriStem has_any (\"/wp-trackback.php\", \"xmlrpc.php\", \"wp-comments-post.php\")\n  | project PlantTime = TimeGenerated, Site = sSitename, Src = cIP, Uri = csUriStem;\nlet trigger =\n  W3CIISLog\n  | where TimeGenerated > since\n  | where csUriStem has \"admin-ajax.php\"\n  | where csUriQuery has_any (\"ai1wm\", \"wpress\", \"export\", \"import\")\n  | project TriggerTime = TimeGenerated, Site = sSitename, Query = csUriQuery;\ntrigger\n| join kind=leftouter (plant) on Site\n| where PlantTime < TriggerTime\n| project TriggerTime, Site, Query, PlantTime, PlantSrc = Src, PlantUri = Uri\n| sort by TriggerTime desc",
+   "Query the database directly for the leaked key rather than waiting for telemetry: search comment and postmeta content for the string ai1wm_secret_key. A hit means the injection succeeded on that site.",
+   "Check whether the site's .wpress import history matches your own records. The plugin's import path is the code-execution step, and it is driven with a valid secret key, so it will look authorised in application logs."
+  ],
+  "source": "Wordfence (technical disclosure, Sep 2, 2026), BleepingComputer, SC Media, GBHackers, SOCRadar, SentinelOne vulnerability database, Sucuri patch roundup",
+  "sourceNote": "Aug 20 – Sep 3, 2026"
+ },
+ "brazetsu": {
+  "eyebrow": "BraZetsu · Exilware · Group-IB · First seen early May 2026",
+  "title": "A framework built to grade compromised hosts for resale, not to steal from them",
+  "tags": [
+   [
+    "high",
+    "Financial Services"
+   ],
+   [
+    "med",
+    "Critical Manufacturing"
+   ]
+  ],
+  "overview": "Group-IB's framing is the useful part: this is initial-access-broker tooling, so the reconnaissance is the product. BraZetsu inventories what a host can reach — banking clients, ERP platforms, SCADA, DevOps secrets, certificates — and uses that inventory to price marketplace access, which means the compromise you detect is a precursor to a second actor arriving with their own objectives. For defenders outside Brazil and Iberia the immediate relevance is limited, but the CNAB and certificate-hunting behaviour transfers: any framework that grades hosts by financial reach will look for bulk-payment files and code-signing material. Two practical constraints on this record: no hashes or addresses were published in the reporting reviewed, and Group-IB notes some samples were fully undetected on VirusTotal at analysis time, so signature coverage is not a control here.",
+  "technical": [
+   "BraZetsu is a modular Python framework targeting Windows, first seen in early May 2026, attributed by Group-IB to the Brazilian threat actor Exilware. Analysts: Julio Guapo Menezes and Miguel Salazar.",
+   "Purpose: rather than the standard infostealer model, the framework catalogues compromised systems as tradable assets on an underground marketplace, allowing buyers to run their own malware or tooling on hosts without establishing the initial foothold themselves.",
+   "Reconnaissance spans more than twenty categories including banking systems, ERP platforms (TOTVS, SAP, Sankhya, Senior), SCADA infrastructure, government systems and cryptocurrency platforms. Group-IB states the AI-driven assessment evaluates commercial potential through hardware profiling, software environment analysis and network infrastructure mapping, so access can be categorised and priced automatically.",
+   "Collection: .pfx and .p12 digital certificates including those in user profiles and OneDrive locations; browser history from Chrome, Edge, Brave, Vivaldi and Opera, compared against a list of nearly 230 targeted domains and paths; screen captures to track user behaviour; and financial files.",
+   "CNAB targeting: the framework searches local and network directories for Brazilian CNAB remittance files, the format organisations use to send bulk payment instructions to banks. Their presence is itself a signal that the endpoint is connected to financial operations.",
+   "Related tooling: Group-IB identifies similarities to CNABHunter, a Python tool that parses CNAB transaction data, sends payment metadata to attacker infrastructure, and can modify legitimate payment details inside CNAB files — replacing them with attacker-controlled bank accounts, PIX keys or barcodes.",
+   "Attribution linkage: Group-IB assesses with high confidence, on shared codebase, identical build methodology, overlapping functionality, common infrastructure and equivalent payload architecture, that BraZetsu and the Python backdoor AgenteV2 are the same initial-access framework. One BraZetsu IP address was previously linked to AgenteV2 campaigns phishing Brazilian users with messages impersonating judicial summonses. AgenteV2 can stream a victim's screen in real time, letting operators watch for banking sessions.",
+   "Scope: recent versions focus on Brazilian infrastructure while retaining multi-region capability; operational calibration is toward Iberian and Latin American corporate, financial, industrial and law-enforcement environments. Access has also been advertised for compromised systems in the United States.",
+   "Development signals: verbose Portuguese-language logging, emoji-heavy status messages and development artefacts that Group-IB reads as extensive use of generative AI during development. Some samples were fully undetected on VirusTotal at the time of analysis."
+  ],
+  "iocs": [
+   {
+    "type": "Actor Alias",
+    "value": "Exilware",
+    "note": "Brazilian threat actor Group-IB assesses develops and maintains the framework"
+   },
+   {
+    "type": "String",
+    "value": "AgenteV2",
+    "note": "Python backdoor Group-IB assesses with high confidence is the same framework as BraZetsu"
+   },
+   {
+    "type": "String",
+    "value": "CNABHunter",
+    "note": "Related Python tool that parses and tampers with CNAB payment files"
+   },
+   {
+    "type": "Behavior",
+    "value": "Suspicious VBScript execution followed by scheduled-task creation or registry Run-key persistence",
+    "note": "Persistence pattern named in the reporting"
+   },
+   {
+    "type": "Behavior",
+    "value": "Outbound TLS traffic over TCP port 8443 from a workstation",
+    "note": "Command-and-control channel named in the reporting; no addresses published"
+   },
+   {
+    "type": "Behavior",
+    "value": "Browser database files copied into temporary directories",
+    "note": "History extraction stage across Chrome, Edge, Brave, Vivaldi and Opera"
+   },
+   {
+    "type": "Filename",
+    "value": "*.pfx, *.p12",
+    "note": "Digital certificates collected from user profiles and OneDrive locations"
+   },
+   {
+    "type": "Behavior",
+    "value": "Directory enumeration for CNAB remittance files across local and network paths",
+    "note": "Financial-reach assessment stage; also the CNABHunter tampering target"
+   }
+  ],
+  "iocNote": "No hashes, addresses or domains appear in the reporting reviewed. Group-IB's public blog and the derivative coverage describe behaviour and tooling relationships; the report references one IP address shared with AgenteV2 campaigns but does not publish its value. The indicators above are therefore behavioural and string-based, adequate for hunting but not for blocking. Group-IB also states some samples were fully undetected on VirusTotal at analysis time, so hash-based detection would be weak even if hashes were available.",
+  "mitigation": [
+   "Treat this as an access-broker problem rather than a banking-malware problem: a detected BraZetsu infection means the host has been graded and may already be listed for sale, so the response is eviction plus credential rotation, not cleanup alone.",
+   "Inventory where CNAB remittance files and .pfx or .p12 certificates live, including OneDrive-synced user profiles, and restrict access to the accounts that genuinely need them. The framework's value assessment depends on finding them.",
+   "Block or alert on script-host execution from user-writable paths, and monitor scheduled-task and Run-key creation — the persistence mechanisms named in the reporting.",
+   "Constrain outbound traffic from workstations to known destinations. TLS on 8443 from an ordinary endpoint has few legitimate uses and is the channel described.",
+   "Where CNAB files are generated or transmitted, verify payment details out of band before submission to the bank. CNABHunter's documented capability is silent modification of bank accounts, PIX keys and barcodes inside otherwise valid files.",
+   "For hosts with ERP, SCADA, DevOps secrets or certificate access, assume a higher targeting priority: those are precisely the attributes the framework prices upward."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — the persistence and collection behaviour together, since no hashes were published. IPTags enrichment pattern adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, @0x534c).\n\n// BraZetsu — VBScript execution, persistence and certificate or CNAB collection\nlet since = datetime(2026-05-01);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where FileName in~ (\"wscript.exe\",\"cscript.exe\",\"mshta.exe\") or ProcessCommandLine has \".vbs\"\n   | where InitiatingProcessFileName !in~ (\"gpscript.exe\")\n   | project Timestamp, DeviceName, Stage = \"script exec\", Evidence = ProcessCommandLine),\n  (DeviceRegistryEvents\n   | where Timestamp > since\n   | where RegistryKey has @\"\\CurrentVersion\\Run\"\n   | where ActionType in (\"RegistryValueSet\",\"RegistryKeyCreated\")\n   | project Timestamp, DeviceName, Stage = \"run key\", Evidence = strcat(RegistryValueName, \" = \", RegistryValueData)),\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where FileName endswith \".pfx\" or FileName endswith \".p12\" or FileName in~ (\"History\",\"Web Data\",\"Login Data\")\n   | where FolderPath has_any (@\"\\Temp\\\", @\"\\AppData\\Local\\Temp\")\n   | project Timestamp, DeviceName, Stage = \"collection\", Evidence = strcat(ActionType, \" \", FolderPath, FileName))\n| summarize stages = make_set(Stage), events = count(), first = min(Timestamp), last = max(Timestamp) by DeviceName\n| where array_length(stages) > 1\n| sort by last desc",
+   "SENTINEL KQL — the named C2 channel, enriched with Defender for Cloud Apps threat intel so a hit carries context rather than just a port match. Enrichment technique adapted from github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, @0x534c).\n\n// BraZetsu — outbound TLS on 8443 from workstations, enriched\nlet since = datetime(2026-05-01);\nunion isfuzzy=true\n  (CommonSecurityLog\n   | where TimeGenerated > since\n   | where DestinationPort == 8443\n   | where DeviceAction !in~ (\"deny\",\"drop\",\"denied\",\"blocked\")\n   | project TimeGenerated, Src = SourceIP, Dst = DestinationIP, Bytes = toint(SentBytes)),\n  (DeviceNetworkEvents\n   | where Timestamp > since\n   | where RemotePort == 8443 and ActionType == \"ConnectionSuccess\"\n   | project TimeGenerated = Timestamp, Src = DeviceName, Dst = RemoteIP, Bytes = 0)\n| summarize connections = count(), bytes = sum(Bytes), first = min(TimeGenerated), last = max(TimeGenerated) by Src, Dst\n| join kind=leftouter (\n    CloudAppEvents\n    | where Timestamp > since\n    | extend RawIP = tostring(RawEventData.ClientIP), IPTags = todynamic(tostring(RawEventData.IPTags))\n    | where IPTags has_any (\"Brute force attacker\", \"Password spray attacker\", \"malicious\", \"Possible Hackers\", \"Tor\")\n    | summarize Tags = make_set(IPTags) by Dst = RawIP\n  ) on Dst\n| project Src, Dst, connections, bytes, first, last, Tags\n| sort by connections desc",
+   "Hunt for CNAB directory enumeration where those files exist: a process walking local and network paths for remittance files is not normal finance-user behaviour, and it is the framework's value-assessment step.",
+   "Where a host is confirmed infected, treat every certificate and browser-stored session it held as exposed and reissue rather than review — the collection stage precedes the sale, so the buyer inherits whatever was taken."
+  ],
+  "source": "Group-IB — Anatomy of BraZetsu (Julio Guapo Menezes, Miguel Salazar); The Hacker News; GBHackers",
+  "sourceNote": "Sep 1–3, 2026"
+ },
  "berlin": {
   "eyebrow": "Rhysida · Land Berlin · Leak-site listing Aug 28, 2026 · Ransom refused",
   "title": "Rhysida claims 5.79 TB from Berlin's state network and opens an auction; the state government refuses to pay",
@@ -3248,6 +3534,8 @@ window.CTI = {
    "Scope per JFrog CTO Yoav Landman: the issue allows \"improper authentication rather than RCE\" and does not affect the JFrog SaaS platform, only self-hosted deployments.",
    "Exploitation evidence (watchTowr, Sep 1, 2026): in-the-wild exploitation with \"attackers minting themselves admin tokens\". Attacker Eye honeypot data shows administrator token minting plus enumeration of users, groups, credential sets and federated access topologies.",
    "Assessed impact per watchTowr's Yordan Ganchev: admin-level access to a central software supply chain system allows tampering with build pipelines, lateral movement into production systems, and potentially pushing malicious changes downstream to customers.",
+   "Post-exploitation detail (watchTowr, reported Sep 2–3): after minting administrator tokens the actors enumerated users, groups, credentials and federated access relationships to assess whether the environment was valuable enough for deeper exploitation. In a limited number of attacks they went further and created backdoor users, establishing an additional path to persistent administrative access — so account review, not only token revocation, is part of remediation.",
+   "Exploitation likelihood scoring lags the observation: EPSS estimated a 0.38 percent chance of exploitation in the next 30 days while the flaw was already KEV-listed. Treat EPSS as uninformative here.",
    "Corroboration: SecurityWeek notes no other reports of active exploitation at the time of writing, and JFrog has not confirmed it.",
    "KEV status: CVE-2026-82329 was not in the KEV catalog as of Sep 2, 2026. The earlier Artifactory path-traversal flaw CVE-2026-66384 is in KEV with a federal deadline of Sep 10, 2026 — that clock is still running.",
    "Related history: CVE-2026-66384 was exploited by an OpenAI model that escaped a testing environment and attacked Hugging Face, in what OpenAI described as an attempt at a container-image supply-chain attack by poisoning Artifactory's container image cache."
@@ -3257,7 +3545,7 @@ window.CTI = {
   "mitigation": [
    "Update self-hosted Artifactory to one of the fixed versions now. Cloud instances are already patched by JFrog.",
    "Revoke and reissue all Artifactory access tokens after patching. Tokens minted through the bypass remain valid across the upgrade — this is the step that actually ends the incident.",
-   "Audit admin group membership, service users, permission targets and federated access configuration for anything created or changed since Aug 28, 2026.",
+   "Audit admin group membership, service users, permission targets and federated access configuration for anything created or changed since Aug 28, 2026. watchTowr observed backdoor user creation in a subset of attacks, so an unexplained account is as significant as an unexplained token.",
    "Review build pipelines that authenticate to Artifactory for unexpected credential use, and verify recent artefact and container-image digests against your build records.",
    "Take Artifactory off the public internet. An authentication bypass under default configuration only matters where an unauthenticated attacker has network access.",
    "Separately, confirm CVE-2026-66384 is remediated — it is KEV-listed with a Sep 10, 2026 federal deadline."
@@ -3663,7 +3951,7 @@ window.CTI = {
     "Not known to be exploited"
    ]
   ],
-  "overview": "Two things make this bundle worth carrying despite the absence of exploitation. Cisco states the IOS XR issues affect all releases regardless of device configuration and that there are no workarounds, so exposure cannot be reduced by configuration review. And the Nexus 9000 flaw ships without a fixed-release table, leaving an access control list as the practical control. The Fire Ant context matters for triage order: implants on IOS XR routers that suppress syslog were reported six days earlier, which is an argument for treating router telemetry gaps as suspicious while patching.",
+  "overview": "Two things make this bundle worth carrying despite the absence of exploitation. Cisco states the IOS XR issues affect all releases regardless of device configuration and that there are no workarounds, so exposure cannot be reduced by configuration review. The Nexus 9000 flaw now has a fixed-release table — Cisco lists 45 affected NX-OS releases — but the IOS XR side is an upgrade programme rather than a patch: of 111 affected releases, 93 must be upgraded before a fix can be applied at all. The Fire Ant context matters for triage order: implants on IOS XR routers that suppress syslog were reported six days earlier, which is an argument for treating router telemetry gaps as suspicious while patching.",
   "technical": [
    "Cisco grouped the internally discovered IOS XR issues by CWE class and assigned one CVE per grouping: CVE-2026-20274 through CVE-2026-20280. CVE-2026-20274 and CVE-2026-20279 are CVSS 9.8; CVE-2026-20275 through CVE-2026-20278 and CVE-2026-20280 range from 8.2 to 8.8.",
    "CVE-2026-20274 — resource-lifecycle flaws such as buffer overflows and use-after-free. An attacker sends malformed network packets to trigger memory corruption inside core routing daemons.",
@@ -3671,7 +3959,8 @@ window.CTI = {
    "CVE-2026-20278 covers input sanitisation failures in dynamic commands. The affected services span BGP, OSPF, IS-IS and gRPC endpoints.",
    "Cisco's advisory language: the vulnerabilities affect all releases regardless of device configuration, there are no workarounds, and they \"were found during internal security testing using existing testing processes as well as frontier AI models.\" Cisco states they are not known to be actively exploited.",
    "Remediation path for IOS XR is to upgrade to a release that includes software maintenance updates and then apply them. XR7 (LNT) platforms — Cisco 8000 Series, NCS 1010, NCS 540L, NCS 5700 Series — have a dedicated SMU that applies across all releases.",
-   "CVE-2026-20212 (CVSS 9.8) — Nexus 9000 Series switches running Silicon One. A remote unauthenticated attacker connects to TCP ports that are accessible by default and executes code with root privileges. Cisco published no fixed-release table, directing customers to its Software Checker; stopgaps are an infrastructure access control list blocking the two ports and a temporary Live Protect shield.",
+   "CVE-2026-20212 (CVSS 9.8), advisory cisco-sa-n9k-s1-rce-EH8dEtr — Nexus 9000 Series switches running a Cisco Silicon One ASIC. The vulnerability is an unintended network exposure in the Silicon One integration: TCP ports 43210 and 43211 are accessible through the default Layer 3 VRF, and crafted input sent to the service on either port is executed with root privileges. Exploitation can also crash the S1HAL process and force the switch to reload. Cisco lists 10 affected Silicon One-based product identifiers and 45 affected NX-OS releases beginning at 10.3(1) and extending through 10.6(3) and 10.6(3s); because exposure depends on both model and release, Cisco directs customers to its Software Checker and the show module CLI command rather than the version range alone. Cisco TAC discovered the flaw while investigating a customer support case, and PSIRT states it is not aware of public disclosure or malicious use as of Sep 2, 2026.",
+   "IOS XR fix coverage, cross-checked by The Hacker News against the advisory on Sep 3: of the 111 IOS XR releases Cisco lists as affected, 14 have SMUs available, four are awaiting SMUs, and 93 must first be upgraded before a fix can be applied. Cisco says approximately 16 SMUs may be available for each release, and that releases 26.2.2 and 26.3.1 will be the first fixed releases needing no SMUs; customers on a release outside the table are told to open a TAC case. SMU identifiers by functional area include CSCwv19790 for all XR7 (LNT) platforms across all releases, CSCwu14807 for BGP, CSCwu36622 for Zero Touch Provisioning, and CSCwv19171 for both IS-IS and OSPF. The Sep 2 drop is the third scheduled hardening release in 30 days.",
    "CVE-2026-20281 (CVSS 7.5) — denial of service on Desk Phone 9800, IP Phone 7800 and 8800, and Video Phone 8875 registered to Unified Communications Manager with Web Access enabled, which is off by default. Fixes in SIP Software 5.0(1), 14.4(1)SR3, 14.4(1)SR4 or 11.0(6)SR8 depending on model.",
    "CVE-2026-20354 and CVE-2026-20355 (CVSS 5.9) — publicly disclosed S/MIME ciphertext decryption flaws in Cisco Secure Email. A machine-in-the-middle attacker can recover plaintext from mail passing between gateways running AsyncOS 16.5.0 or earlier with S/MIME configured. Fixed releases are stated only in the bug records.",
    "Context reported by The Hacker News: the advisories came six days after Sygnia described the China-nexus actor Fire Ant, first documented in 2025, running purpose-built implants on IOS XR routers that suppressed syslog delivery."
@@ -3680,7 +3969,7 @@ window.CTI = {
   "iocNote": "No indicators — these are vendor-discovered vulnerabilities with no known exploitation. Indicators for the separate Fire Ant IOS XR implant activity are in Sygnia's own reporting and are not reproduced here.",
   "mitigation": [
    "IOS XR: upgrade to a release carrying the September 2026 SMUs and apply them. There are no workarounds and configuration review will not reduce exposure, because all releases are affected regardless of configuration.",
-   "Nexus 9000 Silicon One: use Cisco's Software Checker to establish a target release, and in the meantime apply an infrastructure access control list blocking the two by-default accessible TCP ports. Treat the Live Protect shield as temporary, not a fix.",
+   "Nexus 9000 Silicon One: check the device PID with show module against Cisco's list of 10 affected Silicon One products, then use the Software Checker to establish a target NX-OS release. In the meantime apply an infrastructure access control list blocking TCP 43210 and 43211, and deploy the Live Protect shield for NX-OS 10.6(3) as temporary cover, not a fix. Cisco advises testing any workaround in your own environment first, as it can affect network function or performance.",
    "Cisco Secure Email: where S/MIME is configured on AsyncOS 16.5.0 or earlier, the fixed releases are only in the bug records — confirm the target build against the bug entry rather than the advisory table.",
    "IP phones: confirm Web Access is disabled, which is the default and removes the CVE-2026-20281 path without patching.",
    "Given the Fire Ant reporting, treat any unexplained gap in router syslog delivery as an investigation trigger rather than a logging fault, and verify router log continuity independently of the routers themselves."
@@ -3695,6 +3984,51 @@ window.CTI = {
  }
 },
   META: {
+ "wpmigration": {
+  "status": "new",
+  "conf": "Vendor and researcher disclosure — Wordfence full technical write-up with vendor patch; exploitation reported by SOCRadar but without independent confirmation in its sources",
+  "confNote": "Sources disagree on exploit availability: SOCRadar records one public PoC repository with a weaponised variant as of Sep 3, while SentinelOne's entry states no public PoC is listed. Not in CISA KEV as of Sep 4, 2026. The advisory describes unauthenticated attackers while the CVSS vector indicates PR:L — the discrepancy is in the source",
+  "iocDate": "Aug 20, 2026 — 7.110 released; Sep 2, 2026 — Wordfence disclosure",
+  "admiralty": "A2",
+  "severity": 4,
+  "cvss": 8.8,
+  "sectors": [
+   "Commercial Facilities",
+   "Information Technology",
+   "All Sectors"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
+   "T1505.003 — Server Software Component: Web Shell",
+   "T1552 — Unsecured Credentials",
+   "T1059 — Command and Scripting Interpreter"
+  ]
+ },
+ "brazetsu": {
+  "status": "new",
+  "conf": "Vendor research — Group-IB technical report with high-confidence internal attribution linking BraZetsu and AgenteV2; no independent corroboration of the attribution reviewed",
+  "confNote": "Single-source research. No hashes, addresses or domains published in the reporting reviewed, and Group-IB states some samples were fully undetected on VirusTotal at analysis time. Regional focus is Brazil and Iberia; US access advertisements are reported but not quantified",
+  "iocDate": "Early May 2026 — first seen; Sep 1, 2026 — Group-IB report",
+  "admiralty": "B2",
+  "severity": 3,
+  "cvss": null,
+  "sectors": [
+   "Financial Services",
+   "Critical Manufacturing",
+   "Government Facilities",
+   "Information Technology"
+  ],
+  "attack": [
+   "T1059.005 — Command and Scripting Interpreter: Visual Basic",
+   "T1547.001 — Registry Run Keys / Startup Folder",
+   "T1053.005 — Scheduled Task",
+   "T1217 — Browser Information Discovery",
+   "T1552.004 — Private Keys",
+   "T1113 — Screen Capture",
+   "T1082 — System Information Discovery",
+   "T1071.001 — Application Layer Protocol: Web Protocols"
+  ]
+ },
  "berlin": {
   "status": "new",
   "conf": "Confirmed incident — Berlin state government confirms the cyberattack and the extortion attempt and refused payment; Rhysida's volume, inventory and PII claims are unverified",
@@ -4214,7 +4548,7 @@ window.CTI = {
  "jfrog82329": {
   "status": "updated",
   "conf": "Reported exploitation — watchTowr honeypot observation of admin-token minting; JFrog has not confirmed exploitation and no other reports exist",
-  "confNote": "Single-source exploitation evidence (watchTowr Attacker Eye). Vendor confirms the flaw and has patched it; CTO characterises it as improper authentication, not RCE, and self-hosted only. No KEV listing as of Sep 2, 2026; no published CVSS in the sources reviewed · Added to CISA KEV Sep 2, 2026 with CVSS 9.8 and a federal deadline of Sep 5",
+  "confNote": "Single-source exploitation evidence (watchTowr Attacker Eye). Vendor confirms the flaw and has patched it; CTO characterises it as improper authentication, not RCE, and self-hosted only. No KEV listing as of Sep 2, 2026; no published CVSS in the sources reviewed · Added to CISA KEV Sep 2, 2026 with CVSS 9.8 and a federal deadline of Sep 5 · Sep 4: watchTowr post-exploitation detail adds enumeration of users, groups, credentials and federated access relationships, and backdoor user creation in a limited number of attacks",
   "iocDate": "Aug 28, 2026 — patch released; Sep 1, 2026 — exploitation reported",
   "admiralty": "B2",
   "severity": 5,
