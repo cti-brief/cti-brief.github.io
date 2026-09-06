@@ -1259,10 +1259,6 @@ window.CTI = {
 ],
   KJ: [
  {
-  "num": "16",
-  "html": "<b>Credentials shipped to the browser are now a primary initial-access path, and they are invisible to every control on the network.</b> FulcrumSec told BleepingComputer it reached MAG's backend customer systems using Iterable API keys left in the client-side JavaScript of all three airport websites, and published 8.7 million people's data when the ransom was refused; MAG has not confirmed the path. We assess with <b>moderate confidence</b> — the access path is an actor claim, not a vendor finding — that any organisation embedding third-party platform keys in front-end code should treat that as an exposure of the same class as an unauthenticated admin endpoint. <b>The check costs one pass over your own published bundles</b>, and no endpoint or perimeter telemetry would have surfaced this: the exfiltration ran through a legitimate API with valid credentials."
- },
- {
   "num": "01",
   "html": "<b>Remote-access appliances are the week's decisive exposure, and vendors are now finding these flaws by investigating live intrusions rather than through research.</b> SonicWall disclosed CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 as zero-days it discovered internally along with their exploitation, WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, and Citrix NetScaler CVE-2026-8452 remains KEV-listed from last week. We assess with <b>high confidence</b> that patch state on VPN and SSL-VPN terminators is the single highest-yield defensive action available this week; note that SonicWall published no indicators, so absence of artefacts is not evidence of absence of compromise. CISA added both SonicWall CVEs to KEV on Sep 2 with a Sep 5 federal deadline."
  },
@@ -1321,7 +1317,11 @@ window.CTI = {
  {
   "num": "15",
   "html": "<b>Cisco's IOS XR bundle is a disclosure-model change as much as a patch cycle.</b> Seven CVEs stand in for many underlying bugs grouped by weakness class, the advisory states all releases are affected regardless of configuration with no workarounds, and Cisco credits \"frontier AI models\" alongside existing processes for finding them. We assess with <b>moderate confidence</b> that CWE-grouped CVEs will make severity-based prioritisation less reliable over the coming quarters, because one identifier no longer maps to one defect or one exploitation path; and we note that Sygnia's report of Fire Ant implants suppressing syslog on IOS XR routers, six days earlier, means router log gaps deserve investigation on their own merits while patching proceeds."
- }
+ },
+ {
+  "num": "16",
+  "html": "<b>Credentials shipped to the browser are now a primary initial-access path, and they are invisible to every control on the network.</b> FulcrumSec told BleepingComputer it reached MAG's backend customer systems using Iterable API keys left in the client-side JavaScript of all three airport websites, and published 8.7 million people's data when the ransom was refused; MAG has not confirmed the path. We assess with <b>moderate confidence</b> — the access path is an actor claim, not a vendor finding — that any organisation embedding third-party platform keys in front-end code should treat that as an exposure of the same class as an unauthenticated admin endpoint. <b>The check costs one pass over your own published bundles</b>, and no endpoint or perimeter telemetry would have surfaced this: the exfiltration ran through a legitimate API with valid credentials."
+ },
 ],
   SOURCES: [
  {
