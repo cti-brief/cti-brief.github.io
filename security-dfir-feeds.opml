@@ -4,7 +4,7 @@
     <title>Security &amp; DFIR feeds — originally compiled by Andrew Rathbun, extended by dfir-rick</title>
     <ownerName>Andrew Rathbun (original), dfir-rick (additions)</ownerName>
     <ownerId>https://github.com/AndrewRathbun</ownerId>
-    <dateModified>Sat, 05 Sep 2026 18:00:00 GMT</dateModified>
+    <dateModified>Sun, 06 Sep 2026 18:00:00 GMT</dateModified>
   </head>
   <body>
         <outline text="DFIR YouTube Feeds" title="DFIR YouTube Feeds">
@@ -176,6 +176,8 @@
       <outline type="rss" text="The Shadowserver Foundation" title="The Shadowserver Foundation" xmlUrl="https://www.shadowserver.org/feed/" htmlUrl="https://www.shadowserver.org/news/"/>
       <outline type="rss" text="Symantec Threat Intelligence" title="Symantec Threat Intelligence" xmlUrl="https://www.security.com/rss/feeds/threat-intelligence" htmlUrl="https://www.security.com/threat-intelligence"/>
       <outline type="rss" text="Cybernews Security" title="Cybernews Security" xmlUrl="https://cybernews.com/feed/" htmlUrl="https://cybernews.com/security/"/>
+      <outline type="rss" text="Security Affairs" title="Security Affairs" xmlUrl="https://securityaffairs.com/feed" htmlUrl="https://securityaffairs.com/"/>
+      <outline type="rss" text="Arctic Wolf Blog" title="Arctic Wolf Blog" xmlUrl="https://arcticwolf.com/resources/blog/feed/" htmlUrl="https://arcticwolf.com/resources/blog/"/>
     </outline>
   </body>
 </opml>

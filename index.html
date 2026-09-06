@@ -18,7 +18,7 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 41 stories, 79 hunting queries.">
+<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 43 stories, 83 hunting queries.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="CTI Brief — Week of Aug 31 – Sep 6, 2026">
 <meta name="twitter:description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
@@ -1208,7 +1208,7 @@ class Component extends DCLogic {
       kjShort: (d.KJ || []).slice(0, 3).map(k => ({ num: k.num, parts: this.parts(k.html).map(p => ({ t: p.t, w: p.w, c: p.c })) })),
       corrections: (d.CORRECTIONS || []).map(c => ({ date: c.date, item: c.item, was: c.was, now: c.now, why: c.why || c.note || '' })),
       sources: d.SOURCES || [],
-      opmlCount: '156 feeds across 7 categories · last extended Sep 5, 2026',
+      opmlCount: '158 feeds across 7 categories · last extended Sep 6, 2026',
       toast: this.state.toast
     };
   }

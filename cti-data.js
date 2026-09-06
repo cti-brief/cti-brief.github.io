@@ -3,9 +3,12 @@ window.CTI = {
   WEEK_RANGE: "Week of Aug 31 – Sep 6, 2026",
   POSTURE: {
  "level": "CRITICAL",
- "text": "Four new items today and the Sep 5 KEV deadline falls today for five of Wednesday's seven additions: an exploited Chrome V8 zero-day entered KEV a day after the patch, Wordfence counts more than 440,000 attempts against two WordPress upload flaws, Symantec documents implants running under the signed Node.js runtime after payload delivery was blocked, and FulcrumSec published the Manchester Airports dataset after the operator refused to pay. Google shipped Chrome 152.0.7977.82/.83 on Sep 3 fixing CVE-2026-85046, a V8 type confusion Google says has an exploit in the wild, and CISA added it to KEV on Sep 4; no detail or indicators will be published until most users have updated, so browser version state — including the Chromium derivatives Edge, Opera and Brave, which patch later — is the whole defensive position, and the Android build reaches Google Play over several days. Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July. Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations. FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today. All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads. Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due today, Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 federal deadline that falls today; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 federal deadline that falls today; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
+ "text": "Two new items today and two stories moved: a 12-year-old PostgreSQL flaw turns a replication credential into a persistent superuser backdoor, working local-root exploits are public for two Linux kernel use-after-free bugs, Arctic Wolf places the PaperCut chain in an education-sector credential-theft campaign with fresh indicators, and the exploited Chrome V8 zero-day still has none. Cyera disclosed PostGREShell (CVE-2026-6471, CVSS 7.2) on Sep 1 — missing authorization in PostgreSQL logical decoding lets a non-superuser holding REPLICATION name any output plugin, which the server dlopens and executes as its own OS account, escalating to superuser and a persistent passwordless backdoor; every release from 9.4 through 18 is affected, fixes shipped Aug 13 in 18.6/17.11/16.15/15.19/14.24, and the fix's plugin allow-list will break wal2json, decoderbufs and proprietary CDC plugins, so reconcile plugin names before the maintenance window and strip REPLICATION from accounts that do not need it. NebuSec published working local-root exploits for two kernel use-after-free flaws — CVE-2026-52924 in SCTP, which upstream first triaged as denial of service and which NebuSec demonstrates as privilege escalation on Ubuntu 7.0.0-28, and CVE-2026-80714 in IPVS netfilter, demonstrated as root on current Debian; neither is exploited in the wild and both need local access, but blacklisting the sctp module removes that surface immediately where the protocol is unused, while IPVS cannot simply be unloaded on Kubernetes hosts running kube-proxy in IPVS mode. PaperCut escalation, Sep 6: Arctic Wolf reports the CVE-2026-81578 and CVE-2026-82078 chain being used against education organisations from K-12 schools to major universities in the US and Europe, with registry hive collection tools, Meterpreter-related Java payloads, discovery commands, an \"Administrator17\" account and inbound requests from 45.142.193[.]132 for /custom/pcp_*.txt; a public PoC for the full chain now exists, the federal KEV deadline is Sep 14, and credential theft is the objective, so treat any exposed unpatched server as a credential-compromise investigation rather than a patch task. Chrome CVE-2026-85046 stands at the sixth actively exploited Chrome zero-day fixed in 2026 with still no published indicators, so version state remains the whole control: confirm 152.0.7977.82/.83 is applied and relaunched, and track Edge, Opera and Brave separately. Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July. Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations. FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today. All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads. Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due today, Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 federal deadline that falls today; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 federal deadline that falls today; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
  "lines": [
-  "Google shipped Chrome 152.0.7977.82/.83 on Sep 3 fixing CVE-2026-85046, a V8 type confusion Google says has an exploit in the wild, and CISA added it to KEV on Sep 4; no detail or indicators will be published until most users have updated, so browser version state — including the Chromium derivatives Edge, Opera and Brave, which patch later — is the whole defensive position, and the Android build reaches Google Play over several days.",
+  "Cyera disclosed PostGREShell (CVE-2026-6471, CVSS 7.2) on Sep 1 — missing authorization in PostgreSQL logical decoding lets a non-superuser holding REPLICATION name any output plugin, which the server dlopens and executes as its own OS account, escalating to superuser and a persistent passwordless backdoor; every release from 9.4 through 18 is affected, fixes shipped Aug 13 in 18.6/17.11/16.15/15.19/14.24, and the fix's plugin allow-list will break wal2json, decoderbufs and proprietary CDC plugins, so reconcile plugin names before the maintenance window and strip REPLICATION from accounts that do not need it.",
+  "NebuSec published working local-root exploits for two kernel use-after-free flaws — CVE-2026-52924 in SCTP, which upstream first triaged as denial of service and which NebuSec demonstrates as privilege escalation on Ubuntu 7.0.0-28, and CVE-2026-80714 in IPVS netfilter, demonstrated as root on current Debian; neither is exploited in the wild and both need local access, but blacklisting the sctp module removes that surface immediately where the protocol is unused, while IPVS cannot simply be unloaded on Kubernetes hosts running kube-proxy in IPVS mode.",
+  "PaperCut escalation, Sep 6: Arctic Wolf reports the CVE-2026-81578 and CVE-2026-82078 chain being used against education organisations from K-12 schools to major universities in the US and Europe, with registry hive collection tools, Meterpreter-related Java payloads, discovery commands, an \"Administrator17\" account and inbound requests from 45.142.193[.]132 for /custom/pcp_*.txt; a public PoC for the full chain now exists, the federal KEV deadline is Sep 14, and credential theft is the objective, so treat any exposed unpatched server as a credential-compromise investigation rather than a patch task.",
+  "Chrome CVE-2026-85046 stands at the sixth actively exploited Chrome zero-day fixed in 2026 with still no published indicators, so version state remains the whole control: confirm 152.0.7977.82/.83 is applied and relaunched, and track Edge, Opera and Brave separately.",
   "Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July.",
   "Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations.",
   "FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today.",
@@ -17,17 +20,50 @@ window.CTI = {
   "Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact.",
   "SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 federal deadline that falls today; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published.",
   "JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 federal deadline that falls today; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts.",
-  "PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt.",
   "Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637.",
   "Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility.",
   "Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10."
  ],
- "lead": "Four new items today and the Sep 5 KEV deadline falls today for five of Wednesday's seven additions: an exploited Chrome V8 zero-day entered KEV a day after the patch, Wordfence counts more than 440,000 attempts against two WordPress upload flaws, Symantec documents implants running under the signed Node.js runtime after payload delivery was blocked, and FulcrumSec published the Manchester Airports dataset after the operator refused to pay."
+ "lead": "Two new items today and two stories moved: a 12-year-old PostgreSQL flaw turns a replication credential into a persistent superuser backdoor, working local-root exploits are public for two Linux kernel use-after-free bugs, Arctic Wolf places the PaperCut chain in an education-sector credential-theft campaign with fresh indicators, and the exploited Chrome V8 zero-day still has none."
 },
   STORIES: [
  {
-  "key": "chromev8",
+  "key": "postgreshell",
   "badge": "new",
+  "tags": [
+   [
+    "high",
+    "PostgreSQL · CVE-2026-6471 · PostGREShell · CVSS 7.2"
+   ],
+   [
+    "high",
+    "All Sectors · Versions 9.4 through 18"
+   ]
+  ],
+  "title": "Cyera details PostGREShell, a 12-year-old PostgreSQL flaw that turns a replication account into superuser and a persistent backdoor",
+  "body": "Cyera Research Labs disclosed CVE-2026-6471 on Sep 1, 2026, a missing authorization defect in PostgreSQL's logical decoding that it calls PostGREShell, rated CVSS 7.2. A non-superuser holding the REPLICATION attribute can name an arbitrary logical decoding output plugin, which PostgreSQL passes to the loader without validation, causing the server to dlopen any file visible to the operating system account it runs as and execute code with the server process's privileges. Cyera states the flaw lets a low-privilege backup account reach remote code execution on Windows, Linux and macOS, escalate to full PostgreSQL superuser, and install persistent backdoor access including passwordless connections and restored superuser privileges. The defect sits in the logical decoding architecture introduced in PostgreSQL 9.4 in 2014, so every release from 9.4 through 18 is affected — Cyera confirmed it on 18.2 — and the vulnerable path exists wherever logical replication, change data capture or backup tooling is in use. Non-superuser accounts were meant to be restricted to an administrator-controlled plugin directory. The PostgreSQL project fixed it in 18.6, 17.11, 16.15, 15.19 and 14.24, released Aug 13, 2026, choosing a plugin allow-list rather than applying the standard LOAD restrictions, which would have forced all third-party plugins into $libdir/plugins; as a result environments using third-party output plugins such as wal2json or decoderbufs can fail to initialise replication slots after updating, logging \"library may not be used as an output plugin\". Cyera credits Noah Misch and the PostgreSQL security team for coordinating the fix. A VirusTotal hunt by Cyera found 114 malicious PostgreSQL plugins in the wild including trojans, miners and reverse shells; the disclosure does not link any of them to exploitation of this CVE, and no in-the-wild exploitation has been reported.",
+  "src": "Cyera Research Labs (Sep 1, 2026), SecurityWeek, Security Affairs, CSO Online, GBHackers, SC Media — Sep 3–5, 2026"
+ },
+ {
+  "key": "linuxkernelpoc",
+  "badge": "new",
+  "tags": [
+   [
+    "high",
+    "Linux kernel · CVE-2026-52924 · CVE-2026-80714"
+   ],
+   [
+    "med",
+    "All Sectors · Local root, public exploit code"
+   ]
+  ],
+  "title": "NebuSec publishes working root exploits for two Linux kernel use-after-free flaws, one of them first triaged upstream as denial of service",
+  "body": "Security team NebuSec published technical detail and functional exploit code for two Linux kernel use-after-free vulnerabilities in the network stack, both carrying CVSS 9.8 in the reporting reviewed. CVE-2026-52924 is in the SCTP implementation: on a Stale Cookie event the association's stream state is released through sctp_stream_free() while scheduler dequeue paths continue to rely on stream->out_curr->ext, producing a slab use-after-free reported as a KASAN fault in sctp_sched_fcfs_dequeue. Upstream maintainers initially classified the bug as denial of service; NebuSec's proof of concept demonstrates local privilege escalation, verified on Ubuntu kernel 7.0.0-28. The upstream code dates to October 2017, so multiple long-term kernel branches are affected; the fix purges the association outqueue when handling the Stale Cookie case, dropping pending transmit and retransmit state so cached scheduler pointers are invalidated. Where SCTP is not required, unloading or blacklisting the module removes the attack surface. Separately, NebuSec published proof-of-concept code and a video for CVE-2026-80714 (CVSS 9.8), a use-after-free in the kernel's IPVS netfilter code, demonstrating root escalation on current Debian; that flaw is fixed across a series of upstream commits. Neither flaw has been reported as exploited in the wild, and both require local access, but the combination of public exploit code and a demonstration video shortens the interval before commodity use.",
+  "src": "NebuSec research, securityonline.info (Sep 3 and Sep 5, 2026), Intruder CVE data / upstream kernel commit notes"
+ },
+ {
+  "key": "chromev8",
+  "badge": "updated",
   "tags": [
    [
     "crit",
@@ -39,12 +75,12 @@ window.CTI = {
    ]
   ],
   "title": "Google patches an exploited V8 type-confusion zero-day in Chrome; CISA added CVE-2026-85046 to KEV on Sep 4",
-  "body": "Google released Chrome 152.0.7977.82/.83 for Windows and Mac and 152.0.7977.82 for Linux and Android on Sep 3, 2026, fixing twelve vulnerabilities including CVE-2026-85046, a high-severity type confusion in the V8 JavaScript engine. Chrome's Srinivas Sista wrote in the Sep 3 advisory that Google \"is aware of reports that an exploit for CVE-2026-85046 exists in the wild.\" The flaw was reported by an external researcher, Salvatore Gulizia. Type confusion in V8 allows a remote attacker to execute arbitrary code inside the browser's security sandbox through a maliciously crafted web page. Google withholds technical detail and bug access until the majority of users have updated, so no exploitation detail, targeting information or indicators have been published. CISA added the CVE to the Known Exploited Vulnerabilities catalog on Sep 4, 2026. The Android update is reaching Google Play over several days and automatic updates roll out to other platforms over the following days and weeks, so the practical exposure window is the update lag rather than the patch date. Chromium-derived browsers including Microsoft Edge, Opera and Brave inherit the defect and require their own vendor releases.",
+  "body": "Google released Chrome 152.0.7977.82/.83 for Windows and Mac and 152.0.7977.82 for Linux and Android on Sep 3, 2026, fixing twelve vulnerabilities including CVE-2026-85046, a high-severity type confusion in the V8 JavaScript engine. Chrome's Srinivas Sista wrote in the Sep 3 advisory that Google \"is aware of reports that an exploit for CVE-2026-85046 exists in the wild.\" The flaw was reported by an external researcher, Salvatore Gulizia. Type confusion in V8 allows a remote attacker to execute arbitrary code inside the browser's security sandbox through a maliciously crafted web page. Google withholds technical detail and bug access until the majority of users have updated, so no exploitation detail, targeting information or indicators have been published. CISA added the CVE to the Known Exploited Vulnerabilities catalog on Sep 4, 2026. The Android update is reaching Google Play over several days and automatic updates roll out to other platforms over the following days and weeks, so the practical exposure window is the update lag rather than the patch date. Chromium-derived browsers including Microsoft Edge, Opera and Brave inherit the defect and require their own vendor releases. Update, Sep 6: Security Affairs records CVE-2026-85046 as the sixth actively exploited Chrome zero-day fixed in 2026; no exploitation detail or indicators have been published since the advisory.",
   "src": "Google Chrome release advisory (Sep 3, 2026), Forbes, CISA KEV (Sep 4, 2026), securityonline.info — Sep 3–5, 2026"
  },
  {
   "key": "superforms",
-  "badge": "new",
+  "badge": "",
   "tags": [
    [
     "crit",
@@ -61,7 +97,7 @@ window.CTI = {
  },
  {
   "key": "nodeabuse",
-  "badge": "new",
+  "badge": "",
   "tags": [
    [
     "high",
@@ -78,7 +114,7 @@ window.CTI = {
  },
  {
   "key": "magleak",
-  "badge": "new",
+  "badge": "",
   "tags": [
    [
     "crit",
@@ -413,8 +449,8 @@ window.CTI = {
   ],
   "badge": "updated",
   "title": "PaperCut NG/MF zero-day exploited in the wild: CVE-2026-82078 and CVE-2026-81578 chained for unauthenticated remote code execution on all versions",
-  "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26 at 02:10 AEST on Aug 28, followed later the same day by patches for v24, then an Emergency Patch Release 2 adding hardening beyond the first after watchTowr and Huntress found bypasses of the original fix. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor. Update, Sep 1–2: CISA added both CVEs to the KEV catalog on Aug 31, 2026 under BOD 26-04, and SecurityWeek reports exploitation has escalated from scanning and probing to active intrusions. Update, Sep 3: PaperCut's Aug 30 bulletin extended its indicator list and described the post-compromise sequence — the actor enumerates users, privileges and running processes, then silently installs legitimate remote access software. Help Net Security reports SimpleHelp and AnyDesk being planted on compromised Application Servers, and watchTowr's Jake Knott describes activity specifically designed to enable internal network access. ShadowServer counts more than 1,000 internet-exposed PaperCut NG/MF instances. The federal remediation deadline is Sep 14, 2026. Neither CVE was in KEV when this story was first written.",
-  "src": "PaperCut security bulletin (Aug 27 and Aug 30, 2026), Huntress, watchTowr, Help Net Security, SecurityWeek — Aug 27 – Sep 2, 2026"
+  "body": "PaperCut told customers on Aug 27, 2026 that attackers are exploiting a flaw affecting all versions of PaperCut NG and PaperCut MF as a zero-day, that it is \"aware of confirmed customer incidents\" and is treating the matter with the highest priority. It shipped an emergency patch for v25 and v26 at 02:10 AEST on Aug 28, followed later the same day by patches for v24, then an Emergency Patch Release 2 adding hardening beyond the first after watchTowr and Huntress found bypasses of the original fix. Two CVEs were subsequently published: CVE-2026-82078 (CVSS 9.4), unsafe dynamic class loading in the database connection utilities, and CVE-2026-81578 (CVSS 8.8), improper access control in the web management interface. Huntress researchers John Hammond and Andrew Brandt describe an unauthenticated request that changes trusted server configuration and ends in arbitrary Java code execution inside the application process. watchTowr reports attackers chaining both flaws to bypass authentication and reach RCE, and says it found multiple patch bypasses plus a further authentication bypass, likely addressed by the second patch. Huntress observed exploitation in two customer environments; PaperCut has not described the activity or named an actor. Update, Sep 1–2: CISA added both CVEs to the KEV catalog on Aug 31, 2026 under BOD 26-04, and SecurityWeek reports exploitation has escalated from scanning and probing to active intrusions. Update, Sep 3: PaperCut's Aug 30 bulletin extended its indicator list and described the post-compromise sequence — the actor enumerates users, privileges and running processes, then silently installs legitimate remote access software. Help Net Security reports SimpleHelp and AnyDesk being planted on compromised Application Servers, and watchTowr's Jake Knott describes activity specifically designed to enable internal network access. ShadowServer counts more than 1,000 internet-exposed PaperCut NG/MF instances. The federal remediation deadline is Sep 14, 2026. Neither CVE was in KEV when this story was first written. Update, Sep 6: The Arctic Wolf Adversary Research Team reports the campaign is concentrated in the education sector, hitting vulnerable PaperCut servers at organisations from K-12 schools to major universities in the US and Europe. Arctic Wolf's advisory states that exploitation of CVE-2026-81578 and CVE-2026-82078 led to command execution, reconnaissance and attempts to create privileged accounts, and that observed post-exploitation activity included delivery of Windows registry hive collection tools, Metasploit/Meterpreter-related Java payloads, and commands used to identify hosts, users, processes and sensitive configuration data. Reported specifics include discovery commands uname, whoami, ver and tasklist, creation of an account named \"Administrator17\", inbound GET requests from 45.142.193[.]132 for /custom/pcp_*.txt paths, and credential-harvesting tooling delivered via certutil. SOC Prime notes a working proof of concept for the combined chain is now public, with exploit references in vulnerability databases and security tooling, and records Huntress's first observed incident as Aug 26, 2026, including one intrusion lasting under two minutes that ran base64-encoded reconnaissance commands and delivered Java .class files.",
+  "src": "PaperCut security bulletin (Aug 27 and Aug 30, 2026), Huntress, watchTowr, Arctic Wolf, SOC Prime, The Hacker News, Security Affairs — Aug 27 – Sep 6, 2026"
  },
  {
   "key": "zbtimplants",
@@ -724,6 +760,30 @@ window.CTI = {
  }
 ],
   CVES: [
+ {
+  "key": "postgreshell",
+  "level": "high",
+  "num": "CVE-2026-6471",
+  "cvss": "7.2",
+  "vector": "Missing authorization in logical decoding — REPLICATION role dlopens arbitrary file",
+  "status": "Patched 18.6 / 17.11 / 16.15 / 15.19 / 14.24 (Aug 13); no exploitation reported"
+ },
+ {
+  "key": "linuxkernelpoc",
+  "level": "high",
+  "num": "CVE-2026-52924",
+  "cvss": "9.8",
+  "vector": "SCTP stream use-after-free on Stale Cookie — local privilege escalation",
+  "status": "Fixed upstream; public PoC Sep 5, 2026; verified on Ubuntu 7.0.0-28"
+ },
+ {
+  "key": "linuxkernelpoc",
+  "level": "high",
+  "num": "CVE-2026-80714",
+  "cvss": "9.8",
+  "vector": "IPVS netfilter use-after-free — local root",
+  "status": "Fixed in upstream commits; public PoC and video, root demonstrated on Debian"
+ },
  {
   "key": "chromev8",
   "level": "crit",
@@ -1291,6 +1351,65 @@ window.CTI = {
  }
 ],
   SOURCES: [
+ {
+  "group": "PostgreSQL PostGREShell CVE-2026-6471 — Sep 1–5, 2026",
+  "links": [
+   {
+    "label": "Cyera Research — PostGREShell: the database powering much of the internet had an open door for 12 years",
+    "url": "https://www.cyera.com/research/postgreshell-the-database-powering-much-of-the-internet-had-an-open-door-for-12-years"
+   },
+   {
+    "label": "SecurityWeek — 12-year-old PostgreSQL vulnerability enables database, server takeover",
+    "url": "https://www.securityweek.com/12-year-old-postgresql-vulnerability-enables-database-server-takeover/"
+   },
+   {
+    "label": "Security Affairs — PostgreSQL hit by 12-year-old vulnerability allowing server takeover",
+    "url": "https://securityaffairs.com/198433/security/postgresql-hit-by-12-year-old-vulnerability-allowing-server-takeover.html"
+   },
+   {
+    "label": "CSO Online — Decade-old PostgreSQL flaw turns backup account into a backdoor",
+    "url": "https://www.csoonline.com/article/4218101/decade-old-postgresql-flaw-turns-backup-account-into-a-backdoor.html"
+   },
+   {
+    "label": "GBHackers — 12-year-old PostgreSQL flaw lets attackers execute code and take over database servers",
+    "url": "https://gbhackers.com/12-year-old-postgresql-flaw/"
+   }
+  ]
+ },
+ {
+  "group": "Linux kernel local-root PoCs — Sep 3–6, 2026",
+  "links": [
+   {
+    "label": "securityonline.info — CVE-2026-52924 PoC exploit disclosed: Linux root privilege escalation",
+    "url": "https://securityonline.info/linux-cve-2026-52924-poc/"
+   },
+   {
+    "label": "securityonline.info — CVE-2026-80714 (CVSS 9.8): Linux root escalation PoC out",
+    "url": "https://securityonline.info/linux-kernel-cve-2026-80714-root-escalation/"
+   },
+   {
+    "label": "Intruder CVE data — CVE-2026-52924 overview and upstream commit detail",
+    "url": "https://cvemon.intruder.io/cves/CVE-2026-52924"
+   }
+  ]
+ },
+ {
+  "group": "PaperCut education-sector exploitation — Sep 5, 2026",
+  "links": [
+   {
+    "label": "The Hacker News — Attackers exploit PaperCut flaws to steal credentials from schools and universities",
+    "url": "https://thehackernews.com/2026/09/attackers-exploit-papercut-flaws-to.html"
+   },
+   {
+    "label": "Security Affairs — PaperCut flaws exploited in attacks on U.S. and European schools",
+    "url": "https://securityaffairs.com/198476/hacking/papercut-flaws-exploited-in-attacks-on-u-s-and-european-schools.html"
+   },
+   {
+    "label": "SOC Prime — CVE-2026-81578: exploited PaperCut auth bypass",
+    "url": "https://socprime.com/blog/cve-2026-81578-analysis/"
+   }
+  ]
+ },
  {
   "group": "Chrome CVE-2026-85046 — Sep 3–5, 2026",
   "links": [
@@ -2175,6 +2294,109 @@ window.CTI = {
  }
 ],
   D: {
+ "linuxkernelpoc": {
+  "eyebrow": "Linux kernel · CVE-2026-52924 (SCTP) · CVE-2026-80714 (IPVS) · NebuSec · Public exploit code",
+  "title": "Two local-root exploits published, and a reminder that upstream severity triage is not risk triage",
+  "tags": [
+   [
+    "high",
+    "All Sectors"
+   ],
+   [
+    "med",
+    "Information Technology"
+   ]
+  ],
+  "overview": "Neither flaw is being exploited in the wild and both need local access, so this is patch-cycle work rather than an incident. The reason to read it now is the SCTP case: upstream first classified the bug as denial of service, and NebuSec's proof of concept shows local privilege escalation on a current Ubuntu kernel. Organisations that filter kernel updates by upstream severity would have deprioritised it. The practical mitigation for SCTP is not the patch at all — most estates have no use for the protocol, and blacklisting the module removes the attack surface on every host at once, which is faster than a fleet-wide kernel rollout. IPVS is different: it is load-balancer plumbing that Kubernetes kube-proxy uses in IPVS mode, so check whether it is in use before assuming it can be unloaded.",
+  "technical": [
+   "CVE-2026-52924: use-after-free in the kernel SCTP implementation. On a Stale Cookie event the association's stream state is freed via sctp_stream_free() while scheduler dequeue paths (FCFS, RR, PRIO) continue to dereference stream->out_curr->ext. The reported KASAN fault is a slab-use-after-free in sctp_sched_fcfs_dequeue reached through sctp_outq_flush, sctp_do_sm, sctp_assoc_bh_rcv, sctp_inq_push and sctp_rcv; the crash was reported by a researcher credited as Yuqi.",
+   "Upstream fix: fully purge the association outqueue when handling the Stale Cookie case, dropping all pending transmit and retransmit state so cached scheduler pointers are invalidated before stream state is rebuilt during COOKIE_WAIT restart. Updating stream->out_curr alone was judged insufficient because queued and retransmit state would still reference freed memory.",
+   "Severity divergence: upstream maintainers initially classified the bug as a denial-of-service issue; the reporting carries CVSS 9.8 and NebuSec's published exploit demonstrates local privilege escalation, verified on Ubuntu kernel 7.0.0-28. The upstream code dates to October 2017, so multiple long-term branches are affected.",
+   "CVE-2026-80714 (CVSS 9.8): use-after-free in the kernel's IPVS netfilter code. NebuSec published proof-of-concept code and a video showing root privilege escalation on the latest Debian. Fixed across a series of upstream commits (securityonline.info lists 06d1d9b5, acbdc276, 300348e3, 44af98cc and twelve more).",
+   "Both require local unprivileged access. Neither has been reported as exploited in the wild, and neither is in CISA KEV as of Sep 6, 2026.",
+   "Mitigation available without patching: where SCTP is not required, unloading or blacklisting the sctp module removes the CVE-2026-52924 attack surface. securityonline.info records disabling the protocol module as the stated alternative to updating."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators exist: these are published proof-of-concept exploits from a research team, not observed intrusions. Detection of local kernel exploitation is generic — unexpected privilege transitions, kernel oops or KASAN faults referencing the affected subsystems, and unprivileged processes loading protocol modules — and the durable measurement is kernel version and module state rather than artefacts.",
+  "mitigation": [
+   "Patch kernels on the affected long-term branches. Treat CVE-2026-52924 on its demonstrated impact (local root) rather than on the initial upstream denial-of-service classification.",
+   "Blacklist or unload the sctp module where the protocol is not required — install sctp /bin/false in modprobe configuration — which removes the attack surface without waiting for a kernel rollout.",
+   "Before touching IPVS, confirm whether it is in use: Kubernetes kube-proxy in IPVS mode and Linux Virtual Server load balancers depend on it, so unloading is not a universal option for CVE-2026-80714.",
+   "Prioritise multi-tenant and shared-shell hosts, CI runners and container hosts where unprivileged local access is expected by design.",
+   "Where kernel patching lags, restrict who can create raw or unusual protocol sockets and constrain automatic module loading, since both flaws are reached through protocol handling rather than through a privileged interface."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — with no indicators, the useful output is exposure: which Linux hosts run affected kernels and where the vulnerable modules are actually loaded. Technique adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, LinkedIn @0x534c).\n\n// CVE-2026-52924 / CVE-2026-80714 — kernel exposure and module state\nlet since = datetime(2026-09-01);\nunion isfuzzy=true\n  (DeviceInfo\n   | where Timestamp > since\n   | where OSPlatform has \"Linux\"\n   | summarize arg_max(Timestamp, OSVersion, OSDistribution) by DeviceName\n   | project DeviceName, Leg = \"inventory\", Evidence = strcat(OSDistribution, \" \", OSVersion)),\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where FileName in~ (\"modprobe\",\"insmod\",\"kmod\")\n   | where ProcessCommandLine has_any (\"sctp\",\"ip_vs\",\"ipvs\")\n   | project DeviceName, Leg = \"module load\", Evidence = strcat(AccountName, \": \", ProcessCommandLine)),\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where ProcessCommandLine has_any (\"/proc/net/sctp\",\"ipvsadm\",\"lsmod\")\n   | project DeviceName, Leg = \"protocol use\", Evidence = ProcessCommandLine)\n| summarize Legs = make_set(Leg), Detail = make_set(Evidence, 6) by DeviceName\n| sort by DeviceName asc",
+   "SENTINEL KQL — the exploitation-side signal for a local kernel use-after-free is the crash it leaves behind when it fails, plus an unprivileged process gaining root; both are log-side rather than endpoint-side.\n\n// Kernel fault and privilege-transition hunting for the affected subsystems\nlet since = datetime(2026-09-01);\nunion isfuzzy=true\n  (Syslog\n   | where TimeGenerated > since\n   | where SyslogMessage has_any (\"KASAN\",\"slab-use-after-free\",\"general protection fault\",\"BUG: unable to handle\")\n   | where SyslogMessage has_any (\"sctp_\",\"ip_vs\",\"ipvs\")\n   | project TimeGenerated, Host = Computer, Leg = \"kernel fault\", Evidence = SyslogMessage),\n  (Syslog\n   | where TimeGenerated > since\n   | where SyslogMessage has_any (\"session opened for user root\",\"COMMAND=\",\"authentication failure\")\n   | where SyslogMessage has \"root\"\n   | project TimeGenerated, Host = Computer, Leg = \"privilege transition\", Evidence = SyslogMessage)\n| summarize Events = count(), First = min(TimeGenerated), Last = max(TimeGenerated), Detail = make_set(Evidence, 5) by Host, Leg\n| sort by Last desc",
+   "A KASAN or general-protection fault naming sctp_sched_fcfs_dequeue or sctp_outq_flush is worth treating as a failed exploitation attempt on an unpatched host, not as a hardware or driver fault."
+  ],
+  "source": "NebuSec research and proof-of-concept releases, securityonline.info (Sep 3 and Sep 5, 2026), upstream Linux kernel commit notes, Intruder CVE data",
+  "sourceNote": "Sep 3 – Sep 6, 2026"
+ },
+ "postgreshell": {
+  "eyebrow": "PostgreSQL · CVE-2026-6471 · PostGREShell · CVSS 7.2 · Patched Aug 13, 2026",
+  "title": "The replication credential nobody inventories, and a fix that breaks change data capture",
+  "tags": [
+   [
+    "high",
+    "All Sectors"
+   ],
+   [
+    "high",
+    "Information Technology"
+   ]
+  ],
+  "overview": "Two things make this worth acting on despite a 7.2 score and no reported exploitation. First, the prerequisite is a credential most organisations do not treat as sensitive: REPLICATION is handed to backup jobs, monitoring agents and CDC pipelines, often shared, often long-lived, and rarely rotated — and it now yields code execution as the database service account plus a persistent, passwordless superuser backdoor. Second, the fix has a compatibility cost that will tempt teams to defer it: the project chose a plugin allow-list, so environments using wal2json, decoderbufs or a proprietary output plugin can find replication slots refusing to initialise after patching. Plan the plugin question before the maintenance window rather than discovering it during one. The 114 malicious PostgreSQL plugins Cyera found on VirusTotal are context for the plugin-loading risk generally, not evidence of exploitation of this CVE.",
+  "technical": [
+   "CVE-2026-6471 (CVSS 7.2), disclosed by Cyera Research Labs on Sep 1, 2026 and dubbed PostGREShell. Advisory wording: missing authorization in PostgreSQL logical decoding allows a non-superuser holding REPLICATION privilege to dlopen any file visible to the operating system account running the server, via the choice of logical decoding plugin, which in turn runs arbitrary code as that account.",
+   "Mechanism: when a tool requests logical decoding it names an output plugin, which PostgreSQL loads and runs with server process privileges. Non-superuser accounts are meant to be confined to an administrator-controlled plugin directory, but Cyera found the plugin name is passed to the loader without validation or sanitisation.",
+   "Impact chain per Cyera: a low-privilege backup account reaches remote code execution on Windows, Linux and macOS, escalates to full PostgreSQL superuser, and can install persistent backdoor access including passwordless connections and restored superuser privileges — total database and server compromise.",
+   "Affected: every release from PostgreSQL 9.4 (2014) through 18, confirmed by Cyera on 18.2. The vulnerable path exists wherever logical replication, change data capture (for example Debezium), migration tooling or advanced backup solutions are used.",
+   "Fixed in PostgreSQL 18.6, 17.11, 16.15, 15.19 and 14.24, released Aug 13, 2026. CVE assigned ahead of an expected May 14, 2026 release; the release carrying the fix published Aug 22 per Cyera's timeline.",
+   "Fix design and side effect: the project applied an allow-list of permitted output plugins rather than the standard LOAD restrictions, which would have forced all third-party plugins into $libdir/plugins and was judged too disruptive. A replication user naming a plugin outside the list is rejected with ERROR: library \"...\" may not be used as an output plugin, so third-party CDC plugins such as wal2json and decoderbufs fail to initialise slots until reconfigured. A known issue with pg_createsubscriber was reported as of Sep 4, 2026.",
+   "Cyera's VirusTotal hunt found 114 malicious PostgreSQL plugins in the wild — trojans, cryptocurrency miners and reverse shells. The disclosure does not link any of them to exploitation of CVE-2026-6471, and no in-the-wild exploitation has been reported.",
+   "Credit: Cyera Research Labs thanks Noah Misch and the PostgreSQL security team for confirming the flaw and coordinating the fix."
+  ],
+  "iocs": [
+   {
+    "type": "Behavior",
+    "value": "CREATE_REPLICATION_SLOT naming an output plugin that is not part of your standard CDC configuration",
+    "note": "Primary exploitation signal; GBHackers records monitoring for unexpected CREATE_REPLICATION_SLOT activity as the recommended detection"
+   },
+   {
+    "type": "String",
+    "value": "library \"...\" may not be used as an output plugin",
+    "note": "Post-patch server log entry when a replication user names a plugin outside the allow-list — also the artefact a blocked exploit attempt leaves"
+   },
+   {
+    "type": "Behavior",
+    "value": "Child process or outbound connection originating from the postgres service account",
+    "note": "Code executes as the OS account running the server, so process and network activity under that identity is the post-exploitation signal"
+   },
+   {
+    "type": "Behavior",
+    "value": "Outbound SMB (445) or NFS (2049) traffic from a database server",
+    "note": "Remote plugin loading path; GBHackers advises blocking unnecessary outbound SMB and NFS from database hosts and disabling unused automount services"
+   }
+  ],
+  "iocNote": "No indicators of compromise have been published — this is coordinated disclosure with no reported exploitation. Everything above is derived from the mechanism and the researchers' remediation guidance, and should be treated as hunting logic rather than as attributed campaign artefacts. Cyera's 114 malicious plugin samples illustrate the broader risk of untrusted database extensions and are not tied to this CVE.",
+  "mitigation": [
+   "Patch to PostgreSQL 18.6, 17.11, 16.15, 15.19 or 14.24 or later. Confirm managed-service versions too — cloud providers ship their own patch schedules.",
+   "Before patching, enumerate which output plugins your replication and CDC tooling names. Third-party plugins such as wal2json and decoderbufs must be reconciled with the new allow-list or slot creation will fail after the update.",
+   "Audit every account carrying the REPLICATION attribute and remove it from accounts that do not need it. Treat the remaining ones as privileged credentials: unique per consumer, rotated, and not embedded in shared configuration.",
+   "Restrict replication connections to trusted hosts with explicit pg_hba.conf rules rather than relying on network position.",
+   "Block unnecessary outbound SMB on port 445 and NFS on port 2049 from database servers and disable unused automount services, closing the remote-file plugin-loading path.",
+   "Review the filesystem visible to the database service account for writable directories, and review existing extensions and plugins for provenance."
+  ],
+  "response": [
+   "SENTINEL KQL — the detection that matters is a replication slot created with a plugin you do not use, plus the post-patch rejection message; both live in PostgreSQL server logs rather than in endpoint telemetry. Technique adapted from community work: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com).\n\n// PostGREShell CVE-2026-6471 — replication slot and plugin-load activity\nlet since = datetime(2026-08-01);\nlet knownPlugins = dynamic([\"pgoutput\",\"test_decoding\",\"wal2json\",\"decoderbufs\"]);\nunion isfuzzy=true\n  (Syslog\n   | where TimeGenerated > since\n   | where ProcessName has \"postgres\" or Facility has \"postgres\"\n   | where SyslogMessage has_any (\"CREATE_REPLICATION_SLOT\",\"may not be used as an output plugin\",\"logical decoding\")\n   | project TimeGenerated, Host = Computer, Evidence = SyslogMessage),\n  (Event\n   | where TimeGenerated > since\n   | where Source has \"PostgreSQL\"\n   | where RenderedDescription has_any (\"CREATE_REPLICATION_SLOT\",\"may not be used as an output plugin\")\n   | project TimeGenerated, Host = Computer, Evidence = RenderedDescription)\n| extend Plugin = extract(@\"plugin[= ]+'?([A-Za-z0-9_\\-\\.]+)\", 1, Evidence)\n| extend Verdict = case(\n    Evidence has \"may not be used as an output plugin\", \"blocked by patched allow-list — investigate caller\",\n    isnotempty(Plugin) and Plugin !in (knownPlugins), \"unexpected plugin name — investigate\",\n    \"baseline\")\n| where Verdict != \"baseline\"\n| summarize Events = count(), First = min(TimeGenerated), Last = max(TimeGenerated), Detail = make_set(Evidence, 5) by Host, Plugin, Verdict\n| sort by Last desc",
+   "DEFENDER XDR KQL — post-exploitation: the database service account behaving like an interactive account. On a patched estate this should return nothing.\n\n// Code execution under the PostgreSQL service account\nlet since = datetime(2026-08-01);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (\"postgres\",\"postgres.exe\",\"pg_ctl.exe\")\n   | where FileName has_any (\"sh\",\"bash\",\"cmd.exe\",\"powershell.exe\",\"curl\",\"wget\",\"python3\",\"nc\")\n   | project Timestamp, DeviceName, Leg = \"child process\", Evidence = strcat(InitiatingProcessFileName, \" -> \", ProcessCommandLine)),\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (\"postgres\",\"postgres.exe\")\n   | where FileName endswith \".so\" or FileName endswith \".dll\" or FileName endswith \".dylib\"\n   | project Timestamp, DeviceName, Leg = \"library write\", Evidence = strcat(ActionType, \" \", FolderPath, FileName)),\n  (DeviceNetworkEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (\"postgres\",\"postgres.exe\")\n   | where RemotePort in (445, 2049) or RemoteIPType == \"Public\"\n   | project Timestamp, DeviceName, Leg = \"egress\", Evidence = strcat(RemoteIP, \":\", RemotePort, \" \", RemoteUrl))\n| summarize Legs = make_set(Leg), Events = count(), Detail = make_set(Evidence, 8) by DeviceName\n| sort by Events desc",
+   "Where a slot was created with an unexpected plugin, collect the shared library it named before rotating credentials — it is the payload, and the loader path is the only place it is recorded.",
+   "Treat a confirmed exploitation as a superuser compromise of the instance: review roles for restored superuser attributes and passwordless authentication entries, not only for the account that was used."
+  ],
+  "source": "Cyera Research Labs (PostGREShell disclosure, Sep 1, 2026), SecurityWeek, Security Affairs, CSO Online, GBHackers, SC Media, PostgreSQL security release notes",
+  "sourceNote": "Aug 13 – Sep 5, 2026"
+ },
  "chromev8": {
   "eyebrow": "Google Chrome · CVE-2026-85046 · V8 type confusion · Exploited in the wild · Patched Sep 3, 2026",
   "title": "A browser zero-day with nothing to hunt for and one control that works",
@@ -2789,6 +3011,9 @@ window.CTI = {
   "title": "Two chained PaperCut flaws give unauthenticated Java code execution inside the application process; patch bypasses already found",
   "overview": "PaperCut sits in the worst possible place for this class of bug: internet-facing, trusted by the print estate, and holding spooled documents. PaperCut disclosed on Aug 27, 2026 that all versions of NG and MF are affected and that it is aware of confirmed customer incidents. The actionable read is that patching is necessary but not sufficient — watchTowr reports multiple bypasses of the first emergency patch and an additional authentication bypass, likely closed by the second. Remove internet exposure now, apply the latest emergency patch, and hunt: the post-exploitation tooling deletes its own artifacts and the server's logs, so absent or truncated logs are themselves evidence. No actor has been named and no attribution published.",
   "technical": [
+   "Sep 6 update — Arctic Wolf Adversary Research Team: exploitation of CVE-2026-81578 and CVE-2026-82078 leading to command execution, reconnaissance and attempts to create privileged accounts, concentrated in the education sector across K-12 schools and major universities in the US and Europe.",
+   "Arctic Wolf's observed post-exploitation activity: delivery of Windows registry hive collection tools, Metasploit/Meterpreter-related Java payloads, and commands used to identify hosts, users, processes and sensitive configuration data. Reported specifics include uname, whoami, ver and tasklist, an account named \"Administrator17\", inbound GET requests from 45.142.193[.]132 for /custom/pcp_*.txt, and credential-harvesting tooling delivered via certutil.",
+   "SOC Prime, Sep 2: a working proof of concept for the combined CVE-2026-81578 / CVE-2026-82078 chain is publicly available, with exploit references in vulnerability databases and security tooling, lowering the barrier for scanning and mass exploitation of unpatched internet-facing servers. Huntress's first observed incident was Aug 26, 2026; one intrusion lasted under two minutes, ran base64-encoded reconnaissance commands to establish the PaperCut service identity, Windows version and running processes, and delivered malicious Java .class files.",
    "Escalation: SecurityWeek reported on Sep 1, 2026 that exploitation has moved beyond scanning and probing into active intrusions. Treat any internet-exposed PaperCut server that was unpatched after Aug 27 as presumed compromised until the log review below is complete.",
    "KEV: CISA added CVE-2026-82078 and CVE-2026-81578 to the Known Exploited Vulnerabilities catalog on Aug 31, 2026 under BOD 26-04, with the Forensics Triage Requirements applying — remediation alone does not discharge the obligation where the asset was internet-facing.",
    "CVE-2026-82078 (CVSS 9.4) — unsafe dynamic class loading in the database connection utilities of PaperCut MF and NG. The application instantiates database driver classes based on configurable driver names without validating them against an allowlist of approved drivers.",
@@ -2800,6 +3025,12 @@ window.CTI = {
    "Historical precedent: CVE-2023-27350 in PaperCut MF/NG (CVSS 9.8) was exploited in 2023 by Russian threat actors and by Lace Tempest to deliver Cl0p and LockBit ransomware. Treat a PaperCut compromise as a probable ransomware precursor, not an isolated print-server issue."
   ],
   "iocs": [
+   {"type":"IP","value":"45.142.193.132","note":"Sep 6 — source of inbound GET requests for /custom/pcp_*.txt paths on compromised PaperCut servers (Arctic Wolf, via The Hacker News)"},
+   {"type":"URL","value":"/custom/pcp_*.txt","note":"Requested path pattern associated with the exploitation activity Arctic Wolf observed"},
+   {"type":"String","value":"Administrator17","note":"Privileged Windows account created during post-exploitation in the education-sector campaign"},
+   {"type":"Behavior","value":"PaperCut service process spawning uname, whoami, ver or tasklist","note":"Discovery commands reported by Arctic Wolf; Huntress recorded the same shape as base64-encoded reconnaissance"},
+   {"type":"Behavior","value":"Registry hive collection tooling and certutil-delivered credential harvesting on a PaperCut Application Server","note":"Arctic Wolf post-exploitation activity — the campaign's objective is credential theft"},
+   {"type":"Behavior","value":"Metasploit/Meterpreter-related Java payloads or .class files written by the PaperCut process","note":"Payload delivery via the vulnerable server, reported by Arctic Wolf and Huntress"},
    {
     "value": "pc-app.exe",
     "type": "Filename",
@@ -4426,11 +4657,49 @@ window.CTI = {
  }
 },
   META: {
- "chromev8": {
+ "postgreshell": {
   "status": "new",
+  "conf": "Vendor research with upstream confirmation — Cyera Research Labs disclosure reviewed and fixed by the PostgreSQL security team; no exploitation reported",
+  "confNote": "Coordinated disclosure, no in-the-wild exploitation reported and not in CISA KEV. Impact chain (RCE, superuser, persistent backdoor) is the researchers' demonstration rather than observed attacker behaviour. The 114 malicious plugin samples Cyera found on VirusTotal are not linked to this CVE. CVSS 7.2 understates the outcome where REPLICATION credentials are widely shared",
+  "iocDate": "Aug 13, 2026 — patched releases; Sep 1, 2026 — Cyera disclosure",
+  "admiralty": "A2",
+  "severity": 3,
+  "cvss": 7.2,
+  "sectors": [
+   "All Sectors",
+   "Information Technology",
+   "Financial Services"
+  ],
+  "attack": [
+   "T1078 — Valid Accounts",
+   "T1574.002 — Hijack Execution Flow: DLL Side-Loading",
+   "T1068 — Exploitation for Privilege Escalation",
+   "T1505 — Server Software Component"
+  ]
+ },
+ "linuxkernelpoc": {
+  "status": "new",
+  "conf": "Published research with working exploit code — NebuSec proof of concept for both CVEs, verified against named distributions; no exploitation reported",
+  "confNote": "No in-the-wild exploitation and neither CVE is in KEV as of Sep 6, 2026. Both require local access. CVSS 9.8 as carried in the reporting is inconsistent with a local-only attack vector, and upstream initially triaged CVE-2026-52924 as denial of service — treat the score with caution and the demonstrated local-root impact as the planning basis",
+  "iocDate": "Sep 3, 2026 — CVE-2026-80714 PoC; Sep 5, 2026 — CVE-2026-52924 PoC",
+  "admiralty": "B2",
+  "severity": 3,
+  "cvss": 9.8,
+  "sectors": [
+   "All Sectors",
+   "Information Technology"
+  ],
+  "attack": [
+   "T1068 — Exploitation for Privilege Escalation",
+   "T1547.006 — Kernel Modules and Extensions",
+   "T1499 — Endpoint Denial of Service"
+  ]
+ },
+ "chromev8": {
+  "status": "updated",
   "conf": "Vendor confirmation — Google states an exploit exists in the wild and shipped the fix; CISA KEV listing Sep 4, 2026. No exploitation detail, targeting or indicators published",
   "confNote": "Google withholds bug detail and links until the majority of users are updated, so no campaign, victim or indicator information is available and none should be expected soon. No CVSS score published in the sources reviewed; Google rates the flaw high severity. Whether a sandbox escape was chained is not stated",
-  "iocDate": "Sep 3, 2026 — patched; Sep 4, 2026 — added to CISA KEV",
+  "iocDate": "Sep 3, 2026 — patched; Sep 4, 2026 — added to CISA KEV; Sep 6, 2026 — still no published indicators",
   "admiralty": "A1",
   "severity": 4,
   "cvss": null,
@@ -4643,8 +4912,8 @@ window.CTI = {
   "cvss": 9.4,
   "admiralty": "A1",
   "conf": "Confirmed exploitation — vendor-confirmed customer incidents plus independent IR observation",
-  "confNote": "PaperCut confirms customer incidents but has published no detail on the activity or the actor. Huntress observed exploitation in two customer environments; watchTowr reports the chaining and the patch bypasses. The bypass claims are watchTowr's own and have not been independently confirmed. · KEV listing Aug 31, 2026 (BOD 26-04, forensic triage required); SecurityWeek reports escalation to active intrusions Sep 1, 2026 · Sep 2: vendor-extended IOC list and reported installation of SimpleHelp and AnyDesk remote access tooling; federal deadline Sep 14, 2026",
-  "iocDate": "Aug 30, 2026 — extended vendor indicator list",
+  "confNote": "PaperCut confirms customer incidents but has published no detail on the activity or the actor. Huntress observed exploitation in two customer environments; watchTowr reports the chaining and the patch bypasses. The bypass claims are watchTowr's own and have not been independently confirmed. · KEV listing Aug 31, 2026 (BOD 26-04, forensic triage required); SecurityWeek reports escalation to active intrusions Sep 1, 2026 · Sep 2: vendor-extended IOC list and reported installation of SimpleHelp and AnyDesk remote access tooling; federal deadline Sep 14, 2026 · Sep 6: Arctic Wolf reports an education-sector campaign (US and European K-12 through universities) with published network and host indicators, privileged account creation and credential harvesting, and SOC Prime records a public PoC for the full chain",
+  "iocDate": "Aug 30, 2026 — extended vendor indicator list; Sep 5, 2026 — Arctic Wolf campaign indicators",
   "sectors": [
    "All Sectors",
    "Information Technology",
