@@ -3,27 +3,99 @@ window.CTI = {
   WEEK_RANGE: "Week of Aug 31 – Sep 6, 2026",
   POSTURE: {
  "level": "CRITICAL",
- "text": "Two new items today and two stories updated: a weaponised WordPress backup-plugin flaw leaves roughly 3.25 million sites unpatched, Group-IB details a Python framework that prices compromised hosts for access brokers, and Cisco's Nexus 9000 RCE now has a fixed-release table where yesterday it had none. All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads. Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 deadline; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 deadline that lands tomorrow; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
+ "text": "Four new items today and the Sep 5 KEV deadline falls today for five of Wednesday's seven additions: an exploited Chrome V8 zero-day entered KEV a day after the patch, Wordfence counts more than 440,000 attempts against two WordPress upload flaws, Symantec documents implants running under the signed Node.js runtime after payload delivery was blocked, and FulcrumSec published the Manchester Airports dataset after the operator refused to pay. Google shipped Chrome 152.0.7977.82/.83 on Sep 3 fixing CVE-2026-85046, a V8 type confusion Google says has an exploit in the wild, and CISA added it to KEV on Sep 4; no detail or indicators will be published until most users have updated, so browser version state — including the Chromium derivatives Edge, Opera and Brave, which patch later — is the whole defensive position, and the Android build reaches Google Play over several days. Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July. Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations. FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today. All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads. Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due today, Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 federal deadline that falls today; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 federal deadline that falls today; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts. PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
  "lines": [
+  "Google shipped Chrome 152.0.7977.82/.83 on Sep 3 fixing CVE-2026-85046, a V8 type confusion Google says has an exploit in the wild, and CISA added it to KEV on Sep 4; no detail or indicators will be published until most users have updated, so browser version state — including the Chromium derivatives Edge, Opera and Brave, which patch later — is the whole defensive position, and the Android build reaches Google Play over several days.",
+  "Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July.",
+  "Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations.",
+  "FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today.",
   "All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads.",
   "Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443.",
   "Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting.",
-  "CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances.",
+  "CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due today, Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances.",
   "Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected.",
   "Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact.",
-  "SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 deadline; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published.",
-  "JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 deadline that lands tomorrow; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts.",
+  "SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 federal deadline that falls today; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published.",
+  "JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 federal deadline that falls today; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts.",
   "PaperCut has escalated again: the vendor's Aug 30 bulletin describes attackers installing SimpleHelp and AnyDesk on compromised Application Servers, ShadowServer counts more than 1,000 exposed instances, and the federal deadline is Sep 14 — keep hunting archived server.log copies for 'Database error looking up cardID: VALUES CAST' and add remote-access-tool installs to the hunt.",
   "Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637.",
   "Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility.",
   "Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10."
  ],
- "lead": "Two new items today and two stories updated: a weaponised WordPress backup-plugin flaw leaves roughly 3.25 million sites unpatched, Group-IB details a Python framework that prices compromised hosts for access brokers, and Cisco's Nexus 9000 RCE now has a fixed-release table where yesterday it had none."
+ "lead": "Four new items today and the Sep 5 KEV deadline falls today for five of Wednesday's seven additions: an exploited Chrome V8 zero-day entered KEV a day after the patch, Wordfence counts more than 440,000 attempts against two WordPress upload flaws, Symantec documents implants running under the signed Node.js runtime after payload delivery was blocked, and FulcrumSec published the Manchester Airports dataset after the operator refused to pay."
 },
   STORIES: [
  {
-  "key": "wpmigration",
+  "key": "chromev8",
   "badge": "new",
+  "tags": [
+   [
+    "crit",
+    "Google Chrome · CVE-2026-85046 · V8 type confusion"
+   ],
+   [
+    "high",
+    "All Sectors · Exploited in the wild · KEV Sep 4"
+   ]
+  ],
+  "title": "Google patches an exploited V8 type-confusion zero-day in Chrome; CISA added CVE-2026-85046 to KEV on Sep 4",
+  "body": "Google released Chrome 152.0.7977.82/.83 for Windows and Mac and 152.0.7977.82 for Linux and Android on Sep 3, 2026, fixing twelve vulnerabilities including CVE-2026-85046, a high-severity type confusion in the V8 JavaScript engine. Chrome's Srinivas Sista wrote in the Sep 3 advisory that Google \"is aware of reports that an exploit for CVE-2026-85046 exists in the wild.\" The flaw was reported by an external researcher, Salvatore Gulizia. Type confusion in V8 allows a remote attacker to execute arbitrary code inside the browser's security sandbox through a maliciously crafted web page. Google withholds technical detail and bug access until the majority of users have updated, so no exploitation detail, targeting information or indicators have been published. CISA added the CVE to the Known Exploited Vulnerabilities catalog on Sep 4, 2026. The Android update is reaching Google Play over several days and automatic updates roll out to other platforms over the following days and weeks, so the practical exposure window is the update lag rather than the patch date. Chromium-derived browsers including Microsoft Edge, Opera and Brave inherit the defect and require their own vendor releases.",
+  "src": "Google Chrome release advisory (Sep 3, 2026), Forbes, CISA KEV (Sep 4, 2026), securityonline.info — Sep 3–5, 2026"
+ },
+ {
+  "key": "superforms",
+  "badge": "new",
+  "tags": [
+   [
+    "crit",
+    "Super Forms CVE-2026-14894 · CVSS 9.8"
+   ],
+   [
+    "high",
+    "Elementor Pro CVE-2026-32475 · 440,000+ attempts"
+   ]
+  ],
+  "title": "Wordfence records more than 440,000 exploit attempts against unauthenticated file-upload flaws in Super Forms and Elementor Pro",
+  "body": "Wordfence reports active mass exploitation of two unauthenticated arbitrary file-upload vulnerabilities in WordPress plugins. CVE-2026-14894 (CVSS 9.8) is a missing file-type validation flaw in Super Forms – Drag & Drop Form Builder affecting versions through 6.3.313, fixed in 6.3.314 on Jul 8, 2026 and disclosed publicly on Jul 9; Wordfence researcher Andrea Bocchetti found that the plugin's submit_form() routine processes file-upload fields through the unauthenticated super_submit_form AJAX handler, base64-decoding a supplied data URI and writing it to disk without validating the type, and notes the flaw may also permit path traversal outside the intended upload directory. Wordfence's firewall has blocked more than 250,000 attempts against it; exploitation began Jul 14, the day the rule reached Premium, Care and Response customers, free users received it on Aug 13, and the heaviest activity ran Aug 18–25. Super Forms has an estimated 13,000 active installations. CVE-2026-32475 (scored 9.0 and 9.8 in different sources) is the equivalent flaw in Elementor Pro, fixed in 4.2.2; uploaded PHP files land in /wp-content/uploads/elementor/forms/ under a randomly generated filename with the attacker-supplied .php extension and can then be requested directly to run commands on the server. Exploitation of the Elementor Pro flaw began Aug 19, 2026. In both cases the outcome is a PHP web shell, from which Wordfence describes attackers creating administrator accounts, exfiltrating data, deploying phishing or spam infrastructure and overwriting files writable by the web server. Wordfence advises patching immediately, scanning for indicators of compromise and auditing for unexpected or recently modified .php files.",
+  "src": "Wordfence threat intelligence, The Hacker News, GBHackers, Cyberpress, securityonline.info, Patchstack — Sep 4–5, 2026"
+ },
+ {
+  "key": "nodeabuse",
+  "badge": "new",
+  "tags": [
+   [
+    "high",
+    "Node.js runtime abuse · Woodgnat / KongTuke"
+   ],
+   [
+    "high",
+    "Government Facilities · Information Technology · Commercial Facilities"
+   ]
+  ],
+  "title": "Symantec documents a return to Node.js abuse: attackers install the signed runtime to run implants that payload-blocking had stopped",
+  "body": "The Symantec Threat Hunter Team reported on Sep 3, 2026 that attackers have revived the use of Node.js as an execution vehicle since February 2026, in campaigns against government departments, technology companies and hotels. In an intrusion at an Asian technology start-up running from March to July 2026, initial access came through ClickFix social engineering, and after repeated attempts to deploy AdaptixC2 agents and Cobalt Strike Beacon were blocked on the victim network, the attackers downloaded the official Node.js installer from nodejs.org and used the trusted, signed node.exe runtime to execute a malicious JavaScript implant. The implant held its foothold for months and made repeated connections to Ethereum blockchain gateways, an EtherHiding-style channel Symantec assesses was most likely used to retrieve commands or further payloads. Persistence combined a Windows service-launched PowerShell downloader with a registry Run key that relaunched node.exe at login; Symantec also observed domain spoofing of a company called Devmine, with 'datalyerservice' used as a command-and-control server. Because the malicious logic stays in interpreted script rather than in a binary, signature-based detection and binary allow-listing are weakened. Symantec links some of the activity to ModeloRAT and Backdoor.Mistic (MLTBackdoor), assessed to be the work of the initial access broker Woodgnat, also tracked as KongTuke, which has been publicly linked to intrusions involving Qilin, Interlock, Rhysida, Akira, 8Base, Black Basta and Embargo ransomware. Symantec's June 2026 reporting described the same actor abusing node.exe alongside a malicious Chrome extension named NexShield in a ClickFix variant it calls CrashFix, and a .NET payload named GateKeeper with layered encryption and victim-fingerprinting logic. The same tradecraft was seen against a US fintech organisation, where the earliest observed activity was May 6, 2026 and the intrusion led to C2Looper, a Rust-based backdoor documented by Zscaler ThreatLabz. Symantec's assessment is that the technique's return reflects Node.js popularity rather than actor sophistication: attackers of varying skill levels are using it.",
+  "src": "Symantec Threat Hunter Team / security.com (Sep 3, 2026), The Hacker News, Cyber Recaps, OffSeq Threat Radar — Sep 3–4, 2026"
+ },
+ {
+  "key": "magleak",
+  "badge": "new",
+  "tags": [
+   [
+    "crit",
+    "Manchester Airports Group · FulcrumSec"
+   ],
+   [
+    "high",
+    "Transportation Systems · 8.7M people"
+   ]
+  ],
+  "title": "FulcrumSec publishes the full Manchester Airports Group dataset after the operator refuses to pay, claiming access through admin keys left in website JavaScript",
+  "body": "Manchester Airports Group disclosed on Aug 27, 2026 that an unauthorised third party had accessed customer data relating to approximately 8.7 million people across Manchester, London Stansted and East Midlands airports, covering car park, lounge and Fast Track bookings and in-airport Wi-Fi sign-ups. MAG said the data was held in a database hosted by a third party, that email addresses, phone numbers, vehicle registrations and postcodes were exfiltrated, that bank details, payment card data, account passwords and passport numbers are not stored in the affected system, and that airport operations were unaffected. MAG confirmed to the BBC that a ransom was demanded and refused. The extortion group FulcrumSec claimed the breach on Aug 30 in reporting by BleepingComputer, initially describing 86 GB of compressed data, and published the dataset on its leak site on Sep 2. Volume figures differ between sources: SecurityWeek and Computer Weekly describe roughly 550 GB of uncompressed data and half a terabyte respectively, while BleepingComputer reports FulcrumSec saying the exported files total roughly 640 GB extracted, and Hackread counts four archives totalling 74.5 GB compressed. Have I Been Pwned lists email addresses and phone numbers for 8.8 million people. FulcrumSec's own listing claims names, emails, phone numbers, town and postal region and residential IP addresses, and reporting describes booking history, travel dates, vehicle information and purchase references as also present — more detail than MAG's initial disclosure indicated. FulcrumSec told BleepingComputer it obtained access using exposed Iterable API credentials found in client-side JavaScript on each of the three airport root domains; MAG has not publicly confirmed that access path. The group had said it might withhold roughly 200,000 upcoming-travel records on harm grounds, as it did during its Novo Nordisk extortion in June 2026; whether it did so is not established in the reporting reviewed. TechTimes records FulcrumSec as active since approximately September 2025 with about 25 claimed victims across 11 countries, operating a data-theft model without ransomware encryption.",
+  "src": "MAG statements via BBC, SecurityWeek, BleepingComputer, Computer Weekly, Cybernews, TechTimes, Have I Been Pwned — Aug 27 – Sep 4, 2026"
+ },
+ {
+  "key": "wpmigration",
+  "badge": "",
   "tags": [
    [
     "high",
@@ -40,7 +112,7 @@ window.CTI = {
  },
  {
   "key": "brazetsu",
-  "badge": "new",
+  "badge": "",
   "tags": [
    [
     "high",
@@ -57,7 +129,7 @@ window.CTI = {
  },
  {
   "key": "ciscosep",
-  "badge": "new",
+  "badge": "",
   "tags": [
    [
     "crit",
@@ -84,7 +156,7 @@ window.CTI = {
     "All Sectors · BOD 26-04 deadlines Sep 5 and Sep 16"
    ]
   ],
-  "badge": "new",
+  "badge": "updated",
   "title": "CISA adds seven exploited flaws to KEV in one batch, four of them in AI and developer tooling",
   "body": "CISA added seven vulnerabilities to the Known Exploited Vulnerabilities catalog on Sep 2, 2026: CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 (7.8) in SonicWall SMA1000 appliances, CVE-2026-9586 (9.3) in Sangoma Switchvox, CVE-2026-82329 (9.8) in JFrog Artifactory, CVE-2026-48710 (6.5) in Kludex Starlette, CVE-2026-49869 (10.0) in Kestra OSS, and CVE-2026-59822 (8.8) in Berri LiteLLM. Under BOD 26-04, federal civilian agencies must remediate all of them by Sep 5, 2026, except the Starlette and LiteLLM flaws, which carry a Sep 16 deadline. The Starlette entry is an HTTP request and response smuggling flaw that lets an attacker inject paths into the host part, leading to authentication bypass where authentication depends on the reconstructed URL path; Horizon3.ai showed in June that it chains with LiteLLM CVE-2026-42271 for unauthenticated remote code execution. CVE-2026-49869 is an OS command injection flaw in Kestra OSS that lets an unauthenticated remote attacker create and execute arbitrary workflows without credentials; its KEV listing is driven by a Microsoft report describing likely exploitation in late June 2026 to establish a reverse shell, enumerate the Docker container environment, evade defences, deploy a cryptocurrency miner and harvest data. CVE-2026-59822 is an improper authentication flaw in LiteLLM's MCP Streamable HTTP endpoint that lets an unauthenticated attacker establish an authenticated MCP session with an arbitrary Bearer token. Four of the seven sit in AI or developer infrastructure rather than in classic enterprise perimeter products.",
   "src": "CISA KEV catalog (Sep 2, 2026), The Hacker News, Microsoft Security Blog — Sep 2–3, 2026"
@@ -653,6 +725,46 @@ window.CTI = {
 ],
   CVES: [
  {
+  "key": "chromev8",
+  "level": "crit",
+  "num": "CVE-2026-85046",
+  "cvss": "",
+  "vector": "V8 type confusion — arbitrary code execution in the browser sandbox via a crafted page",
+  "status": "Patched Chrome 152.0.7977.82/.83 (Sep 3); exploited in the wild; KEV Sep 4"
+ },
+ {
+  "key": "superforms",
+  "level": "crit",
+  "num": "CVE-2026-14894",
+  "cvss": "9.8",
+  "vector": "Unauthenticated arbitrary file upload via super_submit_form data URI",
+  "status": "Patched 6.3.314 (Jul 8); mass exploitation from Jul 14, 250,000+ attempts blocked"
+ },
+ {
+  "key": "superforms",
+  "level": "crit",
+  "num": "CVE-2026-32475",
+  "cvss": "9.8",
+  "vector": "Unauthenticated arbitrary file upload writing PHP to /wp-content/uploads/elementor/forms/",
+  "status": "Patched Elementor Pro 4.2.2; exploitation from Aug 19, 2026"
+ },
+ {
+  "key": "nodeabuse",
+  "level": "high",
+  "num": "Node.js runtime abuse",
+  "cvss": "",
+  "vector": "Signed node.exe executing attacker JavaScript; EtherHiding C2",
+  "status": "Active since Feb 2026; no vulnerability involved — configuration and detection gap"
+ },
+ {
+  "key": "magleak",
+  "level": "crit",
+  "num": "MAG data theft / FulcrumSec",
+  "cvss": "",
+  "vector": "Exposed Iterable API credentials in client-side JavaScript (actor claim)",
+  "status": "Data published Sep 2, 2026 after ransom refused; ~8.7M people"
+ },
+ {
   "key": "wpmigration",
   "level": "high",
   "num": "CVE-2026-19949",
@@ -1114,6 +1226,10 @@ window.CTI = {
 ],
   KJ: [
  {
+  "num": "16",
+  "html": "<b>Credentials shipped to the browser are now a primary initial-access path, and they are invisible to every control on the network.</b> FulcrumSec told BleepingComputer it reached MAG's backend customer systems using Iterable API keys left in the client-side JavaScript of all three airport websites, and published 8.7 million people's data when the ransom was refused; MAG has not confirmed the path. We assess with <b>moderate confidence</b> — the access path is an actor claim, not a vendor finding — that any organisation embedding third-party platform keys in front-end code should treat that as an exposure of the same class as an unauthenticated admin endpoint. <b>The check costs one pass over your own published bundles</b>, and no endpoint or perimeter telemetry would have surfaced this: the exfiltration ran through a legitimate API with valid credentials."
+ },
+ {
   "num": "01",
   "html": "<b>Remote-access appliances are the week's decisive exposure, and vendors are now finding these flaws by investigating live intrusions rather than through research.</b> SonicWall disclosed CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 as zero-days it discovered internally along with their exploitation, WatchGuard patched three critical unauthenticated RCE flaws in the Fireware OS iked process, and Citrix NetScaler CVE-2026-8452 remains KEV-listed from last week. We assess with <b>high confidence</b> that patch state on VPN and SSL-VPN terminators is the single highest-yield defensive action available this week; note that SonicWall published no indicators, so absence of artefacts is not evidence of absence of compromise. CISA added both SonicWall CVEs to KEV on Sep 2 with a Sep 5 federal deadline."
  },
@@ -1175,6 +1291,86 @@ window.CTI = {
  }
 ],
   SOURCES: [
+ {
+  "group": "Chrome CVE-2026-85046 — Sep 3–5, 2026",
+  "links": [
+   {
+    "label": "Forbes — Google update for actively exploited Chrome security flaw confirmed",
+    "url": "https://www.forbes.com/sites/daveywinder/2026/09/04/google-update-for-actively-exploited-chrome-security-flaw-confirmed/"
+   },
+   {
+    "label": "CISA — Known Exploited Vulnerabilities catalog",
+    "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+   },
+   {
+    "label": "securityonline.info — Daily CyberSecurity (CVE-2026-85046 listing)",
+    "url": "https://securityonline.info/"
+   }
+  ]
+ },
+ {
+  "group": "Super Forms and Elementor Pro mass exploitation — Sep 4–5, 2026",
+  "links": [
+   {
+    "label": "The Hacker News — Over 440,000 exploit attempts target Super Forms and Elementor Pro RCE flaws",
+    "url": "https://thehackernews.com/2026/09/over-440000-exploit-attempts-target.html"
+   },
+   {
+    "label": "GBHackers — Critical Super Forms WordPress flaw actively exploited",
+    "url": "https://gbhackers.com/critical-super-forms-wordpress-flaw-actively-exploited/"
+   },
+   {
+    "label": "Cyberpress — Hackers exploit critical Super Forms WordPress flaw",
+    "url": "https://cyberpress.org/hackers-exploit-critical-super-forms-wordpress-flaw/"
+   },
+   {
+    "label": "securityonline.info — Super Forms CVE-2026-14894 RCE",
+    "url": "https://securityonline.info/super-forms-cve-2026-14894-rce/"
+   },
+   {
+    "label": "Patchstack — Super Forms unauthenticated arbitrary file upload",
+    "url": "https://patchstack.com/database/wordpress/plugin/super-forms/vulnerability/wordpress-super-forms-drag-drop-form-builder-plugin-6-3-313-unauthenticated-arbitrary-file-upload-vulnerability"
+   }
+  ]
+ },
+ {
+  "group": "Node.js runtime abuse / Woodgnat — Sep 3–4, 2026",
+  "links": [
+   {
+    "label": "Symantec (security.com) — Node.js: old technique makes a comeback",
+    "url": "https://www.security.com/threat-intelligence/node-js-returns-ransomware"
+   },
+   {
+    "label": "The Hacker News — Attackers turn trusted Node.js runtime into malware delivery tool",
+    "url": "https://thehackernews.com/2026/09/attackers-turn-trusted-nodejs-runtime.html"
+   },
+   {
+    "label": "OffSeq Threat Radar — Node.js: old technique makes a comeback",
+    "url": "https://radar.offseq.com/threat/nodejs-old-technique-makes-a-comeback-1fe82d90a064755d"
+   }
+  ]
+ },
+ {
+  "group": "Manchester Airports Group / FulcrumSec — Aug 27 – Sep 4, 2026",
+  "links": [
+   {
+    "label": "SecurityWeek — MAG data on 8.8 million people leaked after ransom refusal",
+    "url": "https://www.securityweek.com/manchester-airports-group-data-on-8-8-million-people-leaked-after-ransom-refusal/"
+   },
+   {
+    "label": "BleepingComputer — FulcrumSec claims Manchester Airports hack, theft of 86 GB of data",
+    "url": "https://www.bleepingcomputer.com/news/security/fulcrumsec-claims-manchester-airports-hack-theft-of-86-gb-of-data/"
+   },
+   {
+    "label": "Computer Weekly — UK airport hackers leak stolen customer data",
+    "url": "https://www.computerweekly.com/news/366649824/UK-airport-hackers-leak-stolen-customer-data"
+   },
+   {
+    "label": "Cybernews — UK airport data breach: hackers publish nearly 9M traveler records",
+    "url": "https://cybernews.com/security/hackers-publish-sensitive-data-of-nearly-9m-uk-travelers-manchester-airports/"
+   }
+  ]
+ },
  {
   "group": "All-in-One WP Migration CVE-2026-19949 — Sep 2–3, 2026",
   "links": [
@@ -1979,6 +2175,252 @@ window.CTI = {
  }
 ],
   D: {
+ "chromev8": {
+  "eyebrow": "Google Chrome · CVE-2026-85046 · V8 type confusion · Exploited in the wild · Patched Sep 3, 2026",
+  "title": "A browser zero-day with nothing to hunt for and one control that works",
+  "tags": [
+   [
+    "crit",
+    "All Sectors"
+   ],
+   [
+    "high",
+    "Information Technology"
+   ]
+  ],
+  "overview": "Google restricts detail on exploited Chrome bugs until most users have updated, so there is no exploitation narrative, no targeting information and no indicator set to work from — and there will not be one for weeks. That leaves browser version state as the entire defensive position. Two things make it worth a deliberate pass rather than trusting auto-update: the Android build reaches Google Play over several days and desktop automatic updates roll out over days to weeks, so a fleet is not patched when the release notes say it is; and every Chromium-derived browser in the estate inherits the same V8 defect and needs its own vendor release, which for Edge, Opera and Brave arrives later than Chrome's. Treat managed browser inventory, not KEV, as the measurement here — the KEV entry adds an obligation, not information.",
+  "technical": [
+   "CVE-2026-85046: type confusion in the V8 JavaScript engine, rated high severity by Google. Reported by external researcher Salvatore Gulizia.",
+   "Impact per Google's advisory wording and Forbes's reporting: a remote attacker can execute arbitrary code inside the browser's security sandbox through a maliciously crafted web page. A sandbox escape would be a separate defect; nothing published states whether one was chained in the observed exploitation.",
+   "Fixed versions: 152.0.7977.82/.83 for Windows and Mac, 152.0.7977.82 for Linux and Android, released Sep 3, 2026 by Chrome's Srinivas Sista. Eleven other security fixes shipped in the same release.",
+   "Google states it is aware of reports that an exploit for CVE-2026-85046 exists in the wild, and withholds bug detail and links until a majority of users are updated.",
+   "CISA added the CVE to the KEV catalog on Sep 4, 2026, which brings a BOD 26-04 remediation obligation for federal civilian agencies.",
+   "Downstream exposure: Chromium-based browsers including Microsoft Edge, Opera and Brave carry the same V8 code and require their own vendor updates.",
+   "No CVSS score was published in the sources reviewed; Google's own severity rating is high."
+  ],
+  "iocs": [],
+  "iocNote": "No indicators have been published and none should be expected soon. Google's disclosure policy holds technical detail on exploited Chrome bugs until the majority of users have updated, and no vendor has published campaign infrastructure, delivery domains or victim detail. Hunt on version state, not artefacts.",
+  "mitigation": [
+   "Update Chrome to 152.0.7977.82/.83 on Windows and Mac and 152.0.7977.82 on Linux and Android. Relaunch is required — a downloaded update that has not restarted the browser is not applied.",
+   "Force the update rather than waiting for the staged rollout. Automatic updates reach other platforms over the following days and weeks and the Android build arrives through Google Play over several days.",
+   "Inventory Chromium-derived browsers separately and track their vendor releases. Edge, Opera and Brave inherit the V8 defect and patch on their own schedules.",
+   "Where site isolation and the renderer sandbox have been relaxed by policy, review that configuration. Renderer-level code execution is the demonstrated impact.",
+   "For high-risk users, treat this as a reason to review browser hardening policy rather than as a single patch event; V8 type confusion has been a recurring exploited class."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — the only reliable measurement here is version state across the fleet, including the Chromium derivatives that inherit the defect. Enrichment technique adapted from community work: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com).\n\n// CVE-2026-85046 — Chrome and Chromium-derivative version exposure\nlet fixed = \"152.0.7977.82\";\nDeviceTvmSoftwareInventory\n| where SoftwareName has_any (\"chrome\", \"microsoft edge\", \"opera\", \"brave\")\n| extend Ver = SoftwareVersion\n| extend Major = toint(split(Ver, \".\")[0])\n| summarize Devices = dcount(DeviceName), Sample = make_set(DeviceName, 5)\n    by SoftwareVendor, SoftwareName, Ver, Major\n| extend ChromeExposed = iff(SoftwareName has \"chrome\" and Ver != fixed and Major <= 152, \"review\", \"\")\n| sort by Devices desc",
+   "DEFENDER XDR KQL — post-exploitation shape if a renderer compromise was chained: the browser process spawning script interpreters or writing executables. This is generic browser-exploitation hunting, not detection of this CVE.\n\n// Renderer-to-host activity following browser code execution\nlet browsers = dynamic([\"chrome.exe\",\"msedge.exe\",\"opera.exe\",\"brave.exe\"]);\nlet since = datetime(2026-08-25);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (browsers)\n   | where FileName has_any (\"powershell.exe\",\"cmd.exe\",\"wscript.exe\",\"cscript.exe\",\"mshta.exe\",\"rundll32.exe\",\"node.exe\")\n   | project Timestamp, DeviceName, AccountName, Evidence = strcat(InitiatingProcessFileName, \" -> \", FileName, \" \", ProcessCommandLine)),\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (browsers)\n   | where FileName endswith \".exe\" or FileName endswith \".dll\" or FileName endswith \".scr\"\n   | where not(FolderPath has \"\\\\Downloads\\\\\")\n   | project Timestamp, DeviceName, AccountName, Evidence = strcat(ActionType, \" \", FolderPath, FileName))\n| sort by Timestamp desc",
+   "Report on relaunch-pending state, not installed version. Chrome applies the fix only after restart, and long-lived sessions are common on the users most likely to be targeted."
+  ],
+  "source": "Google Chrome release advisory (Sep 3, 2026), Forbes, CISA KEV catalog, securityonline.info",
+  "sourceNote": "Sep 3 – Sep 5, 2026"
+ },
+ "superforms": {
+  "eyebrow": "Super Forms CVE-2026-14894 · Elementor Pro CVE-2026-32475 · 440,000+ blocked attempts · Wordfence",
+  "title": "Two unauthenticated upload flaws being exploited at scale, eight weeks after the patches",
+  "tags": [
+   [
+    "crit",
+    "Commercial Facilities"
+   ],
+   [
+    "high",
+    "Information Technology"
+   ]
+  ],
+  "overview": "Neither flaw is new and both are fixed; what is new is the volume and the timing. Wordfence's numbers show the pattern that makes plugin file-upload bugs reliable for opportunistic operators: the Super Forms fix shipped Jul 8, disclosure followed on Jul 9, exploitation started Jul 14 on the day the paid firewall rule went out, free customers waited until Aug 13, and the heaviest activity ran Aug 18–25 — a month in which the exploit was public and a large share of sites had neither the patch nor a rule. The end state is an ordinary PHP web shell, so the useful hunt is filesystem-side and log-side rather than plugin-version-side: an unexpected .php file under the uploads tree is the artefact, and for Elementor Pro the write path is specific enough to check directly. Published source addresses are worth blocking but are the disposable part of the operation.",
+  "technical": [
+   "CVE-2026-14894 (CVSS 9.8): missing file-type validation in Super Forms – Drag & Drop Form Builder through 6.3.313. The submit_form() routine processes file-upload fields reaching the unauthenticated super_submit_form AJAX handler, base64-decodes a supplied data URI ('data' parameter, datauristring/value) and writes it to disk without validating type, permitting executable PHP. Wordfence notes the flaw may also support path traversal, placing files outside the expected upload path. Fixed in 6.3.314, released Jul 8, 2026; disclosed Jul 9, 2026. Reported by Wordfence researcher Andrea Bocchetti. Estimated 13,000 active installations.",
+   "CVE-2026-32475 (scored 9.0 by some sources and 9.8 by others): unauthenticated arbitrary file upload in Elementor Pro, fixed in 4.2.2. Per Wordfence, the uploaded PHP file is written to /wp-content/uploads/elementor/forms/ under a randomly generated filename with the attacker-supplied .php extension and can be requested directly to execute arbitrary commands.",
+   "Exploitation timeline for Super Forms per Wordfence: attacks began Jul 14, 2026, the same day the firewall rule reached Premium, Care and Response customers; free users received the rule Aug 13; the most intense activity occurred Aug 18–25. More than 250,000 attempts blocked against this CVE alone.",
+   "Exploitation of the Elementor Pro flaw commenced Aug 19, 2026. The Hacker News puts the combined blocked total for both CVEs above 440,000 attempts.",
+   "Top source addresses reported by Wordfence for the Super Forms campaign: 103.168.147.235 with more than 106,000 blocked requests, and 103.168.146.131.",
+   "Post-exploitation as described by Wordfence and Cyberpress: a PHP web shell yielding persistent access, additional malware, phishing kits or spam infrastructure, rogue administrator accounts, data theft, and overwriting of any file writable by the web server.",
+   "Patchstack rates the Super Forms flaw as the profile used in mass-exploitation campaigns against thousands of sites regardless of traffic or popularity, and has issued a virtual-patching rule."
+  ],
+  "iocs": [
+   {
+    "type": "IP",
+    "value": "103.168.147.235",
+    "note": "Top source of Super Forms CVE-2026-14894 exploitation per Wordfence; 106,000+ blocked requests"
+   },
+   {
+    "type": "IP",
+    "value": "103.168.146.131",
+    "note": "Second-ranked source address in the same Wordfence campaign data"
+   },
+   {
+    "type": "Filename",
+    "value": "/wp-content/uploads/elementor/forms/*.php",
+    "note": "Elementor Pro CVE-2026-32475 web shell write path — randomly generated name, attacker-supplied .php extension"
+   },
+   {
+    "type": "String",
+    "value": "super_submit_form",
+    "note": "Unauthenticated AJAX action carrying the Super Forms upload; look for admin-ajax.php requests with this action and a data URI payload"
+   },
+   {
+    "type": "String",
+    "value": "datauristring",
+    "note": "Parameter value form carrying the base64-encoded file in the Super Forms exploit path"
+   },
+   {
+    "type": "Behavior",
+    "value": "New or modified .php file under wp-content/uploads written by the web server process",
+    "note": "Common end state for both CVEs; Wordfence advises auditing for unexpected or recently modified .php files"
+   }
+  ],
+  "iocNote": "The addresses above are Wordfence's top blocked sources for the Super Forms campaign, published as volume data rather than as attributed actor infrastructure; the Elementor Pro article lists further addresses that were not enumerated in the coverage reviewed. No hashes were published — the payloads are attacker-supplied web shells with randomised filenames, so the file path and the writing process are the durable signals.",
+  "mitigation": [
+   "Update Super Forms to 6.3.314 or later and Elementor Pro to 4.2.2 or later. Both fixes have been available since July.",
+   "Audit wp-content/uploads for .php files and for recently modified PHP anywhere in the webroot. Check /wp-content/uploads/elementor/forms/ specifically — a .php file there is not a legitimate artefact.",
+   "Review administrator accounts and application passwords created since mid-July, and rotate WordPress, database and hosting credentials on any site where a shell is found.",
+   "Block or rate-limit unauthenticated admin-ajax.php actions that accept file content where the plugin is not needed, and disable unused form plugins rather than leaving them installed and inactive.",
+   "Treat the published source addresses as a short-lived control. Blocking 103.168.147.235 and 103.168.146.131 removes the loudest traffic but not the campaign."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — the reliable host-side signal is the web server process writing PHP under the uploads tree, then executing shell commands. Technique adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, LinkedIn @0x534c).\n\n// CVE-2026-14894 / CVE-2026-32475 — web shell write and use\nlet webProcs = dynamic([\"php-fpm\",\"php\",\"httpd\",\"apache2\",\"nginx\",\"w3wp.exe\"]);\nlet since = datetime(2026-07-08);\nunion isfuzzy=true\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (webProcs)\n   | where FileName endswith \".php\"\n   | where FolderPath has \"wp-content\" and FolderPath has \"uploads\"\n   | project Timestamp, DeviceName, Evidence = strcat(ActionType, \" \", FolderPath, FileName)),\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (webProcs)\n   | where FileName has_any (\"sh\",\"bash\",\"cmd.exe\",\"powershell.exe\",\"curl\",\"wget\",\"python3\",\"whoami\")\n   | project Timestamp, DeviceName, Evidence = strcat(InitiatingProcessFileName, \" -> \", FileName, \" \", ProcessCommandLine))\n| sort by Timestamp desc",
+   "SENTINEL KQL — the request side: unauthenticated upload attempts on both plugins, with the published source addresses called out and success separated from attempts by status code.\n\n// Super Forms and Elementor Pro upload exploitation in web logs\nlet since = datetime(2026-07-08);\nlet badIPs = dynamic([\"103.168.147.235\",\"103.168.146.131\"]);\nunion isfuzzy=true\n  (W3CIISLog\n   | where TimeGenerated > since\n   | where csUriStem has \"admin-ajax.php\" and csUriQuery has_any (\"super_submit_form\",\"datauristring\")\n   | project TimeGenerated, Site = sSitename, Src = cIP, Uri = strcat(csUriStem, \"?\", csUriQuery), Status = scStatus, Verb = csMethod),\n  (W3CIISLog\n   | where TimeGenerated > since\n   | where csUriStem has \"/wp-content/uploads/elementor/forms/\" and csUriStem endswith \".php\"\n   | project TimeGenerated, Site = sSitename, Src = cIP, Uri = csUriStem, Status = scStatus, Verb = csMethod)\n| extend KnownSource = iff(Src in (badIPs), \"Wordfence-reported\", \"\")\n| extend Outcome = iff(Status < 400, \"served\", \"blocked-or-error\")\n| summarize Requests = count(), First = min(TimeGenerated), Last = max(TimeGenerated)\n    by Site, Src, KnownSource, Uri, Verb, Outcome\n| sort by Requests desc",
+   "A request that returned 200 for a .php path under /wp-content/uploads/elementor/forms/ is a shell execution, not an attempt. Treat those hosts as compromised and go to file review rather than to patch state.",
+   "Correlate the upload timestamp with administrator-account creation in the WordPress user table. Wordfence describes rogue admin creation as the usual follow-on, and it outlasts removal of the shell."
+  ],
+  "source": "Wordfence threat intelligence and firewall telemetry, The Hacker News, GBHackers, Cyberpress, securityonline.info, Patchstack database",
+  "sourceNote": "Jul 8 – Sep 5, 2026"
+ },
+ "nodeabuse": {
+  "eyebrow": "Node.js runtime abuse · Woodgnat / KongTuke · Symantec Threat Hunter Team · Active since Feb 2026",
+  "title": "When payload delivery kept failing, the attackers installed a signed runtime instead",
+  "tags": [
+   [
+    "high",
+    "Government Facilities"
+   ],
+   [
+    "high",
+    "Information Technology"
+   ]
+  ],
+  "overview": "The detail worth taking from Symantec's report is the decision point: in the Asian technology start-up intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were being blocked, and their answer was to download the vendor's own Node.js installer and run their implant as interpreted JavaScript under a signed, ubiquitous binary. That moves the malicious logic out of files that signatures and allow-lists inspect and into script arguments, and it makes the parent-child chain look like development work. Two consequences for detection: node.exe on a host with no development role is itself the anomaly, so software inventory is a hunting input rather than an asset record; and the C2 leg reaches Ethereum gateways, which are ordinary web endpoints that no reputation list treats as malicious. Woodgnat's ransomware associations mean this tradecraft is a precursor to encryption events, not an espionage curiosity.",
+  "technical": [
+   "Reported by the Symantec Threat Hunter Team on Sep 3, 2026: revived abuse of Node.js since February 2026 against government departments, technology companies and hotels.",
+   "Asian technology start-up, March to July 2026: ClickFix social engineering for initial access, followed by suspicious PowerShell activity; repeated attempts to deploy AdaptixC2 agents and Cobalt Strike Beacon were blocked on the network. The attackers then downloaded the official Node.js installer from nodejs.org and used the signed node.exe runtime to execute a malicious implant.",
+   "The implant maintained access for months and made repeated connections to Ethereum blockchain gateways, an EtherHiding-style channel Symantec assesses was most likely used to retrieve commands or additional payloads.",
+   "Persistence: a Windows service-launched PowerShell downloader plus a registry Run key entry that relaunched node.exe at login. Symantec reports the persistent PowerShell downloaded a further AdaptixC2 binary.",
+   "Infrastructure detail published: domain spoofing of a company called Devmine, with 'datalyerservice' used as a command-and-control server.",
+   "Evasion rationale per Symantec: because malicious code lives in interpreted scripts rather than binaries, signature-based detection and binary allow-listing are less effective against it.",
+   "Attribution and linkage: some attacks used ModeloRAT and Backdoor.Mistic (MLTBackdoor), assessed as the work of initial access broker Woodgnat (aka KongTuke), publicly linked to intrusions involving Qilin, Interlock, Rhysida, Akira, 8Base, Black Basta and Embargo ransomware.",
+   "Symantec's June 2026 reporting on Woodgnat described node.exe abuse chained with PowerShell and Windows command-line tools, a malicious Chrome extension named NexShield, a ClickFix variant dubbed CrashFix, and a .NET payload named GateKeeper with layered encryption and victim-fingerprinting logic.",
+   "US fintech organisation: same modus operandi, earliest observed activity May 6, 2026 with an AdaptixC2 agent and Cobalt Strike Beacon deployed from a ClickFix foothold, later leading to C2Looper, a Rust-based backdoor documented by Zscaler ThreatLabz.",
+   "Related campaign volume: GuidePoint Security reports at least 31 organisations compromised through a ClickFix campaign serving fake CAPTCHA prompts on compromised sites, across e-commerce, professional services and retail logistics."
+  ],
+  "iocs": [
+   {
+    "type": "String",
+    "value": "datalyerservice",
+    "note": "Command-and-control server name published by Symantec for the Asian technology start-up intrusion"
+   },
+   {
+    "type": "Actor Alias",
+    "value": "Woodgnat / KongTuke",
+    "note": "Initial access broker Symantec links to ModeloRAT and Backdoor.Mistic, and publicly associated with Qilin, Interlock, Rhysida, Akira, 8Base, Black Basta and Embargo"
+   },
+   {
+    "type": "Behavior",
+    "value": "node.exe executing a script from a user-writable path on a host with no development role",
+    "note": "Core technique: signed runtime interpreting the attacker's JavaScript implant"
+   },
+   {
+    "type": "Behavior",
+    "value": "Registry Run key entry relaunching node.exe at login",
+    "note": "Persistence observed alongside a Windows service-launched PowerShell downloader"
+   },
+   {
+    "type": "Behavior",
+    "value": "Repeated outbound connections from node.exe to Ethereum blockchain gateway endpoints",
+    "note": "EtherHiding-style command and payload retrieval; the endpoints are legitimate infrastructure"
+   },
+   {
+    "type": "Behavior",
+    "value": "Download and silent install of the official Node.js installer from nodejs.org mid-intrusion",
+    "note": "Ingress tool transfer of a legitimate signed runtime, following blocked AdaptixC2 and Cobalt Strike deployments"
+   },
+   {
+    "type": "Behavior",
+    "value": "ClickFix or fake-CAPTCHA paste-and-run command execution preceding node.exe activity",
+    "note": "Initial access technique across the reported campaigns, including the CrashFix variant"
+   }
+  ],
+  "iocNote": "Symantec published named tooling and one C2 identifier but no hashes, addresses or domain list in the reporting reviewed, and the Ethereum gateways used for EtherHiding are legitimate services that cannot be blocklisted wholesale. Hunt on the behaviour: an unexpected Node.js installation, node.exe running scripts outside a development context, Run-key persistence pointing at it, and its network egress.",
+  "mitigation": [
+   "Inventory where Node.js is installed and remove or restrict it where there is no development requirement. This is the control the technique depends on, and it is a policy change rather than a patch.",
+   "Apply application-control rules that constrain which scripts node.exe may execute and from where, rather than allow-listing the signed binary and stopping there.",
+   "Block the ClickFix entry point: restrict Run dialog and clipboard paste-to-terminal workflows where policy allows, and brief users that a website instructing them to paste a command into Windows is an attack.",
+   "Alert on Run-key writes referencing interpreters, including node.exe, and on services that launch PowerShell downloaders.",
+   "Review egress to blockchain gateway endpoints from server and workstation processes. Legitimate business use is rare outside specific teams and is the EtherHiding channel here.",
+   "Given Woodgnat's ransomware associations, treat any confirmed node.exe implant as pre-ransomware access: hunt for credential theft and lateral movement rather than removing the implant alone."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — the technique's shape in three parts: node.exe running a script from a user-writable path, its persistence, and its egress. Enrichment technique adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, LinkedIn @0x534c).\n\n// Node.js runtime abuse — execution, persistence and C2 legs\nlet since = datetime(2026-02-01);\nlet suspectPaths = dynamic([\"\\\\users\\\\\",\"\\\\appdata\\\\\",\"\\\\programdata\\\\\",\"\\\\temp\\\\\",\"\\\\public\\\\\"]);\nunion isfuzzy=true\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where FileName =~ \"node.exe\"\n   | where ProcessCommandLine has_any (suspectPaths) or ProcessCommandLine has_any (\".js\",\"-e \",\"--eval\")\n   | project Timestamp, DeviceName, AccountName, Leg = \"execution\", Evidence = strcat(InitiatingProcessFileName, \" -> \", ProcessCommandLine)),\n  (DeviceRegistryEvents\n   | where Timestamp > since\n   | where RegistryKey has \"CurrentVersion\\\\Run\"\n   | where RegistryValueData has \"node\"\n   | project Timestamp, DeviceName, AccountName = InitiatingProcessAccountName, Leg = \"persistence\", Evidence = strcat(RegistryKey, \" = \", RegistryValueData)),\n  (DeviceNetworkEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName =~ \"node.exe\"\n   | where RemoteUrl has_any (\"infura\",\"alchemy\",\"quicknode\",\"ankr\",\"cloudflare-eth\",\"datalyerservice\") or RemoteUrl has \"eth\"\n   | project Timestamp, DeviceName, AccountName = InitiatingProcessAccountName, Leg = \"c2\", Evidence = strcat(RemoteUrl, \" \", RemoteIP))\n| summarize Legs = make_set(Leg), Events = count(), Detail = make_set(Evidence, 8) by DeviceName, AccountName\n| extend Confidence = iff(array_length(Legs) > 1, \"multi-leg — investigate\", \"single leg\")\n| sort by Events desc",
+   "SENTINEL KQL — the same hunt where Node.js has no business being installed, joined against installation events so an unexpected runtime and its use surface together; union isfuzzy keeps it working with partial connectors.\n\n// Unexpected Node.js installation and subsequent use\nlet since = datetime(2026-02-01);\nlet installs =\n  union isfuzzy=true\n    (DeviceProcessEvents\n     | where Timestamp > since\n     | where ProcessCommandLine has \"node-v\" and ProcessCommandLine has_any (\".msi\",\"/quiet\",\"/qn\")\n     | project Timestamp, DeviceName, Evidence = ProcessCommandLine),\n    (DeviceFileEvents\n     | where Timestamp > since\n     | where FileName startswith \"node-v\" and FileName endswith \".msi\"\n     | project Timestamp, DeviceName, Evidence = strcat(FolderPath, FileName));\nlet usage =\n  DeviceProcessEvents\n  | where Timestamp > since\n  | where FileName =~ \"node.exe\"\n  | summarize Runs = count(), FirstRun = min(Timestamp), Cmds = make_set(ProcessCommandLine, 5) by DeviceName;\ninstalls\n| join kind=leftouter (usage) on DeviceName\n| project InstallTime = Timestamp, DeviceName, Installer = Evidence, FirstRun, Runs, Cmds\n| sort by InstallTime desc",
+   "Where node.exe activity is found, pull the script it was pointed at before killing the process. The implant is the script, not the binary, and it is the only copy of the attacker's logic on disk.",
+   "Check for the June 2026 tooling in the same environments: the NexShield Chrome extension, GateKeeper .NET payloads and ModeloRAT or Mistic artefacts. Symantec attributes them to the same broker."
+  ],
+  "source": "Symantec Threat Hunter Team / security.com (Sep 3, 2026), The Hacker News, Cyber Recaps, OffSeq Threat Radar, Zscaler ThreatLabz (C2Looper), GuidePoint Security",
+  "sourceNote": "Feb 2026 – Sep 4, 2026"
+ },
+ "magleak": {
+  "eyebrow": "Manchester Airports Group · FulcrumSec · ~8.7M people · Data published Sep 2, 2026",
+  "title": "A refused ransom, a published database, and an access path that was in the page source",
+  "tags": [
+   [
+    "crit",
+    "Transportation Systems"
+   ],
+   [
+    "high",
+    "Commercial Facilities"
+   ]
+  ],
+  "overview": "Two things in this case are operationally useful to other organisations. The first is the claimed access path: FulcrumSec told BleepingComputer it used Iterable API credentials found in the client-side JavaScript of all three airport websites — an exposure that no perimeter control or endpoint agent would have surfaced, and that any organisation can check for itself today by reading its own front-end bundles. MAG has not confirmed that path. The second is the outcome of refusal: MAG declined the demand, in line with NCSC advice, and the group published the entire dataset for free, which Huntress's Muhammad Yahya Patel described as a marketing campaign aimed at every other organisation watching. Note that source figures on volume do not agree, and that FulcrumSec's own claims about contents exceed what MAG disclosed.",
+  "technical": [
+   "MAG disclosed the incident on Aug 27, 2026, following discovery of unauthorised access around Aug 25. Approximately 8.7 million customers were affected across Manchester, London Stansted and East Midlands airports.",
+   "Data in scope per MAG: email addresses, phone numbers, vehicle registrations and postcodes, drawn from car park, lounge and Fast Track bookings and in-airport Wi-Fi sign-ups. MAG states the affected system does not store bank details, payment card data, account passwords or passport numbers, and that airport operations were unaffected. The database was hosted by a third party.",
+   "FulcrumSec claimed the breach on Aug 30 in BleepingComputer's reporting, describing approximately 86 GB of compressed data, and published the dataset on its leak site on Sep 2, 2026 after MAG refused the demand.",
+   "Volume figures differ by source: SecurityWeek reports roughly 550 GB uncompressed and Computer Weekly half a terabyte; BleepingComputer reports FulcrumSec saying the 86 GB figure reflected its own compression and that the exported files total roughly 640 GB extracted; Hackread counts four archives adding to 74.5 GB compressed. Have I Been Pwned lists email addresses and phone numbers for 8.8 million people.",
+   "FulcrumSec's listing claims names, emails, phone numbers, town and postal region and residential IP addresses; further reporting describes booking history, travel dates, vehicle information, purchase references and customer profiles, which TrendAI's David Sancho characterised as a major escalation over what MAG had disclosed.",
+   "Claimed access path: exposed Iterable API credentials present in client-side JavaScript in each of the three airports' root domains, used to reach MAG's backend customer and marketing systems. This is FulcrumSec's account to BleepingComputer; MAG has not publicly confirmed it.",
+   "The group said it was considering withholding roughly 200,000 upcoming-travel records on real-world-harm grounds, a caveat it also exercised during its Novo Nordisk extortion in June 2026. Whether it did so is not established in the reporting reviewed.",
+   "Actor profile per TechTimes: FulcrumSec active since approximately September 2025, roughly 25 claimed victims across 11 countries, a data-theft and extortion model with no ransomware encryption, focused on rapid cloud-platform exfiltration. In June 2026 it published two caches of Novo Nordisk material after a $25 million demand was refused."
+  ],
+  "iocs": [
+   {
+    "type": "Actor Alias",
+    "value": "FulcrumSec",
+    "note": "Extortion group claiming the MAG breach; active since approximately September 2025, ~25 victims across 11 countries, no encryption stage"
+   },
+   {
+    "type": "Behavior",
+    "value": "Third-party marketing or customer-engagement API credentials present in client-side JavaScript on public web properties",
+    "note": "Claimed initial access path at MAG (Iterable API keys in front-end code on three root domains); checkable in your own bundles without any vendor telemetry"
+   }
+  ],
+  "iocNote": "No hashes, addresses or malware indicators exist for this incident — there is no malware stage. The access path is credential exposure in published web code and the exfiltration ran through a legitimate third-party API, so detection depends on API-side logging held by the SaaS provider rather than on endpoint or network telemetry. The actor's claims about volume and contents are unverified and disagree with MAG's disclosure.",
+  "mitigation": [
+   "Search your own public front-end bundles for API keys and tokens, including those for marketing, analytics and customer-engagement platforms. This is the claimed access path and it costs one pass over your own JavaScript to check.",
+   "Move any third-party API call that requires a privileged key behind a server-side proxy, and scope keys that must be client-side to read-only, origin-restricted use.",
+   "Rotate credentials for hosted customer-data platforms and enable API access logging and rate limits with the vendor. Bulk export through a valid key is the exfiltration shape here.",
+   "Add secret scanning to CI for web assets, not only for repositories of server code — the exposure in this case shipped to production as part of the site.",
+   "Inventory which third parties hold customer contact data on your behalf and confirm what their logs would show if a key were abused. MAG's affected database was hosted by a third party.",
+   "For customer-facing risk: the published dataset pairs contact details with travel and vehicle information, which supports targeted phishing and vishing against affected individuals. Brief fraud and service-desk teams accordingly."
+  ],
+  "response": [
+   "No hunting query applies to this incident on the defender side: there is no malware, no endpoint artefact and no network indicator, and the exfiltration ran through a legitimate third-party API using valid credentials. The equivalent work is a review, not a query — inventory client-side secrets in your own web properties and request API audit logs from the platforms that hold your customer data.",
+   "If your organisation uses Iterable or a comparable customer-engagement platform, ask the vendor for API access logs covering key usage by address and volume, and compare against your own expected callers. Bulk reads from an address outside your infrastructure are the signal.",
+   "Treat published customer contact data as active phishing input. Where you hold a copy of an affected population, expect targeted lures referencing genuine bookings and vehicle registrations."
+  ],
+  "source": "MAG statements via BBC, SecurityWeek, BleepingComputer, Computer Weekly, Cybernews, TechRadar, TechTimes, Have I Been Pwned",
+  "sourceNote": "Aug 25 – Sep 4, 2026"
+ },
  "wpmigration": {
   "eyebrow": "All-in-One WP Migration and Backup · CVE-2026-19949 · CVSS 8.8 · Patched 7.110 on Aug 20, 2026",
   "title": "A dormant trackback payload that fires when the administrator runs a backup",
@@ -3984,6 +4426,86 @@ window.CTI = {
  }
 },
   META: {
+ "chromev8": {
+  "status": "new",
+  "conf": "Vendor confirmation — Google states an exploit exists in the wild and shipped the fix; CISA KEV listing Sep 4, 2026. No exploitation detail, targeting or indicators published",
+  "confNote": "Google withholds bug detail and links until the majority of users are updated, so no campaign, victim or indicator information is available and none should be expected soon. No CVSS score published in the sources reviewed; Google rates the flaw high severity. Whether a sandbox escape was chained is not stated",
+  "iocDate": "Sep 3, 2026 — patched; Sep 4, 2026 — added to CISA KEV",
+  "admiralty": "A1",
+  "severity": 4,
+  "cvss": null,
+  "sectors": [
+   "All Sectors",
+   "Information Technology"
+  ],
+  "attack": [
+   "T1189 — Drive-by Compromise",
+   "T1203 — Exploitation for Client Execution"
+  ]
+ },
+ "superforms": {
+  "status": "new",
+  "conf": "Vendor telemetry — Wordfence firewall data showing more than 440,000 blocked attempts across both CVEs, with named researcher attribution and vendor patches for each",
+  "confNote": "Exploitation volume, timeline and source addresses come from a single vendor's firewall telemetry (Wordfence), which reflects its own customer base rather than global activity. CVSS for CVE-2026-32475 is reported as 9.0 by some sources and 9.8 by others; the Super Forms flaw is consistently 9.8. Neither CVE is in CISA KEV as of Sep 5, 2026",
+  "iocDate": "Jul 8, 2026 — Super Forms 6.3.314; Jul 14 and Aug 19, 2026 — exploitation begins; Sep 4, 2026 — Wordfence volume reporting",
+  "admiralty": "A2",
+  "severity": 4,
+  "cvss": 9.8,
+  "sectors": [
+   "Commercial Facilities",
+   "Information Technology",
+   "All Sectors"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
+   "T1505.003 — Server Software Component: Web Shell",
+   "T1136.001 — Create Account: Local Account",
+   "T1059 — Command and Scripting Interpreter"
+  ]
+ },
+ "nodeabuse": {
+  "status": "new",
+  "conf": "Vendor research — Symantec Threat Hunter Team incident reporting across multiple named intrusions, with corroborating detail from its own June 2026 Woodgnat publication and Zscaler ThreatLabz on C2Looper",
+  "confNote": "Single-vendor incident reporting; victims are described by sector and region rather than named. No hashes, addresses or domain lists published in the reporting reviewed, and the EtherHiding channel uses legitimate blockchain gateways. Woodgnat's ransomware associations are described as public linkage, not as attribution of a specific encryption event",
+  "iocDate": "Feb 2026 — technique resurgence; May 6, 2026 — earliest US fintech activity; Sep 3, 2026 — Symantec report",
+  "admiralty": "A2",
+  "severity": 4,
+  "cvss": null,
+  "sectors": [
+   "Government Facilities",
+   "Information Technology",
+   "Commercial Facilities",
+   "Financial Services"
+  ],
+  "attack": [
+   "T1204.004 — User Execution: Malicious Copy and Paste",
+   "T1059.007 — Command and Scripting Interpreter: JavaScript",
+   "T1105 — Ingress Tool Transfer",
+   "T1218 — System Binary Proxy Execution",
+   "T1547.001 — Registry Run Keys / Startup Folder",
+   "T1102 — Web Service",
+   "T1543.003 — Create or Modify System Process: Windows Service"
+  ]
+ },
+ "magleak": {
+  "status": "new",
+  "conf": "Confirmed incident — MAG disclosure and BBC confirmation of the refused ransom; publication of the dataset corroborated by SecurityWeek, BleepingComputer, Computer Weekly and Have I Been Pwned. Access path and data contents beyond MAG's disclosure are actor claims",
+  "confNote": "Volume figures disagree across sources (86 GB compressed, ~550 GB, ~640 GB extracted, 74.5 GB in four archives). The Iterable-API-keys-in-frontend-JavaScript access path is FulcrumSec's account to BleepingComputer and is unconfirmed by MAG. Whether the ~200,000 upcoming-travel records were withheld is not established",
+  "iocDate": "Aug 25, 2026 — access discovered; Aug 27 — MAG disclosure; Sep 2, 2026 — data published",
+  "admiralty": "B2",
+  "severity": 4,
+  "cvss": null,
+  "sectors": [
+   "Transportation Systems",
+   "Commercial Facilities"
+  ],
+  "attack": [
+   "T1552.001 — Unsecured Credentials: Credentials In Files",
+   "T1078.004 — Valid Accounts: Cloud Accounts",
+   "T1567.002 — Exfiltration Over Web Service",
+   "T1657 — Financial Theft"
+  ]
+ },
  "wpmigration": {
   "status": "new",
   "conf": "Vendor and researcher disclosure — Wordfence full technical write-up with vendor patch; exploitation reported by SOCRadar but without independent confirmation in its sources",
