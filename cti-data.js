@@ -764,81 +764,71 @@ window.CTI = {
   "key": "postgreshell",
   "level": "high",
   "num": "CVE-2026-6471",
-  "cvss": "7.2",
-  "vector": "Missing authorization in logical decoding — REPLICATION role dlopens arbitrary file",
-  "status": "Patched 18.6 / 17.11 / 16.15 / 15.19 / 14.24 (Aug 13); no exploitation reported"
+  "score": "7.2",
+  "sub": "Missing authorization in logical decoding — REPLICATION role dlopens arbitrary file. Patched 18.6 / 17.11 / 16.15 / 15.19 / 14.24 (Aug 13); no exploitation reported."
  },
  {
   "key": "linuxkernelpoc",
   "level": "high",
   "num": "CVE-2026-52924",
-  "cvss": "9.8",
-  "vector": "SCTP stream use-after-free on Stale Cookie — local privilege escalation",
-  "status": "Fixed upstream; public PoC Sep 5, 2026; verified on Ubuntu 7.0.0-28"
+  "score": "9.8",
+  "sub": "SCTP stream use-after-free on Stale Cookie — local privilege escalation. Fixed upstream; public PoC Sep 5, 2026; verified on Ubuntu 7.0.0-28."
  },
  {
   "key": "linuxkernelpoc",
   "level": "high",
   "num": "CVE-2026-80714",
-  "cvss": "9.8",
-  "vector": "IPVS netfilter use-after-free — local root",
-  "status": "Fixed in upstream commits; public PoC and video, root demonstrated on Debian"
+  "score": "9.8",
+  "sub": "IPVS netfilter use-after-free — local root. Fixed in upstream commits; public PoC and video, root demonstrated on Debian."
  },
  {
   "key": "chromev8",
   "level": "crit",
   "num": "CVE-2026-85046",
-  "cvss": "",
-  "vector": "V8 type confusion — arbitrary code execution in the browser sandbox via a crafted page",
-  "status": "Patched Chrome 152.0.7977.82/.83 (Sep 3); exploited in the wild; KEV Sep 4"
+  "score": "",
+  "sub": "V8 type confusion — arbitrary code execution in the browser sandbox via a crafted page. Patched Chrome 152.0.7977.82/.83 (Sep 3); exploited in the wild; KEV Sep 4."
  },
  {
   "key": "superforms",
   "level": "crit",
   "num": "CVE-2026-14894",
-  "cvss": "9.8",
-  "vector": "Unauthenticated arbitrary file upload via super_submit_form data URI",
-  "status": "Patched 6.3.314 (Jul 8); mass exploitation from Jul 14, 250,000+ attempts blocked"
+  "score": "9.8",
+  "sub": "Unauthenticated arbitrary file upload via super_submit_form data URI. Patched 6.3.314 (Jul 8); mass exploitation from Jul 14, 250,000+ attempts blocked."
  },
  {
   "key": "superforms",
   "level": "crit",
   "num": "CVE-2026-32475",
-  "cvss": "9.8",
-  "vector": "Unauthenticated arbitrary file upload writing PHP to /wp-content/uploads/elementor/forms/",
-  "status": "Patched Elementor Pro 4.2.2; exploitation from Aug 19, 2026"
+  "score": "9.8",
+  "sub": "Unauthenticated arbitrary file upload writing PHP to /wp-content/uploads/elementor/forms/. Patched Elementor Pro 4.2.2; exploitation from Aug 19, 2026."
  },
  {
   "key": "nodeabuse",
   "level": "high",
   "num": "Node.js runtime abuse",
-  "cvss": "",
-  "vector": "Signed node.exe executing attacker JavaScript; EtherHiding C2",
-  "status": "Active since Feb 2026; no vulnerability involved — configuration and detection gap"
+  "score": "",
+  "sub": "Signed node.exe executing attacker JavaScript; EtherHiding C2. Active since Feb 2026; no vulnerability involved — configuration and detection gap."
  },
  {
   "key": "magleak",
   "level": "crit",
   "num": "MAG data theft / FulcrumSec",
-  "cvss": "",
-  "vector": "Exposed Iterable API credentials in client-side JavaScript (actor claim)",
-  "status": "Data published Sep 2, 2026 after ransom refused; ~8.7M people"
+  "score": "",
+  "sub": "Exposed Iterable API credentials in client-side JavaScript (actor claim). Data published Sep 2, 2026 after ransom refused; ~8.7M people."
  },
  {
   "key": "wpmigration",
   "level": "high",
   "num": "CVE-2026-19949",
-  "cvss": "8.8",
-  "vector": "Second-order SQLi via trackback, fires on archive export/restore",
-  "status": "Patched 7.110 (Aug 20); weaponised PoC recorded"
+  "score": "8.8",
+  "sub": "Second-order SQLi via trackback, fires on archive export/restore. Patched 7.110 (Aug 20); weaponised PoC recorded."
  },
  {
   "key": "brazetsu",
   "level": "high",
   "num": "BraZetsu / Exilware",
-  "cvss": "",
-  "vector": "Access-broker framework; no CVE",
-  "status": "Active since May 2026; some samples undetected on VirusTotal"
+  "score": "",
+  "sub": "Access-broker framework; no CVE. Active since May 2026; some samples undetected on VirusTotal."
  },
  {
   "key": "ciscosep",
@@ -944,23 +934,6 @@ window.CTI = {
   "num": "OpenAI Astra — critical threshold",
   "score": "—",
   "sub": "Vendor-declared crossing of a critical cyber capability threshold after the model found zero-days. Capability assessment, not a vulnerability — no CVE, no CVSS"
- },
- {
-  "key": "berlin",
-  "tags": [
-   [
-    "crit",
-    "Rhysida · Land Berlin · 5.79 TB claimed"
-   ],
-   [
-    "high",
-    "Government Facilities · Extortion refused"
-   ]
-  ],
-  "badge": "new",
-  "title": "Berlin state government refuses Rhysida's ransom; group auctions a claimed 5.79 TB of administrative data three weeks before the state election",
-  "body": "Berlin's state government confirmed it is dealing with an extortion attempt following an August cyberattack on the city-state's administrative network, and refused the demand. Rhysida posted an entry titled \"Berlin, Germany\" to its leak site on Aug 28, 2026, claiming 5.79 terabytes across roughly 1.44 million files and offering the trove at auction from a starting price of 30 bitcoin (about $77,622) on a countdown just under seven days. Mayor Kai Wegner and Interior Senator Iris Spranger said in a joint statement: \"The state of Berlin will not submit to extortion.\" Spranger said the election remains secure and that the attackers have so far not taken election-related data; Berlin elects its state parliament on Sep 20. Tagesschau reported data had been flowing out of the state network since at least Aug 7. Rhysida's claimed inventory includes 124,823 maps and geodata files, 77,939 legal and complaints files, 46,522 contracts, 27,299 HR files, 11,777 marked confidential and 5,941 password files, plus PII on 12,076 individuals and plaintext credentials for named systems. The claims are Rhysida's and have not been independently verified.",
-  "src": "Reuters, Der Spiegel, RBB, Tagesschau, The Hacker News, Security Affairs, ransomware.live — Aug 28–29, 2026"
  },
  {
   "key": "berlin",
@@ -1282,7 +1255,7 @@ window.CTI = {
    "Likely"
   ],
   "sub": "QUIC / DNS / TFTP Server RCE — all unauthenticated, not yet exploited"
- }
+ },
 ],
   KJ: [
  {
@@ -2142,6 +2115,11 @@ window.CTI = {
  }
 ],
   CORRECTIONS: [
+ {
+  "item": "Vulnerabilities tab — 10 CVE rows rendered without description, score or status",
+  "was": "Rows for PostGREShell, the two Linux kernel PoCs, Chrome CVE-2026-85046, the two Super Forms/Elementor flaws, All-in-One WP Migration, and the Node.js abuse, MAG and BraZetsu campaign rows were written with vector/status/cvss field names the table does not read",
+  "now": "Converted to the schema the table renders (score plus a combined sub description); a story record mistakenly duplicated into the CVE array was removed. No assessment changed — the underlying detail was always present on each story page"
+ },
  {
   "date": "Sep 4, 2026",
   "item": "Cisco Nexus 9000 CVE-2026-20212 — fixed-release table and port numbers now published",
