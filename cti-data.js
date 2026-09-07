@@ -3,12 +3,14 @@ window.CTI = {
   WEEK_RANGE: "Week of Aug 31 – Sep 6, 2026",
   POSTURE: {
  "level": "CRITICAL",
- "text": "Two new items today and two stories moved: a 12-year-old PostgreSQL flaw turns a replication credential into a persistent superuser backdoor, working local-root exploits are public for two Linux kernel use-after-free bugs, Arctic Wolf places the PaperCut chain in an education-sector credential-theft campaign with fresh indicators, and the exploited Chrome V8 zero-day still has none. Cyera disclosed PostGREShell (CVE-2026-6471, CVSS 7.2) on Sep 1 — missing authorization in PostgreSQL logical decoding lets a non-superuser holding REPLICATION name any output plugin, which the server dlopens and executes as its own OS account, escalating to superuser and a persistent passwordless backdoor; every release from 9.4 through 18 is affected, fixes shipped Aug 13 in 18.6/17.11/16.15/15.19/14.24, and the fix's plugin allow-list will break wal2json, decoderbufs and proprietary CDC plugins, so reconcile plugin names before the maintenance window and strip REPLICATION from accounts that do not need it. NebuSec published working local-root exploits for two kernel use-after-free flaws — CVE-2026-52924 in SCTP, which upstream first triaged as denial of service and which NebuSec demonstrates as privilege escalation on Ubuntu 7.0.0-28, and CVE-2026-80714 in IPVS netfilter, demonstrated as root on current Debian; neither is exploited in the wild and both need local access, but blacklisting the sctp module removes that surface immediately where the protocol is unused, while IPVS cannot simply be unloaded on Kubernetes hosts running kube-proxy in IPVS mode. PaperCut escalation, Sep 6: Arctic Wolf reports the CVE-2026-81578 and CVE-2026-82078 chain being used against education organisations from K-12 schools to major universities in the US and Europe, with registry hive collection tools, Meterpreter-related Java payloads, discovery commands, an \"Administrator17\" account and inbound requests from 45.142.193[.]132 for /custom/pcp_*.txt; a public PoC for the full chain now exists, the federal KEV deadline is Sep 14, and credential theft is the objective, so treat any exposed unpatched server as a credential-compromise investigation rather than a patch task. Chrome CVE-2026-85046 stands at the sixth actively exploited Chrome zero-day fixed in 2026 with still no published indicators, so version state remains the whole control: confirm 152.0.7977.82/.83 is applied and relaunched, and track Edge, Opera and Brave separately. Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July. Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations. FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today. All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads. Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due today, Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 federal deadline that falls today; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 federal deadline that falls today; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
+ "text": "Two new items close the week and two stories carried forward: N-able shipped a fourth N-central hotfix for a maximum-severity pre-auth RCE the vendor calls an exploited zero-day, a separate authentication-bypass chain in the same product now has a validated proof of concept, and a public proof of concept turns CrowdStrike Falcon's own macro remediation into a local path to SYSTEM. N-able shipped N-central 2026.3 Hotfix 4 on Sep 6 for CVE-2026-86218, a pre-authentication RCE rated CVSS 10.0 that N-able's Jason Murphy described as a zero-day already exploited in the wild and unrelated to the two CVEs patched a day earlier — HF3 is therefore not sufficient; apply HF4 on every on-premises console, restrict inbound access to allow-listed IPs or VPN, audit user lists for the .invalid email anomaly, and export envoy_proxy_HTTPS.log and syslog ncentraldms before rotation, since log rotation is exactly what prevented Huntress from attributing the compromise it investigated. Huntress validated a proof of concept on Sep 5 for a separate N-central authentication-bypass chain (CVE-2026-86206 / CVE-2026-86207) working against 2026.3.1.10 and granting full control of user management, and its investigation began Sep 4 from a fully patched customer environment that was compromised — treat any exposed N-central console as a potential compromise of every downstream tenant it manages, reviewing pushed scripts, jobs and Take Control sessions into domain controllers per customer. A researcher published FalconFlank on Sep 3, a proof-of-concept local privilege escalation abusing CrowdStrike Falcon's Office malicious-macro remediation to reach SYSTEM; CrowdStrike says it is actively investigating and advises disabling the Microsoft Office File Suspicious Macro Removal Windows policy setting while Cloud Anti-malware for Microsoft Office Files stays in force — there is no CVE, CVSS or fix, no confirmed exploitation, and Foresiet notes the zero-day label is the author's claim, so record the decision to turn a prevention control off as a reviewed risk trade rather than a patch. Cyera disclosed PostGREShell (CVE-2026-6471, CVSS 7.2) on Sep 1 — missing authorization in PostgreSQL logical decoding lets a non-superuser holding REPLICATION name any output plugin, which the server dlopens and executes as its own OS account, escalating to superuser and a persistent passwordless backdoor; every release from 9.4 through 18 is affected, fixes shipped Aug 13 in 18.6/17.11/16.15/15.19/14.24, and the fix's plugin allow-list will break wal2json, decoderbufs and proprietary CDC plugins, so reconcile plugin names before the maintenance window and strip REPLICATION from accounts that do not need it. NebuSec published working local-root exploits for two kernel use-after-free flaws — CVE-2026-52924 in SCTP, which upstream first triaged as denial of service and which NebuSec demonstrates as privilege escalation on Ubuntu 7.0.0-28, and CVE-2026-80714 in IPVS netfilter, demonstrated as root on current Debian; neither is exploited in the wild and both need local access, but blacklisting the sctp module removes that surface immediately where the protocol is unused, while IPVS cannot simply be unloaded on Kubernetes hosts running kube-proxy in IPVS mode. PaperCut escalation, Sep 6: Arctic Wolf reports the CVE-2026-81578 and CVE-2026-82078 chain being used against education organisations from K-12 schools to major universities in the US and Europe, with registry hive collection tools, Meterpreter-related Java payloads, discovery commands, an \"Administrator17\" account and inbound requests from 45.142.193[.]132 for /custom/pcp_*.txt; a public PoC for the full chain now exists, the federal KEV deadline is Sep 14, and credential theft is the objective, so treat any exposed unpatched server as a credential-compromise investigation rather than a patch task. Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July. Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations. FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today. All-in-One WP Migration and Backup CVE-2026-19949 (CVSS 8.8, 5 million-plus installs) is a second-order SQL injection that passes WAF inspection as ordinary trackback data and fires when an administrator exports or restores a site, leaking ai1wm_secret_key and allowing a malicious .wpress archive to be imported for code execution; ServMask patched it in 7.110 on Aug 20 but only about 35 percent of installs had applied it when Wordfence published full details on Sep 2, and SOCRadar records a weaponised public exploit, so update to 7.110 or later, rotate the secret key and review recent trackback rows and .wpress uploads. Group-IB attributes the modular Python framework BraZetsu to the Brazilian actor Exilware and assesses with high confidence that it is the same framework as the AgenteV2 backdoor, profiling Windows hosts across 20-plus categories including banking, ERP, SCADA and government systems so that access can be priced and sold on an underground marketplace; no hashes or addresses were published in the reporting reviewed, so hunt on the described behaviour - VBScript execution, Run-key and scheduled-task persistence, browser database copies in temp, .pfx and .p12 certificate collection, CNAB remittance-file searches and outbound TLS on port 8443. Cisco published its September 2026 advisories on Sep 2 — CVE-2026-20274 and CVE-2026-20279 (both CVSS 9.8) group multiple IOS XR memory-safety and access-control bugs affecting all releases regardless of configuration with no workarounds, and CVE-2026-20212 (9.8) gives unauthenticated root RCE as far as the Nexus 9000 Silicon One integration, reachable on TCP ports 43210 and 43211 in the default L3 VRF and found by Cisco TAC while working a customer support case; Cisco now lists 45 affected NX-OS releases with fixes plus a Live Protect shield for 10.6(3), and The Hacker News counts 111 affected IOS XR releases of which 14 have SMUs today, four are awaiting them and 93 must be upgraded before a fix can be applied — so treat the IOS XR side as an upgrade programme, block the two Nexus ports with an iACL in the meantime, and treat router syslog gaps as an investigation trigger given Sygnia's Fire Ant implant reporting. CISA added seven flaws to KEV on Sep 2 — SonicWall SMA1000 CVE-2026-83548 and CVE-2026-83549, Sangoma Switchvox CVE-2026-9586, JFrog Artifactory CVE-2026-82329, Kestra OSS CVE-2026-49869 all due today, Sep 5, with Starlette CVE-2026-48710 and LiteLLM CVE-2026-59822 due Sep 16; four of the seven are engineering-owned components rather than perimeter appliances. Sangoma Switchvox CVE-2026-9586 (CVSS 9.3) is being exploited from Aug 30 — unauthenticated SQL injection on the /pa endpoint reaching PostgreSQL superuser RCE, with reverse shells from 176.65.148.184 and callbacks on TCP/39323; upgrade to 8.4.0.2, review /var/log/switchvox/db-quirks.log, and rotate the cookie signing key if compromise is suspected. Wiz and Microsoft describe sustained attacks on self-hosted AI infrastructure — MCP command injection, blind prompt injection with OAST callbacks, and LiteLLM master keys read out of process memory rather than off disk; patch LiteLLM past 1.83.7 and Starlette past 1.0.1, then rotate every provider key the proxy could reach, because memory-resident theft leaves no file artefact. SonicWall SMA1000 CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 are KEV-listed with a Sep 5 federal deadline that falls today; Rapid7 places the SSRF in the Work Place interface and the command injection in the AMC, affecting models 6210, 7210 and 8200v, and notes exploitation preceded disclosure — so patch to hotfix 12.4.3-03526 or 12.5.0-02952, take the AMC off the internet, and forensically review exposed appliances rather than relying on a version check, because no IOCs were published. JFrog Artifactory CVE-2026-82329 is KEV-listed at CVSS 9.8 with a Sep 5 federal deadline that falls today; watchTowr's follow-up detail is that after minting admin tokens the actors enumerated users, groups, credentials and federated access relationships to judge whether the environment was worth deeper exploitation, and in a limited number of attacks created backdoor users — so update self-hosted instances, revoke every access token, and specifically look for accounts created since Aug 28 rather than only for token artefacts. Rockwell Automation shipped patches or workarounds across RSLinx Classic, ControlLogix, CompactLogix, FactoryTalk and ArmorStart products; CISA is not aware of exploitation of CVE-2026-9637. Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility. Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10.",
  "lines": [
+  "N-able shipped N-central 2026.3 Hotfix 4 on Sep 6 for CVE-2026-86218, a pre-authentication RCE rated CVSS 10.0 that N-able's Jason Murphy described as a zero-day already exploited in the wild and unrelated to the two CVEs patched a day earlier — HF3 is therefore not sufficient; apply HF4 on every on-premises console, restrict inbound access to allow-listed IPs or VPN, audit user lists for the .invalid email anomaly, and export envoy_proxy_HTTPS.log and syslog ncentraldms before rotation, since log rotation is exactly what prevented Huntress from attributing the compromise it investigated.",
+  "Huntress validated a proof of concept on Sep 5 for a separate N-central authentication-bypass chain (CVE-2026-86206 / CVE-2026-86207) working against 2026.3.1.10 and granting full control of user management, and its investigation began Sep 4 from a fully patched customer environment that was compromised — treat any exposed N-central console as a potential compromise of every downstream tenant it manages, reviewing pushed scripts, jobs and Take Control sessions into domain controllers per customer.",
+  "A researcher published FalconFlank on Sep 3, a proof-of-concept local privilege escalation abusing CrowdStrike Falcon's Office malicious-macro remediation to reach SYSTEM; CrowdStrike says it is actively investigating and advises disabling the Microsoft Office File Suspicious Macro Removal Windows policy setting while Cloud Anti-malware for Microsoft Office Files stays in force — there is no CVE, CVSS or fix, no confirmed exploitation, and Foresiet notes the zero-day label is the author's claim, so record the decision to turn a prevention control off as a reviewed risk trade rather than a patch.",
   "Cyera disclosed PostGREShell (CVE-2026-6471, CVSS 7.2) on Sep 1 — missing authorization in PostgreSQL logical decoding lets a non-superuser holding REPLICATION name any output plugin, which the server dlopens and executes as its own OS account, escalating to superuser and a persistent passwordless backdoor; every release from 9.4 through 18 is affected, fixes shipped Aug 13 in 18.6/17.11/16.15/15.19/14.24, and the fix's plugin allow-list will break wal2json, decoderbufs and proprietary CDC plugins, so reconcile plugin names before the maintenance window and strip REPLICATION from accounts that do not need it.",
   "NebuSec published working local-root exploits for two kernel use-after-free flaws — CVE-2026-52924 in SCTP, which upstream first triaged as denial of service and which NebuSec demonstrates as privilege escalation on Ubuntu 7.0.0-28, and CVE-2026-80714 in IPVS netfilter, demonstrated as root on current Debian; neither is exploited in the wild and both need local access, but blacklisting the sctp module removes that surface immediately where the protocol is unused, while IPVS cannot simply be unloaded on Kubernetes hosts running kube-proxy in IPVS mode.",
   "PaperCut escalation, Sep 6: Arctic Wolf reports the CVE-2026-81578 and CVE-2026-82078 chain being used against education organisations from K-12 schools to major universities in the US and Europe, with registry hive collection tools, Meterpreter-related Java payloads, discovery commands, an \"Administrator17\" account and inbound requests from 45.142.193[.]132 for /custom/pcp_*.txt; a public PoC for the full chain now exists, the federal KEV deadline is Sep 14, and credential theft is the objective, so treat any exposed unpatched server as a credential-compromise investigation rather than a patch task.",
-  "Chrome CVE-2026-85046 stands at the sixth actively exploited Chrome zero-day fixed in 2026 with still no published indicators, so version state remains the whole control: confirm 152.0.7977.82/.83 is applied and relaunched, and track Edge, Opera and Brave separately.",
   "Wordfence has blocked more than 440,000 attempts against two unauthenticated file-upload flaws: Super Forms CVE-2026-14894 (CVSS 9.8, ~13,000 installs, fixed 6.3.314 on Jul 8, exploited from Jul 14 with 250,000-plus attempts and peak activity Aug 18–25) and Elementor Pro CVE-2026-32475 (fixed 4.2.2, exploited from Aug 19, shells written to /wp-content/uploads/elementor/forms/); patch both, audit for unexpected .php files under uploads, and check for administrator accounts created since mid-July.",
   "Symantec reports a return to Node.js abuse since February 2026 against government, technology and hotel targets: in one intrusion the attackers' AdaptixC2 and Cobalt Strike payloads were blocked, so they downloaded the official installer from nodejs.org and ran their JavaScript implant under signed node.exe for months, persisting through a Run key and a service-launched PowerShell downloader and retrieving commands from Ethereum gateways — hunt node.exe on hosts with no development role, and treat a hit as pre-ransomware access given Woodgnat's Qilin, Akira and Black Basta associations.",
   "FulcrumSec published the Manchester Airports Group dataset on Sep 2 after MAG refused the ransom, covering roughly 8.7 million people across Manchester, Stansted and East Midlands — contact details, postcodes, vehicle registrations and booking information, with volume claims ranging from 86 GB compressed to about 640 GB extracted; the group told BleepingComputer it used Iterable API keys left in the three sites' client-side JavaScript, which MAG has not confirmed, so read your own front-end bundles for platform keys today.",
@@ -24,12 +26,46 @@ window.CTI = {
   "Late amendments to the UK Cyber Security and Resilience Bill would let ministers bar high-risk technology suppliers from critical sectors, tabled after the Iran-linked disruption of a UK energy facility.",
   "Carried over and still live: Langflow CVE-2026-0768 credential harvesting, the Virtualizor BGP hijack, WatchGuard Fireware iked, Iran-linked disruption of Western OT, Rhysida's Berlin auction, the McKesson SaaS data theft, Oracle WebLogic CVE-2026-21962, and JFrog CVE-2026-66384 with a federal deadline of Sep 10."
  ],
- "lead": "Two new items today and two stories moved: a 12-year-old PostgreSQL flaw turns a replication credential into a persistent superuser backdoor, working local-root exploits are public for two Linux kernel use-after-free bugs, Arctic Wolf places the PaperCut chain in an education-sector credential-theft campaign with fresh indicators, and the exploited Chrome V8 zero-day still has none."
+ "lead": "Two new items close the week and two stories carried forward: N-able shipped a fourth N-central hotfix for a maximum-severity pre-auth RCE the vendor calls an exploited zero-day, a separate authentication-bypass chain in the same product now has a validated proof of concept, and a public proof of concept turns CrowdStrike Falcon's own macro remediation into a local path to SYSTEM."
 },
   STORIES: [
  {
-  "key": "postgreshell",
+  "key": "ncentral86218",
   "badge": "new",
+  "tags": [
+   [
+    "crit",
+    "N-able N-central · CVE-2026-86218 · CVSS 10.0 · Exploited zero-day"
+   ],
+   [
+    "crit",
+    "Information Technology · MSP RMM · Pre-auth RCE"
+   ]
+  ],
+  "title": "N-able ships a fourth N-central hotfix for CVE-2026-86218, a pre-auth RCE zero-day reported exploited in the wild and unrelated to the two CVEs patched a day earlier",
+  "body": "On Sep 6, 2026 N-able issued N-central 2026.3 Hotfix 4 for CVE-2026-86218, a pre-authentication remote code execution vulnerability rated CVSS 10.0. Huntress, which published the rapid response, states HF4 supersedes all prior hotfixes and that systems running HF3 (build 2026.3.1.13) remain vulnerable; hosted NCOD instances were patched by N-able. In an MSPGeek Discord thread quoted by Huntress, N-able's Jason Murphy wrote that after the earlier disclosures \"a third, independent researcher alerted us to a new vulnerability that has been exploited in the wild that is unrelated to the previously disclosed CVEs,\" and described it as a critical zero-day allowing pre-authenticated access to the N-central server; he separately confirmed \"this one is a Zero day.\" Huntress notes a discrepancy in N-able's own communications: the MSPGeek post and N-able's Active Incident page say the flaw has been observed exploited in the wild, while the HF4 release notes state \"At this time, we have no confirmations that this vulnerability has been exploited in production environments, but unpatched systems remain at risk.\" The day before, on Sep 5, Huntress published a validated proof of concept for a net-new authentication bypass chain against the then-current 2026.3.1.10 build, potentially leveraging CVE-2026-86206 and CVE-2026-86207, which allows attackers to bypass access controls and create unauthorized administrative accounts; that chain is distinct from the August flaws CVE-2026-18556 and CVE-2026-18577. Huntress's investigation began Sep 4 after a fully patched customer N-central production environment was compromised, and it states that because appliance logs had already rotated it cannot confirm which vulnerability was used. N-central is an RMM platform used by MSPs to monitor, patch and remotely access endpoints across all of their customers; Huntress notes a compromised server can push scripts and jobs, deploy dual-use tooling, and open remote-control sessions into downstream domain controllers and servers.",
+  "src": "Huntress rapid response (updated Sep 6, 2026), N-able security advisories and HF4 release notes, N-able Active Incident page, MSPGeek Discord thread quoted by Huntress"
+ },
+ {
+  "key": "falconflank",
+  "badge": "new",
+  "tags": [
+   [
+    "high",
+    "CrowdStrike Falcon Sensor · FalconFlank · No CVE · Public PoC"
+   ],
+   [
+    "med",
+    "All Sectors · Local privilege escalation to SYSTEM"
+   ]
+  ],
+  "title": "Researcher publishes FalconFlank, a proof-of-concept local privilege escalation against CrowdStrike Falcon's Office macro remediation; CrowdStrike is investigating and advises disabling the setting",
+  "body": "On Sep 3, 2026 a researcher operating as Nightmare Eclipse, also known as Chaotic Eclipse and MSNightmare, published a GitHub project called FalconFlank, described in its README as \"a 0day privilege escalation that abuses the office malicious macros remediation in Crowdstrike Falcon Sensor.\" The repository contains C++ source, a Visual Studio project, an embedded Office-document decoy, an embedded library payload and a precompiled 64-bit executable, and interacts with named pipes, reparse points, DLL operations and Windows system APIs. Falcon's malicious-macro remediation runs with elevated privileges; the reported attack path is that a lower-privileged local user can cause that cleanup workflow to act on attacker-controlled files, escalating to SYSTEM. The researcher states the PoC works on a fully updated Windows 11 25H2 machine or Windows Server 2025 with the \"Microsoft Office file malicious macro removal\" capability enabled, and notes CrowdStrike may already detect the released code, so testing may require exclusions or changes to the DLL load technique. Truesec places the working conditions at Falcon Phase 3 Optimal Protection with that setting enabled; Rescana reports the affected scope as Falcon Sensor for Windows on Windows 11 and Windows Server 2026. A CrowdStrike spokesperson told The Hacker News the company is \"actively investigating these claims\" and advised customers to disable the Microsoft Office File Suspicious Macro Removal Windows policy setting, stating customers remain protected through the Cloud Anti-malware for Microsoft Office Files settings and referring customers to a FalconFlank Tech Alert in the support portal. As of Sep 3, 2026 SOCRadar records no CrowdStrike confirmation, no CVE, no CVSS score and no fix; the precise root cause is undocumented. Foresiet, which reviewed the repository without executing it, notes the \"0-day\" label is the author's claim rather than a vendor confirmation, and that public exploit code supports the attack concept without independently proving Falcon is vulnerable. No exploitation in the wild has been reported and the issue is not in CISA KEV.",
+  "src": "MSNightmare/FalconFlank GitHub repository (Sep 3, 2026), The Hacker News, BleepingComputer, Truesec, SOCRadar, Rescana, Foresiet, SOC Prime, CybersecurityNews — Sep 3–6, 2026"
+ },
+ {
+  "key": "postgreshell",
+  "badge": "",
   "tags": [
    [
     "high",
@@ -46,7 +82,7 @@ window.CTI = {
  },
  {
   "key": "linuxkernelpoc",
-  "badge": "new",
+  "badge": "",
   "tags": [
    [
     "high",
@@ -63,7 +99,7 @@ window.CTI = {
  },
  {
   "key": "chromev8",
-  "badge": "updated",
+  "badge": "",
   "tags": [
    [
     "crit",
@@ -761,6 +797,27 @@ window.CTI = {
 ],
   CVES: [
  {
+  "key": "ncentral86218",
+  "level": "crit",
+  "num": "CVE-2026-86218",
+  "score": "10.0",
+  "sub": "N-able N-central pre-authentication remote code execution. Reported exploited in the wild; fixed in 2026.3 HF4 (Sep 6, 2026) — HF3 remains vulnerable."
+ },
+ {
+  "key": "ncentral86218",
+  "level": "crit",
+  "num": "CVE-2026-86206 / 86207",
+  "score": "",
+  "sub": "Authentication bypass chain against 2026.3.1.10 allowing creation of unauthorized administrative accounts. Huntress PoC validated Sep 5; fixed in HF3 (2026.3.1.13), superseded by HF4."
+ },
+ {
+  "key": "falconflank",
+  "level": "high",
+  "num": "FalconFlank (no CVE)",
+  "score": "",
+  "sub": "CrowdStrike Falcon Sensor Office macro remediation abused for local privilege escalation to SYSTEM. Public PoC Sep 3; CrowdStrike investigating, no CVE or fix — advises disabling the macro-removal policy setting."
+ },
+ {
   "key": "postgreshell",
   "level": "high",
   "num": "CVE-2026-6471",
@@ -1324,6 +1381,60 @@ window.CTI = {
  },
 ],
   SOURCES: [
+ {
+  "group": "N-able N-central CVE-2026-86218 — Sep 5–6, 2026",
+  "links": [
+   {
+    "label": "Huntress — Rapid Response: Critical N-able N-central Vulnerability and Active Exploitation",
+    "url": "https://www.huntress.com/blog/n-able-vulnerability-exploitation"
+   },
+   {
+    "label": "N-able — CVE-2026-86218 pre-authentication remote code execution advisory",
+    "url": "https://me.n-able.com/s/security-advisory/aArVy0000002Ld3KAE/cve202686218-preauthentication-remote-code-execution"
+   },
+   {
+    "label": "N-able status — N-central 2026.3 Hotfix 4 (CVE-2026-86218)",
+    "url": "https://status.n-able.com/2026/09/06/n-central-2026-3-hotfix-4-cve-2026-86218/"
+   },
+   {
+    "label": "N-able — Active incident page for the CVE-2026-86218 exploitation",
+    "url": "https://uptime.n-able.com/event/201814/"
+   },
+   {
+    "label": "CVE record — CVE-2026-86207",
+    "url": "https://www.cve.org/CVERecord?id=CVE-2026-86207"
+   }
+  ]
+ },
+ {
+  "group": "FalconFlank CrowdStrike Falcon PoC — Sep 3–6, 2026",
+  "links": [
+   {
+    "label": "The Hacker News — Researcher releases FalconFlank PoC showing privilege escalation in CrowdStrike Falcon",
+    "url": "https://thehackernews.com/2026/09/researcher-releases-falconflank-poc.html"
+   },
+   {
+    "label": "BleepingComputer — New CrowdStrike 'FalconFlank' zero-day grants SYSTEM privileges",
+    "url": "https://www.bleepingcomputer.com/news/security/new-crowdstrike-falconflank-zero-day-grants-system-privileges/"
+   },
+   {
+    "label": "Truesec — Privilege escalation vulnerability in Falcon CrowdStrike",
+    "url": "https://www.truesec.com/hub/blog/privilege-escalation-vulnerability-in-falcon-crowdstrike"
+   },
+   {
+    "label": "SOCRadar — FalconFlank: CrowdStrike Falcon 0-day PoC",
+    "url": "https://socradar.io/blog/falconflank-crowdstrike-falcon-0day-poc/"
+   },
+   {
+    "label": "SOC Prime — FalconFlank exposes CrowdStrike Falcon privilege escalation risk",
+    "url": "https://socprime.com/active-threats/falconflank-exposes-crowdstrike-falcon-privilege-escalation-risk/"
+   },
+   {
+    "label": "Foresiet — FalconFlank CrowdStrike privilege escalation advisory",
+    "url": "https://foresiet.com/blog/falconflank-crowdstrike-privilege-escalation-advisory/"
+   }
+  ]
+ },
  {
   "group": "PostgreSQL PostGREShell CVE-2026-6471 — Sep 1–5, 2026",
   "links": [
@@ -2272,6 +2383,240 @@ window.CTI = {
  }
 ],
   D: {
+ "falconflank": {
+  "eyebrow": "CrowdStrike Falcon Sensor · FalconFlank · No CVE assigned · Public PoC Sep 3, 2026",
+  "title": "A security product's own remediation path, and a vendor mitigation that means turning a control off",
+  "tags": [
+   [
+    "high",
+    "All Sectors"
+   ],
+   [
+    "med",
+    "Information Technology"
+   ]
+  ],
+  "overview": "Two things separate this from an ordinary local privilege escalation. First, the vulnerable component is a control organisations deliberately enabled: Falcon's malicious-macro removal runs with elevated privileges, and the reported path turns that cleanup into an attacker's write primitive. The vendor's interim advice is to disable that policy setting, so the mitigation is a reduction in the protection people bought. Weigh that against local-only access as the prerequisite, and against CrowdStrike's statement that Cloud Anti-malware for Microsoft Office Files continues to apply. Second, this is a research drop rather than a confirmed vulnerability. CrowdStrike is investigating; there is no CVE, no CVSS, no fix, and no independent reproduction of the resulting privilege level. Foresiet, which reviewed the repository without executing it, is explicit that the \"0-day\" label is the author's claim. Sources also disagree on the affected Windows builds — the researcher says Windows 11 25H2 and Server 2025, Rescana says Windows 11 and Server 2026 — so scope is not settled. Note this lands alongside ShieldBreak, the unpatched Defender SYSTEM-execution issue already tracked in this brief; the shared shape is a privileged endpoint-security process being made to act on attacker-controlled files.",
+  "technical": [
+   "Published Sep 3, 2026 by a researcher operating as Nightmare Eclipse, also known as Chaotic Eclipse and MSNightmare, as the GitHub project MSNightmare/FalconFlank. README: \"FalconFlank is a 0day privilege escalation that abuses the office malicious macros remediation in Crowdstrike Falcon Sensor.\"",
+   "Reported mechanism: Falcon's removal of malicious Microsoft Office macros during remediation runs with elevated privileges. The claimed flaw is that a lower-privileged local user can cause that workflow to handle attacker-controlled files unsafely — an unsafe path resolution, security descriptor, race condition or similar trust-boundary failure — escalating to SYSTEM. SOCRadar notes the precise root cause is undocumented and no CWE has been assigned.",
+   "Repository contents per Foresiet's review: C++ source, a Visual Studio project, an embedded Office-document decoy, an embedded library payload and a precompiled 64-bit executable; the code interacts with named pipes, reparse points, DLL operations and Windows system APIs. Foresiet did not execute the binary or test it against a live sensor.",
+   "Preconditions: the \"Microsoft Office file malicious macro removal\" capability must be enabled. Truesec places the working configuration at Falcon Phase 3 Optimal Protection with that setting on.",
+   "Affected-version divergence: the researcher states the PoC works on a fully updated Windows 11 25H2 machine or Windows Server 2025; Rescana reports Falcon Sensor for Windows on fully updated Windows 11 and Windows Server 2026. Treat the scope as unsettled.",
+   "The researcher notes CrowdStrike likely already detects the released code, so testing requires adding exclusions or obfuscating the PoC and changing the DLL load technique — an acknowledgement that detection of this exact artefact does not address the underlying path.",
+   "Vendor position: a CrowdStrike spokesperson told The Hacker News the company is \"actively investigating these claims\" and advised customers to disable the Microsoft Office File Suspicious Macro Removal Windows policy setting, adding that customers remain protected through the Cloud Anti-malware for Microsoft Office Files settings, and referring customers to a FalconFlank Tech Alert in the support portal.",
+   "Status as of Sep 3, 2026 per SOCRadar: no CrowdStrike confirmation of the flaw, no CVE, no CVSS score and no fix. Rescana adds it is not in CISA KEV. No exploitation in the wild has been reported."
+  ],
+  "iocs": [
+   {
+    "type": "Actor Alias",
+    "value": "Nightmare Eclipse / Chaotic Eclipse / MSNightmare",
+    "note": "Researcher who published the PoC — not a threat actor; recorded because reporting uses all three names"
+   },
+   {
+    "type": "URL",
+    "value": "github.com/MSNightmare/FalconFlank",
+    "note": "Repository hosting the proof-of-concept source and a precompiled 64-bit executable"
+   },
+   {
+    "type": "Behavior",
+    "value": "Unauthorized DLL writes into C:\\Windows\\System32 or other protected system directories",
+    "note": "SOC Prime advises monitoring for this; detected unauthorized DLL creation in System32 warrants immediate host isolation"
+   },
+   {
+    "type": "Behavior",
+    "value": "Unexpected Windows Error Reporting tasks or unexplained file writes inside protected system folders",
+    "note": "SOC Prime hunting guidance for this class of remediation abuse"
+   },
+   {
+    "type": "Behavior",
+    "value": "Privilege escalation or child-process activity originating from an endpoint-security process",
+    "note": "SOC Prime advises treating privilege escalation attempts originating from security products as high priority"
+   },
+   {
+    "type": "Behavior",
+    "value": "Macro-remediation events immediately followed by local privilege changes on the same host",
+    "note": "Correlation of the remediation trigger with the escalation outcome; audit recent macro-related activity"
+   }
+  ],
+  "iocNote": "No campaign indicators exist — this is a public research release, not an observed intrusion, and there is no confirmed exploitation. The entries above are detection surfaces drawn from SOC Prime's published guidance and from the mechanism, plus the repository reference. No file hashes are recorded: the PoC is attacker-buildable source, and hashing the published binary would produce an indicator any recompilation defeats.",
+  "mitigation": [
+   "Apply CrowdStrike's interim guidance: disable the Microsoft Office File Suspicious Macro Removal Windows prevention policy setting. Truesec advises doing so as soon as possible.",
+   "Confirm Cloud Anti-malware for Microsoft Office Files remains enabled — CrowdStrike states customers stay protected through that setting while the macro-removal policy is off.",
+   "Consult the FalconFlank Tech Alert in the CrowdStrike support portal for the vendor's current position, and track it for a confirmation, CVE assignment or sensor update.",
+   "Review Falcon exclusions: the researcher notes testing the PoC requires exclusions or DLL-load changes, so broad or stale exclusions both weaken detection and complicate assessing exposure.",
+   "Prioritise hosts where unprivileged local access is expected — shared workstations, VDI, CI runners, developer machines — since local access is the prerequisite.",
+   "Record the decision. Turning off a prevention control to mitigate a research claim is a risk trade, and it needs an owner and a review date tied to the vendor's investigation.",
+   "Treat this alongside ShieldBreak (Defender SYSTEM execution, unpatched): if both products are deployed across the estate, review endpoint-security remediation paths as a single exposure rather than two vendor tickets."
+  ],
+  "response": [
+   "DEFENDER XDR KQL — hunting is for the outcome, not the artefact: a privileged security-product process writing DLLs into protected directories, then a local privilege change on the same host. Technique adapted from community work: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com).\n\n// FalconFlank-class abuse — remediation-path writes and escalation\nlet since = datetime(2026-09-01);\nlet secProcs = dynamic([\"CSFalconService.exe\",\"CSFalconContainer.exe\",\"MsMpEng.exe\",\"MpDefenderCoreService.exe\"]);\nunion isfuzzy=true\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where FileName endswith \".dll\"\n   | where FolderPath has_any (@\"C:\\Windows\\System32\", @\"C:\\Windows\\SysWOW64\", @\"C:\\Program Files\\CrowdStrike\")\n   | where InitiatingProcessTokenElevation != \"TokenElevationTypeLimited\"\n   | project Timestamp, DeviceName, Leg = \"protected DLL write\", Evidence = strcat(InitiatingProcessFileName, \" wrote \", FolderPath, FileName)),\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName in~ (secProcs)\n   | where FileName has_any (\"cmd.exe\",\"powershell.exe\",\"rundll32.exe\",\"regsvr32.exe\")\n   | project Timestamp, DeviceName, Leg = \"security process spawned shell\", Evidence = strcat(InitiatingProcessFileName, \" -> \", ProcessCommandLine)),\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where ProcessIntegrityLevel == \"System\"\n   | where InitiatingProcessAccountName !in~ (\"system\",\"local service\",\"network service\")\n   | project Timestamp, DeviceName, Leg = \"unprivileged-to-SYSTEM transition\", Evidence = strcat(InitiatingProcessAccountName, \" -> \", FileName, \" \", ProcessCommandLine)),\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where FileName endswith \".docm\" or FileName endswith \".xlsm\" or FileName endswith \".dotm\"\n   | where FolderPath has_any (\"\\\\Temp\\\\\",\"\\\\AppData\\\\\",\"\\\\Users\\\\Public\\\\\")\n   | project Timestamp, DeviceName, Leg = \"macro decoy staged\", Evidence = strcat(ActionType, \" \", FolderPath, FileName))\n| summarize Legs = make_set(Leg), Events = count(), First = min(Timestamp), Last = max(Timestamp), Detail = make_set(Evidence, 8) by DeviceName\n| where array_length(Legs) > 1\n| sort by Last desc",
+   "SENTINEL KQL — the reparse-point and named-pipe primitives the PoC uses, plus Windows Error Reporting anomalies SOC Prime flags, sit in host event logs rather than in EDR tables.\n\n// Reparse points, pipes and WER anomalies on hosts running the affected sensor\nlet since = datetime(2026-09-01);\nunion isfuzzy=true\n  (SecurityEvent\n   | where TimeGenerated > since\n   | where EventID == 4688\n   | where CommandLine has_any (\"mklink\",\"fsutil reparsepoint\",\"\\\\\\\\.\\\\pipe\\\\\")\n   | project TimeGenerated, Host = Computer, Leg = \"link or pipe primitive\", Evidence = strcat(Account, \": \", CommandLine)),\n  (SecurityEvent\n   | where TimeGenerated > since\n   | where EventID in (4672, 4673, 4674)\n   | where Account !endswith \"$\"\n   | project TimeGenerated, Host = Computer, Leg = \"sensitive privilege assigned\", Evidence = strcat(Account, \" \", Activity)),\n  (Event\n   | where TimeGenerated > since\n   | where Source has_any (\"Windows Error Reporting\",\"Application Error\")\n   | where RenderedDescription has_any (\"CSFalcon\",\"macro\",\"Office\")\n   | project TimeGenerated, Host = Computer, Leg = \"WER anomaly\", Evidence = RenderedDescription)\n| summarize Events = count(), First = min(TimeGenerated), Last = max(TimeGenerated), Detail = make_set(Evidence, 6) by Host, Leg\n| sort by Last desc",
+   "If unauthorized DLL creation in C:\\Windows\\System32 is confirmed, SOC Prime advises isolating the host immediately rather than triaging in place.",
+   "Audit recent macro-related remediation activity on hosts that had the setting enabled, and correlate each event against local privilege changes in the same window — that pairing is the only evidence that distinguishes the reported path from routine cleanup."
+  ],
+  "source": "MSNightmare/FalconFlank GitHub repository (Sep 3, 2026), The Hacker News, BleepingComputer, Truesec, SOCRadar, Rescana, Foresiet, SOC Prime, CybersecurityNews",
+  "sourceNote": "Sep 3 – Sep 6, 2026"
+ },
+ "ncentral86218": {
+  "eyebrow": "N-able N-central · CVE-2026-86218 · CVSS 10.0 · Exploited zero-day · HF4 Sep 6, 2026",
+  "title": "Third hotfix cycle in five weeks on the same RMM, and the vendor's own two statements do not agree",
+  "tags": [
+   [
+    "crit",
+    "Information Technology"
+   ],
+   [
+    "crit",
+    "All Sectors"
+   ]
+  ],
+  "overview": "This is the week's most urgent patch. N-central is MSP infrastructure: one compromised console can push scripts and jobs to every managed endpoint across every downstream customer, deploy tunnels through the agent, and open remote-control sessions into domain controllers. CVE-2026-86218 is pre-auth RCE at CVSS 10.0, and it is unrelated to the two CVEs patched the day before — so HF3 is not a stopping point; HF4 is. Two details deserve attention beyond the version number. First, N-able's own communications conflict: the MSPGeek post and the Active Incident page say the flaw has been observed exploited in the wild and Jason Murphy explicitly called it a zero day, while the HF4 release notes say there are no confirmations of exploitation in production. Treat the exploitation claim as the planning basis. Second, Huntress's investigation started from a fully patched customer environment that was compromised, and appliance logs had already rotated — so nobody can currently say which of the three flaws was used. That log-retention gap is the reason to hunt rather than to assume patch state settles it. Huntress also notes N-central appliances run a custom AlmaLinux distribution and often carry no EDR, which is why the appliance's own logs are the primary evidence source.",
+  "technical": [
+   "CVE-2026-86218 (CVSS 10.0): pre-authentication remote code execution in N-able N-central. Fixed in N-central 2026.3 Hotfix 4, published Sep 6, 2026, which supersedes Hotfix 3 (build 2026.3.1.13). Hosted NCOD instances were patched by N-able; on-premises deployments must apply HF4.",
+   "N-able's Jason Murphy, MSPGeek Discord: after the two earlier disclosures, \"a third, independent researcher alerted us to a new vulnerability that has been exploited in the wild that is unrelated to the previously disclosed CVEs,\" described as a critical zero-day allowing pre-authenticated access to the N-central server. In follow-up he stated \"this one is a Zero day.\"",
+   "Contradiction on record: the MSPGeek post and N-able's Active Incident page (uptime.n-able.com/event/201814/) state the vulnerability has been observed exploited in the wild; the HF4 release notes state \"At this time, we have no confirmations that this vulnerability has been exploited in production environments, but unpatched systems remain at risk.\"",
+   "CVE-2026-86206 and CVE-2026-86207 (Sep 5): Huntress reproduced and validated a proof of concept for an authentication-bypass chain working against N-central 2026.3.1.10, granting full control over user management including creation of unauthorized administrative accounts. Distinct from the August flaws CVE-2026-18556 and CVE-2026-18577 (the latter described as an incomplete patch for the former, allowing authentication bypass and account takeover through 2026.3.1). Fixed in HF3 (2026.3.1.13).",
+   "Origin of the investigation: Huntress began on Sep 4 after a customer's fully patched N-central production environment was compromised. Limited historical logging on the appliance means Huntress cannot confirm which vulnerability the actor used, and cannot rule out alternatives — including CVE-2026-86218.",
+   "Tradecraft, September activity: account-name manipulation appending unexpected strings such as .invalid to known N-able email addresses during user creation, plus subtle character swaps and spoofed domains; reconnaissance probes against /remoteControlAction.do?method=getPierDetails with specific appliance IDs to map the environment before exploitation. Unlike the August campaign, which abused the Take Control feature, this activity targets the underlying API and appliance logs.",
+   "Tradecraft, August campaign: administrative access to the console followed by abuse of the built-in Take Control feature to pivot into managed endpoints and deploy Cloudflare-based tunnels for persistence. Huntress observed strategic reconnaissance prioritising domain controllers, a process list request after exploitation, then rapid lateral movement across hosts. Windows Application Event IDs 4102, 8192 and 8193 recorded the malicious \"MSP Support\" session and the Take Control session start and end.",
+   "Huntress worked with Cloudflare to disable the adversary's existing tunnels, assessing that exploitation predating its discovery likely used the same account token, so the takedown closes those backdoors across affected environments.",
+   "N-able release notes also advised reviewing users' documents folders for files named svchost.exe and checking for a registered service named Cloudflared; Huntress had not seen either in its telemetry as of the Aug 3 update.",
+   "Patch-rate context from August: at one point 55.6% of reachable cloud servers in Huntress's partner base were unpatched, falling to roughly 13.6% of all reachable servers, with self-hosted lagging at 28.6%."
+  ],
+  "iocs": [
+   {
+    "type": "IP",
+    "value": "23.234.100.105",
+    "note": "Intruder IPv4, Tzulo VPN — September activity (Huntress, Sep 5 update)"
+   },
+   {
+    "type": "IP",
+    "value": "23.234.97.68",
+    "note": "Intruder IPv4, Tzulo VPN — September activity (Huntress, Sep 5 update)"
+   },
+   {
+    "type": "String",
+    "value": "5568cd69c754b392121f1dbb8f900fda",
+    "note": "Malicious Cloudflare tunnel account tag — Huntress worked with Cloudflare to disable tunnels using this token"
+   },
+   {
+    "type": "URL",
+    "value": "/remoteControlAction.do?method=getPierDetails",
+    "note": "Reconnaissance endpoint probed with specific appliance IDs during initial staging, ahead of exploitation"
+   },
+   {
+    "type": "String",
+    "value": ".invalid",
+    "note": "Appended to known N-able email addresses during unauthorized user creation; also watch for character swaps and spoofed domains in login names"
+   },
+   {
+    "type": "IP",
+    "value": "173.249.252.200",
+    "note": "N-able August 1 security update; associated with Mullvad or Nord VPN exit nodes"
+   },
+   {
+    "type": "IP",
+    "value": "87.249.138.34",
+    "note": "N-able August 1 update; Huntress attributes substantial traffic to NordVPN"
+   },
+   {
+    "type": "IP",
+    "value": "37.19.210.32",
+    "note": "N-able August 1 update; attributed to Mullvad VPN and previously abused for brute forcing and spam"
+   },
+   {
+    "type": "IP",
+    "value": "68.235.46.214",
+    "note": "N-able August 1 security update"
+   },
+   {
+    "type": "IP",
+    "value": "37.153.90.88",
+    "note": "N-able August 2 security update"
+   },
+   {
+    "type": "IP",
+    "value": "92.118.112.181",
+    "note": "N-able August 2 security update"
+   },
+   {
+    "type": "IP",
+    "value": "173.249.252.176",
+    "note": "N-able August 6 security update"
+   },
+   {
+    "type": "IP",
+    "value": "185.156.46.150",
+    "note": "N-able August 6 security update"
+   },
+   {
+    "type": "IP",
+    "value": "23.234.94.43",
+    "note": "N-able August 6 security update"
+   },
+   {
+    "type": "IP",
+    "value": "68.235.46.235",
+    "note": "N-able August 6 security update"
+   },
+   {
+    "type": "Domain",
+    "value": "mousears.synology.me",
+    "note": "Known malicious domain (Huntress IOC table)"
+   },
+   {
+    "type": "Domain",
+    "value": "wagoosh.direct.quickconnect.to",
+    "note": "Known malicious domain (Huntress IOC table)"
+   },
+   {
+    "type": "Domain",
+    "value": "who-ripped-one.direct.quickconnect.to",
+    "note": "Known malicious domain (Huntress IOC table)"
+   },
+   {
+    "type": "Filename",
+    "value": "svchost.exe in a user's Documents folder",
+    "note": "N-able release notes advised reviewing for this; Huntress had not observed it in telemetry as of Aug 3"
+   },
+   {
+    "type": "String",
+    "value": "Cloudflared",
+    "note": "Registered service name to check for, per N-able release notes — Cloudflare tunnel persistence"
+   },
+   {
+    "type": "Behavior",
+    "value": "Windows Application Event IDs 4102, 8192, 8193 with the \"MSP Support\" account",
+    "note": "Malicious connection via MSP Support (the default N-central Take Control username) followed by Take Control session start and end"
+   },
+   {
+    "type": "Filename",
+    "value": "C:\\ProgramData\\GetSupportService_N-Central\\Logs\\BASupSrvc_*.log.gz",
+    "note": "Take Control breadcrumb on managed Windows hosts — also created by legitimate use, so a pivot rather than proof"
+   }
+  ],
+  "iocNote": "Indicators are published by Huntress and N-able and cover both the August Take Control campaign and the September API-focused activity. The August IP set is largely commercial VPN exit infrastructure (Mullvad, NordVPN, Tzulo), so it is low-fidelity for blocking and better used to scope which sessions to review; Huntress explicitly notes blocking the IOC set is a temporary, partial control because attackers rotate infrastructure. No indicators are attributed specifically to CVE-2026-86218 — log rotation on the compromised appliance prevented attribution.",
+  "mitigation": [
+   "Apply N-central 2026.3 Hotfix 4 immediately on all on-premises deployments, including any already on HF3 (2026.3.1.13). Hosted NCOD instances are patched by N-able.",
+   "Do not treat HF3 as sufficient: CVE-2026-86218 is unrelated to the CVEs HF3 addressed.",
+   "Restrict all inbound access to the N-central console — IP allow-listing or mandatory VPN, SSO where available, MFA on every account. Do not leave the console reachable from the public internet even after patching.",
+   "Where the console is still broadly reachable and cannot be constrained quickly, Huntress advises considering temporarily disabling N-central, up to taking the server offline, until HF4 is applied and strict network controls are in place.",
+   "Audit user lists and access controls for anomalous account creation and unexpected role changes, specifically the .invalid email anomaly and any newly created administrative users.",
+   "Review recent Take Control and remote-control sessions for connections into domain controllers and file servers, viewer IPs outside help-desk ranges, and sessions that do not match a ticket.",
+   "Review jobs and automation for new or modified jobs touching many endpoints at once and unrecognised scripts targeting domain controllers.",
+   "Preserve appliance logs before they rotate — envoy_proxy_HTTPS.log and syslog ncentraldms are the primary evidence, and short retention is what blocked attribution in the Huntress case."
+  ],
+  "response": [
+   "Hunt the appliance logs first. Filter envoy_proxy_HTTPS.log and syslog ncentraldms for successful requests to internal API routes containing URL-encoded values such as %2F, and for probes of /remoteControlAction.do?method=getPierDetails. Then audit newly created accounts for .invalid or other appended strings.",
+   "DEFENDER XDR KQL — the appliance itself usually has no EDR, so endpoint telemetry is where downstream abuse shows: Take Control breadcrumbs, Cloudflare tunnel persistence, and the IOC infrastructure. Technique adapted from community work: github.com/SlimKQL/Hunting-Queries-Detection-Rules (Steven Lim, LinkedIn @0x534c).\n\n// N-central exploitation — downstream endpoint activity\nlet since = datetime(2026-08-01);\nlet ncIPs = dynamic([\"23.234.100.105\",\"23.234.97.68\",\"173.249.252.200\",\"87.249.138.34\",\"37.19.210.32\",\"68.235.46.214\",\"37.153.90.88\",\"92.118.112.181\",\"173.249.252.176\",\"185.156.46.150\",\"23.234.94.43\",\"68.235.46.235\"]);\nlet ncDomains = dynamic([\"mousears.synology.me\",\"wagoosh.direct.quickconnect.to\",\"who-ripped-one.direct.quickconnect.to\"]);\nunion isfuzzy=true\n  (DeviceNetworkEvents\n   | where Timestamp > since\n   | where RemoteIP in (ncIPs) or RemoteUrl has_any (ncDomains)\n   | project Timestamp, DeviceName, Leg = \"IOC infrastructure\", Evidence = strcat(RemoteIP, \" \", RemoteUrl, \" via \", InitiatingProcessFileName)),\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where FolderPath has \"GetSupportService_N-Central\\\\Logs\" or FileName startswith \"BASupSrvc_\"\n   | project Timestamp, DeviceName, Leg = \"Take Control breadcrumb\", Evidence = strcat(ActionType, \" \", FolderPath, FileName)),\n  (DeviceFileEvents\n   | where Timestamp > since\n   | where FileName =~ \"svchost.exe\"\n   | where FolderPath has_any (\"\\\\Documents\\\\\",\"\\\\Downloads\\\\\")\n   | project Timestamp, DeviceName, Leg = \"masquerading binary\", Evidence = strcat(FolderPath, FileName)),\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where ProcessCommandLine has_any (\"cloudflared\",\"tunnel run\",\"--token\")\n   | project Timestamp, DeviceName, Leg = \"tunnel persistence\", Evidence = ProcessCommandLine),\n  (DeviceProcessEvents\n   | where Timestamp > since\n   | where InitiatingProcessFileName has_any (\"BASupSrvc\",\"BASupTSHelper\",\"AgentMonitor\",\"nagent\")\n   | where FileName has_any (\"powershell.exe\",\"cmd.exe\",\"tasklist.exe\",\"net.exe\",\"nltest.exe\")\n   | project Timestamp, DeviceName, Leg = \"RMM-spawned execution\", Evidence = strcat(InitiatingProcessFileName, \" -> \", ProcessCommandLine))\n| summarize Legs = make_set(Leg), Events = count(), First = min(Timestamp), Last = max(Timestamp), Detail = make_set(Evidence, 8) by DeviceName\n| sort by Last desc",
+   "SENTINEL KQL — the console-side story: the Take Control event trio, the MSP Support account, and appliance or firewall traffic touching the IOC set. Technique adapted from community work: github.com/Bert-JanP/Hunting-Queries-Detection-Rules (Bert-Jan Pals, kqlquery.com).\n\n// N-central console abuse — Take Control sessions and IOC traffic\nlet since = datetime(2026-08-01);\nlet ncIPs = dynamic([\"23.234.100.105\",\"23.234.97.68\",\"173.249.252.200\",\"87.249.138.34\",\"37.19.210.32\",\"68.235.46.214\",\"37.153.90.88\",\"92.118.112.181\",\"173.249.252.176\",\"185.156.46.150\",\"23.234.94.43\",\"68.235.46.235\"]);\nunion isfuzzy=true\n  (Event\n   | where TimeGenerated > since\n   | where EventLog =~ \"Application\"\n   | where EventID in (4102, 8192, 8193)\n   | project TimeGenerated, Host = Computer, Leg = strcat(\"Take Control event \", EventID), Evidence = RenderedDescription),\n  (SecurityEvent\n   | where TimeGenerated > since\n   | where Account has_any (\"MSP Support\",\"mspsupport@n-able.com\")\n   | project TimeGenerated, Host = Computer, Leg = \"MSP Support logon\", Evidence = strcat(Activity, \" from \", IpAddress)),\n  (SecurityEvent\n   | where TimeGenerated > since\n   | where EventID in (4720, 4728, 4732, 4756)\n   | where TargetAccount has_any (\".invalid\",\"n-able\")\n   | project TimeGenerated, Host = Computer, Leg = \"anomalous account creation\", Evidence = strcat(Activity, \" \", TargetAccount)),\n  (CommonSecurityLog\n   | where TimeGenerated > since\n   | where SourceIP in (ncIPs) or DestinationIP in (ncIPs)\n   | project TimeGenerated, Host = DeviceName, Leg = \"perimeter IOC traffic\", Evidence = strcat(SourceIP, \" -> \", DestinationIP, \":\", DestinationPort, \" \", RequestURL)),\n  (Syslog\n   | where TimeGenerated > since\n   | where SyslogMessage has_any (\"getPierDetails\",\"%2F\",\"ncentraldms\")\n   | project TimeGenerated, Host = Computer, Leg = \"appliance API anomaly\", Evidence = SyslogMessage)\n| summarize Events = count(), First = min(TimeGenerated), Last = max(TimeGenerated), Detail = make_set(Evidence, 6) by Host, Leg\n| sort by Last desc",
+   "Because appliance logs rotate quickly, export envoy_proxy_HTTPS.log and syslog ncentraldms now on every N-central server, patched or not — that is the only record able to attribute which flaw was used.",
+   "Treat a confirmed console compromise as a compromise of every downstream tenant it manages: audit pushed scripts and jobs, remote-control sessions into domain controllers, and agent-deployed tooling per customer, not only on the appliance."
+  ],
+  "source": "Huntress rapid response \"Critical N-able N-central Vulnerability and Active Exploitation\" (Ben Bernstein and John Hammond, last updated Sep 6, 2026), N-able security advisory for CVE-2026-86218, N-central 2026.3 HF4 release notes, N-able Active Incident page, MSPGeek Discord thread quoted by Huntress",
+  "sourceNote": "Aug 1 – Sep 6, 2026"
+ },
  "linuxkernelpoc": {
   "eyebrow": "Linux kernel · CVE-2026-52924 (SCTP) · CVE-2026-80714 (IPVS) · NebuSec · Public exploit code",
   "title": "Two local-root exploits published, and a reminder that upstream severity triage is not risk triage",
@@ -4635,6 +4980,49 @@ window.CTI = {
  }
 },
   META: {
+ "ncentral86218": {
+  "status": "new",
+  "conf": "Vendor and incident-response confirmation — N-able advisory plus Huntress rapid response from a live customer compromise; vendor states in-the-wild exploitation, release notes contradict",
+  "confNote": "High confidence on the vulnerability, the patch and the tradecraft. Exploitation attribution is unresolved: N-able's MSPGeek post and Active Incident page say CVE-2026-86218 has been observed exploited while the HF4 release notes say there are no confirmations in production, and Huntress cannot say which of three flaws was used in the compromise it investigated because appliance logs had rotated. August IOC IPs are commercial VPN exit nodes, so low fidelity for blocking",
+  "iocDate": "Aug 1 – Aug 6, 2026 — N-able IP sets; Sep 5, 2026 — Huntress September indicators; Sep 6, 2026 — HF4 and CVE-2026-86218",
+  "admiralty": "A1",
+  "severity": 5,
+  "cvss": 10,
+  "sectors": [
+   "All Sectors",
+   "Information Technology",
+   "Commercial Facilities",
+   "Government Facilities"
+  ],
+  "attack": [
+   "T1190 — Exploit Public-Facing Application",
+   "T1078.001 — Valid Accounts: Default Accounts",
+   "T1136.001 — Create Account: Local Account",
+   "T1219 — Remote Access Software",
+   "T1572 — Protocol Tunneling",
+   "T1072 — Software Deployment Tools",
+   "T1036.005 — Masquerading: Match Legitimate Name or Location"
+  ]
+ },
+ "falconflank": {
+  "status": "new",
+  "conf": "Researcher claim with public proof of concept — CrowdStrike investigating, no vendor confirmation, no CVE, no independent reproduction",
+  "confNote": "Foresiet notes the \"0-day\" label is the author's claim, not a vendor confirmation, and that public exploit code supports the attack concept without proving Falcon is vulnerable; SOCRadar records no confirmation, CVE, CVSS or fix as of Sep 3. Sources disagree on affected Windows builds (researcher: Windows 11 25H2 / Server 2025; Rescana: Windows 11 / Server 2026). Local access required, no exploitation reported, not in KEV. The vendor mitigation disables a prevention control, which is itself a risk trade",
+  "iocDate": "Sep 3, 2026 — PoC published; no campaign indicators",
+  "admiralty": "C3",
+  "severity": 3,
+  "cvss": 0,
+  "sectors": [
+   "All Sectors",
+   "Information Technology"
+  ],
+  "attack": [
+   "T1068 — Exploitation for Privilege Escalation",
+   "T1574.001 — Hijack Execution Flow: DLL",
+   "T1211 — Exploitation for Defense Evasion",
+   "T1548 — Abuse Elevation Control Mechanism"
+  ]
+ },
  "postgreshell": {
   "status": "new",
   "conf": "Vendor research with upstream confirmation — Cyera Research Labs disclosure reviewed and fixed by the PostgreSQL security team; no exploitation reported",

@@ -4,7 +4,7 @@
     <title>Security &amp; DFIR feeds — originally compiled by Andrew Rathbun, extended by dfir-rick</title>
     <ownerName>Andrew Rathbun (original), dfir-rick (additions)</ownerName>
     <ownerId>https://github.com/AndrewRathbun</ownerId>
-    <dateModified>Sun, 06 Sep 2026 18:00:00 GMT</dateModified>
+    <dateModified>Sun, 06 Sep 2026 23:00:00 GMT</dateModified>
   </head>
   <body>
         <outline text="DFIR YouTube Feeds" title="DFIR YouTube Feeds">
@@ -162,6 +162,10 @@
     </outline>
     <outline text="CTI Brief sources" title="CTI Brief sources">
       <outline type="rss" text="Wordfence" title="Wordfence" xmlUrl="https://www.wordfence.com/feed/" htmlUrl="https://www.wordfence.com/blog/"/>
+      <outline type="rss" text="Lenny Zeltser" title="Lenny Zeltser" xmlUrl="https://zeltser.com/feed/" htmlUrl="https://zeltser.com/"/>
+      <outline type="rss" text="Truesec" title="Truesec" xmlUrl="https://www.truesec.com/hub/blog/rss.xml" htmlUrl="https://www.truesec.com/hub/blog"/>
+      <outline type="rss" text="SOCRadar" title="SOCRadar" xmlUrl="https://socradar.io/feed/" htmlUrl="https://socradar.io/blog/"/>
+      <outline type="rss" text="Cyera Research" title="Cyera Research" xmlUrl="https://www.cyera.com/rss/research.xml" htmlUrl="https://www.cyera.com/research"/>
       <outline type="rss" text="Group-IB Blog" title="Group-IB Blog" xmlUrl="https://www.group-ib.com/blog/rss.xml" htmlUrl="https://www.group-ib.com/blog/"/>
       <outline type="rss" text="SOC Prime Blog" title="SOC Prime Blog" xmlUrl="https://socprime.com/blog/feed/" htmlUrl="https://socprime.com/blog/"/>
       <outline type="rss" text="Wiz Blog" title="Wiz Blog" xmlUrl="https://www.wiz.io/feed/rss.xml" htmlUrl="https://www.wiz.io/blog"/>
