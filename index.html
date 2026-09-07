@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap">
-<script src="cti-data.js?v=20260906f"></script>
+<script src="cti-data.js?v=20260907a"></script>
 <style>
 :root{
   --font-heading:'Archivo',system-ui,sans-serif;
@@ -108,11 +108,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 </style>
 </helmet>
 
-<div style="height:100vh;display:grid;grid-template-rows:auto auto 1fr;background:var(--color-bg);font-family:var(--font-body);overflow:hidden">
+<div style="height:100vh;display:grid;grid-template-rows:auto auto 1fr;grid-template-columns:minmax(0,1fr);background:var(--color-bg);font-family:var(--font-body);overflow:hidden">
 
-  <header style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:stretch;padding:14px 24px 12px;border-bottom:2px solid var(--color-divider)">
-    <div style="min-width:0;display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;align-items:center;gap:10px">
+  <header style="display:flex;flex-wrap:wrap;gap:16px 32px;align-items:stretch;padding:14px 24px 12px;border-bottom:2px solid var(--color-divider)">
+    <div style="min-width:0;flex:1 1 420px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <span style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;background:var(--badge-bg);color:var(--badge-fg);padding:3px 8px">TLP:CLEAR</span>
         <span style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-mute)">{{ weekRange }}</span>
         <span style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-mute)">· Updated {{ updated }}</span>
@@ -141,7 +141,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
         </div>
       </div>
     </div>
-    <div style="background:var(--color-accent);color:#fff;padding:10px 16px;max-width:420px;display:flex;flex-direction:column;gap:4px">
+    <div style="background:var(--color-accent);color:#fff;padding:10px 16px;flex:1 1 320px;max-width:420px;min-width:0;display:flex;flex-direction:column;gap:4px">
       <div style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;opacity:.85">Threat posture</div>
       <div style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:1;letter-spacing:-.01em">{{ posture.level }}</div>
       <div style="font-size:11.5px;line-height:1.45;text-wrap:pretty;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-width:0">{{ posture.lead }}</div>
@@ -149,7 +149,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
   </header>
 
   <div style="border-bottom:2px solid var(--color-divider)">
-    <nav style="display:flex;gap:0;padding:0 24px;overflow-x:auto">
+    <nav style="display:flex;flex-wrap:wrap;gap:0;padding:0 24px">
       <button onClick="{{ go.overview }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.overview.c }};border-bottom-color:{{ tab.overview.b }}" style-hover="color:var(--hover)">Overview</button>
       <button onClick="{{ go.stories }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.stories.c }};border-bottom-color:{{ tab.stories.b }}" style-hover="color:var(--hover)">Stories <span style="font-family:var(--mono);opacity:.6">{{ counts.stories }}</span></button>
       <button onClick="{{ go.vulns }}" style="appearance:none;background:none;border:0;border-bottom:3px solid transparent;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px 10px;cursor:pointer;text-align:left;color:{{ tab.vulns.c }};border-bottom-color:{{ tab.vulns.b }}" style-hover="color:var(--hover)">Vulnerabilities <span style="font-family:var(--mono);opacity:.6">{{ counts.cves }}</span></button>
