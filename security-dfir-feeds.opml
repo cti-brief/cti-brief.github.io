@@ -4,7 +4,7 @@
     <title>Security &amp; DFIR feeds — originally compiled by Andrew Rathbun, extended by dfir-rick</title>
     <ownerName>Andrew Rathbun (original), dfir-rick (additions)</ownerName>
     <ownerId>https://github.com/AndrewRathbun</ownerId>
-    <dateModified>Sun, 06 Sep 2026 23:00:00 GMT</dateModified>
+    <dateModified>Tue, 08 Sep 2026 22:00:00 GMT</dateModified>
   </head>
   <body>
         <outline text="DFIR YouTube Feeds" title="DFIR YouTube Feeds">
@@ -173,6 +173,8 @@
       <outline type="rss" text="Bishop Fox" title="Bishop Fox" xmlUrl="https://bishopfox.com/feeds/blog.rss" htmlUrl="https://bishopfox.com/blog"/>
       <outline type="rss" text="Horizon3.ai Attack Research" title="Horizon3.ai Attack Research" xmlUrl="https://horizon3.ai/feed/" htmlUrl="https://horizon3.ai/attack-research/"/>
       <outline type="rss" text="watchTowr Labs" title="watchTowr Labs" xmlUrl="https://labs.watchtowr.com/rss/" htmlUrl="https://labs.watchtowr.com/"/>
+      <outline type="rss" text="Security Online (securityonline.info)" title="Security Online (securityonline.info)" xmlUrl="https://securityonline.info/feed/" htmlUrl="https://securityonline.info/"/>
+      <outline type="rss" text="Sansec (eCommerce threat research)" title="Sansec (eCommerce threat research)" xmlUrl="https://sansec.io/atom.xml" htmlUrl="https://sansec.io/research"/>
       <outline type="rss" text="Rapid7 Blog" title="Rapid7 Blog" xmlUrl="https://blog.rapid7.com/rss/" htmlUrl="https://blog.rapid7.com/"/>
       <outline type="rss" text="Sygnia Blog" title="Sygnia Blog" xmlUrl="https://www.sygnia.co/feed/" htmlUrl="https://www.sygnia.co/blog/"/>
       <outline type="rss" text="SecurityOnline.info" title="SecurityOnline.info" xmlUrl="https://securityonline.info/feed/" htmlUrl="https://securityonline.info/"/>

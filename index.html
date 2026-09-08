@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CTI Brief — Week of Aug 31 – Sep 6, 2026</title>
+<title>CTI Brief — Week of Sep 7 – Sep 13, 2026</title>
 <meta name="description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2214%22%20fill%3D%22%23131211%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2234%22%20fill%3D%22none%22%20stroke%3D%22%234a4543%22%20stroke-width%3D%228%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%234a4543%22%20stroke-width%3D%228%22%2F%3E%3Cpath%20d%3D%22M50%2050V12A38%2038%200%200%201%2084%2063z%22%20fill%3D%22%23ff563c%22%2F%3E%3C%2Fsvg%3E">
 <link rel="apple-touch-icon" href="./og-image.png">
@@ -11,16 +11,16 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CTI Brief">
 <meta property="og:url" content="https://cti-brief.github.io/">
-<meta property="og:title" content="CTI Brief — Week of Aug 31 – Sep 6, 2026">
+<meta property="og:title" content="CTI Brief — Week of Sep 7 – Sep 13, 2026">
 <meta property="og:description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
 <meta property="og:image" content="https://cti-brief.github.io/og-image.png">
 <meta property="og:image:secure_url" content="https://cti-brief.github.io/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 45 stories, 87 hunting queries.">
+<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 33 stories, 76 hunting queries.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CTI Brief — Week of Aug 31 – Sep 6, 2026">
+<meta name="twitter:title" content="CTI Brief — Week of Sep 7 – Sep 13, 2026">
 <meta name="twitter:description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
 <meta name="twitter:image" content="https://cti-brief.github.io/og-image.png">
 <script src="./support.js"></script>
@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap">
-<script src="cti-data.js?v=20260907a"></script>
+<script src="cti-data.js?v=20260908k"></script>
 <style>
 :root{
   --font-heading:'Archivo',system-ui,sans-serif;
@@ -226,9 +226,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
                 <div style="padding:14px 20px 20px">
                   <p style="margin:0 0 10px;font-size:13.5px;line-height:1.6;font-weight:600;text-wrap:pretty">{{ postureLead }}</p>
                   <sc-for list="{{ postureLines }}" as="pl" hint-placeholder-count="6">
-                    <div style="display:grid;grid-template-columns:14px minmax(0,1fr);gap:9px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--color-hair)">
+                    <div style="display:grid;grid-template-columns:14px minmax(0,1fr);gap:9px;align-items:baseline;padding:11px 0 3px;border-bottom:1px solid var(--color-hair)">
                       <span style="font-family:var(--mono);font-size:11px;color:var(--color-accent)">·</span>
-                      <p style="margin:0;font-size:13px;line-height:1.6;text-wrap:pretty">{{ pl }}</p>
+                      <div style="min-width:0">
+                        <sc-for list="{{ pl.paras }}" as="pp" hint-placeholder-count="2">
+                          <p style="margin:0 0 10px;font-size:13px;line-height:1.72;text-wrap:pretty;max-width:78ch">{{ pp.t }}</p>
+                        </sc-for>
+                      </div>
                     </div>
                   </sc-for>
                 </div>
@@ -323,7 +327,14 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
                     <span style="font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-mute)">{{ s.admiralty }}</span>
                   </div>
                   <h3 style="font-family:var(--font-heading);font-weight:700;font-size:15.5px;line-height:1.35;margin:0 0 6px;letter-spacing:-.005em;text-wrap:pretty">{{ s.title }}</h3>
-                  <p style="margin:0;font-size:13px;line-height:1.55;color:var(--color-mute);text-wrap:pretty;display:-webkit-box;-webkit-line-clamp:{{ s.clamp }};-webkit-box-orient:vertical;overflow:hidden">{{ s.body }}</p>
+                  <sc-if value="{{ s.collapsed }}" hint-placeholder-val="{{ true }}">
+                    <p style="margin:0;font-size:13px;line-height:1.6;color:var(--color-mute);text-wrap:pretty;max-width:74ch;display:-webkit-box;-webkit-line-clamp:{{ s.clamp }};-webkit-box-orient:vertical;overflow:hidden">{{ s.body }}</p>
+                  </sc-if>
+                  <sc-if value="{{ s.expanded }}">
+                    <sc-for list="{{ s.bodyParas }}" as="bp" hint-placeholder-count="3">
+                      <p style="margin:0 0 15px;font-size:13.5px;line-height:1.78;color:var(--color-text);text-wrap:pretty;max-width:70ch">{{ bp.t }}</p>
+                    </sc-for>
+                  </sc-if>
                   <div style="font-family:var(--mono);font-size:10.5px;color:var(--color-mute);margin-top:8px">{{ s.src }}</div>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding:14px 18px">
@@ -346,12 +357,12 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
                     <div style="margin-bottom:20px">
                       <h4 style="font-family:var(--font-body);font-weight:700;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent);margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid var(--color-hair)">{{ sec.label }}</h4>
                       <sc-for list="{{ sec.paras }}" as="p" hint-placeholder-count="1">
-                        <p style="margin:0 0 10px;font-size:13px;line-height:1.65;max-width:88ch;text-wrap:pretty">{{ p.t }}</p>
+                        <p style="margin:0 0 15px;font-size:13.5px;line-height:1.78;max-width:70ch;text-wrap:pretty">{{ p.t }}</p>
                       </sc-for>
                       <sc-for list="{{ sec.bullets }}" as="b" hint-placeholder-count="3">
                         <div style="display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;margin-bottom:9px">
                           <span style="color:var(--color-accent);font-family:var(--mono);font-size:12px">—</span>
-                          <div style="font-size:12.5px;line-height:1.6;white-space:pre-wrap;max-width:92ch;text-wrap:pretty">{{ b.t }}</div>
+                          <div style="font-size:13px;line-height:1.72;white-space:pre-wrap;max-width:76ch;text-wrap:pretty">{{ b.t }}</div>
                         </div>
                       </sc-for>
                       <div style="display:flex;flex-wrap:wrap;gap:6px">
@@ -368,7 +379,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
                         <button onClick="{{ s.copyIocs }}" style="appearance:none;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;cursor:pointer;background:none;color:var(--color-text);border:1px solid var(--color-hair)" style-hover="border-color:var(--color-accent);color:var(--hover)">Copy values</button>
                       </div>
                       <sc-for list="{{ s.iocs }}" as="i" hint-placeholder-count="4">
-                        <div style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;padding:7px 0;border-bottom:1px solid var(--color-hair)">
+                        <div style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;padding:11px 0 3px;border-bottom:1px solid var(--color-hair)">
                           <span style="font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-mute)">{{ i.type }}</span>
                           <div style="min-width:0">
                             <div style="font-family:var(--mono);font-size:11.5px;word-break:break-all">{{ i.value }}</div>
@@ -430,7 +441,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
               <sc-if value="{{ c.expanded }}">
                 <div style="padding:16px 30px 22px;background:var(--color-surface);border-top:1px dashed var(--color-divider)">
                   <h4 style="font-family:var(--font-heading);font-weight:700;font-size:14px;line-height:1.4;margin:0 0 8px;max-width:100ch;text-wrap:pretty">{{ c.storyTitle }}</h4>
-                  <p style="margin:0 0 14px;font-size:12.5px;line-height:1.6;color:var(--color-mute);max-width:100ch;text-wrap:pretty">{{ c.storyBody }}</p>
+                  <sc-for list="{{ c.storyParas }}" as="sp" hint-placeholder-count="2">
+                    <p style="margin:0 0 12px;font-size:13px;line-height:1.75;color:var(--color-mute);max-width:72ch;text-wrap:pretty">{{ sp.t }}</p>
+                  </sc-for>
                   <sc-for list="{{ c.mitigation }}" as="m" hint-placeholder-count="2">
                     <div style="display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;margin-bottom:8px">
                       <span style="color:var(--color-accent);font-family:var(--mono);font-size:12px">—</span>
@@ -570,6 +583,39 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 <script type="text/x-dc" data-dc-script data-props="{&quot;defaultTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;overview&quot;,&quot;stories&quot;,&quot;vulns&quot;,&quot;iocs&quot;,&quot;kql&quot;,&quot;judgments&quot;,&quot;sources&quot;],&quot;default&quot;:&quot;overview&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pinnedFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 const KQL_RE = /^(DEFENDER XDR KQL|SENTINEL KQL)\s*[—–-]\s*([\s\S]*)/;
 const MUTE = 'var(--color-mute)', ACC = 'var(--color-accent)', HAIR = 'var(--color-hair)';
+
+// Break a long prose block into readable paragraphs. Splits on sentence
+// boundaries and packs sentences up to a character budget, so paragraphs come
+// out an even size whether the source runs to short sentences or very long
+// ones. Abbreviations, decimals and process names keep their dots.
+const SENT_GUARD = /\b(No|no|Nos|vs|Inc|Ltd|Corp|Dr|Mr|Ms|Mrs|St|Sr|Jr|e\.g|i\.e|approx|est|Fig|cf|al|Sep|Sept|Oct|Nov|Dec|Jan|Feb|Mar|Apr|Jun|Jul|Aug|U\.S|U\.K)\.(\s)/g;
+
+const splitSentences = (text) => {
+  const guarded = String(text || '')
+    .replace(SENT_GUARD, '$1\u0001$2')
+    .replace(/(\d)\.(\d)/g, '$1\u0002$2')
+    .replace(/\b([a-z0-9_-]+)\.(exe|dll|vbs|js|php|aspx|ashx|py|sh|log|xml|txt|net|io|me|org|com|xyz|vu)\b/gi, '$1\u0002$2');
+  return guarded
+    .split(/(?<=[.?!])["'\u201d)]?\s+(?=["'(\u201c]?[A-Z0-9])/)
+    .map((s) => s.replace(/\u0001/g, '.').replace(/\u0002/g, '.').trim())
+    .filter(Boolean);
+};
+
+const paraSplit = (text, target = 300, hardMax = 460) => {
+  const sentences = splitSentences(text);
+  if (!sentences.length) return [];
+  const out = [];
+  let buf = '';
+  for (const s of sentences) {
+    if (!buf) { buf = s; }
+    else if (buf.length + 1 + s.length <= hardMax && buf.length < target) { buf += ' ' + s; }
+    else { out.push(buf); buf = s; }
+  }
+  if (buf) out.push(buf);
+  // Fold a short trailing paragraph back so the block does not end on a stub.
+  if (out.length > 1 && out[out.length - 1].length < 110) out[out.length - 2] += ' ' + out.pop();
+  return out;
+};
 
 class Component extends DCLogic {
   state = {
@@ -738,7 +784,9 @@ class Component extends DCLogic {
     const iocs = det.iocs || [];
     const row = {
       key, title: s.title, body: s.body, src: s.src, expanded, domId: 'st-' + key + '-' + entry.i,
-      clamp: expanded ? '99' : (this.props.density === 'compact' ? '1' : '2'),
+      clamp: this.props.density === 'compact' ? '1' : '2',
+      collapsed: !expanded,
+      bodyParas: expanded ? paraSplit(s.body).map(t => ({ t })) : [],
       bg: pinned ? 'var(--pin-bg)' : 'transparent',
       rail: meta.status === 'new' ? ACC : (meta.cvss || 0) >= 9 ? 'var(--accent-rail)' : HAIR,
       pin: (e) => { if (e) { e.stopPropagation(); e.preventDefault(); } this.togglePin(key); },
@@ -763,7 +811,7 @@ class Component extends DCLogic {
       { k: 'Confidence', v: meta.conf || '—', c: MUTE }
     ];
     row.sections = [
-      { label: 'Assessment', paras: det.overview ? [{ t: det.overview }] : [], bullets: [], chips: [] },
+      { label: 'Assessment', paras: paraSplit(det.overview).map(t => ({ t })), bullets: [], chips: [] },
       { label: 'Technical detail', paras: [], bullets: tech.plain.map(t => ({ t })), chips: [] },
       { label: 'Mitigation', paras: [], bullets: (det.mitigation || []).map(t => ({ t })), chips: [] },
       { label: 'Response & hunting', paras: [], bullets: resp.plain.map(t => ({ t })), chips: [] },
@@ -977,7 +1025,7 @@ class Component extends DCLogic {
         })),
         toggle: () => this.toggleExpand(id),
         storyTitle: story.title || det.title || c.num,
-        storyBody: story.body || det.overview || '',
+        storyParas: paraSplit(story.body || det.overview || '').map(t => ({ t })),
         mitigation: (det.mitigation || []).slice(0, 4).map(t => ({ t })),
         openStory: (e) => { if (e) e.stopPropagation(); openStory(c.key); }
       };
@@ -1080,7 +1128,8 @@ class Component extends DCLogic {
       ],
       postureLead: (d.POSTURE || {}).lead || '',
       postureLines: ((d.POSTURE || {}).lines || String((d.POSTURE || {}).text || '').split(/(?<=[.;])\s+/))
-        .map(t => String(t).trim()).filter(Boolean),
+        .map(t => String(t).trim()).filter(Boolean)
+        .map(t => ({ paras: paraSplit(t, 260, 380).map(p => ({ t: p })) })),
       postureOpen: this.state.postureOpen,
       postureLabel: this.state.postureOpen ? 'Hide' : 'Read',
       togglePosture: () => this.setState(st => ({ postureOpen: !st.postureOpen })),
@@ -1208,7 +1257,7 @@ class Component extends DCLogic {
       kjShort: (d.KJ || []).slice(0, 3).map(k => ({ num: k.num, parts: this.parts(k.html).map(p => ({ t: p.t, w: p.w, c: p.c })) })),
       corrections: (d.CORRECTIONS || []).map(c => ({ date: c.date, item: c.item, was: c.was, now: c.now, why: c.why || c.note || '' })),
       sources: d.SOURCES || [],
-      opmlCount: '162 feeds across 7 categories · last extended Sep 6, 2026',
+      opmlCount: '164 feeds across 7 categories · last extended Sep 8, 2026',
       toast: this.state.toast
     };
   }
