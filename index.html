@@ -18,7 +18,7 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 33 stories, 76 hunting queries.">
+<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 36 stories, 83 hunting queries.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="CTI Brief — Week of Sep 7 – Sep 13, 2026">
 <meta name="twitter:description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap">
-<script src="cti-data.js?v=20260908k"></script>
+<script src="cti-data.js?v=20260909c"></script>
 <style>
 :root{
   --font-heading:'Archivo',system-ui,sans-serif;
@@ -125,6 +125,10 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
           <div style="padding:0 16px;border-right:2px solid var(--color-hair)">
             <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-mute)">New</div>
             <div style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:1.1;color:var(--color-accent)">{{ counts.new }}</div>
+          </div>
+          <div style="padding:0 16px;border-right:2px solid var(--color-hair)">
+            <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-mute)">Updated</div>
+            <div style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:1.1">{{ counts.updated }}</div>
           </div>
           <div style="padding:0 16px;border-right:2px solid var(--color-hair)">
             <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-mute)">Ongoing</div>
@@ -532,9 +536,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
         <sc-for list="{{ kj }}" as="k" hint-placeholder-count="6">
           <div style="display:grid;grid-template-columns:70px minmax(0,1fr);gap:0;border-bottom:1px solid var(--color-hair)">
             <div style="font-family:var(--font-heading);font-weight:800;font-size:26px;color:var(--color-accent);padding:20px 0 20px 24px">{{ k.num }}</div>
-            <p style="margin:0;padding:20px 32px 20px 0;font-size:14px;line-height:1.7;max-width:104ch;text-wrap:pretty">
-              <sc-for list="{{ k.parts }}" as="p" hint-placeholder-count="2"><span style="font-weight:{{ p.w }};color:{{ p.c }}">{{ p.t }}</span></sc-for>
-            </p>
+            <div style="padding:20px 32px 20px 0">
+              <sc-for list="{{ k.paras }}" as="kp" hint-placeholder-count="3">
+                <p style="margin:0 0 15px;font-size:14px;line-height:1.78;max-width:70ch;text-wrap:pretty">
+                  <sc-for list="{{ kp.parts }}" as="p" hint-placeholder-count="2"><span style="font-weight:{{ p.w }};color:{{ p.c }}">{{ p.t }}</span></sc-for>
+                </p>
+              </sc-for>
+            </div>
           </div>
         </sc-for>
         <h2 style="font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-mute);margin:0;padding:24px 24px 10px;border-bottom:2px solid var(--color-divider)">Corrections log</h2>
@@ -715,6 +723,46 @@ class Component extends DCLogic {
       const before = String(html).split(/<b>|<\/b>/).slice(0, 0);
       return { t };
     });
+  }
+  // Group a judgment's bold/plain spans into readable paragraphs, splitting at
+  // sentence boundaries so a 1,000-character judgment does not render as one block.
+  kjParas(html, target = 300) {
+    const paras = [];
+    let cur = [], len = 0;
+    const push = (t, w, c) => {
+      const prev = cur[cur.length - 1];
+      if (prev && prev.w === w && prev.c === c) prev.t += t; else cur.push({ t, w, c });
+      len += t.length;
+    };
+    const close = () => { if (cur.length) { paras.push({ parts: cur }); cur = []; len = 0; } };
+    for (const part of this.parts(html)) {
+      const sentences = splitSentences(part.t);
+      if (!sentences.length) { if (part.t) push(part.t, part.w, part.c); continue; }
+      sentences.forEach((s, i) => {
+        push((cur.length && i >= 0 ? ' ' : '') + s, part.w, part.c);
+        if (len >= target) close();
+      });
+    }
+    close();
+    // A stray fragment (e.g. the "." that follows a bold clause) belongs to the
+    // paragraph before it, not to a paragraph of its own.
+    for (let i = paras.length - 1; i > 0; i--) {
+      const len_i = paras[i].parts.reduce((n, p) => n + p.t.length, 0);
+      if (len_i < 25) {
+        paras[i - 1].parts = paras[i - 1].parts.concat(paras[i].parts);
+        paras.splice(i, 1);
+      }
+    }
+    if (paras.length > 1) {
+      const tailLen = paras[paras.length - 1].parts.reduce((n, p) => n + p.t.length, 0);
+      if (tailLen < 110) {
+        const tail = paras.pop();
+        paras[paras.length - 1].parts = paras[paras.length - 1].parts.concat(tail.parts);
+      }
+    }
+    return paras.map(p => ({
+      parts: p.parts.map((x, i) => ({ t: i === 0 ? x.t.replace(/^\s+/, '') : x.t, w: x.w, c: x.c }))
+    }));
   }
   parts(html) {
     const out = []; const re = /<b>([\s\S]*?)<\/b>/g; let last = 0, m;
@@ -965,6 +1013,7 @@ class Component extends DCLogic {
       kql: this.allKql().length,
       new: metas.filter(m => m.status === 'new').length,
       ongoing: metas.filter(m => m.status === 'ongoing').length,
+      updated: metas.filter(m => m.status === 'updated').length,
       kev: d.CVES.filter(c => (c.flags || []).some(f => /kev/i.test(f))).length
     };
 
@@ -1253,11 +1302,11 @@ class Component extends DCLogic {
         if (skippedNet > 0) notes.push(skippedNet + ' unparseable network value(s) skipped');
         this.flash(mapped.length + ' indicators exported' + (notes.length ? ' \u2014 ' + notes.join('; ') : ''));
       },
-      kj: (d.KJ || []).map(k => ({ num: k.num, parts: this.parts(k.html) })),
+      kj: (d.KJ || []).map(k => ({ num: k.num, paras: this.kjParas(k.html) })),
       kjShort: (d.KJ || []).slice(0, 3).map(k => ({ num: k.num, parts: this.parts(k.html).map(p => ({ t: p.t, w: p.w, c: p.c })) })),
       corrections: (d.CORRECTIONS || []).map(c => ({ date: c.date, item: c.item, was: c.was, now: c.now, why: c.why || c.note || '' })),
       sources: d.SOURCES || [],
-      opmlCount: '164 feeds across 7 categories · last extended Sep 8, 2026',
+      opmlCount: '166 feeds across 7 categories · last extended Sep 9, 2026',
       toast: this.state.toast
     };
   }
