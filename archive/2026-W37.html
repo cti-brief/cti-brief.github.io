@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CTI Brief — Week of Sep 14 – Sep 20, 2026</title>
+<title>CTI Brief — Week of Sep 7 – Sep 13, 2026</title>
 <meta name="description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2214%22%20fill%3D%22%23131211%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2234%22%20fill%3D%22none%22%20stroke%3D%22%234a4543%22%20stroke-width%3D%228%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%234a4543%22%20stroke-width%3D%228%22%2F%3E%3Cpath%20d%3D%22M50%2050V12A38%2038%200%200%201%2084%2063z%22%20fill%3D%22%23ff563c%22%2F%3E%3C%2Fsvg%3E">
 <link rel="apple-touch-icon" href="./og-image.png">
@@ -11,16 +11,16 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CTI Brief">
 <meta property="og:url" content="https://cti-brief.github.io/">
-<meta property="og:title" content="CTI Brief — Week of Sep 14 – Sep 20, 2026">
+<meta property="og:title" content="CTI Brief — Week of Sep 7 – Sep 13, 2026">
 <meta property="og:description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
 <meta property="og:image" content="https://cti-brief.github.io/og-image.png">
 <meta property="og:image:secure_url" content="https://cti-brief.github.io/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 36 stories, 80 hunting queries.">
+<meta property="og:image:alt" content="CTI Brief — posture CRITICAL, 42 stories, 93 hunting queries.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CTI Brief — Week of Sep 14 – Sep 20, 2026">
+<meta name="twitter:title" content="CTI Brief — Week of Sep 7 – Sep 13, 2026">
 <meta name="twitter:description" content="Weekly threat intelligence for defenders: active exploitation, CISA KEV deadlines, published indicators and ready-to-run Defender XDR and Sentinel hunting queries.">
 <meta name="twitter:image" content="https://cti-brief.github.io/og-image.png">
 <script src="./support.js"></script>
@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap">
-<script src="cti-data.js?v=20260913d"></script>
+<script src="2026-W37-data.js"></script>
 <style>
 :root{
   --font-heading:'Archivo',system-ui,sans-serif;
@@ -116,7 +116,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
         <span style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;background:var(--badge-bg);color:var(--badge-fg);padding:3px 8px">TLP:CLEAR</span>
         <span style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-mute)">{{ weekRange }}</span>
         <span style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-mute)">· Updated {{ updated }}</span>
-        <a href="./archive/index.html" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-mute);text-decoration:none;border:1px solid var(--color-hair);padding:3px 8px" style-hover="border-color:var(--color-accent);color:var(--hover)">Archive ↗</a>
+        <a href="./index.html" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-mute);text-decoration:none;border:1px solid var(--color-hair);padding:3px 8px" style-hover="border-color:var(--color-accent);color:var(--hover)">← Archive index</a>
         <button onClick="{{ toggleTheme }}" style="appearance:none;background:none;border:1px solid var(--color-hair);cursor:pointer;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-mute);padding:3px 8px;text-align:left" style-hover="border-color:var(--color-accent);color:var(--hover)">{{ themeLabel }}</button>
       </div>
       <div style="display:flex;align-items:baseline;gap:18px;flex-wrap:wrap">
@@ -1153,27 +1153,27 @@ class Component extends DCLogic {
       updated: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
       posture: d.POSTURE || {}, counts, tab: tabDef, go, pinView,
       hqActions: [
-        this.hqAction('01', 'ciscosegzeroday', 'Cisco Secure Email Gateway', 'KEV same-day · deadline Sep 17',
-          'Patch CVE-2026-76461 today — the exploit is the email itself',
-          'Cisco confirms active exploitation of a SQL injection in the gateway\'s mail-parsing logic; a single crafted email gives root, with no attachment or link required. CISA\'s same-day KEV listing indicates zero-day exploitation before disclosure.'),
-        this.hqAction('02', 'wso2jwt', 'WSO2 API Manager', 'exploited · patched since April',
-          'Rotate every credential a forged admin token could reach',
-          'watchTowr\'s honeypots caught the first forged-JWT attempt Sep 13, five months after the fix shipped. A successful forge is assessed to expose every registered application\'s secrets, not just console access.'),
-        this.hqAction('03', 'redheron', 'Gitea (Red Heron campaign)', 'exploited · rootkit found',
-          'Don\'t trust a clean process listing on a suspect Gitea host',
-          'Acronis found a previously undocumented LD_PRELOAD rootkit, SIXZUT, hiding files, processes and connections from standard Linux tooling — discovered via a staging server, not endpoint detection.')
+        this.hqAction('01', 'papercut', 'PaperCut NG/MF', 'KEV Aug 31 · triage required',
+          'Hunt archived server.log copies before you close the PaperCut ticket',
+          'CISA listed both CVEs on Aug 31 under BOD 26-04 and exploitation has moved from probing to active intrusions. The post-exploitation tooling deletes the live log, so a patched server still needs the archived copies read.'),
+        this.hqAction('02', 'jfrog82329', 'JFrog Artifactory', 'exploited · self-hosted only',
+          'Revoke every Artifactory access token, then hunt the ones attackers minted',
+          'watchTowr sees attackers minting admin tokens through CVE-2026-82329 and enumerating credential sets and federated access. Tokens minted before the patch survive it, so upgrading alone leaves the intrusion in place.'),
+        this.hqAction('03', 'langflow', 'Langflow ≤ 1.4.2', 'exploited · credential theft',
+          'Rotate every key the Langflow host could reach, then look for what left',
+          'VulnCheck reports CVE-2026-0768 used for environment variables, secret keys and SSH access, with 360-plus attempts on its UK canaries. This is a secrets incident wherever those keys are valid.')
       ],
       hqCount: 3,
       hqPatch: [
-        { target: 'GitLab CE/EE', note: 'CVE-2026-85706 (CVSS 10.0) reads any file with one unauthenticated request if the instance hosts a public project; watchTowr saw probing six hours after disclosure.', fix: '19.3.2 / 19.2.6 / 19.1.8' },
-        { target: 'F5 BIG-IP APM', note: 'PoisonedRefresh injects a web shell only into Apache memory, so file-integrity monitoring sees nothing; 795 endpoints still exposed per Shadowserver.', fix: 'Verify httpd binary + SELinux state' },
-        { target: 'Cisco Secure FMC', note: 'CVE-2026-20079 patched in March, exploited since August by three separate clusters including Sandworm-overlapping tooling and a Qilin affiliate.', fix: 'Hotfix now, hardening release week of Sep 16' }
+        { target: 'SonicWall SMA1000', note: 'CVE-2026-83548 (CVSS 10.0) and CVE-2026-83549 exploited; SonicWall found both by investigating the attacks and published no indicators.', fix: 'Hotfix 12.4.3-03526' },
+        { target: 'WatchGuard Fireware', note: 'Three critical unauthenticated RCE flaws in the iked process, reachable wherever IPSec VPN is enabled. No exploitation reported.', fix: 'Vendor advisory' },
+        { target: 'Virtualizor', note: 'BGP hijack served a malicious update Aug 28–30 under a valid certificate; the vendor cannot enumerate affected servers.', fix: '3.2.9.9 + vendor IOC' }
       ],
       hqContinuity: [
-        { figure: '4 clusters, 9 days', label: 'BlueMoon', note: 'A Chrome-to-Windows exploit chain went from one espionage group to four independent users in nine days; a fifth (UTA0560/GRIMWEDGE) surfaced Sep 16.' },
-        { figure: '5 months, then Sep 13', label: 'WSO2 CVE-2026-5430', note: 'Patchable since April, first forged-token exploitation attempt only landed this week — the inverse of a zero-day.' },
-        { figure: '4th escalation', label: 'MikroTrick', note: 'CERT Polska traced exploitation to Sep 2, a day before MikroTik\'s patch shipped — this week\'s second case of attacks preceding the fix.' },
-        { figure: '3 patched, still hit', label: 'Appliance rootkits', note: 'Cisco FMC, F5 BIG-IP APM and (last week) ShieldBreak all show a shipped patch is not proof a device wasn\'t already compromised.' }
+        { figure: '12 CVEs in 2026', label: 'Langflow', note: 'One Langflow flaw was known exploited before this year. VulnCheck now counts eleven more, and 15,000-plus successful attacks across three of them.' },
+        { figure: '2 CVEs, 6 days', label: 'JFrog Artifactory', note: 'CVE-2026-66384 entered KEV Aug 27 with a Sep 10 deadline. CVE-2026-82329 was patched Aug 28 and reported exploited Sep 1. Different flaws, different fixed versions.' },
+        { figure: '3rd escalation', label: 'PaperCut', note: 'Zero-day exploitation, then bypasses of the first emergency patch, now KEV listing and active intrusions — inside nine days of this brief.' },
+        { figure: '3 vendors, 1 week', label: 'Remote access', note: 'SonicWall SMA1000, WatchGuard Fireware and Citrix NetScaler. Two of the three were found through live intrusions rather than research.' }
       ],
       postureLead: (d.POSTURE || {}).lead || '',
       postureLines: ((d.POSTURE || {}).lines || String((d.POSTURE || {}).text || '').split(/(?<=[.;])\s+/))

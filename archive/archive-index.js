@@ -1,6 +1,9 @@
 // Archive index — one entry per published edition, newest first.
 // Save a frozen copy of the dashboard as archive/YYYY-Www.html, then add a row here.
 window.CTI_ARCHIVE = [
+  { id: 'W37 2026', period: 'Week of Sep 7 – Sep 13, 2026', published: 'Sep 13, 2026',
+    path: './2026-W37.html', items: 42,
+    breakdown: { new: 15, updated: 2, ongoing: 25 } },
   { id: 'W36 2026', period: 'Week of Aug 31 – Sep 6, 2026', published: 'Sep 6, 2026',
     path: './2026-W36.html', items: 45,
     breakdown: { new: 19, updated: 6, ongoing: 20 } },
